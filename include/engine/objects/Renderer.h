@@ -6,6 +6,8 @@
 #include"engine/util/ShaderProgram.h"
 #include"engine/shapes/Shape.h"
 
+// NOTE: Renderer should use a pointer to ShaderProgram and not have its' own instance
+
 class Renderer
 {
 public:

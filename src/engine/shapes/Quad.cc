@@ -3,7 +3,7 @@
 Quad::Quad() :
 	Shape()
 {
-
+	Init();
 }
 
 Quad::~Quad()
@@ -41,7 +41,7 @@ void Quad::FillIndices(GLuint* buffer)
 	*id++ = 0;
 	*id++ = 1;
 	*id++ = 2;
-	*id++ = 2;
-	*id++ = 3;
 	*id++ = 0;
+	*id++ = 3;
+	*id++ = 2;
 }

@@ -1,49 +1,56 @@
 #include"engine/objects/GameObject.h"
 
-GameObject::GameObject()
+GameObject::GameObject() :
+	Transform(),
+	mRenderer(nullptr)
 {
 
-}
+};
 
 GameObject::~GameObject()
 {
+}
+
+void GameObject::Render(const glm::mat4& projection_matrix, const glm::mat4& view_matrix)
+{
+#ifdef ENGINE_DEBUG
+	assert(mRenderer != nullptr);
+#endif
+	try
+	{
+		mRenderer->Render(glm::value_ptr(projection_matrix*view_matrix*Model()));
+	}
+	catch (std::exception& error)
+	{
+		throw std::runtime_error(std::string("Render failure: ") + error.what());
+	}
+}
+
+void GameObject::Update(const float& dt)
+{
 
 }
 
-void GameObject::Scale(const glm::vec3& scale)
+void GameObject::AddRenderer(std::unique_ptr<Renderer> renderer)
 {
-	mTransform.mScale *= scale;
+//#ifdef ENGINE_DEBUG
+//	assert(mRenderer == nullptr);
+//#endif
+	mRenderer = std::move(renderer);
 }
 
-const glm::vec3& GameObject::Scale() const
+void GameObject::PolyMode(const GLenum& poly_mode)
 {
-	return mTransform.mScale;
+#ifdef ENGINE_DEBUG
+	assert(mRenderer != nullptr);
+#endif
+	mRenderer->PolyMode(poly_mode);
 }
 
-void GameObject::Translate(const glm::vec3& translation_vec)
+const GLenum& GameObject::PolyMode() const
 {
-	mTransform.mPosition += translation_vec;
-}
-
-const glm::vec3& GameObject::Position() const
-{
-	return mTransform.mPosition;
-}
-
-void GameObject::Rotate(const float& angle_degrees, const glm::vec3& rotation_axis)
-{
-	mTransform.mRotation = glm::rotate(mTransform.mRotation, angle_degrees, rotation_axis);
-}
-
-const glm::quat& GameObject::Rotation() const
-{
-	return mTransform.mRotation;
-}
-
-glm::mat4 GameObject::Model()
-{
-	glm::mat4 translation_matrix = glm::translate(Constants::Geometry::IDENTITY_MATRIX, mTransform.mPosition);
-	glm::mat4 scale_matrix = glm::scale(Constants::Geometry::IDENTITY_MATRIX, mTransform.mScale);
-	glm::mat4 rotation_matrix = glm::mat4_cast(mTransform.mRotation);
-	return translation_matrix * rotation_matrix * scale_matrix;
+#ifdef ENGINE_DEBUG
+	assert(mRenderer != nullptr);
+#endif
+	return mRenderer->PolyMode();
 }
