@@ -11,6 +11,7 @@ const std::pair<GLenum, GLenum> OpenGLOptions::DEFAULT_POLY_MODE = { GL_FRONT_AN
 const int OpenGLOptions::DEFAULT_WINDOW_DECORATED = GLFW_FALSE;
 const int OpenGLOptions::DEFAULT_WINDOW_MAXIMIZED = GLFW_TRUE;
 void(*OpenGLOptions::DEFAULT_KEYCB)(GLFWwindow*, int, int, int, int) = nullptr;
+const int OpenGLOptions::DEFAULT_USE_NATIVE_ASPECT_RATIO = GLFW_TRUE;
 
 /////////////////////////////////////////////////////////////
 ///\ fn OpenGLOptions::OpenGLOptions()
@@ -29,7 +30,8 @@ OpenGLOptions::OpenGLOptions() :
 	mEnableOptions(std::vector<GLenum>()),
 	mWindowDecorated(DEFAULT_WINDOW_DECORATED),
 	mWindowMaximized(DEFAULT_WINDOW_MAXIMIZED),
-	mKeyCB(DEFAULT_KEYCB)
+	mKeyCB(DEFAULT_KEYCB),
+	mUseNativeAspectRatio(DEFAULT_USE_NATIVE_ASPECT_RATIO)
 {
 
 }

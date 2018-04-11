@@ -26,6 +26,7 @@ struct OpenGLOptions
 	static const int DEFAULT_WINDOW_MAXIMIZED;
 	static const int DEFAULT_WINDOW_DECORATED;
 	static void(*DEFAULT_KEYCB)(GLFWwindow*, int, int, int, int);
+	static const int DEFAULT_USE_NATIVE_ASPECT_RATIO;
 	// Members
 	unsigned int mMajorV; ///< OpenGL Major version number
 	unsigned int mMinorV; ///< OpenGL Minor version number
@@ -38,6 +39,7 @@ struct OpenGLOptions
 	std::vector<GLenum> mEnableOptions; ///< Vector of glEnable() options
 	int mWindowMaximized;
 	int mWindowDecorated;
+	int mUseNativeAspectRatio;
 	void(*mKeyCB)(GLFWwindow*, int, int, int, int); ///< Key callback
 
 	// Methods

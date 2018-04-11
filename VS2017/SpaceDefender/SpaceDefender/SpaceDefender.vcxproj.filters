@@ -1,42 +1,135 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="src\engine">
+      <UniqueIdentifier>{35dd182c-bd6c-47fe-b9b8-b6261a440441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\game">
+      <UniqueIdentifier>{88390b55-9522-4516-9516-8d82e3e2510c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\containers">
+      <UniqueIdentifier>{89333dea-a693-414d-83c6-6a0679b610f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\objects">
+      <UniqueIdentifier>{2a9b4c60-8863-4686-86c6-8cde9ccfc7e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\shapes">
+      <UniqueIdentifier>{2f351c8b-619a-4ebb-95e5-4b09cb789a52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\util">
+      <UniqueIdentifier>{27b01856-3152-4bba-9590-e6e8689f032f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine">
+      <UniqueIdentifier>{8107fe3b-2347-442b-96c2-837645739f79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\game">
+      <UniqueIdentifier>{473c449d-951f-4e45-90af-3bbd6e9b6b33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine\containers">
+      <UniqueIdentifier>{1761a8e5-13f6-4fee-8935-257cce3439fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine\objects">
+      <UniqueIdentifier>{ed3264c7-c951-4479-a6a3-6ada9da09587}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine\shapes">
+      <UniqueIdentifier>{a7c361f3-95d9-4b27-912e-d9fdd6a728f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine\util">
+      <UniqueIdentifier>{f7a2f3b6-18e6-4375-8d77-a812b4c165aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\game\main.cc">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\..\src\engine\objects\Collider.cc">
+      <Filter>src\engine\objects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\engine\util\InitOpenGL.cc">
-      <Filter>Source Files</Filter>
+      <Filter>src\engine\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\containers\ObjectManager.cc">
+      <Filter>src\engine\containers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\engine\util\OpenGLOptions.cc">
-      <Filter>Source Files</Filter>
+      <Filter>src\engine\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\objects\RenderableObject.cc">
+      <Filter>src\engine\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\util\ShaderProgram.cc">
+      <Filter>src\engine\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\objects\Renderer.cc">
+      <Filter>src\engine\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\shapes\Shape.cc">
+      <Filter>src\engine\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\shapes\Triangle.cc">
+      <Filter>src\engine\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\game\main.cc">
+      <Filter>src\game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\external\glad\src\glad.c">
-      <Filter>Source Files</Filter>
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\shapes\Circle.cc">
+      <Filter>src\engine\shapes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\engine\util\InitOpenGL.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\..\include\engine\objects\Collider.h">
+      <Filter>include\engine\objects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\engine\util\ShaderProgram.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\..\include\engine\util\InitOpenGL.h">
+      <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\containers\ObjectManager.h">
+      <Filter>include\engine\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\util\Paths.h">
+      <Filter>include\engine\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\engine\util\OpenGLOptions.h">
-      <Filter>Header Files</Filter>
+      <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\objects\RenderableObject.h">
+      <Filter>include\engine\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\objects\Renderer.h">
+      <Filter>include\engine\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\util\ShaderProgram.h">
+      <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\shapes\Shape.h">
+      <Filter>include\engine\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\shapes\Triangle.h">
+      <Filter>include\engine\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\objects\Transform.h">
+      <Filter>include\engine\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\objects\GameObject.h">
+      <Filter>include\engine\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\util\Constants.h">
+      <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\shapes\Circle.h">
+      <Filter>include\engine\shapes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

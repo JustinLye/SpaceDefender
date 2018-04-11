@@ -1,0 +1,37 @@
+#ifndef RENDERER_HEADER_INCLUDED
+#define RENDERER_HEADER_INCLUDED
+#include<glad/glad.h>
+#include<glm/glm.hpp>
+#include<glm/gtc/type_ptr.hpp>
+#include"engine/util/ShaderProgram.h"
+#include"engine/shapes/Shape.h"
+
+class Renderer
+{
+public:
+	Renderer(Shape*, const GLenum& = DFLT_POLY_MODE);
+	virtual ~Renderer();
+	virtual void Render(const float* MVP);
+	virtual std::string VertexShaderPath();
+	virtual std::string FragmentShaderPath();
+	virtual void SetCustomUniforms();
+	virtual void SetAttribs();
+	virtual void Init();
+	virtual void Destroy();
+
+	void PolyMode(const GLenum&);
+	const GLenum& PolyMode() const;
+
+	void Color(const glm::vec4&);
+	const glm::vec4& Color() const;
+
+	static const GLenum DFLT_POLY_MODE;
+
+protected:
+	Shape* mShape;
+	ShaderProgram mShader;
+	GLenum mPolyMode;
+	glm::vec4 mColor;
+};
+
+#endif

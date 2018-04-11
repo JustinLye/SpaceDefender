@@ -20,13 +20,32 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\external\glad\src\glad.c" />
+    <ClCompile Include="..\..\..\src\engine\containers\ObjectManager.cc" />
+    <ClCompile Include="..\..\..\src\engine\objects\Collider.cc" />
+    <ClCompile Include="..\..\..\src\engine\objects\RenderableObject.cc" />
+    <ClCompile Include="..\..\..\src\engine\objects\Renderer.cc" />
+    <ClCompile Include="..\..\..\src\engine\shapes\Shape.cc" />
+    <ClCompile Include="..\..\..\src\engine\shapes\Circle.cc" />
+    <ClCompile Include="..\..\..\src\engine\shapes\Triangle.cc" />
     <ClCompile Include="..\..\..\src\engine\util\InitOpenGL.cc" />
     <ClCompile Include="..\..\..\src\engine\util\OpenGLOptions.cc" />
+    <ClCompile Include="..\..\..\src\engine\util\ShaderProgram.cc" />
     <ClCompile Include="..\..\..\src\game\main.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\engine\containers\ObjectManager.h" />
+    <ClInclude Include="..\..\..\include\engine\objects\Collider.h" />
+    <ClInclude Include="..\..\..\include\engine\objects\GameObject.h" />
+    <ClInclude Include="..\..\..\include\engine\objects\RenderableObject.h" />
+    <ClInclude Include="..\..\..\include\engine\objects\Renderer.h" />
+    <ClInclude Include="..\..\..\include\engine\objects\Transform.h" />
+    <ClInclude Include="..\..\..\include\engine\shapes\Shape.h" />
+    <ClInclude Include="..\..\..\include\engine\shapes\Circle.h" />
+    <ClInclude Include="..\..\..\include\engine\shapes\Triangle.h" />
+    <ClInclude Include="..\..\..\include\engine\util\Constants.h" />
     <ClInclude Include="..\..\..\include\engine\util\InitOpenGL.h" />
     <ClInclude Include="..\..\..\include\engine\util\OpenGLOptions.h" />
+    <ClInclude Include="..\..\..\include\engine\util\Paths.h" />
     <ClInclude Include="..\..\..\include\engine\util\ShaderProgram.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -86,7 +105,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SpaceDefender\external\stb;C:\SpaceDefender\external\glm;C:\SpaceDefender\external\glfw\include;C:\SpaceDefender\external\ft29\freetype-2.9\include;C:\SpaceDefender\external\glad\include;C:\SpaceDefender\external\Boost\include;C:\SpaceDefender\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external\stb;C:\SpaceDefender\external;C:\SpaceDefender\external\glfw\include;C:\SpaceDefender\external\ft29\freetype-2.9\include;C:\SpaceDefender\external\glad\include;C:\SpaceDefender\external\Boost\include;C:\SpaceDefender\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/DENGINE_DEBUG %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\SpaceDefender\external\glfw\lib-vc2015;C:\SpaceDefender\external\ft29\freetype-2.9\objs\Win32\Release Static;C:\SpaceDefender\external\Boost\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -99,7 +119,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SpaceDefender\external\stb;C:\SpaceDefender\external\glm;C:\SpaceDefender\external\glfw\include;C:\SpaceDefender\external\ft29\freetype-2.9\include;C:\SpaceDefender\external\glad\include;C:\SpaceDefender\external\Boost\include;C:\SpaceDefender\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external\stb;C:\SpaceDefender\external;C:\SpaceDefender\external\glfw\include;C:\SpaceDefender\external\ft29\freetype-2.9\include;C:\SpaceDefender\external\glad\include;C:\SpaceDefender\external\Boost\include;C:\SpaceDefender\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/DENGINE_DEBUG %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\SpaceDefender\external\glfw\lib-vc2015;C:\SpaceDefender\external\ft29\freetype-2.9\objs\Win32\Release Static;C:\SpaceDefender\external\Boost\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
