@@ -22,8 +22,12 @@
     <ClCompile Include="..\..\..\external\glad\src\glad.c" />
     <ClCompile Include="..\..\..\src\engine\containers\ObjectManager.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\Collider.cc" />
+    <ClCompile Include="..\..\..\src\engine\objects\GameObject.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\RenderableObject.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\Renderer.cc" />
+    <ClCompile Include="..\..\..\src\engine\objects\Transform.cc" />
+    <ClCompile Include="..\..\..\src\engine\shapes\LineSegment.cc" />
+    <ClCompile Include="..\..\..\src\engine\shapes\Quad.cc" />
     <ClCompile Include="..\..\..\src\engine\shapes\Shape.cc" />
     <ClCompile Include="..\..\..\src\engine\shapes\Circle.cc" />
     <ClCompile Include="..\..\..\src\engine\shapes\Triangle.cc" />
@@ -39,6 +43,8 @@
     <ClInclude Include="..\..\..\include\engine\objects\RenderableObject.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Renderer.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Transform.h" />
+    <ClInclude Include="..\..\..\include\engine\shapes\LineSegment.h" />
+    <ClInclude Include="..\..\..\include\engine\shapes\Quad.h" />
     <ClInclude Include="..\..\..\include\engine\shapes\Shape.h" />
     <ClInclude Include="..\..\..\include\engine\shapes\Circle.h" />
     <ClInclude Include="..\..\..\include\engine\shapes\Triangle.h" />

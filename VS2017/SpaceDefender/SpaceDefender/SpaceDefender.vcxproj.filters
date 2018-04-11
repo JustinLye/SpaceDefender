@@ -87,6 +87,18 @@
     <ClCompile Include="..\..\..\src\engine\shapes\Circle.cc">
       <Filter>src\engine\shapes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\shapes\LineSegment.cc">
+      <Filter>src\engine\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\objects\Transform.cc">
+      <Filter>src\engine\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\objects\GameObject.cc">
+      <Filter>src\engine\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\shapes\Quad.cc">
+      <Filter>src\engine\shapes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\engine\objects\Collider.h">
@@ -129,6 +141,12 @@
       <Filter>include\engine\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\engine\shapes\Circle.h">
+      <Filter>include\engine\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\shapes\LineSegment.h">
+      <Filter>include\engine\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\shapes\Quad.h">
       <Filter>include\engine\shapes</Filter>
     </ClInclude>
   </ItemGroup>

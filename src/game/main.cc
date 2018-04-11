@@ -1,19 +1,20 @@
 #ifdef ENGINE_DEBUG
 #define COLLISION_DEBUG
 #endif
+#include<chrono>
+#include<thread>
 #include<glm/glm.hpp>
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
 #include"engine/util/InitOpenGL.h"
 #include"engine/shapes/Triangle.h"
-#include"engine/shapes/Circle.h"
 #include"engine/objects/Renderer.h"
+#include"engine/objects/GameObject.h"
 
 #ifdef ENGINE_DEBUG
-Shape* triangle;
-Shape* circle;
+Triangle* triangle;
+GameObject* game_object;
 Renderer* renderer;
-Renderer* circle_renderer;
 #endif
 
 int main(int argc, char* argv[])
@@ -21,25 +22,38 @@ int main(int argc, char* argv[])
 	try
 	{
 		OpenGLOptions opts;
-		opts.mWindowResizable = GLFW_TRUE;
 		GLFWwindow* window = InitOpenGL::Initialize(opts);
 #ifdef ENGINE_DEBUG
+		namespace chrono = std::chrono;
 		triangle = new Triangle();
-		circle = new Circle();
-		renderer = new Renderer(triangle, GL_FILL);
-		circle_renderer = new Renderer(circle, GL_FILL);
-		circle_renderer->Color(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+		renderer = new Renderer(triangle);
+		game_object = new GameObject();
+		
+		float fixed_update_ms = Constants::Time::TARGET_FRAME_RATE_IN_MS;
+		glfwSetWindowAspectRatio(window, 64, 27);
+		glm::mat4 proj_mat = glm::perspective(glm::radians(45.0f), 64.0f / 27.0f, 0.001f, 1000.0f);
+		glm::vec3 cam_pos = glm::vec3(0.0f, 0.0f, 3.0f);
+		game_object->Scale(glm::vec3(0.10, 0.10f, 0.0f));
+		game_object->Translate(glm::vec3(-2.0f, 0.0f, 0.0f));
+
 #endif
 		while (!glfwWindowShouldClose(window))
 		{
 			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			glm::mat4 model = glm::scale(glm::mat4(1.0f), glm::vec3(0.25f, 0.25f, 0.0f));
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.8f));
-			renderer->Render(glm::value_ptr(model));
-			circle_renderer->Render(glm::value_ptr(glm::mat4(1.0f)));
+#ifdef ENGINE_DEBUG
+			auto start_time = chrono::high_resolution_clock::now();
+			game_object->Rotate(.0060f, glm::vec3(0.0f, 0.0f, 1.0f));
+			glm::mat4 view_mat = glm::lookAt(cam_pos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			renderer->Render(glm::value_ptr(proj_mat*view_mat*game_object->Model()));
+			
+#endif
 			glfwSwapBuffers(window);
 			glfwPollEvents();
+#ifdef ENGINE_DEBUG
+			chrono::duration<double, std::milli> elapsed = chrono::high_resolution_clock::now() - start_time;
+			std::this_thread::sleep_for(chrono::milliseconds((long)(fixed_update_ms - elapsed.count())));
+#endif
 		}
 		glfwTerminate();
 	}

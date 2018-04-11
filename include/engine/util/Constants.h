@@ -17,6 +17,14 @@ namespace Constants
 	{
 		const glm::vec4 DFLT_SHAPE_COLOR = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
+	namespace Geometry
+	{
+		const glm::mat4 IDENTITY_MATRIX = glm::mat4(1.0f);
+	}
+	namespace Time
+	{
+		const float TARGET_FRAME_RATE_IN_MS = 16.0f;
+	}
 };
 
 
