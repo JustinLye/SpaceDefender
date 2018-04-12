@@ -12,7 +12,7 @@
 class Renderer
 {
 public:
-	Renderer(const GLenum& = DFLT_POLY_MODE);
+	Renderer(ShaderProgram* = nullptr, const GLenum& = DFLT_POLY_MODE);
 	virtual ~Renderer();
 	virtual void Render(Shape*, const float*);
 	virtual std::string VertexShaderPath();
@@ -22,6 +22,7 @@ public:
 	virtual void Init();
 	virtual void Destroy();
 
+	virtual void Shader(ShaderProgram*);
 
 	void PolyMode(const GLenum&);
 	const GLenum& PolyMode() const;
@@ -33,7 +34,7 @@ public:
 
 protected:
 	
-	ShaderProgram mShader;
+	ShaderProgram* mShader;
 	GLenum mPolyMode;
 	glm::vec4 mColor;
 };

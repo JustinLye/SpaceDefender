@@ -7,7 +7,7 @@
 #include<sstream>
 #include<glad/glad.h>
 #include"engine/util/Paths.h"
-
+#include"engine/util/Constants.h"
 class ShaderProgram
 {
 public:
@@ -23,6 +23,7 @@ public:
 	void DeleteProgram();
 	void AutoFillUniformsFromString(const std::string&);
 	void AutoFillUniformsFromFile(const std::string&);
+	virtual void Init(); // This creates a default shader. Inherit and override if you wanna change that, or just don't use it
 	GLuint operator[](const std::string&);
 	GLuint operator()(const std::string&);
 	enum ShaderType : GLenum
