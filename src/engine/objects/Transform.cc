@@ -50,5 +50,5 @@ glm::mat4 Transform::Model()
 	glm::mat4 translation_matrix = glm::translate(Constants::Geometry::IDENTITY_MATRIX, mTransformData.mPosition);
 	glm::mat4 scale_matrix = glm::scale(Constants::Geometry::IDENTITY_MATRIX, mTransformData.mScale);
 	glm::mat4 rotation_matrix = glm::mat4_cast(mTransformData.mRotation);
-	return translation_matrix * rotation_matrix * scale_matrix;
+	return  translation_matrix * rotation_matrix * scale_matrix;
 }

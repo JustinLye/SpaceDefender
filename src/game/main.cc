@@ -33,10 +33,17 @@ int main(int argc, char* argv[])
 		game_object->AddShape(circle);
 		game_object->AddShape(triangle);
 		float fixed_update_ms = Constants::Time::TARGET_FRAME_RATE_IN_MS;
-		glm::mat4 proj_mat = glm::perspective(glm::radians(45.0f), 64.0f / 27.0f, 0.001f, 1000.0f);
+		glm::mat4 proj_mat = glm::ortho(0.0f, 2560.0f, 0.0f, 1080.0f, 0.1f, 100.0f);
+		//glm::mat4 proj_mat = glm::perspective(glm::radians(45.0f), 64.0f / 27.0f, 0.001f, 1000.0f);
 		glm::vec3 cam_pos = glm::vec3(0.0f, 0.0f, 3.0f);
-		game_object->Scale(glm::vec3(0.10, 0.10f, 0.0f));
+		game_object->Scale(glm::vec3(200.0f, 200.0f, 0.0f));
+		game_object->Translate(glm::vec3(1500.0f, 500.0f, 0.0f));
 		game_object->Translate(glm::vec3(-2.0f, 0.0f, 0.0f));
+		game_object->Translate(glm::vec3(0.0f, -0.025f, 0.0f), circle);
+		game_object->Scale(glm::vec3(1.15, 1.15f, 0.0f), circle);
+
+		
+		
 		auto loop_start_time = chrono::high_resolution_clock::now();
 #endif
 		while (!glfwWindowShouldClose(window))
@@ -46,6 +53,7 @@ int main(int argc, char* argv[])
 #ifdef ENGINE_DEBUG
 			auto start_time = chrono::high_resolution_clock::now();
 			game_object->Rotate(.0060f, glm::vec3(0.0f, 0.0f, 1.0f));
+			
 			glm::mat4 view_mat = glm::lookAt(cam_pos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 			game_object->Render(proj_mat, view_mat);
 #endif

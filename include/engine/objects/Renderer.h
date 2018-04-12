@@ -14,7 +14,7 @@ class Renderer
 public:
 	Renderer(const GLenum& = DFLT_POLY_MODE);
 	virtual ~Renderer();
-	virtual void Render(const float* MVP);
+	virtual void Render(Shape*, const float*);
 	virtual std::string VertexShaderPath();
 	virtual std::string FragmentShaderPath();
 	virtual void SetCustomUniforms();

@@ -2,6 +2,7 @@
 #define CONSTANTS_HEADER_INCLUDED
 #include<string>
 #include<glm/glm.hpp>
+
 namespace Constants
 {
 	namespace Shaders
