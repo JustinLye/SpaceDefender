@@ -17,6 +17,7 @@ public:
 	virtual void Translate(const glm::vec3&);
 	const glm::vec3& Position() const;
 	virtual void Rotate(const float&, const glm::vec3&);
+	virtual void Rotation(const glm::quat&);
 	const glm::quat& Rotation() const;
 	glm::mat4 Model();
 	

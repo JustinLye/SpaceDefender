@@ -35,6 +35,11 @@ void Transform::Rotate(const float& angle_degrees, const glm::vec3& rotation_axi
 	mTransformData.mRotation = glm::rotate(mTransformData.mRotation, angle_degrees, rotation_axis);
 }
 
+void Transform::Rotation(const glm::quat& copy_quat)
+{
+	mTransformData.mRotation = copy_quat;
+}
+
 const glm::quat& Transform::Rotation() const
 {
 	return mTransformData.mRotation;

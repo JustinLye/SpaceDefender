@@ -26,6 +26,29 @@ void GameObject::Render(const glm::mat4& projection_matrix, const glm::mat4& vie
 	}
 }
 
+void GameObject::AddShape(Shape* shape)
+{
+	auto shape_ptr = mShapeMap.find(shape);
+	if (shape_ptr == mShapeMap.end())
+	{
+		std::pair<Shape*, Transform> p(shape, Transform());
+		p.second.Translate(mTransformData.mPosition);
+		p.second.Scale(mTransformData.mScale);
+		p.second.Rotation(mTransformData.mRotation);
+		mShapeMap.insert(p);
+	}
+}
+
+void GameObject::RemoveShape(Shape* shape)
+{
+	auto shape_ptr = mShapeMap.find(shape);
+	if (shape_ptr != mShapeMap.end())
+	{
+		mShapeMap.erase(shape);
+	}
+}
+
+
 void GameObject::Update(const float& dt)
 {
 
@@ -53,4 +76,9 @@ const GLenum& GameObject::PolyMode() const
 	assert(mRenderer != nullptr);
 #endif
 	return mRenderer->PolyMode();
+}
+
+bool GameObject::operator()(const Shape* lhs, const Shape* rhs)
+{
+	return *lhs < *rhs;
 }

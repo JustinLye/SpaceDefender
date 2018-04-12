@@ -30,6 +30,21 @@ unsigned int Shape::GetVAO()
 	return mVaoId;
 }
 
+const unsigned int& Shape::GetVAO() const
+{
+	return mVaoId;
+}
+
+bool Shape::operator<(const Shape& other) const
+{
+	return mVaoId < other.GetVAO();
+}
+
+bool Shape::operator==(const Shape& other) const
+{
+	return mVaoId == other.GetVAO();
+}
+
 void Shape::Init()
 {
 	Buffer();

@@ -1,5 +1,6 @@
 #ifndef RENDERER_HEADER_INCLUDED
 #define RENDERER_HEADER_INCLUDED
+#include<map>
 #include<glad/glad.h>
 #include<glm/glm.hpp>
 #include<glm/gtc/type_ptr.hpp>
@@ -11,7 +12,7 @@
 class Renderer
 {
 public:
-	Renderer(Shape*, const GLenum& = DFLT_POLY_MODE);
+	Renderer(const GLenum& = DFLT_POLY_MODE);
 	virtual ~Renderer();
 	virtual void Render(const float* MVP);
 	virtual std::string VertexShaderPath();
@@ -20,6 +21,7 @@ public:
 	virtual void SetAttribs();
 	virtual void Init();
 	virtual void Destroy();
+
 
 	void PolyMode(const GLenum&);
 	const GLenum& PolyMode() const;
@@ -30,7 +32,7 @@ public:
 	static const GLenum DFLT_POLY_MODE;
 
 protected:
-	Shape* mShape;
+	
 	ShaderProgram mShader;
 	GLenum mPolyMode;
 	glm::vec4 mColor;

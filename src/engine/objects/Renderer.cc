@@ -2,8 +2,8 @@
 
 const GLenum Renderer::DFLT_POLY_MODE = GL_LINES;
 
-Renderer::Renderer(Shape* shape, const GLenum& poly_mode) :
-	mShape(shape),
+Renderer::Renderer(const GLenum& poly_mode) :
+	mShapeMap(std::map<unsigned int, Shape*>()),
 	mShader(ShaderProgram()),
 	mPolyMode(poly_mode),
 	mColor(Constants::Rendering::DFLT_SHAPE_COLOR)
@@ -19,15 +19,18 @@ Renderer::~Renderer()
 void Renderer::Render(const float* MVP)
 {
 	mShader.Use();
-	glBindVertexArray(mShape->GetVAO());
-	glUniformMatrix4fv(mShader(Constants::Shaders::DFLT_MVP_UNIFORM_NAME), 1, GL_FALSE, MVP);
-	SetCustomUniforms();
-	GLint prev_poly_mode;
-	glGetIntegerv(GL_POLYGON_MODE, &prev_poly_mode);
-	glPolygonMode(GL_FRONT_AND_BACK, mPolyMode);
-	mShape->Draw();
-	glBindVertexArray(0);
-	glPolygonMode(GL_FRONT_AND_BACK, prev_poly_mode);
+	for (auto shape : mShapeMap)
+	{
+		glBindVertexArray(shape.first);
+		glUniformMatrix4fv(mShader(Constants::Shaders::DFLT_MVP_UNIFORM_NAME), 1, GL_FALSE, MVP);
+		SetCustomUniforms();
+		GLint prev_poly_mode;
+		glGetIntegerv(GL_POLYGON_MODE, &prev_poly_mode);
+		glPolygonMode(GL_FRONT_AND_BACK, mPolyMode);
+		shape.second->Draw();
+		glBindVertexArray(0);
+		glPolygonMode(GL_FRONT_AND_BACK, prev_poly_mode);
+	}
 	mShader.UnUse();
 
 }
@@ -44,7 +47,7 @@ std::string Renderer::FragmentShaderPath()
 
 void Renderer::SetCustomUniforms()
 {
-	glUniform4fv(mShader(Constants::Shaders::DFLT_COLOR_UNIFORM_NAME), 1, glm::value_ptr(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)));
+	glUniform4fv(mShader(Constants::Shaders::DFLT_COLOR_UNIFORM_NAME), 1, glm::value_ptr(mColor));
 }
 
 void Renderer::SetAttribs()
@@ -71,6 +74,8 @@ void Renderer::Destroy()
 {
 	mShader.DeleteProgram();
 }
+
+
 
 void Renderer::PolyMode(const GLenum& poly_mode)
 {

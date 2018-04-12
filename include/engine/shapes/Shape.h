@@ -14,7 +14,11 @@ public:
 	virtual ~Shape();
 	virtual void Draw();
 	unsigned int GetVAO();
+	const unsigned int& GetVAO() const;
 	
+	bool operator<(const Shape&) const;
+	bool operator==(const Shape&) const;
+
 protected:
 	virtual unsigned int VertCount() = 0;
 	virtual unsigned int IndexCount() = 0;
