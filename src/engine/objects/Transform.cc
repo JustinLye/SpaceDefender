@@ -5,12 +5,18 @@ Transform::Transform()
 
 }
 
+Transform::Transform(const Transform& other) :
+	mTransformData(other.mTransformData)
+{
+
+}
+
 Transform::~Transform()
 {
 
 }
 
-void Transform::Scale(const glm::vec3& scale)
+void Transform::Scale(const float& scale)
 {
 	mTransformData.mScale *= scale;
 }
@@ -51,4 +57,41 @@ glm::mat4 Transform::Model()
 	glm::mat4 scale_matrix = glm::scale(Constants::Geometry::IDENTITY_MATRIX, mTransformData.mScale);
 	glm::mat4 rotation_matrix = glm::mat4_cast(mTransformData.mRotation);
 	return  translation_matrix * rotation_matrix * scale_matrix;
+}
+
+Transform& Transform::operator=(const Transform& other)
+{
+	this->mTransformData = other.mTransformData;
+	return *this;
+}
+
+bool Transform::operator<(const Transform& other) const
+{
+	if (mTransformData.mPosition.x < other.Position().x)
+	{
+		return true;
+	}
+	else if (mTransformData.mPosition.x > other.Position().x)
+	{
+		return false;
+	}
+	if (mTransformData.mPosition.y < other.Position().y)
+	{
+		return true;
+	}
+	else if (mTransformData.mPosition.y > other.Position().y)
+	{
+		return false;
+	}
+
+	if (mTransformData.mPosition.z < other.Position().z)
+	{
+		return true;
+	}
+	else if (mTransformData.mPosition.z > other.Position().z)
+	{
+		return false;
+	}
+
+	return false;
 }

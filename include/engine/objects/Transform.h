@@ -10,9 +10,10 @@ class Transform
 {
 public:
 	Transform();
+	Transform(const Transform&);
 	virtual ~Transform();
 
-	virtual void Scale(const glm::vec3&);
+	virtual void Scale(const float&);
 	const glm::vec3& Scale() const;
 	virtual void Translate(const glm::vec3&);
 	const glm::vec3& Position() const;
@@ -21,6 +22,8 @@ public:
 	const glm::quat& Rotation() const;
 	glm::mat4 Model();
 	
+	Transform& operator =(const Transform&);
+	bool operator<(const Transform&) const;
 protected:
 	TransformData mTransformData;
 	glm::mat4 mModel;

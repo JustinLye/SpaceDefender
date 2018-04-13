@@ -39,11 +39,11 @@ int main(int argc, char* argv[])
 		glm::mat4 proj_mat = glm::ortho(0.0f, 2560.0f, 0.0f, 1080.0f, 0.1f, 100.0f);
 		//glm::mat4 proj_mat = glm::perspective(glm::radians(45.0f), 64.0f / 27.0f, 0.001f, 1000.0f);
 		glm::vec3 cam_pos = glm::vec3(0.0f, 0.0f, 3.0f);
-		game_object->Scale(glm::vec3(200.0f, 200.0f, 0.0f));
+		game_object->Scale(200.0f);
 		game_object->Translate(glm::vec3(1500.0f, 500.0f, 0.0f));
 		game_object->Translate(glm::vec3(-2.0f, 0.0f, 0.0f));
 		game_object->Translate(glm::vec3(0.0f, -0.025f, 0.0f), circle);
-		game_object->Scale(glm::vec3(1.15, 1.15f, 0.0f), circle);
+		game_object->Scale(1.15f, circle);
 
 		
 		

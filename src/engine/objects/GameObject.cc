@@ -43,7 +43,7 @@ void GameObject::AddShape(Shape* shape)
 	{
 		std::pair<Shape*, Transform> p(shape, Transform());
 		p.second.Translate(mTransform.Position());
-		p.second.Scale(mTransform.Scale());
+		p.second.Scale(mTransform.Scale().x);
 		p.second.Rotation(mTransform.Rotation());
 		mShapeMap.insert(p);
 	}
@@ -71,107 +71,137 @@ void GameObject::AddRenderer(std::unique_ptr<Renderer> renderer)
 	mRenderer = std::move(renderer);
 }
 
-void GameObject::Scale(const glm::vec3& scale, Shape* shape)
+// SCALING OPS
+
+void GameObject::Scale(const float& scale)
 {
-	if (!shape)
-	{
-		mTransform.Scale(scale);
-		std::map<Shape*, Transform, CompareShapePtr>::iterator shape_ptr = mShapeMap.begin();
-		while (shape_ptr != mShapeMap.end())
-		{
-			shape_ptr->second.Scale(scale);
-			++shape_ptr;
-		}
-	}
-	else
-	{
-		GetShape(shape)->second.Scale(scale);
-	}
+	mTransform.Scale(scale);
+	ScaleShapes(scale);
+	ScaleColliders(scale);
+}
+
+void GameObject::Scale(const float& scale, Shape* shape)
+{
+	GetShape(shape)->second.Scale(scale);
+}
+
+void GameObject::Scale(const float& scale, Collider* collider)
+{
+	GetCollider(collider)->second->Scale(scale);
+}
+
+const glm::vec3& GameObject::Scale() const
+{
+	return mTransform.Scale();
 }
 
 const glm::vec3& GameObject::Scale(Shape* shape) const
 {
-	if (shape)
-	{
-		return GetShape(shape)->second.Scale();
-	}
-	return mTransform.Scale();
+	return GetShape(shape)->second.Scale();
+}
+
+const glm::vec3& GameObject::Scale(Collider* collider) const
+{
+	return GetCollider(collider)->second->Scale();
+}
+
+// TRANSLATE OPS
+void GameObject::Translate(const glm::vec3& translation)
+{
+	mTransform.Translate(translation);
+	TranslateShapes(translation);
+	TranslateColliders(translation);
 }
 
 void GameObject::Translate(const glm::vec3& translation, Shape* shape) 
 {
+	GetShape(shape)->second.Translate(translation);
+}
 
-	if (!shape)
-	{
-		mTransform.Translate(translation);
-		std::map<Shape*, Transform, CompareShapePtr>::iterator shape_ptr = mShapeMap.begin();
-		while (shape_ptr != mShapeMap.end())
-		{
-			shape_ptr->second.Translate(translation);
-			++shape_ptr;
-		}
-	}
-	else
-	{
-		GetShape(shape)->second.Translate(translation);
-	}
+void GameObject::Translate(const glm::vec3& translation, Collider* collider)
+{
+	GetCollider(collider)->second->Translate(translation);
+}
+
+const glm::vec3& GameObject::Position() const
+{
+	return mTransform.Position();
 }
 
 const glm::vec3& GameObject::Position(Shape* shape) const
 {
-	if (shape)
-	{
-		return GetShape(shape)->second.Position();
-	}
-	return mTransform.Position();
+	return GetShape(shape)->second.Position();
+}
+
+const glm::vec3& GameObject::Position(Collider* collider) const
+{
+	return GetCollider(collider)->second->Position();
+}
+
+// ROTATION OPS
+
+void GameObject::Rotate(const float& angle_degrees, const glm::vec3& rotation_axis)
+{
+	mTransform.Rotate(angle_degrees, rotation_axis);
+	RotateShapes(angle_degrees, rotation_axis);
+	RotateColliders(angle_degrees, rotation_axis);
 }
 
 void GameObject::Rotate(const float& angle_degrees, const glm::vec3& rotation_axis, Shape* shape)
 {
-	if (!shape)
-	{
-		mTransform.Rotate(angle_degrees, rotation_axis);
-		std::map<Shape*, Transform, CompareShapePtr>::iterator shape_ptr = mShapeMap.begin();
-		while (shape_ptr != mShapeMap.end())
-		{
-			shape_ptr->second.Rotate(angle_degrees, rotation_axis);
-			++shape_ptr;
-		}
-	}
-	else
-	{
-		GetShape(shape)->second.Rotate(angle_degrees, rotation_axis);
-	}
+	GetShape(shape)->second.Rotate(angle_degrees, rotation_axis);
+}
+
+void GameObject::Rotate(const float& angle_degrees, const glm::vec3& rotation_axis, Collider* collider)
+{
+	GetCollider(collider)->second->Rotate(angle_degrees, rotation_axis);
+}
+
+void GameObject::Rotation(const glm::quat& copy_quat)
+{
+	mTransform.Rotation(copy_quat);
+	RotationShapes(copy_quat);
+	RotationColliders(copy_quat);
 }
 
 void GameObject::Rotation(const glm::quat& copy_quat, Shape* shape)
 {
-	if (shape)
-	{
-		GetShape(shape)->second.Rotation(copy_quat);
-	}
-	else
-	{
-		mTransform.Rotation(copy_quat);
-	}
+	GetShape(shape)->second.Rotation(copy_quat);
+}
+
+void GameObject::Rotation(const glm::quat& copy_quat, Collider* collider)
+{
+	GetCollider(collider)->second->Rotation(copy_quat);
+}
+
+const glm::quat& GameObject::Rotation() const
+{
+	return mTransform.Rotation();
 }
 
 const glm::quat& GameObject::Rotation(Shape* shape) const
 {
-	if (shape)
-	{
-		return GetShape(shape)->second.Rotation();
-	}
-	return mTransform.Rotation();
+	return GetShape(shape)->second.Rotation();
+}
+
+const glm::quat& GameObject::Rotation(Collider* collider) const
+{
+	return GetCollider(collider)->second->Rotation();
+}
+
+glm::mat4 GameObject::Model()
+{
+	return mTransform.Model();
 }
 
 glm::mat4 GameObject::Model(Shape* shape)
 {
-	if (shape)
-	{
-		return GetShape(shape)->second.Model();
-	}
-	return mTransform.Model();
+	return GetShape(shape)->second.Model();
+}
+
+glm::mat4 GameObject::Model(Collider* collider)
+{
+	return GetCollider(collider)->second->Model();
 }
 
 void GameObject::PolyMode(const GLenum& poly_mode)
@@ -188,6 +218,99 @@ const GLenum& GameObject::PolyMode() const
 	assert(mRenderer != nullptr);
 #endif
 	return mRenderer->PolyMode();
+}
+
+void GameObject::AddCollider(Collider* collider)
+{
+	if (!ColliderIsMapped(collider))
+	{
+		mColliderMap.insert({ collider, collider });
+	}
+}
+
+void GameObject::RemoveCollider(Collider* collider)
+{
+	mColliderMap.erase(collider);
+}
+
+void GameObject::ScaleShapes(const float& scale)
+{
+	std::map<Shape*, Transform, CompareShapePtr>::iterator iter = mShapeMap.begin();
+	while (iter != mShapeMap.end())
+	{
+		iter->second.Scale(scale);
+		++iter;
+	}
+}
+
+void GameObject::ScaleColliders(const float& scale)
+{
+	std::map<Collider*, Collider*, CompareTransPtr>::iterator iter = mColliderMap.begin();
+	while (iter != mColliderMap.end())
+	{
+		iter->second->Scale(scale);
+		++iter;
+	}
+}
+
+void GameObject::TranslateShapes(const glm::vec3& translation)
+{
+	std::map<Shape*, Transform, CompareShapePtr>::iterator iter = mShapeMap.begin();
+	while (iter != mShapeMap.end())
+	{
+		iter->second.Translate(translation);
+		++iter;
+	}
+}
+
+void GameObject::TranslateColliders(const glm::vec3& translation)
+{
+	std::map<Collider*, Collider*, CompareTransPtr>::iterator iter = mColliderMap.begin();
+	while (iter != mColliderMap.end())
+	{
+		iter->second->Translate(translation);
+		++iter;
+	}
+}
+
+void GameObject::RotateShapes(const float& angle_degrees, const glm::vec3& rotation_axis)
+{
+	std::map<Shape*, Transform, CompareShapePtr>::iterator iter = mShapeMap.begin();
+	while (iter != mShapeMap.end())
+	{
+		iter->second.Rotate(angle_degrees, rotation_axis);
+		++iter;
+	}
+}
+
+void GameObject::RotateColliders(const float& angle_degrees, const glm::vec3& rotation_axis)
+{
+	std::map<Collider*, Collider*, CompareTransPtr>::iterator iter = mColliderMap.begin();
+	while (iter != mColliderMap.end())
+	{
+		iter->second->Rotate(angle_degrees, rotation_axis);
+		++iter;
+	}
+}
+
+void GameObject::RotationShapes(const glm::quat& rotation)
+{
+	std::map<Shape*, Transform, CompareShapePtr>::iterator iter = mShapeMap.begin();
+	while (iter != mShapeMap.end())
+	{
+		iter->second.Rotation(rotation);
+		++iter;
+	}
+}
+
+void GameObject::RotationColliders(const glm::quat& rotation)
+{
+	std::map<Collider*, Collider*, CompareTransPtr>::iterator iter = mColliderMap.begin();
+	while (iter != mColliderMap.end())
+	{
+		iter->second->Rotation(rotation);
+		++iter;
+	}
 }
 
 std::map<Shape*, Transform, GameObject::CompareShapePtr>::iterator GameObject::GetShape(Shape* shape)
@@ -208,14 +331,32 @@ std::map<Shape*, Transform, GameObject::CompareShapePtr>::const_iterator GameObj
 	return result;
 }
 
-bool GameObject::ShapeIsMapped(Shape* shape)
+std::map<Collider*, Collider*, GameObject::CompareTransPtr>::iterator GameObject::GetCollider(Collider* collider)
 {
-	return (mShapeMap.find(shape) != mShapeMap.end());
+	auto result = mColliderMap.find(collider);
+#ifdef ENGINE_DEBUG
+	assert(result != mColliderMap.end());
+#endif
+	return result;
 }
 
-bool GameObject::operator()(const Shape* lhs, const Shape* rhs)
+std::map<Collider*, Collider*, GameObject::CompareTransPtr>::const_iterator GameObject::GetCollider(Collider* collider) const
 {
-	return *lhs < *rhs;
+	auto result = mColliderMap.find(collider);
+#ifdef ENGINE_DEBUG
+	assert(result != mColliderMap.cend());
+#endif
+	return result;
+}
+
+bool GameObject::ShapeIsMapped(Shape* shape) const
+{
+	return (mShapeMap.find(shape) != mShapeMap.cend());
+}
+
+bool GameObject::ColliderIsMapped(Collider* collider) const
+{
+	return (mColliderMap.find(collider) != mColliderMap.cend());
 }
 
 
