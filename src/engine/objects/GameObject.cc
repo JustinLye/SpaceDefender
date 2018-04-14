@@ -20,6 +20,7 @@ void GameObject::Render(const glm::mat4& projection_matrix, const glm::mat4& vie
 	{
 		if (shape == nullptr) /* if individual shape not specified, then render all shapes */
 		{
+
 			for (auto shape_ptr : mShapeMap)
 			{
 				mRenderer->Render(shape_ptr.first, glm::value_ptr(projection_matrix*view_matrix*shape_ptr.second.Model()));
@@ -189,6 +190,40 @@ const glm::quat& GameObject::Rotation(Collider* collider) const
 	return GetCollider(collider)->second->Rotation();
 }
 
+// OFFSET OPS
+
+void GameObject::Offset(const glm::vec3& offset_vec)
+{
+	mTransform.Offset(offset_vec);
+	OffsetShapes(offset_vec);
+	OffsetColliders(offset_vec);
+}
+
+void GameObject::Offset(const glm::vec3& offset_vec, Shape* shape_ptr)
+{
+	GetShape(shape_ptr)->second.Offset(offset_vec);
+}
+
+void GameObject::Offset(const glm::vec3& offset_vec, Collider* collider_ptr)
+{
+	GetCollider(collider_ptr)->second->Offset(offset_vec);
+}
+
+const glm::vec3& GameObject::Offset() const
+{
+	return mTransform.Offset();
+}
+
+const glm::vec3& GameObject::Offset(Shape* shape_ptr) const
+{
+	return GetShape(shape_ptr)->second.Offset();
+}
+
+const glm::vec3& GameObject::Offset(Collider* collider_ptr) const
+{
+	return GetCollider(collider_ptr)->second->Offset();
+}
+
 glm::mat4 GameObject::Model()
 {
 	return mTransform.Model();
@@ -313,6 +348,26 @@ void GameObject::RotationColliders(const glm::quat& rotation)
 	}
 }
 
+void GameObject::OffsetShapes(const glm::vec3& offset_vec)
+{
+	std::map<Shape*, Transform, CompareShapePtr>::iterator iter = mShapeMap.begin();
+	while (iter != mShapeMap.end())
+	{
+		iter->second.Offset(offset_vec);
+		++iter;
+	}
+}
+
+void GameObject::OffsetColliders(const glm::vec3& offset_vec)
+{
+	std::map<Collider*, Collider*, CompareTransPtr>::iterator iter = mColliderMap.begin();
+	while (iter != mColliderMap.end())
+	{
+		iter->second->Offset(offset_vec);
+		++iter;
+	}
+}
+
 std::map<Shape*, Transform, GameObject::CompareShapePtr>::iterator GameObject::GetShape(Shape* shape)
 {
 	auto result = mShapeMap.find(shape);
@@ -358,7 +413,3 @@ bool GameObject::ColliderIsMapped(Collider* collider) const
 {
 	return (mColliderMap.find(collider) != mColliderMap.cend());
 }
-
-
-
-

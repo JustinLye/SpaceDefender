@@ -4,7 +4,7 @@
 #include<iostream>
 #endif
 #include<glm/glm.hpp>
-#include"engine/shapes/Circle.h"
+#include"engine/shapes/CircleData.h"
 #include"engine/objects/Transform.h"
 class Collider :
 	public Transform

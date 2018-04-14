@@ -1,11 +1,11 @@
 #ifndef	SHAPE_HEADER_INCLUDED
 #define SHAPE_HEADER_INCLUDED
-
+#ifdef ENGINE_DEBUG
+#include<iostream>
+#endif
 #include<memory>
-#include<glm/glm.hpp>
-#include<glad/glad.h>
-
 #include"engine/util/Constants.h"
+#include"engine/shapes/ShapeData.h"
 
 class Shape
 {
@@ -15,24 +15,17 @@ public:
 	virtual void Draw();
 	unsigned int GetVAO();
 	const unsigned int& GetVAO() const;
-	
+	virtual void ShapeDataPtr(ShapeData*);
+	virtual void Buffer(ShapeData* = nullptr);
 	bool operator<(const Shape&) const;
 	bool operator==(const Shape&) const;
 
 protected:
-	virtual unsigned int VertCount() = 0;
-	virtual unsigned int IndexCount() = 0;
-	virtual GLenum PrimType() = 0;
-	virtual void FillVertices(GLfloat*) = 0;
-	virtual void FillIndices(GLuint*) = 0;
-
-	virtual void Init();
-	virtual void Buffer();
-	virtual void Destroy();
-	
+	ShapeData* mShapeData;
 	GLuint mVaoId;
 	GLuint mVerticesVboId;
 	GLuint mIndicesVboId;
+	virtual void Destroy();
 };
 
 #endif

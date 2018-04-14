@@ -10,6 +10,7 @@ struct TransformData
 	glm::vec3 mScale;
 	glm::vec3 mPosition;
 	glm::quat mRotation;
+	glm::vec3 mOffset;
 };
 
 #endif

@@ -29,6 +29,7 @@ const glm::vec3& Transform::Scale() const
 void Transform::Translate(const glm::vec3& translation_vec)
 {
 	mTransformData.mPosition += translation_vec;
+	//mTransformData.mOffset += translation_vec;
 }
 
 const glm::vec3& Transform::Position() const
@@ -51,12 +52,24 @@ const glm::quat& Transform::Rotation() const
 	return mTransformData.mRotation;
 }
 
+void Transform::Offset(const glm::vec3& offset_vec)
+{
+	mTransformData.mOffset += offset_vec;
+}
+
+const glm::vec3& Transform::Offset() const
+{
+	return mTransformData.mOffset;
+}
+
 glm::mat4 Transform::Model()
 {
 	glm::mat4 translation_matrix = glm::translate(Constants::Geometry::IDENTITY_MATRIX, mTransformData.mPosition);
+	glm::mat4 offset_matrix = glm::translate(Constants::Geometry::IDENTITY_MATRIX, mTransformData.mOffset);
 	glm::mat4 scale_matrix = glm::scale(Constants::Geometry::IDENTITY_MATRIX, mTransformData.mScale);
 	glm::mat4 rotation_matrix = glm::mat4_cast(mTransformData.mRotation);
-	return  translation_matrix * rotation_matrix * scale_matrix;
+	return  translation_matrix * rotation_matrix * offset_matrix * scale_matrix;
+	//return  translation_matrix * rotation_matrix * scale_matrix;
 }
 
 Transform& Transform::operator=(const Transform& other)

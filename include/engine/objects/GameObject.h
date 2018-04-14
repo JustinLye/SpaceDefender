@@ -5,6 +5,10 @@
 #include"engine/objects/Renderer.h"
 #include"engine/objects/Collider.h"
 
+#ifdef ENGINE_DEBUG
+#include"engine/util/DebugFunctions.h"
+#endif
+
 class GameObject
 {
 public:
@@ -36,6 +40,12 @@ public:
 	const glm::quat& Rotation() const;
 	const glm::quat& Rotation(Shape*) const;
 	const glm::quat& Rotation(Collider*) const;
+	virtual void Offset(const glm::vec3&);
+	virtual void Offset(const glm::vec3&, Shape*);
+	virtual void Offset(const glm::vec3&, Collider*);
+	const glm::vec3& Offset() const;
+	const glm::vec3& Offset(Shape*) const;
+	const glm::vec3& Offset(Collider*) const;
 	 glm::mat4 Model();
 	 glm::mat4 Model(Shape*);
 	 glm::mat4 Model(Collider*);
@@ -82,6 +92,8 @@ protected:
 	virtual void RotateColliders(const float&, const glm::vec3&);
 	virtual void RotationShapes(const glm::quat&);
 	virtual void RotationColliders(const glm::quat&);
+	virtual void OffsetShapes(const glm::vec3&);
+	virtual void OffsetColliders(const glm::vec3&);
 	std::map<Shape*, Transform, CompareShapePtr>::iterator GetShape(Shape*);
 	std::map<Shape*, Transform, CompareShapePtr>::const_iterator GetShape(Shape*) const;
 	std::map<Collider*, Collider*, CompareTransPtr>::iterator GetCollider(Collider*);
