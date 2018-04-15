@@ -54,9 +54,6 @@
     <ClCompile Include="..\..\..\src\engine\objects\Collider.cc">
       <Filter>src\engine\objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\engine\util\InitOpenGL.cc">
-      <Filter>src\engine\util</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\engine\containers\ObjectManager.cc">
       <Filter>src\engine\containers</Filter>
     </ClCompile>
@@ -108,13 +105,22 @@
     <ClCompile Include="..\..\..\src\engine\util\DebugFunctions.cc">
       <Filter>src\engine\util</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\game\Player.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\util\OpenGLUtility.cc">
+      <Filter>src\engine\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\game\LaserCannon.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\game\Laser.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\engine\objects\Collider.h">
       <Filter>include\engine\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\engine\util\InitOpenGL.h">
-      <Filter>include\engine\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\engine\containers\ObjectManager.h">
       <Filter>include\engine\containers</Filter>
@@ -166,6 +172,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\engine\util\DebugFunctions.h">
       <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\Player.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\util\BoundryBox.h">
+      <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\util\OpenGLUtility.h">
+      <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\LaserCannon.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\Laser.h">
+      <Filter>include\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

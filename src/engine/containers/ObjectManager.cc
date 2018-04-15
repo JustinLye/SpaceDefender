@@ -16,15 +16,23 @@ ObjectManager<T>::~ObjectManager()
 }
 
 template<class T>
+unsigned int ObjectManager<T>::ActiveObjectCount() const
+{
+	return mActiveIndices.size();
+}
+
+template<class T>
 void ObjectManager<T>::Init()
 {
+	CustomInitOps();
 	mMaxCapacity = MaxCapacity();
 	mMaxActiveCapacity = MaxActiveCapacity();
 	mObjects = new T*[mMaxCapacity];
-	for (int i = 0; i < mMaxCapacity)
+	for (int i = 0; i < mMaxCapacity; ++i)
 	{
-		mObjects[i] = new T();
+		mObjects[i] = ConstructObject();
 		mIndexQueue.push(i);
+		std::cout << mIndexQueue.size() << '\n';
 	}
 }
 
@@ -57,12 +65,12 @@ void ObjectManager<T>::Update(const float& dt)
 }
 
 template<class T>
-void ObjectManager<T>::Render()
+void ObjectManager<T>::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 {
 	std::list<unsigned int>::iterator iter = mActiveIndices.begin();
 	while (iter != mActiveIndices.end())
 	{
-		mObjects[*iter]->Render();
+		mObjects[*iter]->Render(proj_mat, view_mat);
 		++iter;
 	}
 }
@@ -75,7 +83,8 @@ unsigned int ObjectManager<T>::Alloc()
 	{
 		result = mIndexQueue.front();
 		mIndexQueue.pop();
-		CustomerAllocOps(result);
+		CustomAllocOps(result);
+		mActiveIndices.push_back(result);
 	}
 	return result;
 }
@@ -83,6 +92,12 @@ unsigned int ObjectManager<T>::Alloc()
 
 template<class T>
 void ObjectManager<T>::CustomAllocOps(const unsigned int& index)
+{
+
+}
+
+template<class T>
+void ObjectManager<T>::CustomInitOps()
 {
 
 }

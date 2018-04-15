@@ -13,6 +13,8 @@ namespace Constants
 		const std::string DFLT_COLOR_UNIFORM_NAME = "Color";
 		const std::string DFLT_VERTEX_ATTRIB_NAME = "vVertex";
 		const std::string DFLT_MVP_UNIFORM_NAME = "MVP";
+		const std::string LASER_VERTEX_SHADER_NAME = "position.vert";
+		const std::string LASER_FRAGMENT_SHADER_NAME = "unicolor.frag";
 	}
 	namespace Rendering
 	{
@@ -25,6 +27,14 @@ namespace Constants
 	namespace Time
 	{
 		const float TARGET_FRAME_RATE_IN_MS = 16.0f;
+	}
+	namespace Movement
+	{
+		enum DIRECTION : unsigned int
+		{
+			LEFT,
+			RIGHT
+		};
 	}
 };
 

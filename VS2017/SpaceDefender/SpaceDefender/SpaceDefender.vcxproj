@@ -34,10 +34,13 @@
     <ClCompile Include="..\..\..\src\engine\shapes\ShapeData.cc" />
     <ClCompile Include="..\..\..\src\engine\shapes\TriangleData.cc" />
     <ClCompile Include="..\..\..\src\engine\util\DebugFunctions.cc" />
-    <ClCompile Include="..\..\..\src\engine\util\InitOpenGL.cc" />
+    <ClCompile Include="..\..\..\src\engine\util\OpenGLUtility.cc" />
     <ClCompile Include="..\..\..\src\engine\util\OpenGLOptions.cc" />
     <ClCompile Include="..\..\..\src\engine\util\ShaderProgram.cc" />
+    <ClCompile Include="..\..\..\src\game\Laser.cc" />
+    <ClCompile Include="..\..\..\src\game\LaserCannon.cc" />
     <ClCompile Include="..\..\..\src\game\main.cc" />
+    <ClCompile Include="..\..\..\src\game\Player.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\engine\containers\ObjectManager.h" />
@@ -53,12 +56,16 @@
     <ClInclude Include="..\..\..\include\engine\shapes\Shape.h" />
     <ClInclude Include="..\..\..\include\engine\shapes\ShapeData.h" />
     <ClInclude Include="..\..\..\include\engine\shapes\TriangleData.h" />
+    <ClInclude Include="..\..\..\include\engine\util\BoundryBox.h" />
     <ClInclude Include="..\..\..\include\engine\util\Constants.h" />
     <ClInclude Include="..\..\..\include\engine\util\DebugFunctions.h" />
-    <ClInclude Include="..\..\..\include\engine\util\InitOpenGL.h" />
+    <ClInclude Include="..\..\..\include\engine\util\OpenGLUtility.h" />
     <ClInclude Include="..\..\..\include\engine\util\OpenGLOptions.h" />
     <ClInclude Include="..\..\..\include\engine\util\Paths.h" />
     <ClInclude Include="..\..\..\include\engine\util\ShaderProgram.h" />
+    <ClInclude Include="..\..\..\include\game\Laser.h" />
+    <ClInclude Include="..\..\..\include\game\LaserCannon.h" />
+    <ClInclude Include="..\..\..\include\game\Player.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

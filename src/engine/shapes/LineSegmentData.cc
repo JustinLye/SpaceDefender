@@ -22,7 +22,7 @@ unsigned int LineSegmentData::IndexCount()
 
 GLenum LineSegmentData::PrimType()
 {
-	return GL_LINE;
+	return GL_LINE_STRIP;
 }
 
 void LineSegmentData::InitializeData()

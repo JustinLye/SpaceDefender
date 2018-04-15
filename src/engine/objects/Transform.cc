@@ -72,6 +72,14 @@ glm::mat4 Transform::Model()
 	//return  translation_matrix * rotation_matrix * scale_matrix;
 }
 
+void Transform::Match(const Transform& other)
+{
+	mTransformData.mPosition = other.Position();
+	mTransformData.mRotation = other.Rotation();
+	mTransformData.mScale = other.Scale();
+	mTransformData.mOffset = other.Offset();
+}
+
 Transform& Transform::operator=(const Transform& other)
 {
 	this->mTransformData = other.mTransformData;
@@ -107,4 +115,18 @@ bool Transform::operator<(const Transform& other) const
 	}
 
 	return false;
+}
+
+std::ostream& operator<<(std::ostream& out, const Transform& transform)
+{
+	transform.Output(out);
+	return out;
+}
+
+void Transform::Output(std::ostream& out) const
+{
+	out << "pos: [" << mTransformData.mPosition.x << ", " << mTransformData.mPosition.y << ", " << mTransformData.mPosition.z << "]";
+	out << "\tscale: [" << mTransformData.mScale.x << ", " << mTransformData.mScale.y << ", " << mTransformData.mScale.z << "]";
+	out << "\toffset: [" << mTransformData.mOffset.x << ", " << mTransformData.mOffset.y << ", " << mTransformData.mOffset.z << "]";
+	out << "\trotation: [" << mTransformData.mRotation.x << ", " << mTransformData.mRotation.y << ", " << mTransformData.mRotation.z << ", " << mTransformData.mRotation.w << "]\n";
 }

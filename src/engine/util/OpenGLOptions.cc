@@ -12,6 +12,7 @@ const int OpenGLOptions::DEFAULT_WINDOW_DECORATED = GLFW_FALSE;
 const int OpenGLOptions::DEFAULT_WINDOW_MAXIMIZED = GLFW_TRUE;
 void(*OpenGLOptions::DEFAULT_KEYCB)(GLFWwindow*, int, int, int, int) = nullptr;
 const int OpenGLOptions::DEFAULT_USE_NATIVE_ASPECT_RATIO = GLFW_TRUE;
+const GLFWmonitor* OpenGLOptions::DEFAULT_MONITOR = nullptr;
 
 /////////////////////////////////////////////////////////////
 ///\ fn OpenGLOptions::OpenGLOptions()
@@ -31,7 +32,8 @@ OpenGLOptions::OpenGLOptions() :
 	mWindowDecorated(DEFAULT_WINDOW_DECORATED),
 	mWindowMaximized(DEFAULT_WINDOW_MAXIMIZED),
 	mKeyCB(DEFAULT_KEYCB),
-	mUseNativeAspectRatio(DEFAULT_USE_NATIVE_ASPECT_RATIO)
+	mUseNativeAspectRatio(DEFAULT_USE_NATIVE_ASPECT_RATIO),
+	mMonitor(nullptr)
 {
 
 }

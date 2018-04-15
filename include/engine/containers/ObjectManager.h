@@ -1,9 +1,12 @@
 #ifndef OBJECT_MANAGER_HEADER_INCLUDED
 #define OBJECT_MANAGER_HEADER_INCLUDED
-
+#ifdef ENGINE_DEBUG
+#include<iostream>
+#endif
 #include<queue>
 #include<list>
-
+#include<glm/glm.hpp>
+#include"engine/util/Constants.h"
 //////////////////////////////////////////////////
 ///\ class ObjectManager
 ///\ brief Provoides generic interface for object
@@ -28,15 +31,16 @@ public:
 	ObjectManager();
 	virtual ~ObjectManager();
 
+	unsigned int ActiveObjectCount() const;
+
 	virtual int MaxCapacity() = 0;
 	virtual int MaxActiveCapacity() = 0;
-	virtual void Spawn() = 0;
 
 	virtual void Init();
 	virtual void Destroy();
 
 	virtual void Update(const float&);
-	virtual void Render();
+	virtual void Render(const glm::mat4& = Constants::Geometry::IDENTITY_MATRIX, const glm::mat4& = Constants::Geometry::IDENTITY_MATRIX);
 
 protected:
 	int mMaxCapacity;
@@ -46,7 +50,9 @@ protected:
 	T** mObjects;
 
 	virtual unsigned int Alloc();
+	virtual T* ConstructObject() = 0;
 	virtual void CustomAllocOps(const unsigned int&);
+	virtual void CustomInitOps();
 	virtual std::list<unsigned int>::iterator Dealloc(std::list<unsigned int>::iterator);
 	virtual bool DestructionPred(T*) const;
 };
