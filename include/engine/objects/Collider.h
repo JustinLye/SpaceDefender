@@ -12,7 +12,7 @@ class Collider :
 public:
 	Collider();
 	virtual ~Collider();
-	virtual bool CollisionDetected(const Collider&);
+	virtual bool CollisionDetected(const Collider&) const;
 protected:
 	float mRadius;
 

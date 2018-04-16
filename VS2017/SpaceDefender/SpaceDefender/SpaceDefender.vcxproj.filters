@@ -117,6 +117,18 @@
     <ClCompile Include="..\..\..\src\game\Laser.cc">
       <Filter>src\game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\game\SpaceDefender.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\objects\Subject.cc">
+      <Filter>src\engine\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\objects\Observer.cc">
+      <Filter>src\engine\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\game\Astroid.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\engine\objects\Collider.h">
@@ -186,6 +198,24 @@
       <Filter>include\game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\game\Laser.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\SpaceDefender.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\objects\Observer.h">
+      <Filter>include\engine\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\objects\Subject.h">
+      <Filter>include\engine\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\CollisionDetector.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\Astroid.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\AstroidSpawner.h">
       <Filter>include\game</Filter>
     </ClInclude>
   </ItemGroup>

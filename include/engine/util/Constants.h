@@ -28,12 +28,32 @@ namespace Constants
 	{
 		const float TARGET_FRAME_RATE_IN_MS = 16.0f;
 	}
-	namespace Movement
+	namespace
 	{
 		enum DIRECTION : unsigned int
 		{
 			LEFT,
 			RIGHT
+		};
+		enum shape_t : unsigned int
+		{
+			LINE_SEG,
+			TRIANGLE,
+			CIRCLE,
+			QUAD,
+			TOTAL_SHAPES
+		};
+		enum shader_prog_t : unsigned int
+		{
+			DEFAULT_SHADER_PROG,
+			TOTAL_SHADERS
+		};
+		
+		enum event_t : unsigned int
+		{
+			ACTIVATED_COLLIDABLE_OBJECT,
+			TERMINATED_COLLIDABLE_OBJECT,
+			TOTAL_EVENTS
 		};
 	}
 };

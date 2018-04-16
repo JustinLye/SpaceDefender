@@ -3,6 +3,7 @@
 unsigned int GameObject::NextObjectId = 0;
 
 GameObject::GameObject() :
+	Subject(),
 	mTransform(Transform()),
 	mRenderer(nullptr),
 	mId(++NextObjectId)
@@ -405,6 +406,39 @@ void GameObject::AddGameObject(GameObject* object)
 void GameObject::RemoveGameObject(GameObject* object)
 {
 	mGameObjectMap.erase(object);
+}
+
+void GameObject::Spawn(const Transform& transform)
+{
+	Match(transform);
+	if (mColliderMap.size() > 0)
+	{
+		Notify(*this, Constants::ACTIVATED_COLLIDABLE_OBJECT);
+	}
+}
+
+void GameObject::Despawn()
+{
+	if (mColliderMap.size() > 0)
+	{
+		Notify(*this, Constants::TERMINATED_COLLIDABLE_OBJECT);
+	}
+}
+
+bool GameObject::CollisionDetected(Collider* collider) const
+{
+	std::map<Collider*, Collider*, CompareTransPtr>::const_iterator iter = mColliderMap.cbegin();
+	bool result = false;
+	while (iter != mColliderMap.end())
+	{
+		result = iter->second->CollisionDetected(*collider);
+		if (result)
+		{
+			break;
+		}
+		++iter;
+	}
+	return result;
 }
 
 void GameObject::ScaleShapes(const float& scale)

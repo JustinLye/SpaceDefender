@@ -4,14 +4,38 @@
 
 #include"engine/objects/Renderer.h"
 #include"engine/objects/Collider.h"
-
+#include"engine/objects/Subject.h"
 #ifdef ENGINE_DEBUG
 #include"engine/util/DebugFunctions.h"
 #endif
 
-class GameObject
+class GameObject :
+	public Subject
 {
 public:
+
+	struct CompareShapePtr
+	{
+		bool operator()(const Shape* lhs, const Shape* rhs) const
+		{
+			return *lhs < *rhs;
+		}
+	};
+	struct CompareTransPtr
+	{
+		bool operator()(const Transform* lhs, const Transform* rhs) const
+		{
+			return *lhs < *rhs;
+		}
+	};
+	struct CompareGameObjectPtr
+	{
+		bool operator()(const GameObject* lhs, const GameObject* rhs) const
+		{
+			return *lhs < *rhs;
+		}
+	};
+
 	GameObject();
 	virtual ~GameObject();
 
@@ -24,7 +48,11 @@ public:
 	virtual void MatchShapes(const Transform&);
 	virtual void MatchColliders(const Transform&);
 	virtual void MatchGameObjects(const Transform&);
+	typedef std::map<Collider*, Collider*, CompareTransPtr>::const_iterator const_collider_iter;
+	const std::pair<const_collider_iter, const_collider_iter> GetColliders() const;
+
 	const Transform& GetTransform() const;
+
 	// Transform Interface and individual Shape/Collider/GameObject tranforms
 	virtual void Scale(const float&);
 	virtual void Scale(const float&, Shape*);
@@ -86,32 +114,17 @@ public:
 	virtual void AddGameObject(GameObject*);
 	virtual void RemoveGameObject(GameObject*);
 
+	virtual void Spawn(const Transform&);
+	virtual void Despawn();
+
+	virtual bool CollisionDetected(Collider*) const;
+
 	// Operators
 	bool operator<(const GameObject&) const;
 	bool operator==(const GameObject&) const;
 
 protected:
-	struct CompareShapePtr
-	{
-		bool operator()(const Shape* lhs, const Shape* rhs) const
-		{
-			return *lhs < *rhs;
-		}
-	};
-	struct CompareTransPtr
-	{
-		bool operator()(const Transform* lhs, const Transform* rhs) const
-		{
-			return *lhs < *rhs;
-		}
-	};
-	struct CompareGameObjectPtr
-	{
-		bool operator()(const GameObject* lhs, const GameObject* rhs) const
-		{
-			return *lhs < *rhs;
-		}
-	};
+
 
 	Transform mTransform;
 	Renderer* mRenderer;
@@ -144,10 +157,11 @@ protected:
 	std::map<Collider*, Collider*, CompareTransPtr>::const_iterator GetCollider(Collider*) const;
 	std::map<GameObject*, GameObject*, CompareGameObjectPtr>::iterator GetGameObject(GameObject*);
 	std::map<GameObject*, GameObject*, CompareGameObjectPtr>::const_iterator GetGameObject(GameObject*) const;
+
 	bool ShapeIsMapped(Shape*) const;
 	bool ColliderIsMapped(Collider*) const;
 	bool ObjectIsMapped(GameObject*) const;
-	
+
 private:
 	static unsigned int NextObjectId;
 	unsigned int mId;

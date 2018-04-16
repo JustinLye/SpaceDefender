@@ -15,11 +15,12 @@ public:
 	void HandleKeyboardInput(GLFWwindow*);
 	void AttachCannon(LaserCannon*);
 	void Update(const float&) override;
-	virtual void Strafe(const Constants::Movement::DIRECTION&);
+	virtual void Strafe(const Constants::DIRECTION&);
 	virtual void FireCannon();
 	virtual void Speed(const float&);
 	const float& Speed() const;
 	virtual void Boost();
+	virtual void DoDetection(Collider*);
 protected:
 	float mSpeed;
 	float mStep;

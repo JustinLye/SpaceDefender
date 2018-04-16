@@ -10,7 +10,7 @@ Collider::~Collider()
 
 }
 
-bool Collider::CollisionDetected(const Collider& other)
+bool Collider::CollisionDetected(const Collider& other) const
 {
 	float radius_sum = mTransformData.mScale.x + other.Scale().x;
 	glm::vec3 diff = mTransformData.mPosition - other.Position();

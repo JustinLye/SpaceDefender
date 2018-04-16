@@ -52,7 +52,9 @@ protected:
 	virtual unsigned int Alloc();
 	virtual T* ConstructObject() = 0;
 	virtual void CustomAllocOps(const unsigned int&);
+	virtual void CustomDeallocOps(const unsigned int&);
 	virtual void CustomInitOps();
+	virtual void CustomUpdateOps(const float&);
 	virtual std::list<unsigned int>::iterator Dealloc(std::list<unsigned int>::iterator);
 	virtual bool DestructionPred(T*) const;
 };

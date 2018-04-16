@@ -63,6 +63,15 @@ void Player::Update(const float& dt)
 	}
 }
 
+void Player::DoDetection(Collider* collider)
+{
+	if (CollisionDetected(collider))
+	{
+		// play collided with something
+	}
+	mLaserCannon->DoDetection(collider);
+}
+
 void Player::HandleKeyboardInput(GLFWwindow* window)
 {
 }
@@ -74,13 +83,13 @@ void Player::AttachCannon(LaserCannon* cannon)
 	mLaserCannon->GetTransform().Translate(glm::vec3(0.0f, 100.0f, 0.0f));
 }
 
-void Player::Strafe(const Constants::Movement::DIRECTION& dir)
+void Player::Strafe(const Constants::DIRECTION& dir)
 {
-	if (dir == Constants::Movement::DIRECTION::LEFT)
+	if (dir == Constants::DIRECTION::LEFT)
 	{
 		mTargetXPos = mTransform.Position().x - mStep;
 	}
-	if (dir == Constants::Movement::DIRECTION::RIGHT)
+	if (dir == Constants::DIRECTION::RIGHT)
 	{
 		mTargetXPos = mTransform.Position().x + mStep;
 	}

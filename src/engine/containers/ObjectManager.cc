@@ -32,7 +32,6 @@ void ObjectManager<T>::Init()
 	{
 		mObjects[i] = ConstructObject();
 		mIndexQueue.push(i);
-		std::cout << mIndexQueue.size() << '\n';
 	}
 }
 
@@ -48,6 +47,7 @@ void ObjectManager<T>::Destroy()
 template<class T>
 void ObjectManager<T>::Update(const float& dt)
 {
+	CustomUpdateOps(dt);
 	std::list<unsigned int>::iterator iter = mActiveIndices.begin();
 	while (iter != mActiveIndices.end())
 	{
@@ -97,7 +97,19 @@ void ObjectManager<T>::CustomAllocOps(const unsigned int& index)
 }
 
 template<class T>
+void ObjectManager<T>::CustomDeallocOps(const unsigned int& index)
+{
+
+}
+
+template<class T>
 void ObjectManager<T>::CustomInitOps()
+{
+
+}
+
+template<class T>
+void ObjectManager<T>::CustomUpdateOps(const float& dt)
 {
 
 }
@@ -106,6 +118,7 @@ template<class T>
 std::list<unsigned int>::iterator ObjectManager<T>::Dealloc(std::list<unsigned int>::iterator iter)
 {
 	mIndexQueue.push(*iter);
+	CustomDeallocOpts(*iter);
 	return mActiveIndices.erase(iter);
 }
 

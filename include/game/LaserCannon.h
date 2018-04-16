@@ -1,11 +1,15 @@
 #ifndef LASER_CANNON_HEADER_INCLUDED
 #define LASER_CANNON_HEADER_INCLUDED
 #include<chrono>
+#include"engine/objects/Observer.h"
+#include"engine/objects/Subject.h"
 #include"engine/containers/ObjectManager.h"
 #include"game/Laser.h"
 
 
 class LaserCannon :
+	public Subject,
+	public Observer,
 	public ObjectManager<Laser>
 {
 public:
@@ -13,6 +17,12 @@ public:
 	~LaserCannon();
 	int MaxCapacity();
 	int MaxActiveCapacity();
+	void OnNotify(const GameObject&, const Constants::event_t&);
+	void AddObserver(Observer*) override;
+	void RemoveObserver(Observer*) override;
+
+	void DoDetection(Collider*);
+
 	const float& ProjectileSpeed() const; 
 	const float& CooldownTime() const;
 	const Transform& GetTransform() const;
@@ -36,6 +46,7 @@ protected:
 	std::chrono::time_point<std::chrono::steady_clock> mLastShotTime;
 	float mCooldownTime;
 	void CustomAllocOps(const unsigned int&) override;
+	void CustomDeallocOps(const unsigned int&) override;
 	void CustomInitOps() override;
 };
 

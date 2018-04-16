@@ -1,7 +1,9 @@
 #include"game/LaserCannon.h"
 
 LaserCannon::LaserCannon(Shape* laser, ShaderProgram* shader) :
-	ObjectManager<Laser>(),
+	Subject(),
+	Observer(),
+	ObjectManager<Laser>(), 
 	mTransform(Transform()),
 	mShape(laser),
 	mShaderProg(shader),
@@ -29,6 +31,61 @@ int LaserCannon::MaxActiveCapacity()
 	return 10;
 }
 
+void LaserCannon::OnNotify(const GameObject& object, const Constants::event_t& event_name)
+{
+	switch (event_name)
+	{
+	case Constants::event_t::TERMINATED_COLLIDABLE_OBJECT:
+		std::list<unsigned int>::iterator iter = mActiveIndices.begin();
+		while (iter != mActiveIndices.end())
+		{
+			if (mObjects[*iter]->Id() == object.Id())
+			{
+				Dealloc(iter);
+				return;
+			}
+			++iter;
+		}
+		break;
+	}
+}
+
+void LaserCannon::AddObserver(Observer* observer)
+{
+	if (!ObserverIsMapped(observer))
+	{
+		mObserverMap.insert({ observer->Id(), observer });
+	}
+	for (int i = 0; i < mMaxCapacity; ++i)
+	{
+		mObjects[i]->AddObserver(observer);
+	}
+}
+
+void LaserCannon::RemoveObserver(Observer* observer)
+{
+	if (ObserverIsMapped(observer))
+	{
+		mObserverMap.insert({ observer->Id(), observer });
+	}
+	for (int i = 0; i < mMaxCapacity; ++i)
+	{
+		mObjects[i]->RemoveObserver(observer);
+	}
+}
+
+void LaserCannon::DoDetection(Collider* collider)
+{
+	std::list<unsigned int>::iterator iter = mActiveIndices.begin();
+	while (iter != mActiveIndices.end())
+	{
+		if (mObjects[*iter]->CollisionDetected(collider))
+		{
+			iter = Dealloc(iter);
+		}
+	}
+}
+
 bool LaserCannon::DestructionPred(Laser* object) const
 {
 	return object->Terminate();
@@ -38,6 +95,7 @@ void LaserCannon::AttachTo(const GameObject& object)
 {
 	mTransform.Match(object.GetTransform());
 }
+
 unsigned int LaserCannon::Fire()
 {
 	float elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - mLastShotTime).count();
@@ -94,8 +152,14 @@ void LaserCannon::CustomAllocOps(const unsigned int& index)
 		return;
 	}
 	Laser* object = mObjects[index];
-	object->Match(mTransform);
+	object->Spawn(mTransform);
 	object->Scale(0.40f);
+}
+
+void LaserCannon::CustomDeallocOps(const unsigned int& index)
+{
+	Laser* object = mObjects[index];
+	object->Despawn();
 }
 
 void LaserCannon::CustomInitOps()
