@@ -11,7 +11,9 @@ LaserCannon::LaserCannon(Shape* laser, ShaderProgram* shader) :
 	mCollider(nullptr),
 	mProjectileSpeed(20.0f),
 	mCooldownTime(0.0f),
-	mLastShotTime(std::chrono::high_resolution_clock::now() - std::chrono::milliseconds(1000000))
+	mLastShotTime(std::chrono::high_resolution_clock::now() - std::chrono::milliseconds(1000000)),
+	mLaserTermYPos(0.0f)
+
 {
 	Init();
 }
@@ -31,20 +33,23 @@ int LaserCannon::MaxActiveCapacity()
 	return 10;
 }
 
-void LaserCannon::OnNotify(const GameObject& object, const Constants::event_t& event_name)
+void LaserCannon::OnNotify(const GameObject& object, const Constants::Types::event_t& event_name)
 {
 	switch (event_name)
 	{
-	case Constants::event_t::TERMINATED_COLLIDABLE_OBJECT:
-		std::list<unsigned int>::iterator iter = mActiveIndices.begin();
-		while (iter != mActiveIndices.end())
+	case Constants::Types::event_t::TERMINATED_COLLIDABLE_OBJECT:
+		if (object.Type() == Constants::Types::object_t::ASTROID)
 		{
-			if (mObjects[*iter]->Id() == object.Id())
+			std::list<unsigned int>::iterator iter = mActiveIndices.begin();
+			while (iter != mActiveIndices.end())
 			{
-				Dealloc(iter);
-				return;
+				if (mObjects[*iter]->Id() == object.Id())
+				{
+					Dealloc(iter);
+					return;
+				}
+				++iter;
 			}
-			++iter;
 		}
 		break;
 	}
@@ -56,7 +61,7 @@ void LaserCannon::AddObserver(Observer* observer)
 	{
 		mObserverMap.insert({ observer->Id(), observer });
 	}
-	for (int i = 0; i < mMaxCapacity; ++i)
+	for (int i = 0; i < mMaxCapacity; ++i) // Add observer to each laser
 	{
 		mObjects[i]->AddObserver(observer);
 	}
@@ -98,7 +103,7 @@ void LaserCannon::AttachTo(const GameObject& object)
 
 unsigned int LaserCannon::Fire()
 {
-	float elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - mLastShotTime).count();
+	float elapsed = (float)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - mLastShotTime).count();
 	if (elapsed > mCooldownTime)
 	{
 		mLastShotTime = std::chrono::high_resolution_clock::now();
@@ -135,6 +140,16 @@ void LaserCannon::CooldownTime(const float& cooldown_time)
 	mCooldownTime = cooldown_time;
 }
 
+void LaserCannon::LaserTermYPos(const float& ypos)
+{
+	mLaserTermYPos = ypos;
+}
+
+const float& LaserCannon::LaserTermYPos() const
+{
+	return mLaserTermYPos;
+}
+
 const float& LaserCannon::ProjectileSpeed() const
 {
 	return mProjectileSpeed;
@@ -159,6 +174,7 @@ void LaserCannon::CustomAllocOps(const unsigned int& index)
 void LaserCannon::CustomDeallocOps(const unsigned int& index)
 {
 	Laser* object = mObjects[index];
+	object->OutOfBounds();
 	object->Despawn();
 }
 
@@ -174,6 +190,12 @@ Laser* LaserCannon::ConstructObject()
 	new_obj->AddRenderer(mRenderer);
 	new_obj->AddShape(mShape);
 	new_obj->AddCollider(mCollider);
-	new_obj->TerminateYPos(1000.0f);
+	new_obj->TerminateYPos(mLaserTermYPos);
+#ifdef COLLISION_DEBUG
+	Shape* circle = new Shape();
+	CircleData* circle_data = new CircleData();
+	circle->Buffer(circle_data);
+	new_obj->AddShape(circle);
+#endif
 	return new_obj;
 }

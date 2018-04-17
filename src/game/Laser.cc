@@ -33,17 +33,23 @@ bool Laser::Terminate() const
 	return (std::abs(term_ypos) > 0.0f && ((term_ypos > 0.0f && curr_ypos > term_ypos) || (term_ypos < 0.0f && curr_ypos < term_ypos)));
 }
 
+const Constants::Types::object_t& Laser::Type() const
+{
+	return Constants::Types::object_t::LASER;
+}
+
+void Laser::Collide(const GameObject& object) const
+{
+	switch (object.Type())
+	{
+	case Constants::Types::object_t::ASTROID:
+		Despawn();
+		break;
+	}
+}
+
 void Laser::Update(const float& dt)
 {
 	static int counter = 61;
 	Translate(glm::vec3(0.0f, dt*10.0f, 0.0f));
-	if (counter > 60)
-	{
-		counter = 0;
-	}
-	else
-	{
-		++counter;
-	}
-
 }

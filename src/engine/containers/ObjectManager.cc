@@ -79,7 +79,7 @@ template<class T>
 unsigned int ObjectManager<T>::Alloc()
 {
 	unsigned int result = NOT_INDEX;
-	if (!mIndexQueue.empty() && mActiveIndices.size() < mMaxActiveCapacity)
+	if (!mIndexQueue.empty() && (int)mActiveIndices.size() < mMaxActiveCapacity)
 	{
 		result = mIndexQueue.front();
 		mIndexQueue.pop();
@@ -118,7 +118,7 @@ template<class T>
 std::list<unsigned int>::iterator ObjectManager<T>::Dealloc(std::list<unsigned int>::iterator iter)
 {
 	mIndexQueue.push(*iter);
-	CustomDeallocOpts(*iter);
+	CustomDeallocOps(*iter);
 	return mActiveIndices.erase(iter);
 }
 

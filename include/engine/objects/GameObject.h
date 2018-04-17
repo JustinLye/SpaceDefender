@@ -40,7 +40,8 @@ public:
 	virtual ~GameObject();
 
 	const unsigned int& Id() const;
-
+	virtual const Constants::Types::object_t& Type() const;
+	virtual void Collide(const GameObject&) const;
 	virtual void Update(const float&);
 	virtual void AddRenderer(Renderer*);
 
@@ -48,8 +49,7 @@ public:
 	virtual void MatchShapes(const Transform&);
 	virtual void MatchColliders(const Transform&);
 	virtual void MatchGameObjects(const Transform&);
-	typedef std::map<Collider*, Collider*, CompareTransPtr>::const_iterator const_collider_iter;
-	const std::pair<const_collider_iter, const_collider_iter> GetColliders() const;
+	
 
 	const Transform& GetTransform() const;
 
@@ -115,9 +115,14 @@ public:
 	virtual void RemoveGameObject(GameObject*);
 
 	virtual void Spawn(const Transform&);
-	virtual void Despawn();
+	virtual void Despawn() const;
+	virtual void OutOfBounds() const;
 
-	virtual bool CollisionDetected(Collider*) const;
+	virtual bool CollisionDetected(const Collider*) const;
+	virtual bool CollisionDetected(const GameObject&) const;
+	
+	typedef std::map<Collider*, Collider*, CompareTransPtr>::const_iterator const_collider_iter;
+	std::pair<const_collider_iter, const_collider_iter> GetColliders() const;
 
 	// Operators
 	bool operator<(const GameObject&) const;

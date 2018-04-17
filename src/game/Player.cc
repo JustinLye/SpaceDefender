@@ -16,6 +16,11 @@ Player::~Player()
 {
 }
 
+const Constants::Types::object_t& Player::Type() const
+{
+	return Constants::Types::object_t::PLAYER;
+}
+
 void Player::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 {
 #ifdef ENGINE_DEBUG
@@ -83,13 +88,13 @@ void Player::AttachCannon(LaserCannon* cannon)
 	mLaserCannon->GetTransform().Translate(glm::vec3(0.0f, 100.0f, 0.0f));
 }
 
-void Player::Strafe(const Constants::DIRECTION& dir)
+void Player::Strafe(const Constants::Types::DIRECTION& dir)
 {
-	if (dir == Constants::DIRECTION::LEFT)
+	if (dir == Constants::Types::DIRECTION::LEFT)
 	{
 		mTargetXPos = mTransform.Position().x - mStep;
 	}
-	if (dir == Constants::DIRECTION::RIGHT)
+	if (dir == Constants::Types::DIRECTION::RIGHT)
 	{
 		mTargetXPos = mTransform.Position().x + mStep;
 	}

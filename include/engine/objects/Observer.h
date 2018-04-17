@@ -2,18 +2,16 @@
 #define OBSERVER_HEADER_INCLUDED
 
 #include"engine/util/Constants.h"
-#include"engine/objects/GameObject.h"
-
+class GameObject;
 class Observer
 {
 public:
-	typedef Constants::event_t event_t;
 	Observer();
 	~Observer();
 
 	const unsigned int& Id() const;
 
-	virtual void OnNotify(const GameObject&, const event_t&) = 0;
+	virtual void OnNotify(const GameObject&, const Constants::Types::event_t&) = 0;
 
 private:
 	static unsigned int NextObserverId;

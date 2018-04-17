@@ -1,5 +1,5 @@
 #ifndef ASTROID_HEADER_INCLUDED
-#define ASTROID_HEADER_INCLDUED
+#define ASTROID_HEADER_INCLUDED
 
 #include"engine/objects/GameObject.h"
 
@@ -10,6 +10,8 @@ public:
 	Astroid();
 	~Astroid();
 	
+	const Constants::Types::object_t& Type() const override;
+	void Collide(const GameObject&) const override;
 	const float& Speed() const;
 	const float& TerminateYPos() const;
 

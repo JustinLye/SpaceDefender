@@ -153,21 +153,48 @@ void AstroidSpawner::Init()
 	}
 }
 
-void AstroidSpawner::OnNotify(const GameObject& object, const Constants::event_t& event_name)
+void AstroidSpawner::AddObserver(Observer* observer)
+{
+	if (!ObserverIsMapped(observer))
+	{
+		mObserverMap.insert({ observer->Id(), observer });
+	}
+	for (int i = 0; i < mMaxCapacity; ++i)
+	{
+		mObjects[i]->AddObserver(observer);
+	}
+}
+
+void AstroidSpawner::RemoveObserver(Observer* observer)
+{
+	if (ObserverIsMapped(observer))
+	{
+		mObserverMap.erase(observer->Id());
+	}
+	for (int i = 0; i < mMaxCapacity; ++i)
+	{
+		mObjects[i]->RemoveObserver(observer);
+	}
+}
+
+void AstroidSpawner::OnNotify(const GameObject& object, const Constants::Types::event_t& event_name)
 {
 	switch (event_name)
 	{
-	case Constants::event_t::TERMINATED_COLLIDABLE_OBJECT:
-		std::list<unsigned int>::iterator iter = mActiveIndices.begin();
-		unsigned int index = mAstroidToIndexMap[object.Id()];
-		while (iter != mActiveIndices.end())
+	case Constants::Types::event_t::TERMINATED_COLLIDABLE_OBJECT:
+		if (object.Type() == Constants::Types::object_t::LASER)
 		{
-			if (*iter == index)
+			std::list<unsigned int>::iterator iter = mActiveIndices.begin();
+			unsigned int index = mAstroidToIndexMap[object.Id()];
+			while (iter != mActiveIndices.end())
 			{
-				iter = Dealloc(iter);
-				return;
+				if (*iter == index)
+				{
+					iter = Dealloc(iter);
+					return;
+				}
+				++iter;
 			}
-			++iter;
 		}
 		break;
 	}
@@ -179,6 +206,7 @@ Astroid* AstroidSpawner::ConstructObject()
 	astroid->AddRenderer(mRenderer);
 	astroid->AddShape(mShape);
 	astroid->AddCollider(new Collider());
+	astroid->AddObserver(this);
 	return astroid;
 }
 
@@ -198,6 +226,7 @@ void AstroidSpawner::CustomAllocOps(const unsigned int& index)
 void AstroidSpawner::CustomDeallocOps(const unsigned int& index)
 {
 	Astroid* astroid = mObjects[index];
+	astroid->OutOfBounds();
 	astroid->Despawn();
 }
 

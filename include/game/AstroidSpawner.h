@@ -17,6 +17,10 @@ public:
 	~AstroidSpawner();
 	int MaxCapacity();
 	int MaxActiveCapacity();
+
+	void AddObserver(Observer*) override;
+	void RemoveObserver(Observer*) override;
+
 	const int& MinRespawnWaitTime() const;
 	const int& MaxRespawnWaitTime() const;
 	const float& MinProjectileSpeed() const;
@@ -66,7 +70,7 @@ protected:
 		std::chrono::high_resolution_clock,
 		std::chrono::duration<float, std::milli>> mLastSpawnTime;
 
-	void OnNotify(const GameObject&, const Constants::event_t&);
+	void OnNotify(const GameObject&, const Constants::Types::event_t&);
 	Astroid* ConstructObject();
 	void CustomAllocOps(const unsigned int&) override;
 	void CustomDeallocOps(const unsigned int&) override;

@@ -5,6 +5,7 @@
 #include"engine/objects/Subject.h"
 #include"engine/objects/GameObject.h"
 #include"game/Astroid.h"
+#include"game/Laser.h"
 class CollisionDetector :
 	public Subject,
 	public Observer
@@ -12,11 +13,11 @@ class CollisionDetector :
 public:
 	CollisionDetector();
 	~CollisionDetector();
-	void DoDetection(GameObject*);
-	void OnNotify(const GameObject&, const Constants::event_t&);
+	void DoDetection();
+	void OnNotify(const GameObject&, const Constants::Types::event_t&);
 protected:
-	std::map<unsigned int, Astroid*> mAstroidMap;
-
+	std::map<unsigned int, const Astroid*> mAstroidMap;
+	std::map<unsigned int, const Laser*> mLaserMap;
 
 };
 #endif

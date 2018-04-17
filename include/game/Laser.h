@@ -12,6 +12,8 @@ class Laser :
 public:
 	Laser();
 	~Laser();
+	const Constants::Types::object_t& Type() const override;
+	void Collide(const GameObject&) const override;
 	void Update(const float&) override;
 	void Render(const glm::mat4&, const glm::mat4&) override;
 	void TerminateYPos(const float&);

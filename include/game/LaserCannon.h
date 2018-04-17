@@ -6,6 +6,10 @@
 #include"engine/containers/ObjectManager.h"
 #include"game/Laser.h"
 
+#ifdef COLLISION_DEBUG
+#include"engine/shapes/CircleData.h"
+#endif
+
 
 class LaserCannon :
 	public Subject,
@@ -17,7 +21,7 @@ public:
 	~LaserCannon();
 	int MaxCapacity();
 	int MaxActiveCapacity();
-	void OnNotify(const GameObject&, const Constants::event_t&);
+	void OnNotify(const GameObject&, const Constants::Types::event_t&);
 	void AddObserver(Observer*) override;
 	void RemoveObserver(Observer*) override;
 
@@ -25,12 +29,14 @@ public:
 
 	const float& ProjectileSpeed() const; 
 	const float& CooldownTime() const;
+	const float& LaserTermYPos() const;
 	const Transform& GetTransform() const;
 	Transform& GetTransform();
 
 	unsigned int Fire();
 	void ProjectileSpeed(const float&);
 	void CooldownTime(const float&);
+	void LaserTermYPos(const float&);
 	bool DestructionPred(Laser*) const override;
 	void AttachTo(const GameObject&);
 	bool operator<(const LaserCannon&) const;
@@ -45,6 +51,7 @@ protected:
 	float mProjectileSpeed;
 	std::chrono::time_point<std::chrono::steady_clock> mLastShotTime;
 	float mCooldownTime;
+	float mLaserTermYPos;
 	void CustomAllocOps(const unsigned int&) override;
 	void CustomDeallocOps(const unsigned int&) override;
 	void CustomInitOps() override;

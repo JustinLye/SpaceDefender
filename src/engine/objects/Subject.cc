@@ -23,9 +23,9 @@ void Subject::RemoveObserver(Observer* observer)
 	mObserverMap.erase(observer->Id());
 }
 
-void Subject::Notify(const GameObject& object, const Constants::event_t& event_name)
+void Subject::Notify(const GameObject& object, const Constants::Types::event_t& event_name) const
 {
-	std::map<unsigned int, Observer*>::iterator iter = mObserverMap.begin();
+	std::map<unsigned int, Observer*>::const_iterator iter = mObserverMap.cbegin();
 	while (iter != mObserverMap.end())
 	{
 		iter->second->OnNotify(object, event_name);

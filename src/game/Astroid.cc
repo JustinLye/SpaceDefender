@@ -12,6 +12,21 @@ Astroid::~Astroid()
 
 }
 
+const Constants::Types::object_t& Astroid::Type() const
+{
+	return Constants::Types::object_t::ASTROID;
+}
+
+void Astroid::Collide(const GameObject& object) const
+{
+	switch (object.Type())
+	{
+	case Constants::Types::object_t::LASER:
+		Despawn();
+		break;
+	}
+}
+
 const float& Astroid::Speed() const
 {
 	return mSpeed;

@@ -129,6 +129,12 @@
     <ClCompile Include="..\..\..\src\game\Astroid.cc">
       <Filter>src\game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\game\AstroidSpawner.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\game\CollisionDetector.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\engine\objects\Collider.h">

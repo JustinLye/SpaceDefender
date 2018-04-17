@@ -20,6 +20,16 @@ const unsigned int& GameObject::Id() const
 	return mId;
 }
 
+const Constants::Types::object_t& GameObject::Type() const
+{
+	return Constants::Types::object_t::GENERIC_OBJECT;
+}
+
+void GameObject::Collide(const GameObject& object) const
+{
+
+}
+
 void GameObject::Match(const Transform& transform)
 {
 	mTransform.Match(transform);
@@ -413,19 +423,24 @@ void GameObject::Spawn(const Transform& transform)
 	Match(transform);
 	if (mColliderMap.size() > 0)
 	{
-		Notify(*this, Constants::ACTIVATED_COLLIDABLE_OBJECT);
+		Notify(*this, Constants::Types::event_t::ACTIVATED_COLLIDABLE_OBJECT);
 	}
 }
 
-void GameObject::Despawn()
+void GameObject::Despawn() const
 {
 	if (mColliderMap.size() > 0)
 	{
-		Notify(*this, Constants::TERMINATED_COLLIDABLE_OBJECT);
+		Notify(*this, Constants::Types::event_t::TERMINATED_COLLIDABLE_OBJECT);
 	}
 }
 
-bool GameObject::CollisionDetected(Collider* collider) const
+void GameObject::OutOfBounds() const
+{
+	Notify(*this, Constants::Types::event_t::OBJECT_OUT_OF_BOUNDS);
+}
+
+bool GameObject::CollisionDetected(const Collider* collider) const
 {
 	std::map<Collider*, Collider*, CompareTransPtr>::const_iterator iter = mColliderMap.cbegin();
 	bool result = false;
@@ -439,6 +454,26 @@ bool GameObject::CollisionDetected(Collider* collider) const
 		++iter;
 	}
 	return result;
+}
+
+bool GameObject::CollisionDetected(const GameObject& object) const
+{
+	auto object_colliders = object.GetColliders();
+	auto current_collider = object_colliders.first;
+	while (current_collider != object_colliders.second)
+	{
+		if (CollisionDetected(current_collider->second))
+		{
+			return true;
+		}
+		++current_collider;
+	}
+	return false;
+}
+
+std::pair<GameObject::const_collider_iter, GameObject::const_collider_iter> GameObject::GetColliders() const
+{
+	return std::pair<const_collider_iter, const_collider_iter>(mColliderMap.cbegin(), mColliderMap.cend());
 }
 
 void GameObject::ScaleShapes(const float& scale)

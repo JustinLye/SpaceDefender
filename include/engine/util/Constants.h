@@ -28,7 +28,7 @@ namespace Constants
 	{
 		const float TARGET_FRAME_RATE_IN_MS = 16.0f;
 	}
-	namespace
+	namespace Types
 	{
 		enum DIRECTION : unsigned int
 		{
@@ -53,7 +53,17 @@ namespace Constants
 		{
 			ACTIVATED_COLLIDABLE_OBJECT,
 			TERMINATED_COLLIDABLE_OBJECT,
+			OBJECT_OUT_OF_BOUNDS,
 			TOTAL_EVENTS
+		};
+
+		enum object_t : unsigned int
+		{
+			GENERIC_OBJECT,
+			LASER,
+			ASTROID,
+			PLAYER,
+			TOTAL_GAME_OBJECT_TYPES
 		};
 	}
 };

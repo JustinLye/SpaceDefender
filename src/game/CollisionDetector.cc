@@ -11,40 +11,58 @@ CollisionDetector::~CollisionDetector()
 {
 }
 
-void CollisionDetector::DoDetection(GameObject* object)
+void CollisionDetector::DoDetection()
 {
-	std::map<unsigned int, const Astroid*>::iterator iter = mAstroidMap.begin();
-
-	while (iter != mAstroidMap.end())
+	std::map<unsigned int, const Laser*>::const_iterator laser_iter = mLaserMap.cbegin();
+	while (laser_iter != mLaserMap.cend())
 	{
-		auto colliders = iter->second->GetColliders();
-		auto current_collider = colliders.first;
 		bool collision_detected = false;
-		while (current_collider != colliders.second)
+		std::map<unsigned int, const Astroid*>::const_iterator astroid_iter = mAstroidMap.cbegin();
+		while (astroid_iter != mAstroidMap.cend())
 		{
-			if (object->CollisionDetected(current_collider->second))
+			collision_detected = laser_iter->second->CollisionDetected(*astroid_iter->second);
+			if (collision_detected)
 			{
-				object->Despawn();
-				Notify(*iter->second, Constants::event_t::TERMINATED_COLLIDABLE_OBJECT);
-				iter = mAstroidMap.erase(iter);
-				collision_detected = true;
 				break;
 			}
-			++current_collider;
+			++astroid_iter;
 		}
-		if (!collision_detected)
+		if (collision_detected)
 		{
-			++iter;
+			laser_iter->second->Collide(*astroid_iter->second);
+			astroid_iter->second->Collide(*laser_iter->second);
+			laser_iter = mLaserMap.erase(laser_iter);
+			astroid_iter = mAstroidMap.erase(astroid_iter);
+		}
+		else
+		{
+			++laser_iter;
 		}
 	}
 }
 
-void CollisionDetector::OnNotify(const GameObject& object, const Constants::event_t& event_name)
+void CollisionDetector::OnNotify(const GameObject& object, const Constants::Types::event_t& event_name)
 {
 	switch (event_name)
 	{
-	case Constants::event_t::ACTIVATED_COLLIDABLE_OBJECT:
-		mAstroidMap.insert({ object.Id(), reinterpret_cast<const Astroid*>(&object) });
+	case Constants::Types::event_t::ACTIVATED_COLLIDABLE_OBJECT:
+		if (object.Type() == Constants::Types::object_t::ASTROID)
+		{
+			mAstroidMap.insert({ object.Id(), reinterpret_cast<const Astroid*>(&object) });
+		}
+		else if (object.Type() == Constants::Types::object_t::LASER)
+		{
+			mLaserMap.insert({ object.Id(), reinterpret_cast<const Laser*>(&object) });
+		}
 		break;
+	case Constants::Types::event_t::OBJECT_OUT_OF_BOUNDS:
+		if (object.Type() == Constants::Types::object_t::ASTROID)
+		{
+			mAstroidMap.erase(object.Id());
+		}
+		else if (object.Type() == Constants::Types::object_t::LASER)
+		{
+			mLaserMap.erase(object.Id());
+		}
 	}
 }

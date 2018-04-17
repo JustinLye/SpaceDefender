@@ -1,6 +1,9 @@
 #ifndef SPACE_DEFENDER_INCLUDED
 #define SPACE_DEFENDER_INCLUDED
-
+#ifdef ENGINE_DEBUG
+#include<iostream>
+#endif
+#include<glm/gtc/matrix_transform.hpp>
 #include"engine/util/OpenGLOptions.h"
 #include"engine/shapes/TriangleData.h"
 #include"engine/shapes/CircleData.h"
@@ -18,15 +21,17 @@ public:
 	~SpaceDefender();
 
 	void Init(); ///< Creates space defender environment and 
-
+	void Run();
 	Player* GetPlayer();
+	GLFWwindow* GetWindow();
 	void Update(const float&);
 	void DoCollisionDetection();
 protected:
 	OpenGLOptions mOptions;
 	Player* mPlayer;
-	ShapeData* mShapeData[Constants::shape_t::TOTAL_SHAPES];
-	ShaderProgram* mShaders[Constants::shader_prog_t::TOTAL_SHADERS];
+	GLFWwindow* mWindow;
+	ShapeData* mShapeData[Constants::Types::shape_t::TOTAL_SHAPES];
+	ShaderProgram* mShaders[Constants::Types::shader_prog_t::TOTAL_SHADERS];
 	AstroidSpawner* mAstroidSpawner;
 	CollisionDetector* mCollisionDetector;
 	BoundryBox mBoundries;
@@ -37,6 +42,7 @@ protected:
 	void InitShaders();
 	void InitPlayer();
 	void InitAstroids();
+	void InitCollisionDetection();
 
 
 
