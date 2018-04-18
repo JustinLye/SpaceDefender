@@ -50,7 +50,6 @@ public:
 	virtual void MatchColliders(const Transform&);
 	virtual void MatchGameObjects(const Transform&);
 	
-
 	const Transform& GetTransform() const;
 
 	// Transform Interface and individual Shape/Collider/GameObject tranforms
@@ -152,6 +151,11 @@ protected:
 	virtual void OffsetShapes(const glm::vec3&);
 	virtual void OffsetColliders(const glm::vec3&);
 	virtual void OffsetObjects(const glm::vec3&);
+
+	virtual void CustomScaleActions(const float&) {}
+	virtual void CustomScaleActions(const float&, Shape*) {}
+
+	virtual void CustomTranslateActions(const glm::vec3&) {}
 
 	virtual void RenderShapes(const glm::mat4&, const glm::mat4&);
 	virtual void RenderGameObjects(const glm::mat4&, const glm::mat4&);

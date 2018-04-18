@@ -31,7 +31,7 @@ int AstroidSpawner::MaxCapacity()
 }
 int AstroidSpawner::MaxActiveCapacity()
 {
-	return 20;
+	return 60;
 }
 const int& AstroidSpawner::MinRespawnWaitTime() const
 {
@@ -86,6 +86,20 @@ const Transform& AstroidSpawner::GetTransform() const
 Transform& AstroidSpawner::GetTransform()
 {
 	return mTransform;
+}
+
+void AstroidSpawner::Scale(const float& scale)
+{
+	mTransform.Scale(scale);
+	for (int i = 0; i < mMaxCapacity; ++i)
+	{
+		mObjects[i]->Scale(scale);
+	}
+}
+
+void AstroidSpawner::Translate(const glm::vec3& translation)
+{
+	mTransform.Translate(translation);
 }
 
 void AstroidSpawner::MinRespawnWaitTime(const int& wait_time)
@@ -182,7 +196,7 @@ void AstroidSpawner::OnNotify(const GameObject& object, const Constants::Types::
 	switch (event_name)
 	{
 	case Constants::Types::event_t::TERMINATED_COLLIDABLE_OBJECT:
-		if (object.Type() == Constants::Types::object_t::LASER)
+		if (object.Type() == Constants::Types::object_t::ASTROID)
 		{
 			std::list<unsigned int>::iterator iter = mActiveIndices.begin();
 			unsigned int index = mAstroidToIndexMap[object.Id()];
@@ -219,15 +233,15 @@ void AstroidSpawner::CustomAllocOps(const unsigned int& index)
 	Astroid* astroid = mObjects[index];
 	astroid->Spawn(mTransform);
 	astroid->Speed(mSpeedDist(mGen));
-	astroid->Translate(glm::vec3(mPosDist(mGen), 0.0f, 0.0f));
+	astroid->Translate(glm::vec3(mPosDist(mGen), mStartingYPos - mTransform.Position().y, 0.0f));
 	astroid->Scale(mScaleDist(mGen));
 }
 
 void AstroidSpawner::CustomDeallocOps(const unsigned int& index)
 {
-	Astroid* astroid = mObjects[index];
-	astroid->OutOfBounds();
-	astroid->Despawn();
+//	Astroid* astroid = mObjects[index];
+//	astroid->OutOfBounds();
+//	astroid->Despawn();
 }
 
 void AstroidSpawner::CustomUpdateOps(const float& dt)
@@ -238,7 +252,7 @@ void AstroidSpawner::CustomUpdateOps(const float& dt)
 void AstroidSpawner::TrySpawn()
 {
 	float elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - mLastSpawnTime).count();
-	if (elapsed >= mMaxRespawnWaitTime || (elapsed >= mMinRespawnWaitTime && (mProbabilityOfSpawn > mSpawnDist(mGen))))
+	if (elapsed >= mMaxRespawnWaitTime || (elapsed >= mMinRespawnWaitTime && ((mProbabilityOfSpawn)*((float)mMinRespawnWaitTime/(float)mMaxRespawnWaitTime) > mSpawnDist(mGen))))
 	{
 		if (mActiveIndices.size() < mMaxActiveCapacity)
 		{

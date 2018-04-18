@@ -38,7 +38,7 @@ void LaserCannon::OnNotify(const GameObject& object, const Constants::Types::eve
 	switch (event_name)
 	{
 	case Constants::Types::event_t::TERMINATED_COLLIDABLE_OBJECT:
-		if (object.Type() == Constants::Types::object_t::ASTROID)
+		if (object.Type() == Constants::Types::object_t::LASER)
 		{
 			std::list<unsigned int>::iterator iter = mActiveIndices.begin();
 			while (iter != mActiveIndices.end())
@@ -143,6 +143,10 @@ void LaserCannon::CooldownTime(const float& cooldown_time)
 void LaserCannon::LaserTermYPos(const float& ypos)
 {
 	mLaserTermYPos = ypos;
+	for (int i = 0; i < mMaxCapacity; ++i)
+	{
+		mObjects[i]->TerminateYPos(ypos);
+	}
 }
 
 const float& LaserCannon::LaserTermYPos() const
@@ -173,9 +177,7 @@ void LaserCannon::CustomAllocOps(const unsigned int& index)
 
 void LaserCannon::CustomDeallocOps(const unsigned int& index)
 {
-	Laser* object = mObjects[index];
-	object->OutOfBounds();
-	object->Despawn();
+
 }
 
 void LaserCannon::CustomInitOps()
@@ -189,8 +191,9 @@ Laser* LaserCannon::ConstructObject()
 	Laser* new_obj = new Laser();
 	new_obj->AddRenderer(mRenderer);
 	new_obj->AddShape(mShape);
-	new_obj->AddCollider(mCollider);
+	new_obj->AddCollider(new Collider());
 	new_obj->TerminateYPos(mLaserTermYPos);
+	new_obj->AddObserver(this);
 #ifdef COLLISION_DEBUG
 	Shape* circle = new Shape();
 	CircleData* circle_data = new CircleData();
@@ -198,4 +201,18 @@ Laser* LaserCannon::ConstructObject()
 	new_obj->AddShape(circle);
 #endif
 	return new_obj;
+}
+
+void LaserCannon::Scale(const float& scale)
+{
+	mTransform.Scale(scale);
+	for (int i = 0; i < mMaxCapacity; ++i)
+	{
+		mObjects[i]->Scale(scale*0.6f);
+	}
+}
+
+void LaserCannon::Translate(const glm::vec3& translation)
+{
+	mTransform.Translate(translation);
 }

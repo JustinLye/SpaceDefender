@@ -25,6 +25,7 @@ public:
 	Player* GetPlayer();
 	GLFWwindow* GetWindow();
 	void Update(const float&);
+	void Render();
 	void DoCollisionDetection();
 protected:
 	OpenGLOptions mOptions;
@@ -35,6 +36,8 @@ protected:
 	AstroidSpawner* mAstroidSpawner;
 	CollisionDetector* mCollisionDetector;
 	BoundryBox mBoundries;
+	glm::mat4 mViewMat;
+	glm::mat4 mProjMat;
 	void InitSys();
 	void InitBoundries();
 	void InitShapeData();

@@ -162,6 +162,7 @@ void GameObject::Scale(const float& scale)
 	ScaleShapes(scale);
 	ScaleColliders(scale);
 	ScaleObjects(scale);
+	CustomScaleActions(scale);
 }
 
 void GameObject::Scale(const float& scale, Shape* shape)
@@ -206,6 +207,7 @@ void GameObject::Translate(const glm::vec3& translation)
 	TranslateShapes(translation);
 	TranslateColliders(translation);
 	TranslateObjects(translation);
+	CustomTranslateActions(translation);
 }
 
 void GameObject::Translate(const glm::vec3& translation, Shape* shape) 
@@ -429,6 +431,9 @@ void GameObject::Spawn(const Transform& transform)
 
 void GameObject::Despawn() const
 {
+#ifdef COLLISION_DEBUG
+	std::cout << __FUNCTION__ << '\n';
+#endif
 	if (mColliderMap.size() > 0)
 	{
 		Notify(*this, Constants::Types::event_t::TERMINATED_COLLIDABLE_OBJECT);
@@ -437,6 +442,9 @@ void GameObject::Despawn() const
 
 void GameObject::OutOfBounds() const
 {
+#ifdef COLLISION_DEBUG
+	std::cout << __FUNCTION__ << '\n';
+#endif
 	Notify(*this, Constants::Types::event_t::OBJECT_OUT_OF_BOUNDS);
 }
 

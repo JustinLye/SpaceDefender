@@ -30,9 +30,11 @@ public:
 	const float& ProjectileSpeed() const; 
 	const float& CooldownTime() const;
 	const float& LaserTermYPos() const;
+
 	const Transform& GetTransform() const;
 	Transform& GetTransform();
-
+	void Scale(const float&);
+	void Translate(const glm::vec3&);
 	unsigned int Fire();
 	void ProjectileSpeed(const float&);
 	void CooldownTime(const float&);

@@ -36,6 +36,9 @@ public:
 	const Transform& GetTransform() const;
 	Transform& GetTransform();
 
+	void Scale(const float&);
+	void Translate(const glm::vec3&);
+
 	void MinRespawnWaitTime(const int&);
 	void MaxRespawnWaitTime(const int&);
 	void MinProjectileSpeed(const float&);

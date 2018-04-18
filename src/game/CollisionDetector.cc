@@ -18,8 +18,10 @@ void CollisionDetector::DoDetection()
 	{
 		bool collision_detected = false;
 		std::map<unsigned int, const Astroid*>::const_iterator astroid_iter = mAstroidMap.cbegin();
+
 		while (astroid_iter != mAstroidMap.cend())
 		{
+			
 			collision_detected = laser_iter->second->CollisionDetected(*astroid_iter->second);
 			if (collision_detected)
 			{
@@ -29,6 +31,7 @@ void CollisionDetector::DoDetection()
 		}
 		if (collision_detected)
 		{
+			std::cout << __FUNCTION__ << " " << __LINE__ << '\n';
 			laser_iter->second->Collide(*astroid_iter->second);
 			astroid_iter->second->Collide(*laser_iter->second);
 			laser_iter = mLaserMap.erase(laser_iter);

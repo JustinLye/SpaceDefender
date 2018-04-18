@@ -1,6 +1,8 @@
 #ifndef SUBJECT_HEADER_INCLUDED
 #define SUBJECT_HEADER_INCLUDED
-
+#ifdef ENGINE_DEBUG
+#include<iostream>
+#endif
 #include<map>
 #include"engine/util/Constants.h"
 #include"engine/objects/Observer.h"

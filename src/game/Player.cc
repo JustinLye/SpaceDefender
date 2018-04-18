@@ -56,10 +56,6 @@ void Player::Update(const float& dt)
 	
 		//float delta_x = distance*dt;
 		Translate(glm::vec3(delta_x, 0.0f, 0.0f));
-		if (mLaserCannon)
-		{
-			mLaserCannon->GetTransform().Translate(glm::vec3(delta_x, 0.0f, 0.0f));
-		}
 	}
 	if (mLaserCannon)
 	{
@@ -85,7 +81,6 @@ void Player::AttachCannon(LaserCannon* cannon)
 {
 	mLaserCannon = cannon;
 	mLaserCannon->AttachTo(*this);
-	mLaserCannon->GetTransform().Translate(glm::vec3(0.0f, 100.0f, 0.0f));
 }
 
 void Player::Strafe(const Constants::Types::DIRECTION& dir)
@@ -112,6 +107,22 @@ void Player::FireCannon()
 	}
 }
 
+void Player::CustomScaleActions(const float& scale)
+{
+	if (mLaserCannon)
+	{
+		mLaserCannon->Scale(scale);
+	}
+}
+
+void Player::CustomTranslateActions(const glm::vec3& translation)
+{
+	if (mLaserCannon)
+	{
+		mLaserCannon->Translate(translation);
+	}
+}
+
 void Player::Speed(const float& speed)
 {
 	mSpeed = speed;
@@ -125,4 +136,22 @@ const float& Player::Speed() const
 void Player::Boost()
 {
 	mSpeedBoost = mMaxBoost;
+}
+
+void Player::AddObserver(Observer* observer)
+{
+	if (!ObserverIsMapped(observer))
+	{
+		mObserverMap.insert({ observer->Id(), observer });
+	}
+	if (mLaserCannon)
+	{
+		mLaserCannon->AddObserver(observer);
+	}
+}
+
+void Player::RemoveObserver(Observer* observer)
+{
+	mObserverMap.erase(observer->Id());
+	mLaserCannon->RemoveObserver(observer);
 }
