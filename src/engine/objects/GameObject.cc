@@ -6,6 +6,7 @@ GameObject::GameObject() :
 	Subject(),
 	mTransform(Transform()),
 	mRenderer(nullptr),
+	mRigidBody(nullptr),
 	mId(++NextObjectId)
 {
 
@@ -66,6 +67,78 @@ void GameObject::MatchGameObjects(const Transform& transform)
 		iter->second->Match(transform);
 		++iter;
 	}
+}
+
+void GameObject::Mass(const float& mass)
+{
+#ifdef ENGINE_DEBUG
+	assert(mRigidBody != nullptr);
+#endif
+	mRigidBody->Mass(mass);
+}
+
+void GameObject::Force(const glm::vec3& force)
+{
+#ifdef ENGINE_DEBUG
+	assert(mRigidBody != nullptr);
+#endif
+	mRigidBody->Force(force);
+}
+
+void GameObject::Damping(const float& damping)
+{
+#ifdef ENGINE_DEBUG
+	assert(mRigidBody != nullptr);
+#endif
+	mRigidBody->Damping(damping);
+}
+
+const float& GameObject::Mass() const
+{
+#ifdef ENGINE_DEBUG
+	assert(mRigidBody != nullptr);
+#endif
+	return mRigidBody->Mass();
+}
+
+const float& GameObject::InverseMass() const
+{
+#ifdef ENGINE_DEBUG
+	assert(mRigidBody != nullptr);
+#endif
+	return mRigidBody->InverseMass();
+}
+
+const glm::vec3& GameObject::Force() const
+{
+#ifdef ENGINE_DEBUG
+	assert(mRigidBody != nullptr);
+#endif
+	return mRigidBody->Force();
+}
+
+const float& GameObject::Damping() const
+{
+#ifdef ENGINE_DEBUG
+	assert(mRigidBody != nullptr);
+#endif
+	return mRigidBody->Damping();
+}
+
+const glm::vec3& GameObject::Velocity() const
+{
+#ifdef ENGINE_DEBUG
+	assert(mRigidBody != nullptr);
+#endif
+	return mRigidBody->Velocity();
+}
+
+const glm::vec3& GameObject::Acceleration() const
+{
+#ifdef ENGINE_DEBUG
+	assert(mRigidBody != nullptr);
+#endif
+	return mRigidBody->Acceleration();
 }
 
 const Transform& GameObject::GetTransform() const
@@ -138,6 +211,11 @@ void GameObject::RemoveShape(Shape* shape)
 
 void GameObject::Update(const float& dt)
 {
+	if (mRigidBody != nullptr)
+	{
+		mRigidBody->Update(dt);
+		Translate(mRigidBody->Velocity());
+	}
 	std::map<GameObject*, GameObject*, CompareGameObjectPtr>::iterator iter = mGameObjectMap.begin();
 	while (iter != mGameObjectMap.end())
 	{
@@ -152,6 +230,11 @@ void GameObject::AddRenderer(Renderer* renderer)
 //	assert(mRenderer == nullptr);
 //#endif
 	mRenderer = renderer;
+}
+
+void GameObject::AddRigidBody(RigidBody* rb)
+{
+	mRigidBody = rb;
 }
 
 // SCALING OPS

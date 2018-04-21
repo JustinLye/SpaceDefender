@@ -41,12 +41,29 @@ void Player::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 
 void Player::Update(const float& dt)
 {
-	float distance = mTargetXPos - mTransform.Position().x;
+/*	float distance = mTargetXPos - mTransform.Position().x;
 	float delta_x = distance*dt*mSpeed*mSpeedBoost;
 	if (std::abs(distance) > 0.01f)
 	{
 		Translate(glm::vec3(delta_x, 0.0f, 0.0f));
+	}*/
+	static int i = 61;
+	if (mRigidBody != nullptr)
+	{
+		mRigidBody->Update(dt);
+		if (i > 60)
+		{
+			i = 0;
+			std::cout << "Velocity: " << mRigidBody->Velocity().x << " InverseMass: " << mRigidBody->InverseMass() << '\n';
+		}
+		else
+		{
+			++i;
+		}
+		
+		Translate(mRigidBody->Velocity());
 	}
+	
 	if (mLaserCannon)
 	{
 		mLaserCannon->Update(dt*mLaserCannon->ProjectileSpeed());
@@ -76,11 +93,12 @@ void Player::Strafe(const Constants::Types::DIRECTION& dir)
 {
 	if (dir == Constants::Types::DIRECTION::LEFT)
 	{
-		mTargetXPos = mTransform.Position().x - mStep;
+		mRigidBody->Force(glm::vec3(-10.0f, 0.0f, 0.0f));
+	//	mTargetXPos = mTransform.Position().x - mStep;
 	}
 	if (dir == Constants::Types::DIRECTION::RIGHT)
 	{
-		mTargetXPos = mTransform.Position().x + mStep;
+		mRigidBody->Force(glm::vec3(10.0f, 0.0f, 0.0f));
 	}
 }
 

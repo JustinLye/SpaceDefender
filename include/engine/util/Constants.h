@@ -28,6 +28,11 @@ namespace Constants
 	{
 		const float TARGET_FRAME_RATE_IN_MS = 16.0f;
 	}
+	namespace Physics
+	{
+		const float DFLT_MASS = 1.0f;
+		const float DFLT_DAMPING = 0.999f;
+	}
 	namespace Input
 	{
 		enum KEY_STATE : unsigned int

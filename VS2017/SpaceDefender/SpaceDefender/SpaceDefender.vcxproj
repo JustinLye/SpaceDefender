@@ -24,6 +24,7 @@
     <ClCompile Include="..\..\..\src\engine\objects\Collider.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\GameObject.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\Observer.cc" />
+    <ClCompile Include="..\..\..\src\engine\objects\RigidBody.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\Subject.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\Transform.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\RenderableObject.cc" />
@@ -54,6 +55,7 @@
     <ClInclude Include="..\..\..\include\engine\objects\Collider.h" />
     <ClInclude Include="..\..\..\include\engine\objects\GameObject.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Observer.h" />
+    <ClInclude Include="..\..\..\include\engine\objects\RigidBody.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Subject.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Transform.h" />
     <ClInclude Include="..\..\..\include\engine\objects\RenderableObject.h" />

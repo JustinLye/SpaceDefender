@@ -117,14 +117,18 @@ void SpaceDefender::InitPlayer()
 	laser->Buffer(mShapeData[Constants::Types::shape_t::LINE_SEG]);
 	LaserCannon* laser_cannon = new LaserCannon(laser, mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG]);
 	laser_cannon->LaserTermYPos(mBoundries.mTop * 1.05f);
-	laser_cannon->ProjectileSpeed(sh * 0.050f);
-	laser_cannon->CooldownTime(100.0f);
+	laser_cannon->ProjectileSpeed(sh * 0.090f);
+	laser_cannon->CooldownTime(80.0f);
 	Renderer* renderer = new Renderer(mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG], GL_FILL);
 	Collider* collider = new Collider();
+	RigidBody* rb = new RigidBody();
 	mPlayer = new Player();
 	mPlayer->AddRenderer(renderer);
 	mPlayer->AddShape(ship);
 	mPlayer->AddCollider(collider);
+	mPlayer->AddRigidBody(rb);
+	mPlayer->Mass(1.0f);
+	mPlayer->Damping(0.75f);
 	mPlayer->AttachCannon(laser_cannon);
 	mPlayer->Scale(sw*0.015f);
 	mPlayer->Translate(glm::vec3(sw/2.0f, sh*0.08f, 0.0f));
@@ -174,6 +178,7 @@ void SpaceDefender::InitKeyStateMap()
 	mKeyStateMap.AddKey(GLFW_KEY_LEFT);
 	mKeyStateMap.AddKey(GLFW_KEY_D);
 	mKeyStateMap.AddKey(GLFW_KEY_RIGHT);
+	mKeyStateMap.AddKey(GLFW_KEY_UP);
 }
 
 void SpaceDefender::HandleInput()
@@ -192,6 +197,10 @@ void SpaceDefender::HandleInput()
 	}
 
 	if (mKeyStateMap[GLFW_KEY_SPACE].mState == KEY_STATE::DOWN || mKeyStateMap[GLFW_KEY_SPACE].mState == KEY_STATE::PRESSED)
+	{
+		mPlayer->FireCannon();
+	}
+	else if (KeyDown(GLFW_KEY_UP))
 	{
 		mPlayer->FireCannon();
 	}

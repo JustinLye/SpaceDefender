@@ -1,13 +1,15 @@
 #ifndef GAME_OBJECT_HEADER_INCLUDED
 #define GAME_OBJECT_HEADER_INCLUDED
 
-
 #include"engine/objects/Renderer.h"
 #include"engine/objects/Collider.h"
 #include"engine/objects/Subject.h"
+#include"engine/objects/RigidBody.h"
 #ifdef ENGINE_DEBUG
 #include"engine/util/DebugFunctions.h"
 #endif
+
+using namespace Constants::Physics;
 
 class GameObject :
 	public Subject
@@ -44,15 +46,27 @@ public:
 	virtual void Collide(const GameObject&) const;
 	virtual void Update(const float&);
 	virtual void AddRenderer(Renderer*);
-
+	virtual void AddRigidBody(RigidBody*);
 	virtual void Match(const Transform&);
 	virtual void MatchShapes(const Transform&);
 	virtual void MatchColliders(const Transform&);
 	virtual void MatchGameObjects(const Transform&);
 	
-	const Transform& GetTransform() const;
+	void Mass(const float&);
+	void Force(const glm::vec3&);
+	void Damping(const float&);
+
+	const float& Mass() const;
+	const float& InverseMass() const;
+	const glm::vec3& Force() const;
+	const float& Damping() const;
+	const glm::vec3& Velocity() const;
+	const glm::vec3& Acceleration() const;
+	
+
 
 	// Transform Interface and individual Shape/Collider/GameObject tranforms
+	const Transform& GetTransform() const;
 	virtual void Scale(const float&);
 	virtual void Scale(const float&, Shape*);
 	virtual void Scale(const float&, Collider*);
@@ -128,10 +142,9 @@ public:
 	bool operator==(const GameObject&) const;
 
 protected:
-
-
 	Transform mTransform;
 	Renderer* mRenderer;
+	RigidBody* mRigidBody;
 	std::map<Shape*, Transform, CompareShapePtr> mShapeMap;
 	std::map<Collider*, Collider*, CompareTransPtr> mColliderMap;
 	std::map<GameObject*, GameObject*, CompareGameObjectPtr> mGameObjectMap;

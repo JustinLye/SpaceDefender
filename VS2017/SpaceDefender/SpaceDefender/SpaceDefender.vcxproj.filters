@@ -138,6 +138,9 @@
     <ClCompile Include="..\..\..\src\engine\util\KeyMap.cc">
       <Filter>src\engine\util</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\objects\RigidBody.cc">
+      <Filter>src\engine\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\engine\objects\Collider.h">
@@ -229,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\engine\util\KeyMap.h">
       <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\objects\RigidBody.h">
+      <Filter>include\engine\objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
