@@ -252,6 +252,7 @@ void AstroidSpawner::CustomAllocOps(const unsigned int& index)
 	astroid->Speed(mSpeedDist(mGen));
 	astroid->Translate(glm::vec3(mPosDist(mGen), mStartingYPos - mTransform.Position().y, 0.0f));
 	astroid->Scale(mScaleDist(mGen));
+	astroid->HitPoints(2);
 }
 
 void AstroidSpawner::CustomDeallocOps(const unsigned int& index)
