@@ -10,13 +10,18 @@
 #include"engine/shapes/QuadData.h"
 #include"engine/shapes/LineSegmentData.h"
 #include"engine/util/BoundryBox.h"
+#include"engine/util/KeyMap.h"
 #include"game/Player.h"
 #include"game/AstroidSpawner.h"
 #include"game/CollisionDetector.h"
 
+using namespace Constants::Input;
+using namespace Constants::Types;
+using namespace std::chrono;
 class SpaceDefender
 {
 public:
+	
 	SpaceDefender(const OpenGLOptions&);
 	~SpaceDefender();
 
@@ -27,17 +32,22 @@ public:
 	void Update(const float&);
 	void Render();
 	void DoCollisionDetection();
+
 protected:
+	
 	OpenGLOptions mOptions;
 	Player* mPlayer;
 	GLFWwindow* mWindow;
-	ShapeData* mShapeData[Constants::Types::shape_t::TOTAL_SHAPES];
-	ShaderProgram* mShaders[Constants::Types::shader_prog_t::TOTAL_SHADERS];
+	ShapeData* mShapeData[shape_t::TOTAL_SHAPES];
+	ShaderProgram* mShaders[shader_prog_t::TOTAL_SHADERS];
 	AstroidSpawner* mAstroidSpawner;
 	CollisionDetector* mCollisionDetector;
 	BoundryBox mBoundries;
 	glm::mat4 mViewMat;
 	glm::mat4 mProjMat;
+	KeyStateMap mKeyStateMap;
+	float mBoostChargeTime;
+
 	void InitSys();
 	void InitBoundries();
 	void InitShapeData();
@@ -46,8 +56,17 @@ protected:
 	void InitPlayer();
 	void InitAstroids();
 	void InitCollisionDetection();
+	void InitKeyStateMap();
+	void HandleInput();
+	void UpdateKeyStates();
 
-
+	void HandleLeftMovement();
+	void HandleRightMovement();
+	bool MoveLeft();
+	bool MoveRight();
+	bool KeyDown(const int&);
+	bool UseBoost(const int&);
+	float TimeSinceKeyChangeMs(const int&);
 
 };
 

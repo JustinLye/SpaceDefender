@@ -723,6 +723,11 @@ bool GameObject::ObjectIsMapped(GameObject* object) const
 	return (mGameObjectMap.find(object) != mGameObjectMap.cend());
 }
 
+void GameObject::ReportCollision() const
+{
+	Notify(*this, Constants::Types::event_t::COLLISION_REPORTED);
+}
+
 bool GameObject::operator<(const GameObject& other) const
 {
 	return mId < other.Id();

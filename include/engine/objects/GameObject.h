@@ -171,6 +171,8 @@ protected:
 	bool ColliderIsMapped(Collider*) const;
 	bool ObjectIsMapped(GameObject*) const;
 
+	void ReportCollision() const;
+
 private:
 	static unsigned int NextObjectId;
 	unsigned int mId;

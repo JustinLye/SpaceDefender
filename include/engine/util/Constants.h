@@ -28,6 +28,17 @@ namespace Constants
 	{
 		const float TARGET_FRAME_RATE_IN_MS = 16.0f;
 	}
+	namespace Input
+	{
+		enum KEY_STATE : unsigned int
+		{
+			UNKNOWN,
+			PRESSED,
+			RELEASED,
+			DOWN,
+			UP
+		};
+	}
 	namespace Types
 	{
 		enum DIRECTION : unsigned int
@@ -54,6 +65,7 @@ namespace Constants
 			ACTIVATED_COLLIDABLE_OBJECT,
 			TERMINATED_COLLIDABLE_OBJECT,
 			OBJECT_OUT_OF_BOUNDS,
+			COLLISION_REPORTED,
 			TOTAL_EVENTS
 		};
 

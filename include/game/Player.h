@@ -22,7 +22,8 @@ public:
 	virtual void CustomTranslateActions(const glm::vec3&) override;
 	virtual void Speed(const float&);
 	const float& Speed() const;
-	virtual void Boost();
+	virtual void Boost(const float&);
+	const float& Boost() const;
 	virtual void DoDetection(Collider*);
 	virtual void AddObserver(Observer*) override;
 	virtual void RemoveObserver(Observer*) override;

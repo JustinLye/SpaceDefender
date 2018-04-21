@@ -31,11 +31,13 @@ void CollisionDetector::DoDetection()
 		}
 		if (collision_detected)
 		{
-			std::cout << __FUNCTION__ << " " << __LINE__ << '\n';
 			laser_iter->second->Collide(*astroid_iter->second);
 			astroid_iter->second->Collide(*laser_iter->second);
 			laser_iter = mLaserMap.erase(laser_iter);
-			astroid_iter = mAstroidMap.erase(astroid_iter);
+			if (astroid_iter->second->HitPoints() <= 0)
+			{
+				astroid_iter = mAstroidMap.erase(astroid_iter);
+			}
 		}
 		else
 		{

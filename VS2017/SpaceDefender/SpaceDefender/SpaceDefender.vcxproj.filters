@@ -135,6 +135,9 @@
     <ClCompile Include="..\..\..\src\game\CollisionDetector.cc">
       <Filter>src\game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\util\KeyMap.cc">
+      <Filter>src\engine\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\engine\objects\Collider.h">
@@ -223,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\game\AstroidSpawner.h">
       <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\util\KeyMap.h">
+      <Filter>include\engine\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

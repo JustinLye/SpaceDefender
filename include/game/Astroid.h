@@ -21,9 +21,11 @@ public:
 	void Update(const float&) override;
 	
 	bool Terminate() const;
-
+	void HitPoints(const int&);
+	const int& HitPoints() const;
 protected:
 	float mSpeed;
+	int mHitPoints;
 	float mTerminateYPos;
 };
 

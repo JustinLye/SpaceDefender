@@ -27,11 +27,11 @@ AstroidSpawner::~AstroidSpawner()
 }
 int AstroidSpawner::MaxCapacity()
 {
-	return 60;
+	return 30;
 }
 int AstroidSpawner::MaxActiveCapacity()
 {
-	return 60;
+	return 15;
 }
 const int& AstroidSpawner::MinRespawnWaitTime() const
 {
@@ -211,6 +211,22 @@ void AstroidSpawner::OnNotify(const GameObject& object, const Constants::Types::
 			}
 		}
 		break;
+	case Constants::Types::event_t::COLLISION_REPORTED:
+		if (object.Type() == object_t::ASTROID)
+		{
+			std::list<unsigned int>::iterator iter = mActiveIndices.begin();
+			unsigned int index = mAstroidToIndexMap[object.Id()];
+			while (iter != mActiveIndices.end())
+			{
+				if (*iter == index)
+				{
+					Astroid* astroid = mObjects[*iter];
+					astroid->HitPoints(astroid->HitPoints() - 1);
+					return;
+				}
+				++iter;
+			}
+		}
 	}
 }
 
@@ -221,6 +237,7 @@ Astroid* AstroidSpawner::ConstructObject()
 	astroid->AddShape(mShape);
 	astroid->AddCollider(new Collider());
 	astroid->AddObserver(this);
+	astroid->HitPoints(2);
 	return astroid;
 }
 
@@ -239,9 +256,7 @@ void AstroidSpawner::CustomAllocOps(const unsigned int& index)
 
 void AstroidSpawner::CustomDeallocOps(const unsigned int& index)
 {
-//	Astroid* astroid = mObjects[index];
-//	astroid->OutOfBounds();
-//	astroid->Despawn();
+
 }
 
 void AstroidSpawner::CustomUpdateOps(const float& dt)
@@ -262,4 +277,10 @@ void AstroidSpawner::TrySpawn()
 			}
 		}
 	}
+}
+
+
+bool AstroidSpawner::DestructionPred(Astroid* astroid) const
+{
+	return astroid->Terminate();
 }

@@ -42,24 +42,13 @@ void Player::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 void Player::Update(const float& dt)
 {
 	float distance = mTargetXPos - mTransform.Position().x;
-	if (mSpeedBoost > 1.0f)
-	{
-		mSpeedBoost *= 0.95f;
-		if (mSpeedBoost < 1.0f)
-		{
-			mSpeedBoost = 1.0f;
-		}
-	}
 	float delta_x = distance*dt*mSpeed*mSpeedBoost;
 	if (std::abs(distance) > 0.01f)
 	{
-	
-		//float delta_x = distance*dt;
 		Translate(glm::vec3(delta_x, 0.0f, 0.0f));
 	}
 	if (mLaserCannon)
 	{
-
 		mLaserCannon->Update(dt*mLaserCannon->ProjectileSpeed());
 	}
 }
@@ -133,9 +122,14 @@ const float& Player::Speed() const
 	return mSpeed;
 }
 
-void Player::Boost()
+void Player::Boost(const float& boost)
 {
-	mSpeedBoost = mMaxBoost;
+	mSpeedBoost = boost;
+}
+
+const float& Player::Boost() const
+{
+	return mSpeedBoost;
 }
 
 void Player::AddObserver(Observer* observer)

@@ -25,12 +25,12 @@ LaserCannon::~LaserCannon()
 
 int LaserCannon::MaxCapacity()
 {
-	return 20;
+	return 10;
 }
 
 int LaserCannon::MaxActiveCapacity()
 {
-	return 10;
+	return 7;
 }
 
 void LaserCannon::OnNotify(const GameObject& object, const Constants::Types::event_t& event_name)

@@ -6,7 +6,7 @@
 #include"engine/objects/Observer.h"
 #include"engine/containers/ObjectManager.h"
 #include"game/Astroid.h"
-
+using namespace Constants::Types;
 class AstroidSpawner :
 	Subject,
 	Observer,
@@ -78,6 +78,7 @@ protected:
 	void CustomAllocOps(const unsigned int&) override;
 	void CustomDeallocOps(const unsigned int&) override;
 	void CustomUpdateOps(const float&) override;
+	bool DestructionPred(Astroid*) const override;
 
 	void TrySpawn();
 

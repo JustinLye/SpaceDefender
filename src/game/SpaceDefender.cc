@@ -34,6 +34,7 @@ void SpaceDefender::Run()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		HandleInput();
 		Update(1.0f / 60.0f);
 		DoCollisionDetection();
 		Render();
@@ -116,8 +117,8 @@ void SpaceDefender::InitPlayer()
 	laser->Buffer(mShapeData[Constants::Types::shape_t::LINE_SEG]);
 	LaserCannon* laser_cannon = new LaserCannon(laser, mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG]);
 	laser_cannon->LaserTermYPos(mBoundries.mTop * 1.05f);
-	laser_cannon->ProjectileSpeed(sh * 0.20f);
-	
+	laser_cannon->ProjectileSpeed(sh * 0.050f);
+	laser_cannon->CooldownTime(100.0f);
 	Renderer* renderer = new Renderer(mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG], GL_FILL);
 	Collider* collider = new Collider();
 	mPlayer = new Player();
@@ -125,7 +126,7 @@ void SpaceDefender::InitPlayer()
 	mPlayer->AddShape(ship);
 	mPlayer->AddCollider(collider);
 	mPlayer->AttachCannon(laser_cannon);
-	mPlayer->Scale(sw*0.04f);
+	mPlayer->Scale(sw*0.015f);
 	mPlayer->Translate(glm::vec3(sw/2.0f, sh*0.08f, 0.0f));
 	laser_cannon->Translate(glm::vec3(1.0f, sh * 0.05f, 0.0f)); // adjust laser cannon
 	
@@ -143,17 +144,18 @@ void SpaceDefender::InitAstroids()
 
 	mAstroidSpawner = new AstroidSpawner(astroid, mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG]);
 	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
-	mAstroidSpawner->MaxProjectileSpeed(sw*0.20f);
-	mAstroidSpawner->MinProjectileSpeed(sw*0.05f);
-	mAstroidSpawner->MaxScale(sw*0.03f);
-	mAstroidSpawner->MinScale(sw*0.01f);
-	mAstroidSpawner->MinRespawnWaitTime(1000);
-	mAstroidSpawner->MaxRespawnWaitTime(1500);
+	mAstroidSpawner->MaxProjectileSpeed(sw*0.30f);
+	mAstroidSpawner->MinProjectileSpeed(sw*0.025f);
+	mAstroidSpawner->MaxScale(sw*0.05f);
+	mAstroidSpawner->MinScale(sw*0.03f);
+	mAstroidSpawner->MinRespawnWaitTime(100);
+	mAstroidSpawner->MaxRespawnWaitTime(700);
 	mAstroidSpawner->ProbabilityOfSpawn(10.0f);
 	mAstroidSpawner->MaxXPos(mBoundries.mRight - (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));
 	mAstroidSpawner->MinXPos(mBoundries.mLeft + (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));
 	mAstroidSpawner->StartingYPos(mBoundries.mTop + (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.05f));
 	mAstroidSpawner->TerminateYPos(mBoundries.mBottom - (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.05f));
+	
 	
 }
 
@@ -162,4 +164,128 @@ void SpaceDefender::InitCollisionDetection()
 	mCollisionDetector = new CollisionDetector();
 	mAstroidSpawner->AddObserver(mCollisionDetector);
 	mPlayer->AddObserver(mCollisionDetector);
+}
+
+void SpaceDefender::InitKeyStateMap()
+{
+	mKeyStateMap.AddKey(GLFW_KEY_ESCAPE);
+	mKeyStateMap.AddKey(GLFW_KEY_SPACE);
+	mKeyStateMap.AddKey(GLFW_KEY_A);
+	mKeyStateMap.AddKey(GLFW_KEY_LEFT);
+	mKeyStateMap.AddKey(GLFW_KEY_D);
+	mKeyStateMap.AddKey(GLFW_KEY_RIGHT);
+}
+
+void SpaceDefender::HandleInput()
+{
+	UpdateKeyStates();
+	if (mKeyStateMap[GLFW_KEY_ESCAPE].mState == KEY_STATE::DOWN || mKeyStateMap[GLFW_KEY_ESCAPE].mState == KEY_STATE::PRESSED)
+	{
+		glfwSetWindowShouldClose(mWindow, GLFW_TRUE);
+	}
+
+	HandleLeftMovement();
+	HandleRightMovement();
+	if (!MoveLeft() && !MoveRight() && mPlayer->Boost() > 1.0f)
+	{
+		mPlayer->Boost(1.0f);
+	}
+
+	if (mKeyStateMap[GLFW_KEY_SPACE].mState == KEY_STATE::DOWN || mKeyStateMap[GLFW_KEY_SPACE].mState == KEY_STATE::PRESSED)
+	{
+		mPlayer->FireCannon();
+	}
+
+}
+
+void SpaceDefender::HandleLeftMovement()
+{
+	if (MoveLeft())
+	{
+		mPlayer->Strafe(DIRECTION::LEFT);
+		if (UseBoost(GLFW_KEY_A) || UseBoost(GLFW_KEY_LEFT))
+		{
+			mPlayer->Boost(2.0f);
+		}
+	}
+}
+
+void SpaceDefender::HandleRightMovement()
+{
+	if (MoveRight())
+	{
+		mPlayer->Strafe(DIRECTION::RIGHT);
+		if (UseBoost(GLFW_KEY_D) || UseBoost(GLFW_KEY_RIGHT))
+		{
+			mPlayer->Boost(2.0f);
+		}
+	}
+}
+
+
+bool SpaceDefender::KeyDown(const int& key)
+{
+	return mKeyStateMap[key].mState == KEY_STATE::DOWN || mKeyStateMap[key].mState == KEY_STATE::PRESSED;
+}
+
+bool SpaceDefender::MoveLeft()
+{
+	return KeyDown(GLFW_KEY_A) || KeyDown(GLFW_KEY_LEFT);
+}
+
+bool SpaceDefender::MoveRight()
+{
+	return KeyDown(GLFW_KEY_D) || KeyDown(GLFW_KEY_RIGHT);
+}
+
+bool SpaceDefender::UseBoost(const int& key)
+{
+	return mPlayer->Boost() < 2.0f && ((float)duration_cast<milliseconds>(high_resolution_clock::now() - mKeyStateMap[key].mLastChanged).count() > mBoostChargeTime);
+}
+
+
+void SpaceDefender::UpdateKeyStates()
+{
+	KeyStateMap::iterator iter = mKeyStateMap.Begin();
+	while (iter != mKeyStateMap.End())
+	{
+		switch (glfwGetKey(mWindow, iter->first))
+		{
+		case GLFW_PRESS:
+			switch (iter->second.mState)
+			{
+			case KEY_STATE::UNKNOWN:
+			case KEY_STATE::RELEASED:
+			case KEY_STATE::UP:
+				iter->second.mState = KEY_STATE::PRESSED;
+				iter->second.mLastChanged = high_resolution_clock::now();
+				break;
+			default:
+				iter->second.mState = KEY_STATE::DOWN;
+				break;
+			}
+			break;
+		case GLFW_RELEASE:
+			if (iter->second.mState == KEY_STATE::RELEASED)
+			{
+				iter->second.mState = KEY_STATE::UP;
+			}
+			else
+			{
+				iter->second.mState = KEY_STATE::RELEASED;
+				iter->second.mLastChanged = high_resolution_clock::now();
+			}
+			
+			break;
+		case GLFW_REPEAT:
+			iter->second.mState = KEY_STATE::DOWN;
+			break;
+		}
+		++iter;
+	}
+}
+
+float SpaceDefender::TimeSinceKeyChangeMs(const int& key)
+{
+	return (float)duration_cast<milliseconds>(high_resolution_clock::now() - mKeyStateMap[key].mLastChanged).count();
 }

@@ -19,8 +19,10 @@ public:
 	void TerminateYPos(const float&);
 	const float& TerminateYPos() const;
 	bool Terminate() const;
+
 protected:
 	float mTerminateYPos;
+	int mAttackDamage;
 };
 
 #endif

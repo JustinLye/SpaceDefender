@@ -2,7 +2,8 @@
 
 Astroid::Astroid() :
 	GameObject(),
-	mSpeed(0.0f)
+	mSpeed(0.0f),
+	mHitPoints(2)
 {
 
 }
@@ -22,7 +23,12 @@ void Astroid::Collide(const GameObject& object) const
 	switch (object.Type())
 	{
 	case Constants::Types::object_t::LASER:
-		Despawn();
+		ReportCollision();
+		std::cout << "hit points: " << mHitPoints << "\n";
+		if (mHitPoints <= 0)
+		{
+			Despawn();
+		}
 		break;
 	}
 }
@@ -37,6 +43,11 @@ const float& Astroid::TerminateYPos() const
 	return mTerminateYPos;
 }
 
+const int& Astroid::HitPoints() const
+{
+	return mHitPoints;
+}
+
 void Astroid::Speed(const float& speed)
 {
 	mSpeed = speed;
@@ -47,14 +58,17 @@ void Astroid::TerminateYPos(const float& ypos)
 	mTerminateYPos = ypos;
 }
 
+void Astroid::HitPoints(const int& points)
+{
+	mHitPoints = points;
+}
+
 void Astroid::Update(const float& dt)
 {
-	Translate(glm::vec3(0.0f, -dt * mSpeed, 0.0f));
+	Translate(glm::vec3(0.0f, mSpeed, 0.0f) * -dt);
 }
 
 bool Astroid::Terminate() const
 {
-	float term_ypos = mTerminateYPos;
-	float curr_ypos = Position().y;
-	return (std::abs(term_ypos) > 0.0f && ((term_ypos > 0.0f && curr_ypos > term_ypos) || (term_ypos < 0.0f && curr_ypos < term_ypos)));
+	return mTerminateYPos > mTransform.Position().y;
 }

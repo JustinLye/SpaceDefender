@@ -36,6 +36,7 @@
     <ClCompile Include="..\..\..\src\engine\shapes\ShapeData.cc" />
     <ClCompile Include="..\..\..\src\engine\shapes\TriangleData.cc" />
     <ClCompile Include="..\..\..\src\engine\util\DebugFunctions.cc" />
+    <ClCompile Include="..\..\..\src\engine\util\KeyMap.cc" />
     <ClCompile Include="..\..\..\src\engine\util\OpenGLUtility.cc" />
     <ClCompile Include="..\..\..\src\engine\util\OpenGLOptions.cc" />
     <ClCompile Include="..\..\..\src\engine\util\ShaderProgram.cc" />
@@ -67,6 +68,7 @@
     <ClInclude Include="..\..\..\include\engine\util\BoundryBox.h" />
     <ClInclude Include="..\..\..\include\engine\util\Constants.h" />
     <ClInclude Include="..\..\..\include\engine\util\DebugFunctions.h" />
+    <ClInclude Include="..\..\..\include\engine\util\KeyMap.h" />
     <ClInclude Include="..\..\..\include\engine\util\OpenGLUtility.h" />
     <ClInclude Include="..\..\..\include\engine\util\OpenGLOptions.h" />
     <ClInclude Include="..\..\..\include\engine\util\Paths.h" />
@@ -137,7 +139,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external\stb;C:\SpaceDefender\external;C:\SpaceDefender\external\glfw\include;C:\SpaceDefender\external\ft29\freetype-2.9\include;C:\SpaceDefender\external\glad\include;C:\SpaceDefender\external\Boost\include;C:\SpaceDefender\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/DENGINE_DEBUG /DCOLLISION_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/DENGINE_DEBUG %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\SpaceDefender\external\glfw\lib-vc2015;C:\SpaceDefender\external\ft29\freetype-2.9\objs\Win32\Release Static;C:\SpaceDefender\external\Boost\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
