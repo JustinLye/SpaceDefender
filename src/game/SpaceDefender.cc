@@ -22,6 +22,7 @@ void SpaceDefender::Init()
 	InitShapeData();
 	InitShapes();
 	InitShaders();
+	InitFonts();
 	InitPlayer();
 	InitAstroids();
 	InitCollisionDetection();
@@ -36,7 +37,7 @@ void SpaceDefender::Run()
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		HandleInput();
 		Update(1.0f / 60.0f);
-		DoCollisionDetection();
+		DoCollisionDetection(1.0f / 60.0f);
 		Render();
 		glfwSwapBuffers(mWindow);
 		glfwPollEvents();
@@ -65,9 +66,9 @@ void SpaceDefender::Render()
 	mAstroidSpawner->Render(mProjMat, mViewMat);
 }
 
-void SpaceDefender::DoCollisionDetection()
+void SpaceDefender::DoCollisionDetection(const float& dt)
 {
-	mCollisionDetector->DoDetection();
+	mCollisionDetector->DoDetection(dt);
 }
 
 void SpaceDefender::InitSys()
@@ -103,6 +104,14 @@ void SpaceDefender::InitShaders()
 {
 	mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG] = new ShaderProgram();
 	mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG]->Init();
+}
+
+void SpaceDefender::InitFonts()
+{
+	mScoreFont.PathToFont(EngineFontPath(SCORE_FONT_FILENAME));
+	mScoreFont.FontHeight(48);
+	mScoreFont.FontWidth(48);
+	mScoreFont.Init();
 }
 
 void SpaceDefender::InitPlayer()
@@ -148,8 +157,8 @@ void SpaceDefender::InitAstroids()
 
 	mAstroidSpawner = new AstroidSpawner(astroid, mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG]);
 	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
-	mAstroidSpawner->MaxProjectileSpeed(sw*0.30f);
-	mAstroidSpawner->MinProjectileSpeed(sw*0.025f);
+	mAstroidSpawner->MaxProjectileSpeed(sw*0.10f);
+	mAstroidSpawner->MinProjectileSpeed(sw*0.005f);
 	mAstroidSpawner->MaxScale(sw*0.05f);
 	mAstroidSpawner->MinScale(sw*0.03f);
 	mAstroidSpawner->MinRespawnWaitTime(100);

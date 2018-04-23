@@ -14,9 +14,12 @@
 #include"game/Player.h"
 #include"game/AstroidSpawner.h"
 #include"game/CollisionDetector.h"
+#include"game/ScoreFont.h"
 
 using namespace Constants::Input;
 using namespace Constants::Types;
+using namespace Constants::Font;
+
 using namespace std::chrono;
 class SpaceDefender
 {
@@ -31,7 +34,7 @@ public:
 	GLFWwindow* GetWindow();
 	void Update(const float&);
 	void Render();
-	void DoCollisionDetection();
+	void DoCollisionDetection(const float&);
 
 protected:
 	
@@ -47,12 +50,14 @@ protected:
 	glm::mat4 mProjMat;
 	KeyStateMap mKeyStateMap;
 	float mBoostChargeTime;
+	ScoreFont mScoreFont;
 
 	void InitSys();
 	void InitBoundries();
 	void InitShapeData();
 	void InitShapes();
 	void InitShaders();
+	void InitFonts();
 	void InitPlayer();
 	void InitAstroids();
 	void InitCollisionDetection();

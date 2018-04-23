@@ -13,7 +13,7 @@ class CollisionDetector :
 public:
 	CollisionDetector();
 	~CollisionDetector();
-	void DoDetection();
+	void DoDetection(const float&);
 	void OnNotify(const GameObject&, const Constants::Types::event_t&);
 protected:
 	std::map<unsigned int, const Astroid*> mAstroidMap;

@@ -811,6 +811,14 @@ void GameObject::ReportCollision() const
 	Notify(*this, Constants::Types::event_t::COLLISION_REPORTED);
 }
 
+void GameObject::ResetRigidBody()
+{
+#ifdef ENGINE_DEBUG
+	assert(mRigidBody != nullptr);
+#endif
+	mRigidBody->Reset();
+}
+
 bool GameObject::operator<(const GameObject& other) const
 {
 	return mId < other.Id();

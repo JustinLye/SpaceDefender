@@ -4,11 +4,12 @@
 #include<glad/glad.h>
 #include<glm/glm.hpp>
 #include<glm/gtc/type_ptr.hpp>
+#include"engine/util/Constants.h"
 #include"engine/util/ShaderProgram.h"
 #include"engine/shapes/Shape.h"
 
-// NOTE: Renderer should use a pointer to ShaderProgram and not have its' own instance
-
+using namespace Constants::Shaders;
+using namespace Constants::Rendering;
 class Renderer
 {
 public:
@@ -29,9 +30,6 @@ public:
 
 	void Color(const glm::vec4&);
 	const glm::vec4& Color() const;
-
-	static const GLenum DFLT_POLY_MODE;
-
 protected:
 	
 	ShaderProgram* mShader;
