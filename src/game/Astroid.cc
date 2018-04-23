@@ -22,7 +22,7 @@ void Astroid::Collide(const GameObject& object) const
 {
 	switch (object.Type())
 	{
-	case Constants::Types::object_t::LASER:
+	case object_t::LASER:
 		ReportCollision();
 		std::cout << "hit points: " << mHitPoints << "\n";
 		if (mHitPoints <= 0)
@@ -30,7 +30,16 @@ void Astroid::Collide(const GameObject& object) const
 			Despawn();
 		}
 		break;
+	case object_t::ASTROID:
+		ReportAstroidCollision((const Astroid&)object);
+		break;
 	}
+}
+
+void Astroid::ReportAstroidCollision(const Astroid& astroid) const
+{
+	AstroidCollision collision(this->Id(), astroid.Id());
+	Notify(collision, event_t::ASTROID_TO_ASTROID_COLLISION);
 }
 
 const float& Astroid::Speed() const
@@ -65,7 +74,20 @@ void Astroid::HitPoints(const int& points)
 
 void Astroid::Update(const float& dt)
 {
-	Translate(glm::vec3(0.0f, mSpeed, 0.0f) * -dt);
+	if (mRigidBody != nullptr)
+	{
+		mRigidBody->Update(dt);
+		if (std::abs(mRigidBody->Force().y) <= 0.0f)
+		{
+			mRigidBody->Force(glm::vec3(0.0f, -1 * mSpeed, 0.0f));
+		}
+		Translate(mRigidBody->Velocity());
+	}
+	else
+	{
+		Translate(glm::vec3(0.0f, mSpeed, 0.0f) * -dt);
+	}
+	
 }
 
 bool Astroid::Terminate() const

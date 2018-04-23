@@ -214,9 +214,11 @@ void AstroidSpawner::OnNotify(const GameObject& object, const Constants::Types::
 	case Constants::Types::event_t::COLLISION_REPORTED:
 		if (object.Type() == object_t::ASTROID)
 		{
-			std::list<unsigned int>::iterator iter = mActiveIndices.begin();
+			//std::list<unsigned int>::iterator iter = mActiveIndices.begin();
 			unsigned int index = mAstroidToIndexMap[object.Id()];
-			while (iter != mActiveIndices.end())
+			Astroid* astroid = mObjects[index];
+			astroid->HitPoints(astroid->HitPoints() - 1);
+			/*while (iter != mActiveIndices.end())
 			{
 				if (*iter == index)
 				{
@@ -225,9 +227,46 @@ void AstroidSpawner::OnNotify(const GameObject& object, const Constants::Types::
 					return;
 				}
 				++iter;
-			}
+			}*/
 		}
+		break;
+	case event_t::ASTROID_TO_ASTROID_COLLISION:
+		Astroid* astroid_1 = mObjects[mAstroidToIndexMap[((const AstroidCollision&)object).GetAstroidIds().first]];
+		Astroid* astroid_2 = mObjects[mAstroidToIndexMap[((const AstroidCollision&)object).GetAstroidIds().second]];
+		// calculate final velocity
+		glm::vec3 U1 = astroid_1->Velocity();
+		float M1 = astroid_1->Mass();
+		glm::vec3 U2 = astroid_2->Velocity();
+		float M2 = astroid_2->Mass();
+		glm::vec3 V1 = (U1 * (M1 - M2) + 2.0f * (M2)* U2) / (M1 + M2);
+		glm::vec3 V2 = (U2 * (M2 - M1) + 2.0f * (M1)* U1) / (M1 + M2);
+		glm::vec3 V1d = V1 - U1;
+		glm::vec3 V2d = V2 - U2;
+		glm::vec3 F1 = M1 * V1d;
+		glm::vec3 F2 = M2 * V2d;
+		astroid_1->Translate(V1);
+		astroid_2->Translate(V2);
+		if (astroid_1->Position().y < astroid_2->Position().y)
+		{
+			float depth_1_in_2 = astroid_1->Position().y + astroid_1->Scale().y;
+			float depth_2_in_1 = astroid_2->Position().y - astroid_2->Scale().y;
+			astroid_1->Translate(glm::vec3(0.0f, depth_2_in_1 - depth_1_in_2, 0.0f));
+		} else
+		{
+			float depth_1_in_2 = astroid_1->Position().y - astroid_1->Scale().y;
+			float depth_2_in_1 = astroid_2->Position().y + astroid_2->Scale().y;
+			astroid_2->Translate(glm::vec3(0.0f, depth_1_in_2 - depth_2_in_1, 0.0f));
+		}
+		
+		break;
 	}
+}
+
+Astroid* AstroidSpawner::LookUpAstroid(const unsigned int& id)
+{
+	Astroid* result = nullptr;
+	
+	return result;
 }
 
 Astroid* AstroidSpawner::ConstructObject()
@@ -238,6 +277,7 @@ Astroid* AstroidSpawner::ConstructObject()
 	astroid->AddCollider(new Collider());
 	astroid->AddObserver(this);
 	astroid->HitPoints(2);
+	astroid->AddRigidBody(new RigidBody());
 	return astroid;
 }
 
@@ -253,11 +293,12 @@ void AstroidSpawner::CustomAllocOps(const unsigned int& index)
 	astroid->Translate(glm::vec3(mPosDist(mGen), mStartingYPos - mTransform.Position().y, 0.0f));
 	astroid->Scale(mScaleDist(mGen));
 	astroid->HitPoints(2);
+	astroid->Mass(astroid->Scale().x);
 }
 
 void AstroidSpawner::CustomDeallocOps(const unsigned int& index)
 {
-
+	mObjects[index]->ResetRigidBody();
 }
 
 void AstroidSpawner::CustomUpdateOps(const float& dt)

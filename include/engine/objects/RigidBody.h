@@ -15,6 +15,8 @@ public:
 	void Mass(const float&);
 	void Damping(const float&);
 	void Force(const glm::vec3&);
+	void Reset();
+
 
 	const float& Mass() const;
 	const float& InverseMass() const;

@@ -5,7 +5,9 @@
 #include"engine/objects/Subject.h"
 #include"engine/objects/Observer.h"
 #include"engine/containers/ObjectManager.h"
+#include"engine/objects/RigidBody.h"
 #include"game/Astroid.h"
+#include"game/AstroidCollision.h"
 using namespace Constants::Types;
 class AstroidSpawner :
 	Subject,
@@ -81,6 +83,7 @@ protected:
 	bool DestructionPred(Astroid*) const override;
 
 	void TrySpawn();
+	Astroid* LookUpAstroid(const unsigned int&);
 
 };
 

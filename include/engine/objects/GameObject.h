@@ -137,6 +137,8 @@ public:
 	typedef std::map<Collider*, Collider*, CompareTransPtr>::const_iterator const_collider_iter;
 	std::pair<const_collider_iter, const_collider_iter> GetColliders() const;
 
+	void ResetRigidBody();
+
 	// Operators
 	bool operator<(const GameObject&) const;
 	bool operator==(const GameObject&) const;
@@ -185,7 +187,7 @@ protected:
 	bool ObjectIsMapped(GameObject*) const;
 
 	void ReportCollision() const;
-
+	
 private:
 	static unsigned int NextObjectId;
 	unsigned int mId;

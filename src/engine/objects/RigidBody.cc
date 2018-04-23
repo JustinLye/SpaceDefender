@@ -36,9 +36,16 @@ void RigidBody::Damping(const float& damping)
 	mDamping = damping;
 }
 
+void RigidBody::Reset()
+{
+	mAcceleration = glm::vec3(0.0f);
+	mVelocity = glm::vec3(0.0f);
+	mForce = glm::vec3(0.0f);
+}
+
 void RigidBody::Force(const glm::vec3& force)
 {
-	mForce = force;
+	mForce += force;
 }
 
 const float& RigidBody::Mass() const

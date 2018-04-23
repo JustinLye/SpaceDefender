@@ -11,7 +11,7 @@ CollisionDetector::~CollisionDetector()
 {
 }
 
-void CollisionDetector::DoDetection()
+void CollisionDetector::DoDetection(const float& dt)
 {
 	std::map<unsigned int, const Laser*>::const_iterator laser_iter = mLaserMap.cbegin();
 	while (laser_iter != mLaserMap.cend())
@@ -43,6 +43,28 @@ void CollisionDetector::DoDetection()
 		{
 			++laser_iter;
 		}
+	}
+	std::map<unsigned int, const Astroid*>::const_iterator curr_astroid_iter = mAstroidMap.cbegin();
+	while (curr_astroid_iter != mAstroidMap.cend())
+	{
+		bool collision_detected = false;
+		std::map<unsigned int, const Astroid*>::const_iterator astroid_iter = curr_astroid_iter;
+		astroid_iter++;
+		while (astroid_iter != mAstroidMap.cend())
+		{
+			collision_detected = curr_astroid_iter->second->CollisionDetected(*astroid_iter->second);
+			if (collision_detected)
+			{
+				break;
+			}
+			++astroid_iter;
+		}
+		if (collision_detected)
+		{
+			curr_astroid_iter->second->Collide(*astroid_iter->second);
+			astroid_iter->second->Collide(*curr_astroid_iter->second);
+		}
+		++curr_astroid_iter;
 	}
 }
 

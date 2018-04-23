@@ -19,6 +19,7 @@ namespace Constants
 	namespace Rendering
 	{
 		const glm::vec4 DFLT_SHAPE_COLOR = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+		const GLenum DFLT_POLY_MODE = GL_LINES;
 	}
 	namespace Geometry
 	{
@@ -32,6 +33,10 @@ namespace Constants
 	{
 		const float DFLT_MASS = 1.0f;
 		const float DFLT_DAMPING = 0.999f;
+	}
+	namespace Font
+	{
+		const char* SCORE_FONT_FILENAME = "Arial.tff";
 	}
 	namespace Input
 	{
@@ -71,6 +76,7 @@ namespace Constants
 			TERMINATED_COLLIDABLE_OBJECT,
 			OBJECT_OUT_OF_BOUNDS,
 			COLLISION_REPORTED,
+			ASTROID_TO_ASTROID_COLLISION,
 			TOTAL_EVENTS
 		};
 

@@ -2,7 +2,8 @@
 #define ASTROID_HEADER_INCLUDED
 
 #include"engine/objects/GameObject.h"
-
+#include"game/AstroidCollision.h"
+using namespace Constants::Types;
 class Astroid :
 	public GameObject
 {
@@ -10,7 +11,7 @@ public:
 	Astroid();
 	~Astroid();
 	
-	const Constants::Types::object_t& Type() const override;
+	const object_t& Type() const override;
 	void Collide(const GameObject&) const override;
 	const float& Speed() const;
 	const float& TerminateYPos() const;
@@ -23,6 +24,8 @@ public:
 	bool Terminate() const;
 	void HitPoints(const int&);
 	const int& HitPoints() const;
+	void ReportAstroidCollision(const Astroid&) const;
+
 protected:
 	float mSpeed;
 	int mHitPoints;

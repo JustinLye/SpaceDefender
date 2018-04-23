@@ -1,11 +1,9 @@
 #include"engine/objects/Renderer.h"
 
-const GLenum Renderer::DFLT_POLY_MODE = GL_LINES;
-
 Renderer::Renderer(ShaderProgram* shader_program, const GLenum& poly_mode) :
 	mShader(shader_program),
 	mPolyMode(poly_mode),
-	mColor(Constants::Rendering::DFLT_SHAPE_COLOR)
+	mColor(DFLT_SHAPE_COLOR)
 {
 	if (shader_program != nullptr)
 	{
@@ -25,7 +23,7 @@ void Renderer::Render(Shape* shape, const float* MVP)
 #endif
 	mShader->Use();
 	glBindVertexArray(shape->GetVAO());
-	glUniformMatrix4fv(mShader->operator()(Constants::Shaders::DFLT_MVP_UNIFORM_NAME), 1, GL_FALSE, MVP);
+	glUniformMatrix4fv(mShader->operator()(DFLT_MVP_UNIFORM_NAME), 1, GL_FALSE, MVP);
 	SetCustomUniforms();
 	GLint prev_poly_mode;
 	glGetIntegerv(GL_POLYGON_MODE, &prev_poly_mode);
@@ -39,22 +37,22 @@ void Renderer::Render(Shape* shape, const float* MVP)
 
 std::string Renderer::VertexShaderPath()
 {
-	return EngineShaderPath(Constants::Shaders::DFLT_VERTEX_SHADER);
+	return EngineShaderPath(DFLT_VERTEX_SHADER);
 }
 
 std::string Renderer::FragmentShaderPath()
 {
-	return EngineShaderPath(Constants::Shaders::DFLT_FRAGMENT_SHADER);
+	return EngineShaderPath(DFLT_FRAGMENT_SHADER);
 }
 
 void Renderer::SetCustomUniforms()
 {
-	glUniform4fv(mShader->operator()(Constants::Shaders::DFLT_COLOR_UNIFORM_NAME), 1, glm::value_ptr(mColor));
+	glUniform4fv(mShader->operator()(DFLT_COLOR_UNIFORM_NAME), 1, glm::value_ptr(mColor));
 }
 
 void Renderer::SetAttribs()
 {
-	mShader->AddAttribute(Constants::Shaders::DFLT_VERTEX_ATTRIB_NAME);
+	mShader->AddAttribute(DFLT_VERTEX_ATTRIB_NAME);
 }
 
 void Renderer::Init()
