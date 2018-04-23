@@ -6,4 +6,8 @@
 #define ENGINE_SHADER_BASE_PATH "C:\\SpaceDefender\\shaders\\engine\\"
 #define EngineShaderPath(filename) ENGINE_SHADER_BASE_PATH + boost::lexical_cast<std::string>(filename)
 #endif
+#ifndef ENGINE_FONT_BASE_PATH
+#define ENGINE_FONT_BASE_PATH "C:\\SpaceDefender\\font\\"
+#define EngineFontPath(filename) ENGINE_FONT_BASE_PATH + boost::lexical_cast<std::string>(filename)
+#endif
 #endif
