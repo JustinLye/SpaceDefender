@@ -26,6 +26,8 @@ public:
 	const int& HitPoints() const;
 	void ReportAstroidCollision(const Astroid&) const;
 
+	void Despawn() const override;
+
 protected:
 	float mSpeed;
 	int mHitPoints;

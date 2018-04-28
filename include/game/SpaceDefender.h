@@ -14,14 +14,18 @@
 #include"engine/util/TextShader.h"
 #include"engine/font/Font.h"
 #include"engine/font/ArialFontData.h"
+#include"engine/objects/Text.h"
+#include"engine/objects/Canvas.h"
 #include"game/Player.h"
 #include"game/AstroidSpawner.h"
 #include"game/CollisionDetector.h"
+#include"game/ScoreText.h"
 
 using namespace Constants::Input;
 using namespace Constants::Types;
 using namespace Constants::Font;
 using namespace Constants::Shaders;
+using namespace Constants::Rendering;
 using namespace std::chrono;
 
 class SpaceDefender
@@ -53,6 +57,10 @@ protected:
 	glm::mat4 mProjMat;
 	KeyStateMap mKeyStateMap;
 	float mBoostChargeTime;
+	FontData* mFontData[font_data_t::TOTAL_FONT_DATA_TYPES];
+	Font* mFont[font_t::TOTAL_GAME_FONT_TYPES];
+	ScoreText* mScoreText;
+	Canvas* mCanvas;
 
 	void InitSys();
 	void InitBoundries();

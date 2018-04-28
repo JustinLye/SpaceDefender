@@ -6,7 +6,8 @@ SpaceDefender::SpaceDefender(const OpenGLOptions& opts) :
 	mWindow(nullptr),
 	mAstroidSpawner(nullptr),
 	mViewMat(Constants::Geometry::IDENTITY_MATRIX),
-	mProjMat(Constants::Geometry::IDENTITY_MATRIX)
+	mProjMat(Constants::Geometry::IDENTITY_MATRIX),
+	mScoreText(nullptr)
 {
 
 }
@@ -31,13 +32,7 @@ void SpaceDefender::Init()
 
 void SpaceDefender::Run()
 {
-	Font* font = new Font();
-	ArialFontData* arial_font_data = new ArialFontData();
-	font->Data(arial_font_data);
-	font->Shader(mShaders[TEXT_SHADER_PROG]);
-	font->Init();
-	font->Color(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-	font->Projection(glm::ortho(0.0f, mBoundries.mRight, 0.0f, mBoundries.mTop));
+	mScoreText->Message("Score: ");
 	while (!glfwWindowShouldClose(mWindow))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -46,7 +41,6 @@ void SpaceDefender::Run()
 		Update(1.0f / 60.0f);
 		DoCollisionDetection(1.0f / 60.0f);
 		Render();
-		font->Render("SpaceDefender", 50.0f, mBoundries.mTop - 50.0f, 1.0f);
 		glfwSwapBuffers(mWindow);
 		glfwPollEvents();
 	}
@@ -72,6 +66,7 @@ void SpaceDefender::Render()
 {
 	mPlayer->Render(mProjMat, mViewMat);
 	mAstroidSpawner->Render(mProjMat, mViewMat);
+	mCanvas->Render();
 }
 
 void SpaceDefender::DoCollisionDetection(const float& dt)
@@ -123,10 +118,27 @@ void SpaceDefender::InitShaders()
 
 void SpaceDefender::InitFonts()
 {
+	mFontData[font_data_t::ARIAL_FONT_DATA] = new ArialFontData();
+	
+	mFont[font_t::SCORE_FONT] = new Font();
+	mFont[font_t::SCORE_FONT]->Data(mFontData[font_data_t::ARIAL_FONT_DATA]);
+	mFont[font_t::SCORE_FONT]->Shader(mShaders[shader_prog_t::TEXT_SHADER_PROG]);
+	mFont[font_t::SCORE_FONT]->Color(SCORE_TEXT_COLOR);
+	mFont[font_t::SCORE_FONT]->Projection(glm::ortho(mBoundries.mLeft, mBoundries.mRight, mBoundries.mBottom, mBoundries.mTop));
+	mFont[font_t::SCORE_FONT]->Init();
+	
 }
 
 void SpaceDefender::InitUI()
 {
+	mScoreText = new ScoreText();
+	mScoreText->XBearing(mBoundries.mLeft + mBoundries.mRight * 0.05f);
+	mScoreText->YBearing(mBoundries.mLeft + mBoundries.mTop * 0.95f);
+	mScoreText->Scale(1.0f);
+	mScoreText->FontPtr(mFont[font_t::SCORE_FONT]);
+
+	mCanvas = new Canvas();
+	mCanvas->AddUIObject(mScoreText);
 }
 
 void SpaceDefender::InitPlayer()
@@ -183,7 +195,7 @@ void SpaceDefender::InitAstroids()
 	mAstroidSpawner->MinXPos(mBoundries.mLeft + (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));
 	mAstroidSpawner->StartingYPos(mBoundries.mTop + (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.05f));
 	mAstroidSpawner->TerminateYPos(mBoundries.mBottom - (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.05f));
-	
+	mAstroidSpawner->AddObserver(mScoreText);
 	
 }
 

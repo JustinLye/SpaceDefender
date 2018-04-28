@@ -26,6 +26,7 @@ namespace Constants
 	{
 		const glm::vec4 DFLT_SHAPE_COLOR = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 		const GLenum DFLT_POLY_MODE = GL_LINES;
+		const glm::vec4 SCORE_TEXT_COLOR = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
 	}
 	namespace Geometry
 	{
@@ -84,6 +85,7 @@ namespace Constants
 			OBJECT_OUT_OF_BOUNDS,
 			COLLISION_REPORTED,
 			ASTROID_TO_ASTROID_COLLISION,
+			PLAYER_DESTROYED_ASTROID,
 			TOTAL_EVENTS
 		};
 
@@ -94,6 +96,18 @@ namespace Constants
 			ASTROID,
 			PLAYER,
 			TOTAL_GAME_OBJECT_TYPES
+		};
+
+		enum font_data_t : unsigned int
+		{
+			ARIAL_FONT_DATA,
+			TOTAL_FONT_DATA_TYPES
+		};
+
+		enum font_t : unsigned int
+		{
+			SCORE_FONT,
+			TOTAL_GAME_FONT_TYPES
 		};
 	}
 };

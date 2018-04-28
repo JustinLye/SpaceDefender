@@ -36,6 +36,18 @@ void Astroid::Collide(const GameObject& object) const
 	}
 }
 
+void Astroid::Despawn() const
+{
+	if (mColliderMap.size() > 0)
+	{
+		Notify(*this, event_t::TERMINATED_COLLIDABLE_OBJECT);
+	}
+	if (mHitPoints <= 0)
+	{
+		Notify(*this, event_t::PLAYER_DESTROYED_ASTROID);
+	}
+}
+
 void Astroid::ReportAstroidCollision(const Astroid& astroid) const
 {
 	AstroidCollision collision(this->Id(), astroid.Id());

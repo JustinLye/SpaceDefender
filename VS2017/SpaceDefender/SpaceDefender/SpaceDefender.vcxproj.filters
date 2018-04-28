@@ -153,9 +153,6 @@
     <ClCompile Include="..\..\..\src\engine\font\Font.cc">
       <Filter>src\engine\font</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\game\ScoreFont.cc">
-      <Filter>src\game</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\engine\util\TextShader.cc">
       <Filter>src\engine\util</Filter>
     </ClCompile>
@@ -164,6 +161,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\engine\font\ArialFontData.cc">
       <Filter>src\engine\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\objects\Text.cc">
+      <Filter>src\engine\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\objects\UIObject.cc">
+      <Filter>src\engine\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\objects\Canvas.cc">
+      <Filter>src\engine\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\game\ScoreText.cc">
+      <Filter>src\game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -263,9 +272,6 @@
     <ClInclude Include="..\..\..\include\game\AstroidCollision.h">
       <Filter>include\game</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\game\ScoreFont.h">
-      <Filter>include\game</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\engine\util\TextShader.h">
       <Filter>include\engine\util</Filter>
     </ClInclude>
@@ -277,6 +283,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\engine\font\ArialFontData.h">
       <Filter>include\engine\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\objects\Text.h">
+      <Filter>include\engine\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\objects\UIObject.h">
+      <Filter>include\engine\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\objects\Canvas.h">
+      <Filter>include\engine\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\ScoreText.h">
+      <Filter>include\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
