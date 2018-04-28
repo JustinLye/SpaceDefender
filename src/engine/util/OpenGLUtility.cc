@@ -61,7 +61,7 @@ void OpenGLUtility::HandleKeyCB(GLFWwindow* window, int key, int action, int sca
 	switch (key)
 	{
 	case GLFW_KEY_ESCAPE:
-		glfwSetWindowShouldClose(window, GLFW_TRUE);
+		//glfwSetWindowShouldClose(window, GLFW_TRUE);
 		break;
 	}
 }

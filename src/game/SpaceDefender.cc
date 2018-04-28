@@ -7,7 +7,8 @@ SpaceDefender::SpaceDefender(const OpenGLOptions& opts) :
 	mAstroidSpawner(nullptr),
 	mViewMat(Constants::Geometry::IDENTITY_MATRIX),
 	mProjMat(Constants::Geometry::IDENTITY_MATRIX),
-	mScoreText(nullptr)
+	mScoreText(nullptr),
+	mGameIsPaused(false)
 {
 
 }
@@ -38,10 +39,13 @@ void SpaceDefender::Run()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		HandleInput();
-		Update(1.0f / 60.0f);
-		DoCollisionDetection(1.0f / 60.0f);
-		Render();
-		glfwSwapBuffers(mWindow);
+		if (!mGameIsPaused)
+		{
+			Update(1.0f / 60.0f);
+			DoCollisionDetection(1.0f / 60.0f);
+			Render();
+			glfwSwapBuffers(mWindow);
+		}
 		glfwPollEvents();
 	}
 }
@@ -220,25 +224,31 @@ void SpaceDefender::InitKeyStateMap()
 void SpaceDefender::HandleInput()
 {
 	UpdateKeyStates();
-	if (mKeyStateMap[GLFW_KEY_ESCAPE].mState == KEY_STATE::DOWN || mKeyStateMap[GLFW_KEY_ESCAPE].mState == KEY_STATE::PRESSED)
+	if (mKeyStateMap[GLFW_KEY_P].mState == KEY_STATE::PRESSED)
+	{
+		mGameIsPaused = !mGameIsPaused;
+		
+	}
+	if (mKeyStateMap[GLFW_KEY_ESCAPE].mState == KEY_STATE::PRESSED && mGameIsPaused)
 	{
 		glfwSetWindowShouldClose(mWindow, GLFW_TRUE);
 	}
+	if (!mGameIsPaused)
+	{
+		HandleLeftMovement();
+		HandleRightMovement();
+		if (!MoveLeft() && !MoveRight() && mPlayer->Boost() > 1.0f)
+		{
+			mPlayer->Boost(1.0f);
+		}
 
-	HandleLeftMovement();
-	HandleRightMovement();
-	if (!MoveLeft() && !MoveRight() && mPlayer->Boost() > 1.0f)
-	{
-		mPlayer->Boost(1.0f);
-	}
-
-	if (mKeyStateMap[GLFW_KEY_SPACE].mState == KEY_STATE::DOWN || mKeyStateMap[GLFW_KEY_SPACE].mState == KEY_STATE::PRESSED)
-	{
-		mPlayer->FireCannon();
-	}
-	else if (KeyDown(GLFW_KEY_UP))
-	{
-		mPlayer->FireCannon();
+		if (mKeyStateMap[GLFW_KEY_SPACE].mState == KEY_STATE::DOWN || mKeyStateMap[GLFW_KEY_SPACE].mState == KEY_STATE::PRESSED)
+		{
+			mPlayer->FireCannon();
+		} else if (KeyDown(GLFW_KEY_UP))
+		{
+			mPlayer->FireCannon();
+		}
 	}
 
 }
