@@ -1,48 +1,35 @@
 #ifndef FONT_HEADER_INCLUDED
 #define FONT_HEADER_INCLUDED
-#ifdef FONT_DEBUG
-#include<iostream>
-#endif
-#include<map>
-#include<string>
-#include<glad/glad.h>
-#include<glm/glm.hpp>
-#include<ft2build.h>
-#include FT_FREETYPE_H
-
-struct Character
-{
-	GLuint mTextureId;
-	glm::ivec2 mSize;
-	glm::ivec2 mBearing;
-	GLuint mAdvance;
-};
+#include<glm/gtc/type_ptr.hpp>
+#include"engine/util/Constants.h"
+#include"engine/util/ShaderProgram.h"
+#include"engine/font/FontData.h"
+using namespace Constants::Shaders;
 
 class Font
 {
 public:
 	Font();
 	virtual ~Font();
-	virtual const char* PathToFont() = 0;
-	virtual int FontWidth() = 0;
-	virtual int FontHeight() = 0;
-	void Draw(const std::string&, const GLfloat&, const GLfloat&, const GLfloat&);
-	void Init();
-	void Buffer();
-	void Destroy();
-	const Character& operator[](const GLchar&) const;
+	void Data(FontData*);
+	FontData* Data();
+	void Shader(ShaderProgram*);
+	ShaderProgram* Shader();
+	void Color(const glm::vec4&);
+	const glm::vec4& Color() const;
+	virtual void Render(const std::string&, const GLfloat&, const GLfloat&, const GLfloat&);
+	virtual void Init();
+	virtual void Destroy();
+	const GLuint& GetVao() const;
+	void Projection(const glm::mat4&);
+	const glm::mat4& Projection() const;
 protected:
-	std::map<GLchar, Character> mCharacterMap;
-private:
-	static bool InitOpenGL;
-	GLuint* mTextures;
+	ShaderProgram* mShader;
+	FontData* mFontData;
 	GLuint mVaoId;
 	GLuint mVboId;
+	glm::vec4 mColor;
+	glm::mat4 mProjection;
 };
-
-
-
-
-
 
 #endif

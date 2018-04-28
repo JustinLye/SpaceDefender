@@ -21,7 +21,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\external\glad\src\glad.c" />
     <ClCompile Include="..\..\..\src\engine\containers\ObjectManager.cc" />
+    <ClCompile Include="..\..\..\src\engine\font\ArialFontData.cc" />
     <ClCompile Include="..\..\..\src\engine\font\Font.cc" />
+    <ClCompile Include="..\..\..\src\engine\font\FontData.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\Collider.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\GameObject.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\Observer.cc" />
@@ -42,6 +44,7 @@
     <ClCompile Include="..\..\..\src\engine\util\OpenGLUtility.cc" />
     <ClCompile Include="..\..\..\src\engine\util\OpenGLOptions.cc" />
     <ClCompile Include="..\..\..\src\engine\util\ShaderProgram.cc" />
+    <ClCompile Include="..\..\..\src\engine\util\TextShader.cc" />
     <ClCompile Include="..\..\..\src\game\Astroid.cc" />
     <ClCompile Include="..\..\..\src\game\AstroidCollision.cc" />
     <ClCompile Include="..\..\..\src\game\AstroidSpawner.cc" />
@@ -55,7 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\engine\containers\ObjectManager.h" />
+    <ClInclude Include="..\..\..\include\engine\font\ArialFontData.h" />
     <ClInclude Include="..\..\..\include\engine\font\Font.h" />
+    <ClInclude Include="..\..\..\include\engine\font\FontData.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Collider.h" />
     <ClInclude Include="..\..\..\include\engine\objects\GameObject.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Observer.h" />
@@ -79,6 +84,7 @@
     <ClInclude Include="..\..\..\include\engine\util\OpenGLOptions.h" />
     <ClInclude Include="..\..\..\include\engine\util\Paths.h" />
     <ClInclude Include="..\..\..\include\engine\util\ShaderProgram.h" />
+    <ClInclude Include="..\..\..\include\engine\util\TextShader.h" />
     <ClInclude Include="..\..\..\include\game\Astroid.h" />
     <ClInclude Include="..\..\..\include\game\AstroidCollision.h" />
     <ClInclude Include="..\..\..\include\game\AstroidSpawner.h" />
@@ -147,7 +153,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external\stb;C:\SpaceDefender\external;C:\SpaceDefender\external\glfw\include;C:\SpaceDefender\external\ft29\freetype-2.9\include;C:\SpaceDefender\external\glad\include;C:\SpaceDefender\external\Boost\include;C:\SpaceDefender\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/DENGINE_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/DENGINE_DEBUG /DFONT_DEBUG %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\SpaceDefender\external\glfw\lib-vc2015;C:\SpaceDefender\external\ft29\freetype-2.9\objs\Win32\Release Static;C:\SpaceDefender\external\Boost\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

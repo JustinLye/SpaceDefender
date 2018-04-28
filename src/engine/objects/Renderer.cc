@@ -1,4 +1,4 @@
-#include"engine/objects/Renderer.h"
+ #include"engine/objects/Renderer.h"
 
 Renderer::Renderer(ShaderProgram* shader_program, const GLenum& poly_mode) :
 	mShader(shader_program),

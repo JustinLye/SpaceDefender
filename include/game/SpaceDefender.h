@@ -11,16 +11,19 @@
 #include"engine/shapes/LineSegmentData.h"
 #include"engine/util/BoundryBox.h"
 #include"engine/util/KeyMap.h"
+#include"engine/util/TextShader.h"
+#include"engine/font/Font.h"
+#include"engine/font/ArialFontData.h"
 #include"game/Player.h"
 #include"game/AstroidSpawner.h"
 #include"game/CollisionDetector.h"
-#include"game/ScoreFont.h"
 
 using namespace Constants::Input;
 using namespace Constants::Types;
 using namespace Constants::Font;
-
+using namespace Constants::Shaders;
 using namespace std::chrono;
+
 class SpaceDefender
 {
 public:
@@ -50,7 +53,6 @@ protected:
 	glm::mat4 mProjMat;
 	KeyStateMap mKeyStateMap;
 	float mBoostChargeTime;
-	ScoreFont mScoreFont;
 
 	void InitSys();
 	void InitBoundries();
@@ -58,6 +60,7 @@ protected:
 	void InitShapes();
 	void InitShaders();
 	void InitFonts();
+	void InitUI();
 	void InitPlayer();
 	void InitAstroids();
 	void InitCollisionDetection();

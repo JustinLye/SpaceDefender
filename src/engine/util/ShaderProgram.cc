@@ -170,7 +170,11 @@ GLuint ShaderProgram::operator[](const std::string& attribute)
 
 GLuint ShaderProgram::operator()(const std::string& uniform)
 {
+#ifdef FONT_DEBUG
+	assert(mUniformLocMap.find(uniform) != mUniformLocMap.end());
+#endif
 	return mUniformLocMap[uniform];
+
 }
 
 void ShaderProgram::AttachShaders()

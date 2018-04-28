@@ -156,6 +156,15 @@
     <ClCompile Include="..\..\..\src\game\ScoreFont.cc">
       <Filter>src\game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\util\TextShader.cc">
+      <Filter>src\engine\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\font\FontData.cc">
+      <Filter>src\engine\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\font\ArialFontData.cc">
+      <Filter>src\engine\font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\engine\objects\Collider.h">
@@ -254,11 +263,20 @@
     <ClInclude Include="..\..\..\include\game\AstroidCollision.h">
       <Filter>include\game</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\game\ScoreFont.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\util\TextShader.h">
+      <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\font\FontData.h">
+      <Filter>include\engine\font</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\include\engine\font\Font.h">
       <Filter>include\engine\font</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\game\ScoreFont.h">
-      <Filter>include\game</Filter>
+    <ClInclude Include="..\..\..\include\engine\font\ArialFontData.h">
+      <Filter>include\engine\font</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

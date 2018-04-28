@@ -23,6 +23,7 @@ void SpaceDefender::Init()
 	InitShapes();
 	InitShaders();
 	InitFonts();
+	InitUI();
 	InitPlayer();
 	InitAstroids();
 	InitCollisionDetection();
@@ -30,15 +31,22 @@ void SpaceDefender::Init()
 
 void SpaceDefender::Run()
 {
-	
+	Font* font = new Font();
+	ArialFontData* arial_font_data = new ArialFontData();
+	font->Data(arial_font_data);
+	font->Shader(mShaders[TEXT_SHADER_PROG]);
+	font->Init();
+	font->Color(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	font->Projection(glm::ortho(0.0f, mBoundries.mRight, 0.0f, mBoundries.mTop));
 	while (!glfwWindowShouldClose(mWindow))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		HandleInput();
 		Update(1.0f / 60.0f);
 		DoCollisionDetection(1.0f / 60.0f);
 		Render();
+		font->Render("SpaceDefender", 50.0f, mBoundries.mTop - 50.0f, 1.0f);
 		glfwSwapBuffers(mWindow);
 		glfwPollEvents();
 	}
@@ -102,16 +110,23 @@ void SpaceDefender::InitShapes()
 
 void SpaceDefender::InitShaders()
 {
-	mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG] = new ShaderProgram();
-	mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG]->Init();
+	mShaders[shader_prog_t::DEFAULT_SHADER_PROG] = new ShaderProgram();
+	mShaders[shader_prog_t::DEFAULT_SHADER_PROG]->Init();
+	mShaders[shader_prog_t::TEXT_SHADER_PROG] = new TextShader();
+	mShaders[shader_prog_t::TEXT_SHADER_PROG]->Init();
+	mShaders[shader_prog_t::TEXT_SHADER_PROG]->Use();
+	glUniformMatrix4fv((*mShaders[shader_prog_t::TEXT_SHADER_PROG])(TEXT_PROJ_UNIFORM_NAME), 1, GL_FALSE, glm::value_ptr(mProjMat));
+	mShaders[shader_prog_t::TEXT_SHADER_PROG]->UnUse();
+
+	
 }
 
 void SpaceDefender::InitFonts()
 {
-	mScoreFont.PathToFont(EngineFontPath(SCORE_FONT_FILENAME));
-	mScoreFont.FontHeight(48);
-	mScoreFont.FontWidth(48);
-	mScoreFont.Init();
+}
+
+void SpaceDefender::InitUI()
+{
 }
 
 void SpaceDefender::InitPlayer()

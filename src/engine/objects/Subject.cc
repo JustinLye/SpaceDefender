@@ -12,10 +12,8 @@ Subject::~Subject()
 
 void Subject::AddObserver(Observer* observer)
 {
-	std::cout << __FUNCTION__ << " " << __LINE__ << '\n';
 	if (!ObserverIsMapped(observer))
 	{
-		std::cout << __FUNCTION__ << " " << __LINE__ << '\n';
 		mObserverMap.insert({ observer->Id(), observer });
 	}
 }

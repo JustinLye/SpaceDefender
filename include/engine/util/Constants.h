@@ -1,6 +1,7 @@
 #ifndef CONSTANTS_HEADER_INCLUDED
 #define CONSTANTS_HEADER_INCLUDED
 #include<string>
+#include<glad/glad.h>
 #include<glm/glm.hpp>
 
 namespace Constants
@@ -10,11 +11,16 @@ namespace Constants
 		const int VERTEX_ATTRIB_POS = 0; ///< all vertex shaders used to render Shapes must have the vertex attribute location = 0
 		const std::string DFLT_VERTEX_SHADER = "position.vert";
 		const std::string DFLT_FRAGMENT_SHADER = "unicolor.frag";
+		const std::string TEXT_VERTEX_SHADER = "text.vert";
+		const std::string TEXT_FRAGMENT_SHADER = "text.frag";
 		const std::string DFLT_COLOR_UNIFORM_NAME = "Color";
+		const std::string TEXT_COLOR_UNIFORM_NAME = "TextColor";
 		const std::string DFLT_VERTEX_ATTRIB_NAME = "vVertex";
+		const std::string TEXT_PROJ_UNIFORM_NAME = "Projection";
 		const std::string DFLT_MVP_UNIFORM_NAME = "MVP";
 		const std::string LASER_VERTEX_SHADER_NAME = "position.vert";
 		const std::string LASER_FRAGMENT_SHADER_NAME = "unicolor.frag";
+		const std::string DFLT_PROJ_UNIFORM_NAME = "Projection";
 	}
 	namespace Rendering
 	{
@@ -36,7 +42,7 @@ namespace Constants
 	}
 	namespace Font
 	{
-		const char* SCORE_FONT_FILENAME = "Arial.tff";
+		const std::string SCORE_FONT_FILENAME = "arial.ttf";
 	}
 	namespace Input
 	{
@@ -67,6 +73,7 @@ namespace Constants
 		enum shader_prog_t : unsigned int
 		{
 			DEFAULT_SHADER_PROG,
+			TEXT_SHADER_PROG,
 			TOTAL_SHADERS
 		};
 		
