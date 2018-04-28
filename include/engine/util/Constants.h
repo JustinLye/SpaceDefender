@@ -109,6 +109,13 @@ namespace Constants
 			SCORE_FONT,
 			TOTAL_GAME_FONT_TYPES
 		};
+		enum game_state_t : unsigned int
+		{
+			INIT_GAME_STATE,
+			ACTIVE_GAMEPLAY,
+			PAUSED,
+			TOTAL_GAME_STATE_TYPES
+		};
 	}
 };
 

@@ -8,7 +8,7 @@ SpaceDefender::SpaceDefender(const OpenGLOptions& opts) :
 	mViewMat(Constants::Geometry::IDENTITY_MATRIX),
 	mProjMat(Constants::Geometry::IDENTITY_MATRIX),
 	mScoreText(nullptr),
-	mGameIsPaused(false)
+	mGameState(game_state_t::INIT_GAME_STATE)
 {
 
 }
@@ -34,19 +34,28 @@ void SpaceDefender::Init()
 void SpaceDefender::Run()
 {
 	mScoreText->Message("Score: ");
+	mGameState = game_state_t::ACTIVE_GAMEPLAY;
 	while (!glfwWindowShouldClose(mWindow))
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-		HandleInput();
-		if (!mGameIsPaused)
+
+		
+		switch (mGameState)
 		{
+		case game_state_t::ACTIVE_GAMEPLAY:
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+			HandleInput();
 			Update(1.0f / 60.0f);
 			DoCollisionDetection(1.0f / 60.0f);
 			Render();
 			glfwSwapBuffers(mWindow);
+			glfwPollEvents();
+			break;
+		case game_state_t::PAUSED:
+			HandleInput();
+			glfwPollEvents();
+			break;
 		}
-		glfwPollEvents();
 	}
 }
 
@@ -226,14 +235,21 @@ void SpaceDefender::HandleInput()
 	UpdateKeyStates();
 	if (mKeyStateMap[GLFW_KEY_P].mState == KEY_STATE::PRESSED)
 	{
-		mGameIsPaused = !mGameIsPaused;
-		
+		if (mGameState == game_state_t::ACTIVE_GAMEPLAY)
+		{
+			mGameState = game_state_t::PAUSED;
+		}
+		else if (mGameState == game_state_t::PAUSED)
+		{
+			mGameState = game_state_t::ACTIVE_GAMEPLAY;
+		}
 	}
-	if (mKeyStateMap[GLFW_KEY_ESCAPE].mState == KEY_STATE::PRESSED && mGameIsPaused)
+	if (mKeyStateMap[GLFW_KEY_ESCAPE].mState == KEY_STATE::PRESSED && mGameState == game_state_t::PAUSED)
 	{
 		glfwSetWindowShouldClose(mWindow, GLFW_TRUE);
+		return;
 	}
-	if (!mGameIsPaused)
+	if (mGameState == game_state_t::ACTIVE_GAMEPLAY)
 	{
 		HandleLeftMovement();
 		HandleRightMovement();

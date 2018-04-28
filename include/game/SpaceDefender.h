@@ -61,7 +61,7 @@ protected:
 	Font* mFont[font_t::TOTAL_GAME_FONT_TYPES];
 	ScoreText* mScoreText;
 	Canvas* mCanvas;
-	bool mGameIsPaused;
+	game_state_t mGameState;
 
 	void InitSys();
 	void InitBoundries();
