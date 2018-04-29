@@ -35,10 +35,27 @@ void SpaceDefender::Run()
 {
 	mScoreText->Message("Score: ");
 	mGameState = game_state_t::ACTIVE_GAMEPLAY;
+	Button* button = new Button();
+	QuadData* quad_data = new QuadData();
+	Shape* button_shape = new Shape();
+	Text* button_text = new Text();
+	button_text->FontPtr(mFont[PAUSE_FONT]);
+	button_text->Scale(1.0f);
+	button_text->Message("Paused");
+	button_text->XBearing(mBoundries.mRight / 2.0f - 100.0f);
+	button_text->YBearing(mBoundries.mTop / 2.0f - 50.0f);
+	button_shape->Buffer(quad_data);
+	button->AddShape(button_shape);
+	button->Scale(glm::vec3(100.0f, 25.0f, 0.0f));
+	button->AddRenderer(new Renderer(mShaders[DEFAULT_SHADER_PROG], GL_LINES));
+	button->AddText(button_text);
+	button->Translate(glm::vec3(mBoundries.mRight / 2.0f, mBoundries.mTop / 2.0f, 1.0f));
+	button->FillColor(glm::vec4(0.3f, 0.9f, 0.3f, 0.0f));
+	button->TextColor(glm::vec4(0.0f, 1.0f, 0.0f, .70f));
+	button->Projection(mProjMat);
+	button->View(mViewMat);
 	while (!glfwWindowShouldClose(mWindow))
 	{
-
-		
 		switch (mGameState)
 		{
 		case game_state_t::ACTIVE_GAMEPLAY:
@@ -52,7 +69,12 @@ void SpaceDefender::Run()
 			glfwPollEvents();
 			break;
 		case game_state_t::PAUSED:
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 			HandleInput();
+			Render();
+			button->Render();
+			glfwSwapBuffers(mWindow);
 			glfwPollEvents();
 			break;
 		}
@@ -139,6 +161,15 @@ void SpaceDefender::InitFonts()
 	mFont[font_t::SCORE_FONT]->Color(SCORE_TEXT_COLOR);
 	mFont[font_t::SCORE_FONT]->Projection(glm::ortho(mBoundries.mLeft, mBoundries.mRight, mBoundries.mBottom, mBoundries.mTop));
 	mFont[font_t::SCORE_FONT]->Init();
+
+	mFont[font_t::PAUSE_FONT] = new Font();
+	mFont[font_t::PAUSE_FONT]->Data(mFontData[font_data_t::ARIAL_FONT_DATA]);
+	mFont[font_t::PAUSE_FONT]->Shader(mShaders[shader_prog_t::TEXT_SHADER_PROG]);
+	mFont[font_t::PAUSE_FONT]->Color(SCORE_TEXT_COLOR);
+	mFont[font_t::PAUSE_FONT]->Projection(glm::ortho(mBoundries.mLeft, mBoundries.mRight, mBoundries.mBottom, mBoundries.mTop));
+	mFont[font_t::PAUSE_FONT]->Init();
+
+	
 	
 }
 

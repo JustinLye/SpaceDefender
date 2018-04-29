@@ -16,6 +16,7 @@
 #include"engine/font/ArialFontData.h"
 #include"engine/objects/Text.h"
 #include"engine/objects/Canvas.h"
+#include"engine/objects/Button.h"
 #include"game/Player.h"
 #include"game/AstroidSpawner.h"
 #include"game/CollisionDetector.h"

@@ -21,6 +21,11 @@ void Transform::Scale(const float& scale)
 	mTransformData.mScale *= scale;
 }
 
+void Transform::Scale(const glm::vec3& scale)
+{
+	mTransformData.mScale *= scale;
+}
+
 const glm::vec3& Transform::Scale() const
 {
 	return mTransformData.mScale;

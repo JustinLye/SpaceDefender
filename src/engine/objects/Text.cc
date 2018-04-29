@@ -47,6 +47,11 @@ void Text::Message(const std::string& message)
 	mMessage = message;
 }
 
+void Text::Color(const glm::vec4& color)
+{
+	mFont->Color(color);
+}
+
 const float& Text::XBearing() const
 {
 	return mXBearing;
@@ -67,3 +72,7 @@ const std::string& Text::Message() const
 	return mMessage;
 }
 
+const glm::vec4& Text::Color() const
+{
+	return mFont->Color();
+}

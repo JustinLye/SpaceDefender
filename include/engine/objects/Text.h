@@ -17,13 +17,14 @@ public:
 	void YBearing(const float&);
 	void Scale(const float&);
 	void Message(const std::string&);
+	void Color(const glm::vec4&);
 
 	const Font* FontPtr() const;
 	const float& XBearing() const;
 	const float& YBearing() const;
 	const float& Scale() const;
 	const std::string& Message() const;
-	
+	const glm::vec4& Color() const;
 protected:
 	Font* mFont;
 	float mXBearing;

@@ -107,6 +107,7 @@ namespace Constants
 		enum font_t : unsigned int
 		{
 			SCORE_FONT,
+			PAUSE_FONT,
 			TOTAL_GAME_FONT_TYPES
 		};
 		enum game_state_t : unsigned int
