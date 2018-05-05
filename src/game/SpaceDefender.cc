@@ -45,7 +45,7 @@ void SpaceDefender::Run()
 	button_text->XBearing(mBoundries.mRight / 2.0f - 100.0f);
 	button_text->YBearing(mBoundries.mTop / 2.0f - 50.0f);
 	button_shape->Buffer(quad_data);
-	button->AddShape(button_shape);
+	button->AddDrawableObject(button_shape);
 	button->Scale(glm::vec3(100.0f, 25.0f, 0.0f));
 	button->AddRenderer(new Renderer(mShaders[DEFAULT_SHADER_PROG], GL_LINES));
 	button->AddText(button_text);
@@ -54,6 +54,9 @@ void SpaceDefender::Run()
 	button->TextColor(glm::vec4(0.0f, 1.0f, 0.0f, .70f));
 	button->Projection(mProjMat);
 	button->View(mViewMat);
+
+	glEnable(GL_TEXTURE_2D);
+
 	while (!glfwWindowShouldClose(mWindow))
 	{
 		switch (mGameState)
@@ -147,6 +150,9 @@ void SpaceDefender::InitShaders()
 	mShaders[shader_prog_t::TEXT_SHADER_PROG]->Use();
 	glUniformMatrix4fv((*mShaders[shader_prog_t::TEXT_SHADER_PROG])(TEXT_PROJ_UNIFORM_NAME), 1, GL_FALSE, glm::value_ptr(mProjMat));
 	mShaders[shader_prog_t::TEXT_SHADER_PROG]->UnUse();
+	mShaders[shader_prog_t::TEXTURE_SHADER_PROG] = new TextureShader();
+	mShaders[shader_prog_t::TEXTURE_SHADER_PROG]->Init();
+	glUniform1i((*(mShaders[shader_prog_t::TEXTURE_SHADER_PROG]))(TEXTURE_SAMPLER_NAME), 0);
 
 	
 }
@@ -189,22 +195,23 @@ void SpaceDefender::InitPlayer()
 {
 	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
 	float sh = OpenGLUtility::GetScreenHeight(mOptions.mMonitor);
-	Shape* ship = new Shape();
-	ship->Buffer(mShapeData[Constants::Types::shape_t::TRIANGLE]);
+	Texture* ship = new Texture();
+	ship->LoadFromFile(EngineTexPath(PLAYER_SHIP_TEXTURE_FILENAME));
 
 	// Setup laser cannon
 	Shape* laser = new Shape();
 	laser->Buffer(mShapeData[Constants::Types::shape_t::LINE_SEG]);
 	LaserCannon* laser_cannon = new LaserCannon(laser, mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG]);
-	laser_cannon->LaserTermYPos(mBoundries.mTop * 1.05f);
-	laser_cannon->ProjectileSpeed(sh * 0.090f);
+	laser_cannon->LaserTermYPos(mBoundries.mTop * 1.01f);
+	laser_cannon->ProjectileSpeed(sh * 0.10f);
 	laser_cannon->CooldownTime(80.0f);
-	Renderer* renderer = new Renderer(mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG], GL_FILL);
+	TexRenderer* renderer = new TexRenderer(mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG], GL_FILL);
 	Collider* collider = new Collider();
 	RigidBody* rb = new RigidBody();
 	mPlayer = new Player();
 	mPlayer->AddRenderer(renderer);
-	mPlayer->AddShape(ship);
+	mPlayer->AddDrawableObject(ship);
+	//mPlayer->AddShape(ship);
 	mPlayer->AddCollider(collider);
 	mPlayer->AddRigidBody(rb);
 	mPlayer->Mass(1.0f);
@@ -217,7 +224,7 @@ void SpaceDefender::InitPlayer()
 #ifdef COLLISION_DEBUG
 	Shape* detection_circle = new Shape();
 	detection_circle->Buffer(mShapeData[Constants::Types::shape_t::CIRCLE]);
-	mPlayer->AddShape(detection_circle);
+	mPlayer->AddDrawableObject(detection_circle);
 #endif
 }
 

@@ -21,12 +21,18 @@ namespace Constants
 		const std::string LASER_VERTEX_SHADER_NAME = "position.vert";
 		const std::string LASER_FRAGMENT_SHADER_NAME = "unicolor.frag";
 		const std::string DFLT_PROJ_UNIFORM_NAME = "Projection";
+		const std::string TEXTURE_VERT_SHADER = "texture.vert";
+		const std::string TEXTURE_FRAG_SHADER = "texture.frag";
+		const std::string TEXTURE_SAMPLER_NAME = "tex";
+		const std::string TEXTURE_COORD_ATTRIB_NAME = "vTexCoord";
+		const int TEXTURE_COORD_ATTRIB_POS = 1;
 	}
 	namespace Rendering
 	{
 		const glm::vec4 DFLT_SHAPE_COLOR = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 		const GLenum DFLT_POLY_MODE = GL_LINES;
 		const glm::vec4 SCORE_TEXT_COLOR = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+		const std::string PLAYER_SHIP_TEXTURE_FILENAME = "g3829.png";
 	}
 	namespace Geometry
 	{
@@ -75,6 +81,7 @@ namespace Constants
 		{
 			DEFAULT_SHADER_PROG,
 			TEXT_SHADER_PROG,
+			TEXTURE_SHADER_PROG,
 			TOTAL_SHADERS
 		};
 		
@@ -97,6 +104,8 @@ namespace Constants
 			PLAYER,
 			TOTAL_GAME_OBJECT_TYPES
 		};
+
+
 
 		enum font_data_t : unsigned int
 		{

@@ -24,13 +24,18 @@
     <ClCompile Include="..\..\..\src\engine\font\ArialFontData.cc" />
     <ClCompile Include="..\..\..\src\engine\font\Font.cc" />
     <ClCompile Include="..\..\..\src\engine\font\FontData.cc" />
+    <ClCompile Include="..\..\..\src\engine\graphics\TexData.cc" />
+    <ClCompile Include="..\..\..\src\engine\graphics\Texture.cc" />
+    <ClCompile Include="..\..\..\src\engine\graphics\TextureShader.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\Button.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\Canvas.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\Collider.cc" />
+    <ClCompile Include="..\..\..\src\engine\objects\DrawableObject.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\GameObject.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\Observer.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\RigidBody.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\Subject.cc" />
+    <ClCompile Include="..\..\..\src\engine\objects\TexRenderer.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\Text.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\Transform.cc" />
     <ClCompile Include="..\..\..\src\engine\objects\RenderableObject.cc" />
@@ -65,14 +70,18 @@
     <ClInclude Include="..\..\..\include\engine\font\ArialFontData.h" />
     <ClInclude Include="..\..\..\include\engine\font\Font.h" />
     <ClInclude Include="..\..\..\include\engine\font\FontData.h" />
+    <ClInclude Include="..\..\..\include\engine\graphics\TexData.h" />
+    <ClInclude Include="..\..\..\include\engine\graphics\Texture.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Button.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Canvas.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Collider.h" />
+    <ClInclude Include="..\..\..\include\engine\objects\DrawableObject.h" />
     <ClInclude Include="..\..\..\include\engine\objects\GameObject.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Menu.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Observer.h" />
     <ClInclude Include="..\..\..\include\engine\objects\RigidBody.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Subject.h" />
+    <ClInclude Include="..\..\..\include\engine\objects\TexRenderer.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Text.h" />
     <ClInclude Include="..\..\..\include\engine\objects\Transform.h" />
     <ClInclude Include="..\..\..\include\engine\objects\RenderableObject.h" />
@@ -103,6 +112,7 @@
     <ClInclude Include="..\..\..\include\game\Player.h" />
     <ClInclude Include="..\..\..\include\game\ScoreText.h" />
     <ClInclude Include="..\..\..\include\game\SpaceDefender.h" />
+    <ClInclude Include="..\..\..\src\engine\graphics\TextureShader.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -162,7 +172,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external\stb;C:\SpaceDefender\external;C:\SpaceDefender\external\glfw\include;C:\SpaceDefender\external\ft29\freetype-2.9\include;C:\SpaceDefender\external\glad\include;C:\SpaceDefender\external\Boost\include;C:\SpaceDefender\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/DENGINE_DEBUG /DFONT_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/DENGINE_DEBUG /DFONT_DEBUG /DGRAPHICS_DEBUG %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\SpaceDefender\external\glfw\lib-vc2015;C:\SpaceDefender\external\ft29\freetype-2.9\objs\Win32\Release Static;C:\SpaceDefender\external\Boost\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

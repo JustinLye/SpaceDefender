@@ -41,8 +41,8 @@ void GameObject::Match(const Transform& transform)
 
 void GameObject::MatchShapes(const Transform& transform)
 {
-	std::map<Shape*, Transform, CompareShapePtr>::iterator iter = mShapeMap.begin();
-	while (iter != mShapeMap.end())
+	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::iterator iter = mDrawableObjectMap.begin();
+	while (iter != mDrawableObjectMap.end())
 	{
 		iter->second.Match(transform);
 		++iter;
@@ -156,11 +156,11 @@ void GameObject::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 #else
 	assert(mRenderer != nullptr);
 #endif
-	RenderShapes(proj_mat, view_mat);
+	RenderDrawableObjects(proj_mat, view_mat);
 	RenderGameObjects(proj_mat, view_mat);
 }
 
-void GameObject::Render(const glm::mat4& projection_matrix, const glm::mat4& view_matrix, Shape* shape)
+void GameObject::Render(const glm::mat4& projection_matrix, const glm::mat4& view_matrix, DrawableObject* object)
 {
 #ifdef ENGINE_DEBUG
 	if (!mRenderer)
@@ -170,7 +170,7 @@ void GameObject::Render(const glm::mat4& projection_matrix, const glm::mat4& vie
 #else
 	assert(mRenderer != nullptr);
 #endif
-	auto shape_ptr = GetShape(shape);
+	auto shape_ptr = GetDrawableObject(object);
 	mRenderer->Render(shape_ptr->first, glm::value_ptr(projection_matrix*view_matrix*shape_ptr->second.Model()));
 }
 
@@ -188,23 +188,23 @@ void GameObject::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat, Ga
 	object_ptr->second->Render(proj_mat, view_mat);
 }
 
-void GameObject::AddShape(Shape* shape)
+void GameObject::AddDrawableObject(DrawableObject* object)
 {
-	if (!ShapeIsMapped(shape))
+	if (!DrawableObjectIsMapped(object))
 	{
-		std::pair<Shape*, Transform> p(shape, Transform());
+		std::pair<DrawableObject*, Transform> p(object, Transform());
 		p.second.Translate(mTransform.Position());
 		p.second.Scale(mTransform.Scale().x);
 		p.second.Rotation(mTransform.Rotation());
-		mShapeMap.insert(p);
+		mDrawableObjectMap.insert(p);
 	}
 }
 
-void GameObject::RemoveShape(Shape* shape)
+void GameObject::RemoveDrawableObject(DrawableObject* object)
 {
-	if (ShapeIsMapped(shape))
+	if (DrawableObjectIsMapped(object))
 	{
-		mShapeMap.erase(shape);
+		mDrawableObjectMap.erase(object);
 	}
 }
 
@@ -242,15 +242,15 @@ void GameObject::AddRigidBody(RigidBody* rb)
 void GameObject::Scale(const float& scale)
 {
 	mTransform.Scale(scale);
-	ScaleShapes(scale);
+	ScaleDrawableObjects(scale);
 	ScaleColliders(scale);
 	ScaleObjects(scale);
 	CustomScaleActions(scale);
 }
 
-void GameObject::Scale(const float& scale, Shape* shape)
+void GameObject::Scale(const float& scale, DrawableObject* object)
 {
-	GetShape(shape)->second.Scale(scale);
+	GetDrawableObject(object)->second.Scale(scale);
 }
 
 void GameObject::Scale(const float& scale, Collider* collider)
@@ -268,9 +268,9 @@ const glm::vec3& GameObject::Scale() const
 	return mTransform.Scale();
 }
 
-const glm::vec3& GameObject::Scale(Shape* shape) const
+const glm::vec3& GameObject::Scale(DrawableObject* object) const
 {
-	return GetShape(shape)->second.Scale();
+	return GetDrawableObject(object)->second.Scale();
 }
 
 const glm::vec3& GameObject::Scale(Collider* collider) const
@@ -287,15 +287,15 @@ const glm::vec3& GameObject::Scale(GameObject* object) const
 void GameObject::Translate(const glm::vec3& translation)
 {
 	mTransform.Translate(translation);
-	TranslateShapes(translation);
+	TranslateDrawableObjects(translation);
 	TranslateColliders(translation);
 	TranslateObjects(translation);
 	CustomTranslateActions(translation);
 }
 
-void GameObject::Translate(const glm::vec3& translation, Shape* shape) 
+void GameObject::Translate(const glm::vec3& translation, DrawableObject* object) 
 {
-	GetShape(shape)->second.Translate(translation);
+	GetDrawableObject(object)->second.Translate(translation);
 }
 
 void GameObject::Translate(const glm::vec3& translation, Collider* collider)
@@ -313,9 +313,9 @@ const glm::vec3& GameObject::Position() const
 	return mTransform.Position();
 }
 
-const glm::vec3& GameObject::Position(Shape* shape) const
+const glm::vec3& GameObject::Position(DrawableObject* object) const
 {
-	return GetShape(shape)->second.Position();
+	return GetDrawableObject(object)->second.Position();
 }
 
 const glm::vec3& GameObject::Position(Collider* collider) const
@@ -333,14 +333,14 @@ const glm::vec3& GameObject::Position(GameObject* object) const
 void GameObject::Rotate(const float& angle_degrees, const glm::vec3& rotation_axis)
 {
 	mTransform.Rotate(angle_degrees, rotation_axis);
-	RotateShapes(angle_degrees, rotation_axis);
+	RotateDrawableObjects(angle_degrees, rotation_axis);
 	RotateColliders(angle_degrees, rotation_axis);
 	RotateObjects(angle_degrees, rotation_axis);
 }
 
-void GameObject::Rotate(const float& angle_degrees, const glm::vec3& rotation_axis, Shape* shape)
+void GameObject::Rotate(const float& angle_degrees, const glm::vec3& rotation_axis, DrawableObject* object)
 {
-	GetShape(shape)->second.Rotate(angle_degrees, rotation_axis);
+	GetDrawableObject(object)->second.Rotate(angle_degrees, rotation_axis);
 }
 
 void GameObject::Rotate(const float& angle_degrees, const glm::vec3& rotation_axis, Collider* collider)
@@ -356,14 +356,14 @@ void GameObject::Rotate(const float& angle_degrees, const glm::vec3& rotation_ax
 void GameObject::Rotation(const glm::quat& copy_quat)
 {
 	mTransform.Rotation(copy_quat);
-	RotationShapes(copy_quat);
+	RotationDrawableObjects(copy_quat);
 	RotationColliders(copy_quat);
 	RotationObjects(copy_quat);
 }
 
-void GameObject::Rotation(const glm::quat& copy_quat, Shape* shape)
+void GameObject::Rotation(const glm::quat& copy_quat, DrawableObject* object)
 {
-	GetShape(shape)->second.Rotation(copy_quat);
+	GetDrawableObject(object)->second.Rotation(copy_quat);
 }
 
 void GameObject::Rotation(const glm::quat& copy_quat, Collider* collider)
@@ -381,9 +381,9 @@ const glm::quat& GameObject::Rotation() const
 	return mTransform.Rotation();
 }
 
-const glm::quat& GameObject::Rotation(Shape* shape) const
+const glm::quat& GameObject::Rotation(DrawableObject* object) const
 {
-	return GetShape(shape)->second.Rotation();
+	return GetDrawableObject(object)->second.Rotation();
 }
 
 const glm::quat& GameObject::Rotation(Collider* collider) const
@@ -401,14 +401,14 @@ const glm::quat& GameObject::Rotation(GameObject* object) const
 void GameObject::Offset(const glm::vec3& offset_vec)
 {
 	mTransform.Offset(offset_vec);
-	OffsetShapes(offset_vec);
+	OffsetDrawableObjects(offset_vec);
 	OffsetColliders(offset_vec);
 	OffsetObjects(offset_vec);
 }
 
-void GameObject::Offset(const glm::vec3& offset_vec, Shape* shape_ptr)
+void GameObject::Offset(const glm::vec3& offset_vec, DrawableObject* object)
 {
-	GetShape(shape_ptr)->second.Offset(offset_vec);
+	GetDrawableObject(object)->second.Offset(offset_vec);
 }
 
 void GameObject::Offset(const glm::vec3& offset_vec, Collider* collider_ptr)
@@ -426,9 +426,9 @@ const glm::vec3& GameObject::Offset() const
 	return mTransform.Offset();
 }
 
-const glm::vec3& GameObject::Offset(Shape* shape_ptr) const
+const glm::vec3& GameObject::Offset(DrawableObject* object) const
 {
-	return GetShape(shape_ptr)->second.Offset();
+	return GetDrawableObject(object)->second.Offset();
 }
 
 const glm::vec3& GameObject::Offset(Collider* collider_ptr) const
@@ -446,9 +446,9 @@ glm::mat4 GameObject::Model()
 	return mTransform.Model();
 }
 
-glm::mat4 GameObject::Model(Shape* shape)
+glm::mat4 GameObject::Model(DrawableObject* object)
 {
-	return GetShape(shape)->second.Model();
+	return GetDrawableObject(object)->second.Model();
 }
 
 glm::mat4 GameObject::Model(Collider* collider)
@@ -567,10 +567,10 @@ std::pair<GameObject::const_collider_iter, GameObject::const_collider_iter> Game
 	return std::pair<const_collider_iter, const_collider_iter>(mColliderMap.cbegin(), mColliderMap.cend());
 }
 
-void GameObject::ScaleShapes(const float& scale)
+void GameObject::ScaleDrawableObjects(const float& scale)
 {
-	std::map<Shape*, Transform, CompareShapePtr>::iterator iter = mShapeMap.begin();
-	while (iter != mShapeMap.end())
+	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::iterator iter = mDrawableObjectMap.begin();
+	while (iter != mDrawableObjectMap.end())
 	{
 		iter->second.Scale(scale);
 		++iter;
@@ -597,10 +597,10 @@ void GameObject::ScaleObjects(const float& scale)
 	}
 }
 
-void GameObject::TranslateShapes(const glm::vec3& translation)
+void GameObject::TranslateDrawableObjects(const glm::vec3& translation)
 {
-	std::map<Shape*, Transform, CompareShapePtr>::iterator iter = mShapeMap.begin();
-	while (iter != mShapeMap.end())
+	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::iterator iter = mDrawableObjectMap.begin();
+	while (iter != mDrawableObjectMap.end())
 	{
 		iter->second.Translate(translation);
 		++iter;
@@ -627,10 +627,10 @@ void GameObject::TranslateObjects(const glm::vec3& translation)
 	}
 }
 
-void GameObject::RotateShapes(const float& angle_degrees, const glm::vec3& rotation_axis)
+void GameObject::RotateDrawableObjects(const float& angle_degrees, const glm::vec3& rotation_axis)
 {
-	std::map<Shape*, Transform, CompareShapePtr>::iterator iter = mShapeMap.begin();
-	while (iter != mShapeMap.end())
+	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::iterator iter = mDrawableObjectMap.begin();
+	while (iter != mDrawableObjectMap.end())
 	{
 		iter->second.Rotate(angle_degrees, rotation_axis);
 		++iter;
@@ -657,10 +657,10 @@ void GameObject::RotateObjects(const float& angle_degrees, const glm::vec3& rota
 	}
 }
 
-void GameObject::RotationShapes(const glm::quat& rotation)
+void GameObject::RotationDrawableObjects(const glm::quat& rotation)
 {
-	std::map<Shape*, Transform, CompareShapePtr>::iterator iter = mShapeMap.begin();
-	while (iter != mShapeMap.end())
+	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::iterator iter = mDrawableObjectMap.begin();
+	while (iter != mDrawableObjectMap.end())
 	{
 		iter->second.Rotation(rotation);
 		++iter;
@@ -687,10 +687,10 @@ void GameObject::RotationObjects(const glm::quat& rotation)
 	}
 }
 
-void GameObject::OffsetShapes(const glm::vec3& offset_vec)
+void GameObject::OffsetDrawableObjects(const glm::vec3& offset_vec)
 {
-	std::map<Shape*, Transform, CompareShapePtr>::iterator iter = mShapeMap.begin();
-	while (iter != mShapeMap.end())
+	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::iterator iter = mDrawableObjectMap.begin();
+	while (iter != mDrawableObjectMap.end())
 	{
 		iter->second.Offset(offset_vec);
 		++iter;
@@ -717,10 +717,10 @@ void GameObject::OffsetObjects(const glm::vec3& offset_vec)
 	}
 }
 
-void GameObject::RenderShapes(const glm::mat4& proj_mat, const glm::mat4& view_mat)
+void GameObject::RenderDrawableObjects(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 {
-	std::map<Shape*, Transform, CompareShapePtr>::iterator iter = mShapeMap.begin();
-	while (iter != mShapeMap.end())
+	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::iterator iter = mDrawableObjectMap.begin();
+	while (iter != mDrawableObjectMap.end())
 	{
 		mRenderer->Render(iter->first, glm::value_ptr(proj_mat * view_mat * iter->second.Model()));
 		++iter;
@@ -737,20 +737,20 @@ void GameObject::RenderGameObjects(const glm::mat4& proj_mat, const glm::mat4& v
 	}
 }
 
-std::map<Shape*, Transform, GameObject::CompareShapePtr>::iterator GameObject::GetShape(Shape* shape)
+std::map<DrawableObject*, Transform, GameObject::CompareDrawObjPtr>::iterator GameObject::GetDrawableObject(DrawableObject* shape)
 {
-	auto result = mShapeMap.find(shape);
+	auto result = mDrawableObjectMap.find(shape);
 #ifdef ENGINE_DEBUG
-	assert(result != mShapeMap.end());
+	assert(result != mDrawableObjectMap.end());
 #endif
 	return result;
 }
 
-std::map<Shape*, Transform, GameObject::CompareShapePtr>::const_iterator GameObject::GetShape(Shape* shape) const
+std::map<DrawableObject*, Transform, GameObject::CompareDrawObjPtr>::const_iterator GameObject::GetDrawableObject(DrawableObject* shape) const
 {
-	auto result = mShapeMap.find(shape);
+	auto result = mDrawableObjectMap.find(shape);
 #ifdef ENGINE_DEBUG
-	assert(result != mShapeMap.cend());
+	assert(result != mDrawableObjectMap.cend());
 #endif
 	return result;
 }
@@ -791,9 +791,9 @@ std::map<GameObject*, GameObject*, GameObject::CompareGameObjectPtr>::const_iter
 	return result;
 }
 
-bool GameObject::ShapeIsMapped(Shape* shape) const
+bool GameObject::DrawableObjectIsMapped(DrawableObject* object) const
 {
-	return (mShapeMap.find(shape) != mShapeMap.cend());
+	return (mDrawableObjectMap.find(object) != mDrawableObjectMap.cend());
 }
 
 bool GameObject::ColliderIsMapped(Collider* collider) const

@@ -55,6 +55,12 @@
     <Filter Include="src\engine\font">
       <UniqueIdentifier>{b12c278d-2dba-4ee2-b49c-6edf2ce20891}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\engine\graphics">
+      <UniqueIdentifier>{584db9de-90d4-48b7-9406-6baf5a4e9b45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\graphics">
+      <UniqueIdentifier>{c9ebb830-9c3d-4721-8243-ad5c26283612}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\engine\objects\Collider.cc">
@@ -175,6 +181,21 @@
       <Filter>src\game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\engine\objects\Button.cc">
+      <Filter>src\engine\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\graphics\TexData.cc">
+      <Filter>src\engine\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\graphics\Texture.cc">
+      <Filter>src\engine\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\graphics\TextureShader.cc">
+      <Filter>src\engine\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\objects\DrawableObject.cc">
+      <Filter>src\engine\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\objects\TexRenderer.cc">
       <Filter>src\engine\objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -303,6 +324,21 @@
       <Filter>include\engine\objects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\engine\objects\Button.h">
+      <Filter>include\engine\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\graphics\TexData.h">
+      <Filter>include\engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\graphics\Texture.h">
+      <Filter>include\engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\engine\graphics\TextureShader.h">
+      <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\objects\TexRenderer.h">
+      <Filter>include\engine\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\objects\DrawableObject.h">
       <Filter>include\engine\objects</Filter>
     </ClInclude>
   </ItemGroup>

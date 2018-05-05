@@ -273,7 +273,7 @@ Astroid* AstroidSpawner::ConstructObject()
 {
 	Astroid* astroid = new Astroid();
 	astroid->AddRenderer(mRenderer);
-	astroid->AddShape(mShape);
+	astroid->AddDrawableObject(mShape);
 	astroid->AddCollider(new Collider());
 	astroid->AddObserver(this);
 	astroid->HitPoints(2);

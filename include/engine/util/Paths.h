@@ -10,4 +10,8 @@
 #define ENGINE_FONT_BASE_PATH "C:\\SpaceDefender\\font\\"
 #define EngineFontPath(filename) ENGINE_FONT_BASE_PATH + boost::lexical_cast<std::string>(filename)
 #endif
+#ifndef ENGINE_TEX_BASE_PATH
+#define ENGINE_TEX_BASE_PATH "C:\\SpaceDefender\\textures\\"
+#define EngineTexPath(filename) ENGINE_TEX_BASE_PATH + boost::lexical_cast<std::string>(filename)
+#endif
 #endif

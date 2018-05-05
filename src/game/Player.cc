@@ -31,7 +31,7 @@ void Player::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 #else
 	assert(mRenderer != nullptr);
 #endif
-	RenderShapes(proj_mat, view_mat);
+	RenderDrawableObjects(proj_mat, view_mat);
 	RenderGameObjects(proj_mat, view_mat);
 	if (mLaserCannon)
 	{

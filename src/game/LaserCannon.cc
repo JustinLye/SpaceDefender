@@ -25,12 +25,12 @@ LaserCannon::~LaserCannon()
 
 int LaserCannon::MaxCapacity()
 {
-	return 10;
+	return 20;
 }
 
 int LaserCannon::MaxActiveCapacity()
 {
-	return 7;
+	return 5;
 }
 
 void LaserCannon::OnNotify(const GameObject& object, const Constants::Types::event_t& event_name)
@@ -190,7 +190,7 @@ Laser* LaserCannon::ConstructObject()
 {
 	Laser* new_obj = new Laser();
 	new_obj->AddRenderer(mRenderer);
-	new_obj->AddShape(mShape);
+	new_obj->AddDrawableObject(mShape);
 	new_obj->AddCollider(new Collider());
 	new_obj->TerminateYPos(mLaserTermYPos);
 	new_obj->AddObserver(this);
@@ -198,7 +198,7 @@ Laser* LaserCannon::ConstructObject()
 	Shape* circle = new Shape();
 	CircleData* circle_data = new CircleData();
 	circle->Buffer(circle_data);
-	new_obj->AddShape(circle);
+	new_obj->AddDrawableObject(circle);
 #endif
 	return new_obj;
 }

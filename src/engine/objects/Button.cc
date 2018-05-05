@@ -66,7 +66,7 @@ void Button::AddRenderer(Renderer* renderer)
 	mRenderer = renderer;
 }
 
-void Button::AddShape(Shape* shape)
+void Button::AddDrawableObject(Shape* shape)
 {
 	mShape = shape;
 }

@@ -24,7 +24,7 @@ public:
 	void Projection(const glm::mat4&);
 	void View(const glm::mat4&);
 	void AddRenderer(Renderer*);
-	void AddShape(Shape*);
+	void AddDrawableObject(Shape*);
 	void AddText(Text*);
 
 	const glm::vec4& FillColor() const;
