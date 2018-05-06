@@ -148,6 +148,7 @@ const Transform& GameObject::GetTransform() const
 
 void GameObject::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 {
+	RenderGameObjects(proj_mat, view_mat);
 #ifdef ENGINE_DEBUG
 	if (!mRenderer)
 	{
@@ -157,7 +158,7 @@ void GameObject::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 	assert(mRenderer != nullptr);
 #endif
 	RenderDrawableObjects(proj_mat, view_mat);
-	RenderGameObjects(proj_mat, view_mat);
+	
 }
 
 void GameObject::Render(const glm::mat4& projection_matrix, const glm::mat4& view_matrix, DrawableObject* object)

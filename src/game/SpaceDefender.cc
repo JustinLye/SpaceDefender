@@ -26,6 +26,7 @@ void SpaceDefender::Init()
 	InitShaders();
 	InitFonts();
 	InitUI();
+	InitTextures();
 	InitPlayer();
 	InitAstroids();
 	InitCollisionDetection();
@@ -57,6 +58,32 @@ void SpaceDefender::Run()
 
 	glEnable(GL_TEXTURE_2D);
 
+	GameObject* background = new GameObject();
+	GameObject* background2 = new GameObject();
+	GameObject* background3 = new GameObject();
+	GameObject* start_background = new GameObject();
+	GameObject* static_background = new GameObject();
+
+	static_background->AddGameObject(background);
+	static_background->AddGameObject(background2);
+	static_background->AddGameObject(background3);
+	static_background->AddGameObject(start_background);
+	//static_background->Scale(2.0f);
+	background->AddRenderer(new TexRenderer(mShaders[shader_prog_t::TEXTURE_SHADER_PROG]));
+	background->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND]);
+	background->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND2]);
+	background2->AddRenderer(new TexRenderer(mShaders[shader_prog_t::TEXTURE_SHADER_PROG]));
+	background2->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND]);
+	background2->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND2]);
+	background3->AddRenderer(new TexRenderer(mShaders[shader_prog_t::TEXTURE_SHADER_PROG]));
+	background3->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND]);
+	background3->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND2]);
+
+	start_background->Offset(glm::vec3(0.0f, -2.5f, 0.0f));
+	background2->Offset(glm::vec3(0.0f, -1.75f, 0.0f));
+	background3->Offset(glm::vec3(0.0f, -2.75f, 0.0f));
+
+	float scroll_speed = 0.10f * (1.0f / 60.0f);
 	while (!glfwWindowShouldClose(mWindow))
 	{
 		switch (mGameState)
@@ -68,6 +95,23 @@ void SpaceDefender::Run()
 			Update(1.0f / 60.0f);
 			DoCollisionDetection(1.0f / 60.0f);
 			Render();
+			static_background->Render(Constants::Geometry::IDENTITY_MATRIX, Constants::Geometry::IDENTITY_MATRIX);
+			static_background->Offset(glm::vec3(0.0f, scroll_speed, 0.0f), background);
+			static_background->Offset(glm::vec3(0.0f, scroll_speed, 0.0f), background2);
+			static_background->Offset(glm::vec3(0.0f, scroll_speed, 0.0f), background3);
+			if (background->Offset().y >= 2.15f)
+			{
+				background->Match(start_background->GetTransform());
+			}
+			if (background2->Offset().y >= 2.15f)
+			{
+				background2->Match(start_background->GetTransform());
+			}
+			if (background3->Offset().y >= 2.15f)
+			{
+				background3->Match(start_background->GetTransform());
+			}
+			std::cout << background->Offset().y << '\t' << mBoundries.mTop / 2.0f << '\n';
 			glfwSwapBuffers(mWindow);
 			glfwPollEvents();
 			break;
@@ -77,6 +121,7 @@ void SpaceDefender::Run()
 			HandleInput();
 			Render();
 			button->Render();
+			static_background->Render(Constants::Geometry::IDENTITY_MATRIX, Constants::Geometry::IDENTITY_MATRIX);
 			glfwSwapBuffers(mWindow);
 			glfwPollEvents();
 			break;
@@ -125,8 +170,8 @@ void SpaceDefender::InitBoundries()
 	mBoundries.mBottom = 0.0f;
 	mBoundries.mTop = OpenGLUtility::GetScreenHeight(mOptions.mMonitor);
 
-	mProjMat = glm::ortho(0.0f, mBoundries.mRight, 0.0f, mBoundries.mTop, 0.1f, 100.0f);
-	mViewMat = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	mProjMat = glm::ortho(0.0f, mBoundries.mRight, 0.0f, mBoundries.mTop, 0.01f, 1000.0f);
+	mViewMat = glm::lookAt(glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 void SpaceDefender::InitShapeData()
@@ -191,17 +236,28 @@ void SpaceDefender::InitUI()
 	mCanvas->AddUIObject(mScoreText);
 }
 
+void SpaceDefender::InitTextures()
+{
+	for (int i = 0; i < texture_t::TOTAL_GAME_TEXTURES; ++i)
+	{
+		mTextures[i] = new Texture();
+	}
+	mTextures[texture_t::PLAYER_SHIP]->LoadFromFile(EngineTexPath(PLAYER_SHIP_TEXTURE_FILENAME));
+	mTextures[texture_t::GREEN_LASER]->LoadFromFile(EngineTexPath(GREEN_LASER_TEXTURE_FILENAME));
+	mTextures[texture_t::BROWN_ASTROID]->LoadFromFile(EngineTexPath(BROWN_ASTROID_TEXTURE_FILENAME));
+	mTextures[texture_t::CARTOON_ASTROID]->LoadFromFile(EngineTexPath(CARTOON_ASTROID_TEXTURE_FILENAME));
+	mTextures[texture_t::SPACE_BACKGROUND]->LoadFromFile(EngineTexPath(SPACE_BACKGROUND_TEXTURE_FILENAME));
+	mTextures[texture_t::SPACE_BACKGROUND2]->LoadFromFile(EngineTexPath(SPACE_BACKGROUND2_TEXTURE_FILENAME));
+}
+
 void SpaceDefender::InitPlayer()
 {
 	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
 	float sh = OpenGLUtility::GetScreenHeight(mOptions.mMonitor);
-	Texture* ship = new Texture();
-	ship->LoadFromFile(EngineTexPath(PLAYER_SHIP_TEXTURE_FILENAME));
 
 	// Setup laser cannon
-	Shape* laser = new Shape();
-	laser->Buffer(mShapeData[Constants::Types::shape_t::LINE_SEG]);
-	LaserCannon* laser_cannon = new LaserCannon(laser, mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG]);
+	
+	LaserCannon* laser_cannon = new LaserCannon(mTextures[texture_t::GREEN_LASER], mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG]);
 	laser_cannon->LaserTermYPos(mBoundries.mTop * 1.01f);
 	laser_cannon->ProjectileSpeed(sh * 0.10f);
 	laser_cannon->CooldownTime(80.0f);
@@ -210,16 +266,16 @@ void SpaceDefender::InitPlayer()
 	RigidBody* rb = new RigidBody();
 	mPlayer = new Player();
 	mPlayer->AddRenderer(renderer);
-	mPlayer->AddDrawableObject(ship);
-	//mPlayer->AddShape(ship);
+	mPlayer->AddDrawableObject(mTextures[texture_t::PLAYER_SHIP]);
 	mPlayer->AddCollider(collider);
 	mPlayer->AddRigidBody(rb);
 	mPlayer->Mass(1.0f);
 	mPlayer->Damping(0.75f);
 	mPlayer->AttachCannon(laser_cannon);
-	mPlayer->Scale(sw*0.015f);
-	mPlayer->Translate(glm::vec3(sw/2.0f, sh*0.08f, 0.0f));
+	mPlayer->Scale(sw*0.025f);
+	mPlayer->Translate(glm::vec3(sw/2.0f, sh*0.09f, 0.0f));
 	laser_cannon->Translate(glm::vec3(1.0f, sh * 0.05f, 0.0f)); // adjust laser cannon
+	laser_cannon->Scale(0.5f);
 	
 #ifdef COLLISION_DEBUG
 	Shape* detection_circle = new Shape();
@@ -230,10 +286,8 @@ void SpaceDefender::InitPlayer()
 
 void SpaceDefender::InitAstroids()
 {
-	Shape* astroid = new Shape();
-	astroid->Buffer(mShapeData[Constants::Types::shape_t::CIRCLE]);
 
-	mAstroidSpawner = new AstroidSpawner(astroid, mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG]);
+	mAstroidSpawner = new AstroidSpawner(mTextures[texture_t::CARTOON_ASTROID], mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG]);
 	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
 	mAstroidSpawner->MaxProjectileSpeed(sw*0.10f);
 	mAstroidSpawner->MinProjectileSpeed(sw*0.005f);

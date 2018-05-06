@@ -1,6 +1,6 @@
 #include"game/LaserCannon.h"
 
-LaserCannon::LaserCannon(Shape* laser, ShaderProgram* shader) :
+LaserCannon::LaserCannon(DrawableObject* laser, ShaderProgram* shader) :
 	Subject(),
 	Observer(),
 	ObjectManager<Laser>(), 
@@ -182,7 +182,7 @@ void LaserCannon::CustomDeallocOps(const unsigned int& index)
 
 void LaserCannon::CustomInitOps()
 {
-	mRenderer = new Renderer(mShaderProg, GL_LINE);
+	mRenderer = new TexRenderer(mShaderProg, GL_FILL);
 	mCollider = new Collider();
 }
 

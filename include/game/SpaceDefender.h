@@ -53,6 +53,7 @@ protected:
 	GLFWwindow* mWindow;
 	ShapeData* mShapeData[shape_t::TOTAL_SHAPES];
 	ShaderProgram* mShaders[shader_prog_t::TOTAL_SHADERS];
+	Texture* mTextures[texture_t::TOTAL_GAME_TEXTURES];
 	AstroidSpawner* mAstroidSpawner;
 	CollisionDetector* mCollisionDetector;
 	BoundryBox mBoundries;
@@ -73,6 +74,7 @@ protected:
 	void InitShaders();
 	void InitFonts();
 	void InitUI();
+	void InitTextures();
 	void InitPlayer();
 	void InitAstroids();
 	void InitCollisionDetection();

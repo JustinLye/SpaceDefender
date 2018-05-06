@@ -1,6 +1,6 @@
 #include"game/AstroidSpawner.h"
 
-AstroidSpawner::AstroidSpawner(Shape* shape, ShaderProgram* shader_prog) :
+AstroidSpawner::AstroidSpawner(DrawableObject* shape, ShaderProgram* shader_prog) :
 	Subject(),
 	Observer(),
 	ObjectManager<Astroid>(),
@@ -11,7 +11,7 @@ AstroidSpawner::AstroidSpawner(Shape* shape, ShaderProgram* shader_prog) :
 	mMaxRespawnWaitTime(0),
 	mTransform(Transform()),
 	mShape(shape),
-	mRenderer(new Renderer(shader_prog, GL_LINE)),
+	mRenderer(new TexRenderer(shader_prog, GL_FILL)),
 	mGen(mRd()),
 	mSpawnDist(0.0f, 100.0f),
 	mPosDist(0.0f, 0.0f),

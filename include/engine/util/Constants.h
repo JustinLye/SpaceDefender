@@ -33,6 +33,11 @@ namespace Constants
 		const GLenum DFLT_POLY_MODE = GL_LINES;
 		const glm::vec4 SCORE_TEXT_COLOR = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
 		const std::string PLAYER_SHIP_TEXTURE_FILENAME = "g3829.png";
+		const std::string GREEN_LASER_TEXTURE_FILENAME = "green-laser.png";
+		const std::string BROWN_ASTROID_TEXTURE_FILENAME = "brown-astroid.png";
+		const std::string CARTOON_ASTROID_TEXTURE_FILENAME = "astroid.png";
+		const std::string SPACE_BACKGROUND_TEXTURE_FILENAME = "spr_stars02.png";
+		const std::string SPACE_BACKGROUND2_TEXTURE_FILENAME = "spr_stars01.png";
 	}
 	namespace Geometry
 	{
@@ -125,6 +130,17 @@ namespace Constants
 			ACTIVE_GAMEPLAY,
 			PAUSED,
 			TOTAL_GAME_STATE_TYPES
+		};
+
+		enum texture_t : unsigned int
+		{
+			PLAYER_SHIP,
+			GREEN_LASER,
+			BROWN_ASTROID,
+			CARTOON_ASTROID,
+			SPACE_BACKGROUND,
+			SPACE_BACKGROUND2,
+			TOTAL_GAME_TEXTURES
 		};
 	}
 };
