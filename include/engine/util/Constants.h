@@ -21,12 +21,23 @@ namespace Constants
 		const std::string LASER_VERTEX_SHADER_NAME = "position.vert";
 		const std::string LASER_FRAGMENT_SHADER_NAME = "unicolor.frag";
 		const std::string DFLT_PROJ_UNIFORM_NAME = "Projection";
+		const std::string TEXTURE_VERT_SHADER = "texture.vert";
+		const std::string TEXTURE_FRAG_SHADER = "texture.frag";
+		const std::string TEXTURE_SAMPLER_NAME = "tex";
+		const std::string TEXTURE_COORD_ATTRIB_NAME = "vTexCoord";
+		const int TEXTURE_COORD_ATTRIB_POS = 1;
 	}
 	namespace Rendering
 	{
 		const glm::vec4 DFLT_SHAPE_COLOR = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 		const GLenum DFLT_POLY_MODE = GL_LINES;
 		const glm::vec4 SCORE_TEXT_COLOR = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+		const std::string PLAYER_SHIP_TEXTURE_FILENAME = "g3829.png";
+		const std::string GREEN_LASER_TEXTURE_FILENAME = "green-laser.png";
+		const std::string BROWN_ASTROID_TEXTURE_FILENAME = "brown-astroid.png";
+		const std::string CARTOON_ASTROID_TEXTURE_FILENAME = "astroid.png";
+		const std::string SPACE_BACKGROUND_TEXTURE_FILENAME = "spr_stars02.png";
+		const std::string SPACE_BACKGROUND2_TEXTURE_FILENAME = "spr_stars01.png";
 	}
 	namespace Geometry
 	{
@@ -75,6 +86,7 @@ namespace Constants
 		{
 			DEFAULT_SHADER_PROG,
 			TEXT_SHADER_PROG,
+			TEXTURE_SHADER_PROG,
 			TOTAL_SHADERS
 		};
 		
@@ -98,6 +110,8 @@ namespace Constants
 			TOTAL_GAME_OBJECT_TYPES
 		};
 
+
+
 		enum font_data_t : unsigned int
 		{
 			ARIAL_FONT_DATA,
@@ -107,7 +121,26 @@ namespace Constants
 		enum font_t : unsigned int
 		{
 			SCORE_FONT,
+			PAUSE_FONT,
 			TOTAL_GAME_FONT_TYPES
+		};
+		enum game_state_t : unsigned int
+		{
+			INIT_GAME_STATE,
+			ACTIVE_GAMEPLAY,
+			PAUSED,
+			TOTAL_GAME_STATE_TYPES
+		};
+
+		enum texture_t : unsigned int
+		{
+			PLAYER_SHIP,
+			GREEN_LASER,
+			BROWN_ASTROID,
+			CARTOON_ASTROID,
+			SPACE_BACKGROUND,
+			SPACE_BACKGROUND2,
+			TOTAL_GAME_TEXTURES
 		};
 	}
 };

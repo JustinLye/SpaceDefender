@@ -3,6 +3,7 @@
 #include<chrono>
 #include"engine/objects/Observer.h"
 #include"engine/objects/Subject.h"
+#include"engine/objects/TexRenderer.h"
 #include"engine/containers/ObjectManager.h"
 #include"game/Laser.h"
 
@@ -17,7 +18,7 @@ class LaserCannon :
 	public ObjectManager<Laser>
 {
 public:
-	LaserCannon(Shape*, ShaderProgram*);
+	LaserCannon(DrawableObject*, ShaderProgram*);
 	~LaserCannon();
 	int MaxCapacity();
 	int MaxActiveCapacity();
@@ -45,7 +46,7 @@ public:
 
 protected:
 	Transform mTransform;
-	Shape* mShape;
+	DrawableObject* mShape;
 	ShaderProgram* mShaderProg;
 	Renderer* mRenderer;
 	Collider* mCollider;

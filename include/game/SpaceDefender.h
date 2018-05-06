@@ -16,6 +16,9 @@
 #include"engine/font/ArialFontData.h"
 #include"engine/objects/Text.h"
 #include"engine/objects/Canvas.h"
+#include"engine/objects/Button.h"
+#include"engine/graphics/TextureShader.h"
+#include"engine/objects/TexRenderer.h"
 #include"game/Player.h"
 #include"game/AstroidSpawner.h"
 #include"game/CollisionDetector.h"
@@ -50,6 +53,7 @@ protected:
 	GLFWwindow* mWindow;
 	ShapeData* mShapeData[shape_t::TOTAL_SHAPES];
 	ShaderProgram* mShaders[shader_prog_t::TOTAL_SHADERS];
+	Texture* mTextures[texture_t::TOTAL_GAME_TEXTURES];
 	AstroidSpawner* mAstroidSpawner;
 	CollisionDetector* mCollisionDetector;
 	BoundryBox mBoundries;
@@ -61,6 +65,7 @@ protected:
 	Font* mFont[font_t::TOTAL_GAME_FONT_TYPES];
 	ScoreText* mScoreText;
 	Canvas* mCanvas;
+	game_state_t mGameState;
 
 	void InitSys();
 	void InitBoundries();
@@ -69,6 +74,7 @@ protected:
 	void InitShaders();
 	void InitFonts();
 	void InitUI();
+	void InitTextures();
 	void InitPlayer();
 	void InitAstroids();
 	void InitCollisionDetection();

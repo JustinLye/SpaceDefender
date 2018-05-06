@@ -6,6 +6,7 @@
 #include"engine/objects/Observer.h"
 #include"engine/containers/ObjectManager.h"
 #include"engine/objects/RigidBody.h"
+#include"engine/objects/TexRenderer.h"
 #include"game/Astroid.h"
 #include"game/AstroidCollision.h"
 using namespace Constants::Types;
@@ -15,7 +16,7 @@ class AstroidSpawner :
 	public ObjectManager<Astroid>
 {
 public:
-	AstroidSpawner(Shape*, ShaderProgram*);
+	AstroidSpawner(DrawableObject*, ShaderProgram*);
 	~AstroidSpawner();
 	int MaxCapacity();
 	int MaxActiveCapacity();
@@ -62,8 +63,8 @@ protected:
 	int mMinRespawnWaitTime;
 	int mMaxRespawnWaitTime;
 	Transform mTransform;
-	Shape* mShape;
-	Renderer* mRenderer;
+	DrawableObject* mShape;
+	TexRenderer* mRenderer;
 	std::map<unsigned int, unsigned int> mAstroidToIndexMap;
 	std::random_device mRd;
 	std::mt19937 mGen;

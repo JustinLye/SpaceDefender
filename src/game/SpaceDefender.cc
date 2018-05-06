@@ -7,7 +7,8 @@ SpaceDefender::SpaceDefender(const OpenGLOptions& opts) :
 	mAstroidSpawner(nullptr),
 	mViewMat(Constants::Geometry::IDENTITY_MATRIX),
 	mProjMat(Constants::Geometry::IDENTITY_MATRIX),
-	mScoreText(nullptr)
+	mScoreText(nullptr),
+	mGameState(game_state_t::INIT_GAME_STATE)
 {
 
 }
@@ -25,6 +26,7 @@ void SpaceDefender::Init()
 	InitShaders();
 	InitFonts();
 	InitUI();
+	InitTextures();
 	InitPlayer();
 	InitAstroids();
 	InitCollisionDetection();
@@ -33,16 +35,97 @@ void SpaceDefender::Init()
 void SpaceDefender::Run()
 {
 	mScoreText->Message("Score: ");
+	mGameState = game_state_t::ACTIVE_GAMEPLAY;
+	Button* button = new Button();
+	QuadData* quad_data = new QuadData();
+	Shape* button_shape = new Shape();
+	Text* button_text = new Text();
+	button_text->FontPtr(mFont[PAUSE_FONT]);
+	button_text->Scale(1.0f);
+	button_text->Message("Paused");
+	button_text->XBearing(mBoundries.mRight / 2.0f - 100.0f);
+	button_text->YBearing(mBoundries.mTop / 2.0f - 50.0f);
+	button_shape->Buffer(quad_data);
+	button->AddDrawableObject(button_shape);
+	button->Scale(glm::vec3(100.0f, 25.0f, 0.0f));
+	button->AddRenderer(new Renderer(mShaders[DEFAULT_SHADER_PROG], GL_LINES));
+	button->AddText(button_text);
+	button->Translate(glm::vec3(mBoundries.mRight / 2.0f, mBoundries.mTop / 2.0f, 1.0f));
+	button->FillColor(glm::vec4(0.3f, 0.9f, 0.3f, 0.0f));
+	button->TextColor(glm::vec4(0.0f, 1.0f, 0.0f, .70f));
+	button->Projection(mProjMat);
+	button->View(mViewMat);
+
+	glEnable(GL_TEXTURE_2D);
+
+	GameObject* background = new GameObject();
+	GameObject* background2 = new GameObject();
+	GameObject* background3 = new GameObject();
+	GameObject* start_background = new GameObject();
+	GameObject* static_background = new GameObject();
+
+	static_background->AddGameObject(background);
+	static_background->AddGameObject(background2);
+	static_background->AddGameObject(background3);
+	static_background->AddGameObject(start_background);
+	//static_background->Scale(2.0f);
+	background->AddRenderer(new TexRenderer(mShaders[shader_prog_t::TEXTURE_SHADER_PROG]));
+	background->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND]);
+	background->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND2]);
+	background2->AddRenderer(new TexRenderer(mShaders[shader_prog_t::TEXTURE_SHADER_PROG]));
+	background2->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND]);
+	background2->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND2]);
+	background3->AddRenderer(new TexRenderer(mShaders[shader_prog_t::TEXTURE_SHADER_PROG]));
+	background3->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND]);
+	background3->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND2]);
+
+	start_background->Offset(glm::vec3(0.0f, -2.5f, 0.0f));
+	background2->Offset(glm::vec3(0.0f, -1.75f, 0.0f));
+	background3->Offset(glm::vec3(0.0f, -2.75f, 0.0f));
+
+	float scroll_speed = 0.10f * (1.0f / 60.0f);
 	while (!glfwWindowShouldClose(mWindow))
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-		HandleInput();
-		Update(1.0f / 60.0f);
-		DoCollisionDetection(1.0f / 60.0f);
-		Render();
-		glfwSwapBuffers(mWindow);
-		glfwPollEvents();
+		switch (mGameState)
+		{
+		case game_state_t::ACTIVE_GAMEPLAY:
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+			HandleInput();
+			Update(1.0f / 60.0f);
+			DoCollisionDetection(1.0f / 60.0f);
+			Render();
+			static_background->Render(Constants::Geometry::IDENTITY_MATRIX, Constants::Geometry::IDENTITY_MATRIX);
+			static_background->Offset(glm::vec3(0.0f, scroll_speed, 0.0f), background);
+			static_background->Offset(glm::vec3(0.0f, scroll_speed, 0.0f), background2);
+			static_background->Offset(glm::vec3(0.0f, scroll_speed, 0.0f), background3);
+			if (background->Offset().y >= 2.15f)
+			{
+				background->Match(start_background->GetTransform());
+			}
+			if (background2->Offset().y >= 2.15f)
+			{
+				background2->Match(start_background->GetTransform());
+			}
+			if (background3->Offset().y >= 2.15f)
+			{
+				background3->Match(start_background->GetTransform());
+			}
+			std::cout << background->Offset().y << '\t' << mBoundries.mTop / 2.0f << '\n';
+			glfwSwapBuffers(mWindow);
+			glfwPollEvents();
+			break;
+		case game_state_t::PAUSED:
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+			HandleInput();
+			Render();
+			button->Render();
+			static_background->Render(Constants::Geometry::IDENTITY_MATRIX, Constants::Geometry::IDENTITY_MATRIX);
+			glfwSwapBuffers(mWindow);
+			glfwPollEvents();
+			break;
+		}
 	}
 }
 
@@ -87,8 +170,8 @@ void SpaceDefender::InitBoundries()
 	mBoundries.mBottom = 0.0f;
 	mBoundries.mTop = OpenGLUtility::GetScreenHeight(mOptions.mMonitor);
 
-	mProjMat = glm::ortho(0.0f, mBoundries.mRight, 0.0f, mBoundries.mTop, 0.1f, 100.0f);
-	mViewMat = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	mProjMat = glm::ortho(0.0f, mBoundries.mRight, 0.0f, mBoundries.mTop, 0.01f, 1000.0f);
+	mViewMat = glm::lookAt(glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 void SpaceDefender::InitShapeData()
@@ -112,6 +195,9 @@ void SpaceDefender::InitShaders()
 	mShaders[shader_prog_t::TEXT_SHADER_PROG]->Use();
 	glUniformMatrix4fv((*mShaders[shader_prog_t::TEXT_SHADER_PROG])(TEXT_PROJ_UNIFORM_NAME), 1, GL_FALSE, glm::value_ptr(mProjMat));
 	mShaders[shader_prog_t::TEXT_SHADER_PROG]->UnUse();
+	mShaders[shader_prog_t::TEXTURE_SHADER_PROG] = new TextureShader();
+	mShaders[shader_prog_t::TEXTURE_SHADER_PROG]->Init();
+	glUniform1i((*(mShaders[shader_prog_t::TEXTURE_SHADER_PROG]))(TEXTURE_SAMPLER_NAME), 0);
 
 	
 }
@@ -126,6 +212,15 @@ void SpaceDefender::InitFonts()
 	mFont[font_t::SCORE_FONT]->Color(SCORE_TEXT_COLOR);
 	mFont[font_t::SCORE_FONT]->Projection(glm::ortho(mBoundries.mLeft, mBoundries.mRight, mBoundries.mBottom, mBoundries.mTop));
 	mFont[font_t::SCORE_FONT]->Init();
+
+	mFont[font_t::PAUSE_FONT] = new Font();
+	mFont[font_t::PAUSE_FONT]->Data(mFontData[font_data_t::ARIAL_FONT_DATA]);
+	mFont[font_t::PAUSE_FONT]->Shader(mShaders[shader_prog_t::TEXT_SHADER_PROG]);
+	mFont[font_t::PAUSE_FONT]->Color(SCORE_TEXT_COLOR);
+	mFont[font_t::PAUSE_FONT]->Projection(glm::ortho(mBoundries.mLeft, mBoundries.mRight, mBoundries.mBottom, mBoundries.mTop));
+	mFont[font_t::PAUSE_FONT]->Init();
+
+	
 	
 }
 
@@ -141,48 +236,58 @@ void SpaceDefender::InitUI()
 	mCanvas->AddUIObject(mScoreText);
 }
 
+void SpaceDefender::InitTextures()
+{
+	for (int i = 0; i < texture_t::TOTAL_GAME_TEXTURES; ++i)
+	{
+		mTextures[i] = new Texture();
+	}
+	mTextures[texture_t::PLAYER_SHIP]->LoadFromFile(EngineTexPath(PLAYER_SHIP_TEXTURE_FILENAME));
+	mTextures[texture_t::GREEN_LASER]->LoadFromFile(EngineTexPath(GREEN_LASER_TEXTURE_FILENAME));
+	mTextures[texture_t::BROWN_ASTROID]->LoadFromFile(EngineTexPath(BROWN_ASTROID_TEXTURE_FILENAME));
+	mTextures[texture_t::CARTOON_ASTROID]->LoadFromFile(EngineTexPath(CARTOON_ASTROID_TEXTURE_FILENAME));
+	mTextures[texture_t::SPACE_BACKGROUND]->LoadFromFile(EngineTexPath(SPACE_BACKGROUND_TEXTURE_FILENAME));
+	mTextures[texture_t::SPACE_BACKGROUND2]->LoadFromFile(EngineTexPath(SPACE_BACKGROUND2_TEXTURE_FILENAME));
+}
+
 void SpaceDefender::InitPlayer()
 {
 	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
 	float sh = OpenGLUtility::GetScreenHeight(mOptions.mMonitor);
-	Shape* ship = new Shape();
-	ship->Buffer(mShapeData[Constants::Types::shape_t::TRIANGLE]);
 
 	// Setup laser cannon
-	Shape* laser = new Shape();
-	laser->Buffer(mShapeData[Constants::Types::shape_t::LINE_SEG]);
-	LaserCannon* laser_cannon = new LaserCannon(laser, mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG]);
-	laser_cannon->LaserTermYPos(mBoundries.mTop * 1.05f);
-	laser_cannon->ProjectileSpeed(sh * 0.090f);
+	
+	LaserCannon* laser_cannon = new LaserCannon(mTextures[texture_t::GREEN_LASER], mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG]);
+	laser_cannon->LaserTermYPos(mBoundries.mTop * 1.01f);
+	laser_cannon->ProjectileSpeed(sh * 0.10f);
 	laser_cannon->CooldownTime(80.0f);
-	Renderer* renderer = new Renderer(mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG], GL_FILL);
+	TexRenderer* renderer = new TexRenderer(mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG], GL_FILL);
 	Collider* collider = new Collider();
 	RigidBody* rb = new RigidBody();
 	mPlayer = new Player();
 	mPlayer->AddRenderer(renderer);
-	mPlayer->AddShape(ship);
+	mPlayer->AddDrawableObject(mTextures[texture_t::PLAYER_SHIP]);
 	mPlayer->AddCollider(collider);
 	mPlayer->AddRigidBody(rb);
 	mPlayer->Mass(1.0f);
 	mPlayer->Damping(0.75f);
 	mPlayer->AttachCannon(laser_cannon);
-	mPlayer->Scale(sw*0.015f);
-	mPlayer->Translate(glm::vec3(sw/2.0f, sh*0.08f, 0.0f));
+	mPlayer->Scale(sw*0.025f);
+	mPlayer->Translate(glm::vec3(sw/2.0f, sh*0.09f, 0.0f));
 	laser_cannon->Translate(glm::vec3(1.0f, sh * 0.05f, 0.0f)); // adjust laser cannon
+	laser_cannon->Scale(0.5f);
 	
 #ifdef COLLISION_DEBUG
 	Shape* detection_circle = new Shape();
 	detection_circle->Buffer(mShapeData[Constants::Types::shape_t::CIRCLE]);
-	mPlayer->AddShape(detection_circle);
+	mPlayer->AddDrawableObject(detection_circle);
 #endif
 }
 
 void SpaceDefender::InitAstroids()
 {
-	Shape* astroid = new Shape();
-	astroid->Buffer(mShapeData[Constants::Types::shape_t::CIRCLE]);
 
-	mAstroidSpawner = new AstroidSpawner(astroid, mShaders[Constants::Types::shader_prog_t::DEFAULT_SHADER_PROG]);
+	mAstroidSpawner = new AstroidSpawner(mTextures[texture_t::CARTOON_ASTROID], mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG]);
 	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
 	mAstroidSpawner->MaxProjectileSpeed(sw*0.10f);
 	mAstroidSpawner->MinProjectileSpeed(sw*0.005f);
@@ -220,25 +325,38 @@ void SpaceDefender::InitKeyStateMap()
 void SpaceDefender::HandleInput()
 {
 	UpdateKeyStates();
-	if (mKeyStateMap[GLFW_KEY_ESCAPE].mState == KEY_STATE::DOWN || mKeyStateMap[GLFW_KEY_ESCAPE].mState == KEY_STATE::PRESSED)
+	if (mKeyStateMap[GLFW_KEY_P].mState == KEY_STATE::PRESSED)
+	{
+		if (mGameState == game_state_t::ACTIVE_GAMEPLAY)
+		{
+			mGameState = game_state_t::PAUSED;
+		}
+		else if (mGameState == game_state_t::PAUSED)
+		{
+			mGameState = game_state_t::ACTIVE_GAMEPLAY;
+		}
+	}
+	if (mKeyStateMap[GLFW_KEY_ESCAPE].mState == KEY_STATE::PRESSED && mGameState == game_state_t::PAUSED)
 	{
 		glfwSetWindowShouldClose(mWindow, GLFW_TRUE);
+		return;
 	}
+	if (mGameState == game_state_t::ACTIVE_GAMEPLAY)
+	{
+		HandleLeftMovement();
+		HandleRightMovement();
+		if (!MoveLeft() && !MoveRight() && mPlayer->Boost() > 1.0f)
+		{
+			mPlayer->Boost(1.0f);
+		}
 
-	HandleLeftMovement();
-	HandleRightMovement();
-	if (!MoveLeft() && !MoveRight() && mPlayer->Boost() > 1.0f)
-	{
-		mPlayer->Boost(1.0f);
-	}
-
-	if (mKeyStateMap[GLFW_KEY_SPACE].mState == KEY_STATE::DOWN || mKeyStateMap[GLFW_KEY_SPACE].mState == KEY_STATE::PRESSED)
-	{
-		mPlayer->FireCannon();
-	}
-	else if (KeyDown(GLFW_KEY_UP))
-	{
-		mPlayer->FireCannon();
+		if (mKeyStateMap[GLFW_KEY_SPACE].mState == KEY_STATE::DOWN || mKeyStateMap[GLFW_KEY_SPACE].mState == KEY_STATE::PRESSED)
+		{
+			mPlayer->FireCannon();
+		} else if (KeyDown(GLFW_KEY_UP))
+		{
+			mPlayer->FireCannon();
+		}
 	}
 
 }

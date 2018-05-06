@@ -8,6 +8,7 @@
 #ifdef ENGINE_DEBUG
 #include"engine/util/DebugFunctions.h"
 #endif
+#include"engine/objects/DrawableObject.h"
 
 using namespace Constants::Physics;
 
@@ -16,9 +17,9 @@ class GameObject :
 {
 public:
 
-	struct CompareShapePtr
+	struct CompareDrawObjPtr
 	{
-		bool operator()(const Shape* lhs, const Shape* rhs) const
+		bool operator()(const DrawableObject* lhs, const DrawableObject* rhs) const
 		{
 			return *lhs < *rhs;
 		}
@@ -68,52 +69,52 @@ public:
 	// Transform Interface and individual Shape/Collider/GameObject tranforms
 	const Transform& GetTransform() const;
 	virtual void Scale(const float&);
-	virtual void Scale(const float&, Shape*);
+	virtual void Scale(const float&, DrawableObject*);
 	virtual void Scale(const float&, Collider*);
 	virtual void Scale(const float&, GameObject*);
 	const glm::vec3& Scale() const;
-	const glm::vec3& Scale(Shape*) const;
+	const glm::vec3& Scale(DrawableObject*) const;
 	const glm::vec3& Scale(Collider*) const;
 	const glm::vec3& Scale(GameObject*) const;
 	virtual void Translate(const glm::vec3&);
-	virtual void Translate(const glm::vec3&, Shape*);
+	virtual void Translate(const glm::vec3&, DrawableObject*);
 	virtual void Translate(const glm::vec3&, Collider*);
 	virtual void Translate(const glm::vec3&, GameObject*);
 	const glm::vec3& Position() const;
-	const glm::vec3& Position(Shape*) const;
+	const glm::vec3& Position(DrawableObject*) const;
 	const glm::vec3& Position(Collider*) const;
 	const glm::vec3& Position(GameObject*) const;
 	virtual void Rotate(const float&, const glm::vec3&);
-	virtual void Rotate(const float&, const glm::vec3&, Shape*);
+	virtual void Rotate(const float&, const glm::vec3&, DrawableObject*);
 	virtual void Rotate(const float&, const glm::vec3&, Collider*);
 	virtual void Rotate(const float&, const glm::vec3&, GameObject*);
 	virtual void Rotation(const glm::quat&);
-	virtual void Rotation(const glm::quat&, Shape*);
+	virtual void Rotation(const glm::quat&, DrawableObject*);
 	virtual void Rotation(const glm::quat&, Collider*);
 	virtual void Rotation(const glm::quat&, GameObject*);
 	const glm::quat& Rotation() const;
-	const glm::quat& Rotation(Shape*) const;
+	const glm::quat& Rotation(DrawableObject*) const;
 	const glm::quat& Rotation(Collider*) const;
 	const glm::quat& Rotation(GameObject*) const;
 	virtual void Offset(const glm::vec3&);
-	virtual void Offset(const glm::vec3&, Shape*);
+	virtual void Offset(const glm::vec3&, DrawableObject*);
 	virtual void Offset(const glm::vec3&, Collider*);
 	virtual void Offset(const glm::vec3&, GameObject*);
 	const glm::vec3& Offset() const;
-	const glm::vec3& Offset(Shape*) const;
+	const glm::vec3& Offset(DrawableObject*) const;
 	const glm::vec3& Offset(Collider*) const;
 	const glm::vec3& Offset(GameObject*) const;
 	 glm::mat4 Model();
-	 glm::mat4 Model(Shape*);
+	 glm::mat4 Model(DrawableObject*);
 	 glm::mat4 Model(Collider*);
 	 glm::mat4 Model(GameObject*);
 	// Shape Interface
-	virtual void AddShape(Shape*);
-	virtual void RemoveShape(Shape*);
+	virtual void AddDrawableObject(DrawableObject*);
+	virtual void RemoveDrawableObject(DrawableObject*);
 
 	// Renderer Interface
 	virtual void Render(const glm::mat4&, const glm::mat4&);
-	virtual void Render(const glm::mat4&, const glm::mat4&, Shape*);
+	virtual void Render(const glm::mat4&, const glm::mat4&, DrawableObject*);
 	virtual void Render(const glm::mat4&, const glm::mat4&, GameObject*);
 
 	virtual void PolyMode(const GLenum&);
@@ -147,42 +148,42 @@ protected:
 	Transform mTransform;
 	Renderer* mRenderer;
 	RigidBody* mRigidBody;
-	std::map<Shape*, Transform, CompareShapePtr> mShapeMap;
+	std::map<DrawableObject*, Transform, CompareDrawObjPtr> mDrawableObjectMap;
 	std::map<Collider*, Collider*, CompareTransPtr> mColliderMap;
 	std::map<GameObject*, GameObject*, CompareGameObjectPtr> mGameObjectMap;
 
-	virtual void ScaleShapes(const float&);
+	virtual void ScaleDrawableObjects(const float&);
 	virtual void ScaleColliders(const float&);
 	virtual void ScaleObjects(const float&);
-	virtual void TranslateShapes(const glm::vec3&);
+	virtual void TranslateDrawableObjects(const glm::vec3&);
 	virtual void TranslateColliders(const glm::vec3&);
 	virtual void TranslateObjects(const glm::vec3&);
-	virtual void RotateShapes(const float&, const glm::vec3&);
+	virtual void RotateDrawableObjects(const float&, const glm::vec3&);
 	virtual void RotateColliders(const float&, const glm::vec3&);
 	virtual void RotateObjects(const float&, const glm::vec3&);
-	virtual void RotationShapes(const glm::quat&);
+	virtual void RotationDrawableObjects(const glm::quat&);
 	virtual void RotationColliders(const glm::quat&);
 	virtual void RotationObjects(const glm::quat&);
-	virtual void OffsetShapes(const glm::vec3&);
+	virtual void OffsetDrawableObjects(const glm::vec3&);
 	virtual void OffsetColliders(const glm::vec3&);
 	virtual void OffsetObjects(const glm::vec3&);
 
 	virtual void CustomScaleActions(const float&) {}
-	virtual void CustomScaleActions(const float&, Shape*) {}
+	virtual void CustomScaleActions(const float&, DrawableObject*) {}
 
 	virtual void CustomTranslateActions(const glm::vec3&) {}
 
-	virtual void RenderShapes(const glm::mat4&, const glm::mat4&);
+	virtual void RenderDrawableObjects(const glm::mat4&, const glm::mat4&);
 	virtual void RenderGameObjects(const glm::mat4&, const glm::mat4&);
 
-	std::map<Shape*, Transform, CompareShapePtr>::iterator GetShape(Shape*);
-	std::map<Shape*, Transform, CompareShapePtr>::const_iterator GetShape(Shape*) const;
+	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::iterator GetDrawableObject(DrawableObject*);
+	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::const_iterator GetDrawableObject(DrawableObject*) const;
 	std::map<Collider*, Collider*, CompareTransPtr>::iterator GetCollider(Collider*);
 	std::map<Collider*, Collider*, CompareTransPtr>::const_iterator GetCollider(Collider*) const;
 	std::map<GameObject*, GameObject*, CompareGameObjectPtr>::iterator GetGameObject(GameObject*);
 	std::map<GameObject*, GameObject*, CompareGameObjectPtr>::const_iterator GetGameObject(GameObject*) const;
 
-	bool ShapeIsMapped(Shape*) const;
+	bool DrawableObjectIsMapped(DrawableObject*) const;
 	bool ColliderIsMapped(Collider*) const;
 	bool ObjectIsMapped(GameObject*) const;
 

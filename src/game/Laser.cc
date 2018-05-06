@@ -13,7 +13,7 @@ Laser::~Laser()
 
 void Laser::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 {
-	RenderShapes(proj_mat, view_mat);
+	RenderDrawableObjects(proj_mat, view_mat);
 }
 
 void Laser::TerminateYPos(const float& ypos)

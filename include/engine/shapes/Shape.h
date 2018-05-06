@@ -6,23 +6,22 @@
 #include<memory>
 #include"engine/util/Constants.h"
 #include"engine/shapes/ShapeData.h"
+#include"engine/objects/DrawableObject.h"
 
-class Shape
+
+
+class Shape :
+	public DrawableObject
 {
 public:
 	Shape();
 	virtual ~Shape();
 	virtual void Draw();
-	unsigned int GetVAO();
-	const unsigned int& GetVAO() const;
 	virtual void ShapeDataPtr(ShapeData*);
 	virtual void Buffer(ShapeData* = nullptr);
-	bool operator<(const Shape&) const;
-	bool operator==(const Shape&) const;
 
 protected:
 	ShapeData* mShapeData;
-	GLuint mVaoId;
 	GLuint mVerticesVboId;
 	GLuint mIndicesVboId;
 	virtual void Destroy();

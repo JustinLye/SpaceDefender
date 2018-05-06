@@ -1,8 +1,8 @@
 #include"engine/shapes/Shape.h"
 
 Shape::Shape() :
+	DrawableObject(),
 	mShapeData(nullptr),
-	mVaoId(0),
 	mVerticesVboId(0),
 	mIndicesVboId(0)
 {
@@ -29,29 +29,9 @@ void Shape::Draw()
 	glDrawElements(mShapeData->PrimType(), mShapeData->IndexCount(), GL_UNSIGNED_INT, 0);
 }
 
-unsigned int Shape::GetVAO()
-{
-	return mVaoId;
-}
-
-const unsigned int& Shape::GetVAO() const
-{
-	return mVaoId;
-}
-
 void Shape::ShapeDataPtr(ShapeData* shape_ptr)
 {
 	mShapeData = shape_ptr;
-}
-
-bool Shape::operator<(const Shape& other) const
-{
-	return mVaoId < other.GetVAO();
-}
-
-bool Shape::operator==(const Shape& other) const
-{
-	return mVaoId == other.GetVAO();
 }
 
 void Shape::Buffer(ShapeData* shape_data)

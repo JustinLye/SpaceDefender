@@ -16,20 +16,20 @@ Renderer::~Renderer()
 	Destroy();
 }
 
-void Renderer::Render(Shape* shape, const float* MVP)
+void Renderer::Render(DrawableObject* object, const float* MVP)
 {
 #ifdef ENGINE_DEBUG
 	assert(mShader != nullptr);
 #endif
 	mShader->Use();
-	glBindVertexArray(shape->GetVAO());
+	object->Activate();
 	glUniformMatrix4fv(mShader->operator()(DFLT_MVP_UNIFORM_NAME), 1, GL_FALSE, MVP);
 	SetCustomUniforms();
 	GLint prev_poly_mode;
 	glGetIntegerv(GL_POLYGON_MODE, &prev_poly_mode);
 	glPolygonMode(GL_FRONT_AND_BACK, mPolyMode);
-	shape->Draw();
-	glBindVertexArray(0);
+	object->Draw();
+	object->Deactivate();
 	glPolygonMode(GL_FRONT_AND_BACK, prev_poly_mode);
 	mShader->UnUse();
 

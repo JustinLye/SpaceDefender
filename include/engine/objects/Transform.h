@@ -14,6 +14,7 @@ public:
 	virtual ~Transform();
 
 	virtual void Scale(const float&);
+	virtual void Scale(const glm::vec3&);
 	const glm::vec3& Scale() const;
 	virtual void Translate(const glm::vec3&);
 	const glm::vec3& Position() const;

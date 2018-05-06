@@ -12,6 +12,9 @@ namespace engine
 		void Print4x4Matrix(glm::mat4);
 		void Print4x4Matrix(const float*);		
 	}
+#ifndef DEBUG_MESSAGE
+#define DebugMessage(msg) std::cout << __FILE__ << "    " << __FUNCTION__ << " [" << __LINE__ << "] " << msg << '\n';
+#endif
 };
 
 #endif
