@@ -13,14 +13,17 @@ public:
 	static void Init();
 	static GLFWwindow* InitWindow(const OpenGLOptions&);
 	static void HandleKeyCB(GLFWwindow*, int, int, int, int);
+	static void HandleWindowFocusCB(GLFWwindow*, int);
 	static std::pair<int, int> GetScreenResolution(GLFWmonitor* = nullptr);
 	static float GetScreenHeight(GLFWmonitor* = nullptr);
 	static float GetScreenWidth(GLFWmonitor* = nullptr);
 	static bool KeyDown(GLFWwindow*, int);
+	static int GetRefreshRate(GLFWmonitor* = nullptr);
 private:
 	OpenGLUtility() {}
 	OpenGLUtility(const OpenGLUtility&) {}
 	OpenGLUtility(OpenGLUtility&&) {}
+	static const GLFWvidmode* GetVidMode(GLFWmonitor* = nullptr);
 };
 
 #endif

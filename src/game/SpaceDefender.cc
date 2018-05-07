@@ -29,6 +29,7 @@ void SpaceDefender::Init()
 	InitTextures();
 	InitPlayer();
 	InitAstroids();
+	InitExplosions();
 	InitCollisionDetection();
 }
 
@@ -84,16 +85,43 @@ void SpaceDefender::Run()
 	background3->Offset(glm::vec3(0.0f, -2.75f, 0.0f));
 
 	float scroll_speed = 0.10f * (1.0f / 60.0f);
+	auto begin_time = high_resolution_clock::now();
+	auto last_frame_time = high_resolution_clock::now();
+	auto next_frame_time = high_resolution_clock::now();
+	float fps60 = 1.0f / 60.0f;
+	unsigned int frame_count = 0;
+	double start_time = glfwGetTime();
+	double current_time = glfwGetTime();
+	glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	float refresh_rate = (float)OpenGLUtility::GetRefreshRate(mOptions.mMonitor);
+	
+	if (refresh_rate <= 0.0f)
+	{
+		throw std::runtime_error("Failed to get refresh rate\n");
+	}
+	std::cout << "Timer frequency " << glfwGetTimerFrequency() << '\n';
+	float dt = 1.0f / refresh_rate;
+	time_point<steady_clock> frame_start = high_resolution_clock::now();
+	auto wait_time = milliseconds(12);
 	while (!glfwWindowShouldClose(mWindow))
 	{
+
+		double start_frame_time = glfwGetTime();
+		auto now = high_resolution_clock::now().time_since_epoch();
+		auto target_time = now + wait_time;
 		switch (mGameState)
 		{
 		case game_state_t::ACTIVE_GAMEPLAY:
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+			if (!glfwGetWindowAttrib(mWindow, GLFW_FOCUSED))
+			{
+				mGameState = game_state_t::PAUSED;
+				continue;
+			}
 			HandleInput();
-			Update(1.0f / 60.0f);
-			DoCollisionDetection(1.0f / 60.0f);
+			Update(dt);
+			DoCollisionDetection(dt);
 			Render();
 			static_background->Render(Constants::Geometry::IDENTITY_MATRIX, Constants::Geometry::IDENTITY_MATRIX);
 			static_background->Offset(glm::vec3(0.0f, scroll_speed, 0.0f), background);
@@ -111,13 +139,16 @@ void SpaceDefender::Run()
 			{
 				background3->Match(start_background->GetTransform());
 			}
-			std::cout << background->Offset().y << '\t' << mBoundries.mTop / 2.0f << '\n';
 			glfwSwapBuffers(mWindow);
 			glfwPollEvents();
 			break;
 		case game_state_t::PAUSED:
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+			if (glfwGetWindowAttrib(mWindow, GLFW_FOCUSED) && glfwGetInputMode(mWindow, GLFW_CURSOR) != GLFW_CURSOR_NORMAL)
+			{
+				glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			}
 			HandleInput();
 			Render();
 			button->Render();
@@ -126,6 +157,16 @@ void SpaceDefender::Run()
 			glfwPollEvents();
 			break;
 		}
+		++frame_count;
+		if (duration_cast<milliseconds>(high_resolution_clock::now() - begin_time).count() >= 999)
+		{
+			mFPSText->Message(std::string("FPS: ") + boost::lexical_cast<std::string>(frame_count));
+			frame_count = 0;
+			begin_time = high_resolution_clock::now();
+		}
+		std::this_thread::sleep_until(time_point<steady_clock>(target_time));
+		std::cout << "frame time: " << (glfwGetTime() - start_frame_time) * 1000.0f << " ms.\n";
+		
 	}
 }
 
@@ -143,12 +184,14 @@ void SpaceDefender::Update(const float& dt)
 {
 	mPlayer->Update(dt);
 	mAstroidSpawner->Update(dt);
+	mExplosionManager->Update(dt);
 }
 
 void SpaceDefender::Render()
 {
 	mPlayer->Render(mProjMat, mViewMat);
 	mAstroidSpawner->Render(mProjMat, mViewMat);
+	mExplosionManager->Render(mProjMat, mViewMat);
 	mCanvas->Render();
 }
 
@@ -232,8 +275,15 @@ void SpaceDefender::InitUI()
 	mScoreText->Scale(1.0f);
 	mScoreText->FontPtr(mFont[font_t::SCORE_FONT]);
 
+	mFPSText = new ScoreText();
+	mFPSText->XBearing(mBoundries.mLeft + mBoundries.mRight * 0.05f);
+	mFPSText->YBearing(mBoundries.mBottom + mBoundries.mTop * 0.05f);
+	mFPSText->Scale(0.5);
+	mFPSText->FontPtr(mFont[font_t::SCORE_FONT]);
+
 	mCanvas = new Canvas();
 	mCanvas->AddUIObject(mScoreText);
+	mCanvas->AddUIObject(mFPSText);
 }
 
 void SpaceDefender::InitTextures()
@@ -244,10 +294,11 @@ void SpaceDefender::InitTextures()
 	}
 	mTextures[texture_t::PLAYER_SHIP]->LoadFromFile(EngineTexPath(PLAYER_SHIP_TEXTURE_FILENAME));
 	mTextures[texture_t::GREEN_LASER]->LoadFromFile(EngineTexPath(GREEN_LASER_TEXTURE_FILENAME));
-	mTextures[texture_t::BROWN_ASTROID]->LoadFromFile(EngineTexPath(BROWN_ASTROID_TEXTURE_FILENAME));
 	mTextures[texture_t::CARTOON_ASTROID]->LoadFromFile(EngineTexPath(CARTOON_ASTROID_TEXTURE_FILENAME));
 	mTextures[texture_t::SPACE_BACKGROUND]->LoadFromFile(EngineTexPath(SPACE_BACKGROUND_TEXTURE_FILENAME));
 	mTextures[texture_t::SPACE_BACKGROUND2]->LoadFromFile(EngineTexPath(SPACE_BACKGROUND2_TEXTURE_FILENAME));
+	mTextures[texture_t::EXPLOSION]->LoadFromFile(EngineTexPath(EXPLOSION_TEXTURE_FILENAME));
+	mTextures[texture_t::LASER_EXPLOSION]->LoadFromFile(EngineTexPath(LASER_EXPLOSION_TEXTURE_FILENAME));
 }
 
 void SpaceDefender::InitPlayer()
@@ -291,10 +342,12 @@ void SpaceDefender::InitAstroids()
 	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
 	mAstroidSpawner->MaxProjectileSpeed(sw*0.10f);
 	mAstroidSpawner->MinProjectileSpeed(sw*0.005f);
-	mAstroidSpawner->MaxScale(sw*0.05f);
-	mAstroidSpawner->MinScale(sw*0.03f);
+	mAstroidSpawner->MaxScale(sw*0.03f);
+	mAstroidSpawner->MinScale(sw*0.005f);
 	mAstroidSpawner->MinRespawnWaitTime(100);
 	mAstroidSpawner->MaxRespawnWaitTime(700);
+	mAstroidSpawner->MinHitPoints(2);
+	mAstroidSpawner->MaxHitPoints(5);
 	mAstroidSpawner->ProbabilityOfSpawn(10.0f);
 	mAstroidSpawner->MaxXPos(mBoundries.mRight - (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));
 	mAstroidSpawner->MinXPos(mBoundries.mLeft + (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));
@@ -302,6 +355,15 @@ void SpaceDefender::InitAstroids()
 	mAstroidSpawner->TerminateYPos(mBoundries.mBottom - (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.05f));
 	mAstroidSpawner->AddObserver(mScoreText);
 	
+}
+
+void SpaceDefender::InitExplosions()
+{
+	mExplosionManager = new ExplosionManager(mTextures[texture_t::LASER_EXPLOSION], mShaders[shader_prog_t::TEXTURE_SHADER_PROG]);
+	mExplosionManager->ExpansionSpeed(mBoundries.mRight*0.02f);
+	mExplosionManager->MaxExpansion(mBoundries.mRight*0.01f);
+	mExplosionManager->InitScale(mBoundries.mRight*0.005f);
+	mPlayer->AddObserver(mExplosionManager);
 }
 
 void SpaceDefender::InitCollisionDetection()
@@ -330,10 +392,12 @@ void SpaceDefender::HandleInput()
 		if (mGameState == game_state_t::ACTIVE_GAMEPLAY)
 		{
 			mGameState = game_state_t::PAUSED;
+			glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		}
 		else if (mGameState == game_state_t::PAUSED)
 		{
 			mGameState = game_state_t::ACTIVE_GAMEPLAY;
+			glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		}
 	}
 	if (mKeyStateMap[GLFW_KEY_ESCAPE].mState == KEY_STATE::PRESSED && mGameState == game_state_t::PAUSED)

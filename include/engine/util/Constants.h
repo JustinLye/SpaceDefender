@@ -34,10 +34,11 @@ namespace Constants
 		const glm::vec4 SCORE_TEXT_COLOR = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
 		const std::string PLAYER_SHIP_TEXTURE_FILENAME = "g3829.png";
 		const std::string GREEN_LASER_TEXTURE_FILENAME = "green-laser.png";
-		const std::string BROWN_ASTROID_TEXTURE_FILENAME = "brown-astroid.png";
 		const std::string CARTOON_ASTROID_TEXTURE_FILENAME = "astroid.png";
 		const std::string SPACE_BACKGROUND_TEXTURE_FILENAME = "spr_stars02.png";
 		const std::string SPACE_BACKGROUND2_TEXTURE_FILENAME = "spr_stars01.png";
+		const std::string EXPLOSION_TEXTURE_FILENAME = "explosion6.png";
+		const std::string LASER_EXPLOSION_TEXTURE_FILENAME = "laser-explosion-tex2.png";
 	}
 	namespace Geometry
 	{
@@ -98,6 +99,7 @@ namespace Constants
 			COLLISION_REPORTED,
 			ASTROID_TO_ASTROID_COLLISION,
 			PLAYER_DESTROYED_ASTROID,
+			EXPLOSION_SCALE_MAXED_OUT,
 			TOTAL_EVENTS
 		};
 
@@ -107,6 +109,7 @@ namespace Constants
 			LASER,
 			ASTROID,
 			PLAYER,
+			EXPLOSION_OBJECT,
 			TOTAL_GAME_OBJECT_TYPES
 		};
 
@@ -136,10 +139,11 @@ namespace Constants
 		{
 			PLAYER_SHIP,
 			GREEN_LASER,
-			BROWN_ASTROID,
 			CARTOON_ASTROID,
 			SPACE_BACKGROUND,
 			SPACE_BACKGROUND2,
+			EXPLOSION,
+			LASER_EXPLOSION,
 			TOTAL_GAME_TEXTURES
 		};
 	}

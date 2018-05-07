@@ -11,7 +11,7 @@
 #include"engine/objects/DrawableObject.h"
 
 using namespace Constants::Physics;
-
+using namespace Constants::Types;
 class GameObject :
 	public Subject
 {

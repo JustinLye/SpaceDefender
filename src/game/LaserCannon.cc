@@ -69,10 +69,7 @@ void LaserCannon::AddObserver(Observer* observer)
 
 void LaserCannon::RemoveObserver(Observer* observer)
 {
-	if (ObserverIsMapped(observer))
-	{
-		mObserverMap.insert({ observer->Id(), observer });
-	}
+	mObserverMap.erase(observer->Id());
 	for (int i = 0; i < mMaxCapacity; ++i)
 	{
 		mObjects[i]->RemoveObserver(observer);

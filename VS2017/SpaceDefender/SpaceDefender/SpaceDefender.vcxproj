@@ -58,6 +58,8 @@
     <ClCompile Include="..\..\..\src\game\AstroidCollision.cc" />
     <ClCompile Include="..\..\..\src\game\AstroidSpawner.cc" />
     <ClCompile Include="..\..\..\src\game\CollisionDetector.cc" />
+    <ClCompile Include="..\..\..\src\game\Explosion.cc" />
+    <ClCompile Include="..\..\..\src\game\ExplosionManager.cc" />
     <ClCompile Include="..\..\..\src\game\Laser.cc" />
     <ClCompile Include="..\..\..\src\game\LaserCannon.cc" />
     <ClCompile Include="..\..\..\src\game\main.cc" />
@@ -107,6 +109,8 @@
     <ClInclude Include="..\..\..\include\game\AstroidCollision.h" />
     <ClInclude Include="..\..\..\include\game\AstroidSpawner.h" />
     <ClInclude Include="..\..\..\include\game\CollisionDetector.h" />
+    <ClInclude Include="..\..\..\include\game\Explosion.h" />
+    <ClInclude Include="..\..\..\include\game\ExplosionManager.h" />
     <ClInclude Include="..\..\..\include\game\Laser.h" />
     <ClInclude Include="..\..\..\include\game\LaserCannon.h" />
     <ClInclude Include="..\..\..\include\game\Player.h" />

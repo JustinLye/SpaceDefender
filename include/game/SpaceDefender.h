@@ -3,6 +3,7 @@
 #ifdef ENGINE_DEBUG
 #include<iostream>
 #endif
+#include<thread>
 #include<glm/gtc/matrix_transform.hpp>
 #include"engine/util/OpenGLOptions.h"
 #include"engine/shapes/TriangleData.h"
@@ -23,6 +24,7 @@
 #include"game/AstroidSpawner.h"
 #include"game/CollisionDetector.h"
 #include"game/ScoreText.h"
+#include"game/ExplosionManager.h"
 
 using namespace Constants::Input;
 using namespace Constants::Types;
@@ -56,6 +58,8 @@ protected:
 	Texture* mTextures[texture_t::TOTAL_GAME_TEXTURES];
 	AstroidSpawner* mAstroidSpawner;
 	CollisionDetector* mCollisionDetector;
+	ExplosionManager* mExplosionManager;
+
 	BoundryBox mBoundries;
 	glm::mat4 mViewMat;
 	glm::mat4 mProjMat;
@@ -64,6 +68,7 @@ protected:
 	FontData* mFontData[font_data_t::TOTAL_FONT_DATA_TYPES];
 	Font* mFont[font_t::TOTAL_GAME_FONT_TYPES];
 	ScoreText* mScoreText;
+	ScoreText* mFPSText;
 	Canvas* mCanvas;
 	game_state_t mGameState;
 
@@ -77,6 +82,7 @@ protected:
 	void InitTextures();
 	void InitPlayer();
 	void InitAstroids();
+	void InitExplosions();
 	void InitCollisionDetection();
 	void InitKeyStateMap();
 	void HandleInput();

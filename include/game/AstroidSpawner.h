@@ -35,6 +35,8 @@ public:
 	const float& ProbabilityOfSpawn() const;
 	const float& MinScale() const;
 	const float& MaxScale() const;
+	const int& MinHitPoints() const;
+	const int& MaxHitPoints() const;
 
 	const Transform& GetTransform() const;
 	Transform& GetTransform();
@@ -53,6 +55,8 @@ public:
 	void ProbabilityOfSpawn(const float&);
 	void MinScale(const float&);
 	void MaxScale(const float&);
+	void MinHitPoints(const int&);
+	void MaxHitPoints(const int&);
 
 	void Init() override;
 
@@ -62,6 +66,8 @@ protected:
 	float mProbabilityOfSpawn;
 	int mMinRespawnWaitTime;
 	int mMaxRespawnWaitTime;
+	int mMinHitPoints;
+	int mMaxHitPoints;
 	Transform mTransform;
 	DrawableObject* mShape;
 	TexRenderer* mRenderer;

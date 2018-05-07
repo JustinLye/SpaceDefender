@@ -50,6 +50,5 @@ void Laser::Collide(const GameObject& object) const
 
 void Laser::Update(const float& dt)
 {
-	static int counter = 61;
 	Translate(glm::vec3(0.0f, dt*10.0f, 0.0f));
 }

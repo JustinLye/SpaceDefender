@@ -9,6 +9,8 @@ AstroidSpawner::AstroidSpawner(DrawableObject* shape, ShaderProgram* shader_prog
 	mProbabilityOfSpawn(0.0f),
 	mMinRespawnWaitTime(0),
 	mMaxRespawnWaitTime(0),
+	mMinHitPoints(1),
+	mMaxHitPoints(1),
 	mTransform(Transform()),
 	mShape(shape),
 	mRenderer(new TexRenderer(shader_prog, GL_FILL)),
@@ -76,6 +78,16 @@ const float& AstroidSpawner::MinScale() const
 const float& AstroidSpawner::MaxScale() const
 {
 	return mScaleDist.max();
+}
+
+const int& AstroidSpawner::MinHitPoints() const
+{
+	return mMinHitPoints;
+}
+
+const int& AstroidSpawner::MaxHitPoints() const
+{
+	return mMaxHitPoints;
 }
 
 const Transform& AstroidSpawner::GetTransform() const
@@ -151,6 +163,16 @@ void AstroidSpawner::MinScale(const float& scale)
 void AstroidSpawner::MaxScale(const float& scale)
 {
 	mScaleDist.param(std::uniform_real_distribution<>::param_type(mScaleDist.min(), scale));
+}
+
+void AstroidSpawner::MinHitPoints(const int& hp)
+{
+	mMinHitPoints = hp;
+}
+
+void AstroidSpawner::MaxHitPoints(const int& hp)
+{
+	mMaxHitPoints = hp;
 }
 
 void AstroidSpawner::Init()
@@ -276,7 +298,7 @@ Astroid* AstroidSpawner::ConstructObject()
 	astroid->AddDrawableObject(mShape);
 	astroid->AddCollider(new Collider());
 	astroid->AddObserver(this);
-	astroid->HitPoints(2);
+	astroid->HitPoints(1);
 	astroid->AddRigidBody(new RigidBody());
 	return astroid;
 }
@@ -292,7 +314,7 @@ void AstroidSpawner::CustomAllocOps(const unsigned int& index)
 	astroid->Speed(mSpeedDist(mGen));
 	astroid->Translate(glm::vec3(mPosDist(mGen), mStartingYPos - mTransform.Position().y, 0.0f));
 	astroid->Scale(mScaleDist(mGen));
-	astroid->HitPoints(2);
+	astroid->HitPoints((int)((astroid->Scale().x / mScaleDist.max()) * (mMaxHitPoints - mMinHitPoints) + mMinHitPoints));
 	astroid->Mass(astroid->Scale().x);
 }
 

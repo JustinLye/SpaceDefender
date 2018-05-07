@@ -198,6 +198,12 @@
     <ClCompile Include="..\..\..\src\engine\objects\TexRenderer.cc">
       <Filter>src\engine\objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\game\Explosion.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\game\ExplosionManager.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\engine\objects\Collider.h">
@@ -340,6 +346,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\engine\objects\DrawableObject.h">
       <Filter>include\engine\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\Explosion.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\ExplosionManager.h">
+      <Filter>include\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
