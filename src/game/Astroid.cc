@@ -99,6 +99,7 @@ void Astroid::Update(const float& dt)
 	{
 		Translate(glm::vec3(0.0f, mSpeed, 0.0f) * -dt);
 	}
+	Rotate(-dt, glm::vec3(0.0f, 0.0f, 1.0f));
 	
 }
 

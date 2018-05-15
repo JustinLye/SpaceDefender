@@ -69,6 +69,9 @@ protected:
 	Font* mFont[font_t::TOTAL_GAME_FONT_TYPES];
 	ScoreText* mScoreText;
 	ScoreText* mFPSText;
+	ScoreText* mGunTempText;
+	ScoreText* mWarningMessage;
+
 	Canvas* mCanvas;
 	game_state_t mGameState;
 

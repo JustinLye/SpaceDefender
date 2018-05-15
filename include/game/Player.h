@@ -24,6 +24,10 @@ public:
 	const float& Speed() const;
 	virtual void Boost(const float&);
 	const float& Boost() const;
+	const float& CurrentGunTemp() const;
+	const float& MaxGunTemp() const;
+	bool GunOverHeated() const;
+
 	virtual void DoDetection(Collider*);
 	virtual void AddObserver(Observer*) override;
 	virtual void RemoveObserver(Observer*) override;

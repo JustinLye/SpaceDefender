@@ -150,6 +150,30 @@ const float& Player::Boost() const
 	return mSpeedBoost;
 }
 
+const float& Player::CurrentGunTemp() const
+{
+#ifdef ENGINE_DEBUG
+	assert(mLaserCannon != nullptr);
+#endif
+	return mLaserCannon->CurrentGunTemp();
+}
+
+const float& Player::MaxGunTemp() const
+{
+#ifdef ENGINE_DEBUG
+	assert(mLaserCannon != nullptr);
+#endif
+	return mLaserCannon->MaxGunTemp();
+}
+
+bool Player::GunOverHeated() const
+{
+#ifdef ENGINE_DEBUG
+	assert(mLaserCannon != nullptr);
+#endif
+	return mLaserCannon->GunOverHeated();
+}
+
 void Player::AddObserver(Observer* observer)
 {
 	if (!ObserverIsMapped(observer))

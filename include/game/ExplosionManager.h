@@ -1,10 +1,9 @@
 #ifndef EXPLOSION_MANAGER_HEADER_INCLUDED
 #define EXPLOSION_MANAGER_HEADER_INCLUDED
-
+#include<random>
 #ifdef ENGINE_DEBUG
 #include"engine/util//DebugFunctions.h"
 #endif
-
 #include"engine/objects/TexRenderer.h"
 #include"engine/containers/ObjectManager.h"
 #include"game/Explosion.h"
@@ -26,11 +25,13 @@ public:
 	void RemoveObserver(Observer*) override;
 
 	void ExpansionSpeed(const float&);
+	void MinExpansion(const float&);
 	void MaxExpansion(const float&);
 	void InitScale(const float&);
 
 	const float& ExpansionSpeed() const;
 	const float& MaxExpansion() const;
+	const float& MinExpansion() const;
 	const float& InitScale() const;
 
 protected:
@@ -39,8 +40,11 @@ protected:
 	ShaderProgram* mShaderProg;
 	Renderer* mRenderer;
 	float mSpeed;
-	float mMaxExpansion;
 	float mInitScale;
+	std::random_device mRd;
+	std::mt19937 mGen;
+	std::uniform_real_distribution<> mExpansionDist;
+
 
 	Explosion* ConstructObject();
 	void CustomAllocOps(const unsigned int&) override;

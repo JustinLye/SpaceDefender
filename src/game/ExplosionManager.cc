@@ -8,8 +8,9 @@ ExplosionManager::ExplosionManager(DrawableObject* explosion, ShaderProgram* sha
 	mShape(explosion),
 	mShaderProg(shader),
 	mSpeed(0.0f),
-	mMaxExpansion(0.0f),
-	mInitScale(1.0f)
+	mInitScale(1.0f),
+	mGen(mRd()),
+	mExpansionDist(0.0f, 0.0f)
 {
 	Init();
 }
@@ -73,14 +74,17 @@ void ExplosionManager::ExpansionSpeed(const float& speed)
 	}
 }
 
+void ExplosionManager::MinExpansion(const float& min)
+{
+	mExpansionDist.param(std::uniform_real_distribution<>::param_type((double)min, mExpansionDist.max()));
+}
+
 void ExplosionManager::MaxExpansion(const float& max)
 {
-	mMaxExpansion = max;
-	for (int i = 0; i < mMaxCapacity; ++i)
-	{
-		mObjects[i]->MaxScale(max);
-	}
+	mExpansionDist.param(std::uniform_real_distribution<>::param_type(mExpansionDist.min(), (double)max));
 }
+
+
 
 void ExplosionManager::InitScale(const float& scale)
 {
@@ -92,9 +96,14 @@ const float& ExplosionManager::ExpansionSpeed() const
 	return mSpeed;
 }
 
+const float& ExplosionManager::MinExpansion() const
+{
+	return (float)mExpansionDist.min();
+}
+
 const float& ExplosionManager::MaxExpansion() const
 {
-	return mMaxExpansion;
+	return (float)mExpansionDist.max();
 }
 
 const float& ExplosionManager::InitScale() const
@@ -109,7 +118,7 @@ Explosion* ExplosionManager::ConstructObject()
 	object->AddDrawableObject(mShape);
 	object->Scale(mInitScale);
 	object->Speed(mSpeed);
-	object->MaxScale(mMaxExpansion);
+	object->MaxScale(mExpansionDist(mGen));
 	object->AddObserver(this);
 	return object;
 }
@@ -123,6 +132,7 @@ void ExplosionManager::CustomAllocOps(const unsigned int& index)
 
 	Explosion* object = mObjects[index];
 	object->Spawn(mTransform);
+	object->MaxScale(mExpansionDist(mGen));
 	if (object->Scale().x > 0)
 	{
 		// set scale to 1

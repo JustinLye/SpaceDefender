@@ -12,8 +12,14 @@ LaserCannon::LaserCannon(DrawableObject* laser, ShaderProgram* shader) :
 	mProjectileSpeed(20.0f),
 	mCooldownTime(0.0f),
 	mLastShotTime(std::chrono::high_resolution_clock::now() - std::chrono::milliseconds(1000000)),
-	mLaserTermYPos(0.0f)
-
+	mLaserTermYPos(0.0f),
+	mOverheatCooldownTime(0.0f),
+	mMaxGunTemp(100.0f),
+	mCoolDownTemp(40.0f),
+	mShotTemp(10.0f),
+	mCoolDownStepTemp(0.30f),
+	mCurrentGunTemp(0.0f),
+	mGunOverHeated(false)
 {
 	Init();
 }
@@ -30,7 +36,7 @@ int LaserCannon::MaxCapacity()
 
 int LaserCannon::MaxActiveCapacity()
 {
-	return 5;
+	return 20;
 }
 
 void LaserCannon::OnNotify(const GameObject& object, const Constants::Types::event_t& event_name)
@@ -101,11 +107,19 @@ void LaserCannon::AttachTo(const GameObject& object)
 unsigned int LaserCannon::Fire()
 {
 	float elapsed = (float)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - mLastShotTime).count();
-	if (elapsed > mCooldownTime)
+	if (elapsed > mCooldownTime && !mGunOverHeated)
 	{
 		mLastShotTime = std::chrono::high_resolution_clock::now();
+		mCurrentGunTemp += mShotTemp;
 		return Alloc();
 	}
+#ifdef ENGINE_DEBUG
+	else if (mGunOverHeated)
+	{
+		DebugMessage("Gun is overheated. Current temp is: " + boost::lexical_cast<std::string>(mCurrentGunTemp));
+		return NOT_INDEX;
+	}
+#endif
 	else
 	{
 		return NOT_INDEX;
@@ -146,6 +160,11 @@ void LaserCannon::LaserTermYPos(const float& ypos)
 	}
 }
 
+void LaserCannon::OverheatCooldownTime(const float& t)
+{
+	mOverheatCooldownTime = t;
+}
+
 const float& LaserCannon::LaserTermYPos() const
 {
 	return mLaserTermYPos;
@@ -159,6 +178,26 @@ const float& LaserCannon::ProjectileSpeed() const
 const float& LaserCannon::CooldownTime() const
 {
 	return mCooldownTime;
+}
+
+const float& LaserCannon::OverheatCooldownTime() const
+{
+	return mOverheatCooldownTime;
+}
+
+const float& LaserCannon::CurrentGunTemp() const
+{
+	return mCurrentGunTemp;
+}
+
+const float& LaserCannon::MaxGunTemp() const
+{
+	return mMaxGunTemp;
+}
+
+bool LaserCannon::GunOverHeated() const
+{
+	return mGunOverHeated;
 }
 
 void LaserCannon::CustomAllocOps(const unsigned int& index)
@@ -181,6 +220,35 @@ void LaserCannon::CustomInitOps()
 {
 	mRenderer = new TexRenderer(mShaderProg, GL_FILL);
 	mCollider = new Collider();
+}
+
+void LaserCannon::CustomUpdateOps(const float& dt)
+{
+#ifdef ENGINE_DEBUG
+	static int counter = 25;
+	++counter;
+	if (counter >= 25)
+	{
+		DebugMessage("Current Gun Temp: " + boost::lexical_cast<std::string>(mCurrentGunTemp));
+		counter = 0;
+	}
+	
+#endif
+	if (mMaxGunTemp <= mCurrentGunTemp)
+	{
+		mGunOverHeated = true;
+	} else if (mGunOverHeated && mCurrentGunTemp <= mCoolDownTemp)
+	{
+		mGunOverHeated = false;
+	}
+	if (mCurrentGunTemp > 0)
+	{
+		mCurrentGunTemp -= mCoolDownStepTemp * dt;
+		if (mCurrentGunTemp < 0)
+		{
+			mCurrentGunTemp = 0;
+		}
+	}
 }
 
 Laser* LaserCannon::ConstructObject()

@@ -31,6 +31,10 @@ public:
 	const float& ProjectileSpeed() const; 
 	const float& CooldownTime() const;
 	const float& LaserTermYPos() const;
+	const float& OverheatCooldownTime() const;
+	const float& CurrentGunTemp() const;
+	const float& MaxGunTemp() const;
+	bool GunOverHeated() const;
 
 	const Transform& GetTransform() const;
 	Transform& GetTransform();
@@ -40,6 +44,7 @@ public:
 	void ProjectileSpeed(const float&);
 	void CooldownTime(const float&);
 	void LaserTermYPos(const float&);
+	void OverheatCooldownTime(const float&);
 	bool DestructionPred(Laser*) const override;
 	void AttachTo(const GameObject&);
 	bool operator<(const LaserCannon&) const;
@@ -55,9 +60,18 @@ protected:
 	std::chrono::time_point<std::chrono::steady_clock> mLastShotTime;
 	float mCooldownTime;
 	float mLaserTermYPos;
+	float mOverheatCooldownTime;
+	float mMaxGunTemp;
+	float mCoolDownTemp;
+	float mShotTemp;
+	float mCoolDownStepTemp;
+	float mCurrentGunTemp;
+	bool mGunOverHeated;
+
 	void CustomAllocOps(const unsigned int&) override;
 	void CustomDeallocOps(const unsigned int&) override;
 	void CustomInitOps() override;
+	void CustomUpdateOps(const float&);
 };
 
 #endif

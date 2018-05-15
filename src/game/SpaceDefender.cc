@@ -102,7 +102,7 @@ void SpaceDefender::Run()
 	std::cout << "Timer frequency " << glfwGetTimerFrequency() << '\n';
 	float dt = 1.0f / refresh_rate;
 	time_point<steady_clock> frame_start = high_resolution_clock::now();
-	auto wait_time = milliseconds(12);
+	auto wait_time = milliseconds(9);
 	while (!glfwWindowShouldClose(mWindow))
 	{
 
@@ -122,6 +122,14 @@ void SpaceDefender::Run()
 			HandleInput();
 			Update(dt);
 			DoCollisionDetection(dt);
+			if (mPlayer->GunOverHeated())
+			{
+				mWarningMessage->Message("GUN IS OVERHEATED!!");
+			} else
+			{
+				mWarningMessage->Message("");
+				mGunTempText->Message("Gun Temp: " + boost::lexical_cast<std::string>((int)mPlayer->CurrentGunTemp()));
+			}
 			Render();
 			static_background->Render(Constants::Geometry::IDENTITY_MATRIX, Constants::Geometry::IDENTITY_MATRIX);
 			static_background->Offset(glm::vec3(0.0f, scroll_speed, 0.0f), background);
@@ -151,6 +159,14 @@ void SpaceDefender::Run()
 			}
 			HandleInput();
 			Render();
+			if (mPlayer->GunOverHeated())
+			{
+				mWarningMessage->Message("GUN IS OVERHEATED!!");
+			} else
+			{
+				mWarningMessage->Message("");
+				mGunTempText->Message("Gun Temp: " + boost::lexical_cast<std::string>((int)mPlayer->CurrentGunTemp()));
+			}
 			button->Render();
 			static_background->Render(Constants::Geometry::IDENTITY_MATRIX, Constants::Geometry::IDENTITY_MATRIX);
 			glfwSwapBuffers(mWindow);
@@ -165,7 +181,7 @@ void SpaceDefender::Run()
 			begin_time = high_resolution_clock::now();
 		}
 		std::this_thread::sleep_until(time_point<steady_clock>(target_time));
-		std::cout << "frame time: " << (glfwGetTime() - start_frame_time) * 1000.0f << " ms.\n";
+		//std::cout << "frame time: " << (glfwGetTime() - start_frame_time) * 1000.0f << " ms.\n";
 		
 	}
 }
@@ -281,9 +297,23 @@ void SpaceDefender::InitUI()
 	mFPSText->Scale(0.5);
 	mFPSText->FontPtr(mFont[font_t::SCORE_FONT]);
 
+	mGunTempText = new ScoreText();
+	mGunTempText->XBearing(mBoundries.mLeft + mBoundries.mRight * 0.85f);
+	mGunTempText->YBearing(mBoundries.mBottom + mBoundries.mTop * 0.05f);
+	mGunTempText->Scale(0.50f);
+	mGunTempText->FontPtr(mFont[font_t::SCORE_FONT]);
+
+	mWarningMessage = new ScoreText();
+	mWarningMessage->XBearing(mBoundries.mLeft + mBoundries.mRight * 0.33f);
+	mWarningMessage->YBearing(mBoundries.mBottom + mBoundries.mTop * 0.45f);
+	mWarningMessage->Scale(1.2f);
+	mWarningMessage->FontPtr(mFont[font_t::SCORE_FONT]);
+
 	mCanvas = new Canvas();
 	mCanvas->AddUIObject(mScoreText);
 	mCanvas->AddUIObject(mFPSText);
+	mCanvas->AddUIObject(mGunTempText);
+	mCanvas->AddUIObject(mWarningMessage);
 }
 
 void SpaceDefender::InitTextures()
@@ -320,7 +350,7 @@ void SpaceDefender::InitPlayer()
 	mPlayer->AddDrawableObject(mTextures[texture_t::PLAYER_SHIP]);
 	mPlayer->AddCollider(collider);
 	mPlayer->AddRigidBody(rb);
-	mPlayer->Mass(1.0f);
+	mPlayer->Mass(0.65f);
 	mPlayer->Damping(0.75f);
 	mPlayer->AttachCannon(laser_cannon);
 	mPlayer->Scale(sw*0.025f);
@@ -340,14 +370,14 @@ void SpaceDefender::InitAstroids()
 
 	mAstroidSpawner = new AstroidSpawner(mTextures[texture_t::CARTOON_ASTROID], mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG]);
 	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
-	mAstroidSpawner->MaxProjectileSpeed(sw*0.10f);
-	mAstroidSpawner->MinProjectileSpeed(sw*0.005f);
+	mAstroidSpawner->MaxProjectileSpeed(sw*0.010f);
+	mAstroidSpawner->MinProjectileSpeed(sw*0.0005f);
 	mAstroidSpawner->MaxScale(sw*0.03f);
 	mAstroidSpawner->MinScale(sw*0.005f);
 	mAstroidSpawner->MinRespawnWaitTime(100);
 	mAstroidSpawner->MaxRespawnWaitTime(700);
-	mAstroidSpawner->MinHitPoints(2);
-	mAstroidSpawner->MaxHitPoints(5);
+	mAstroidSpawner->MinHitPoints(3);
+	mAstroidSpawner->MaxHitPoints(9);
 	mAstroidSpawner->ProbabilityOfSpawn(10.0f);
 	mAstroidSpawner->MaxXPos(mBoundries.mRight - (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));
 	mAstroidSpawner->MinXPos(mBoundries.mLeft + (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));
@@ -361,8 +391,9 @@ void SpaceDefender::InitExplosions()
 {
 	mExplosionManager = new ExplosionManager(mTextures[texture_t::LASER_EXPLOSION], mShaders[shader_prog_t::TEXTURE_SHADER_PROG]);
 	mExplosionManager->ExpansionSpeed(mBoundries.mRight*0.02f);
-	mExplosionManager->MaxExpansion(mBoundries.mRight*0.01f);
-	mExplosionManager->InitScale(mBoundries.mRight*0.005f);
+	mExplosionManager->MaxExpansion(mBoundries.mRight*0.012f);
+	mExplosionManager->MinExpansion(mBoundries.mRight*0.00075f);
+	mExplosionManager->InitScale(mBoundries.mRight*0.0005f);
 	mPlayer->AddObserver(mExplosionManager);
 }
 
