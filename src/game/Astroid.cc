@@ -3,7 +3,8 @@
 Astroid::Astroid() :
 	GameObject(),
 	mSpeed(0.0f),
-	mHitPoints(2)
+	mHitPoints(2),
+	mRotationSpeed(0.0f)
 {
 
 }
@@ -64,6 +65,11 @@ const float& Astroid::TerminateYPos() const
 	return mTerminateYPos;
 }
 
+const float& Astroid::RotationSpeed() const
+{
+	return mRotationSpeed;
+}
+
 const int& Astroid::HitPoints() const
 {
 	return mHitPoints;
@@ -77,6 +83,11 @@ void Astroid::Speed(const float& speed)
 void Astroid::TerminateYPos(const float& ypos)
 {
 	mTerminateYPos = ypos;
+}
+
+void Astroid::RotationSpeed(const float& speed)
+{
+	mRotationSpeed = speed;
 }
 
 void Astroid::HitPoints(const int& points)
@@ -99,7 +110,7 @@ void Astroid::Update(const float& dt)
 	{
 		Translate(glm::vec3(0.0f, mSpeed, 0.0f) * -dt);
 	}
-	Rotate(-dt, glm::vec3(0.0f, 0.0f, 1.0f));
+	Rotate(dt * mRotationSpeed, glm::vec3(0.0f, 0.0f, 1.0f));
 	
 }
 

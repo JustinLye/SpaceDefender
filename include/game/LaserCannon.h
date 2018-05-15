@@ -47,6 +47,7 @@ public:
 	void OverheatCooldownTime(const float&);
 	bool DestructionPred(Laser*) const override;
 	void AttachTo(const GameObject&);
+	void Render(const glm::mat4&, const glm::mat4&) override;
 	bool operator<(const LaserCannon&) const;
 
 protected:

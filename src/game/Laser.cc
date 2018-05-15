@@ -1,7 +1,8 @@
 #include"game/Laser.h"
 
 Laser::Laser() :
-	GameObject()
+	GameObject(),
+	mColor(Constants::Rendering::DFLT_SHAPE_COLOR)
 {
 
 }
@@ -21,9 +22,19 @@ void Laser::TerminateYPos(const float& ypos)
 	mTerminateYPos = ypos;
 }
 
+void Laser::Color(const glm::vec4& color)
+{
+	mColor = color;
+}
+
 const float& Laser::TerminateYPos() const
 {
 	return mTerminateYPos;
+}
+
+const glm::vec4& Laser::Color() const
+{
+	return mColor;
 }
 
 bool Laser::Terminate() const

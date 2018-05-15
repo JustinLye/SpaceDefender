@@ -25,6 +25,8 @@ namespace Constants
 		const std::string TEXTURE_FRAG_SHADER = "texture.frag";
 		const std::string TEXTURE_SAMPLER_NAME = "tex";
 		const std::string TEXTURE_COORD_ATTRIB_NAME = "vTexCoord";
+		const std::string USE_MIX_IN_COLOR_NAME = "mixInColor";
+		const std::string MIX_IN_COLOR_NAME = "mixColor";
 		const int TEXTURE_COORD_ATTRIB_POS = 1;
 	}
 	namespace Rendering

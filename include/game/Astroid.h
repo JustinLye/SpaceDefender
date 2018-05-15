@@ -15,9 +15,11 @@ public:
 	void Collide(const GameObject&) const override;
 	const float& Speed() const;
 	const float& TerminateYPos() const;
+	const float& RotationSpeed() const;
 
 	void Speed(const float&);
 	void TerminateYPos(const float&);
+	void RotationSpeed(const float&);
 
 	void Update(const float&) override;
 	
@@ -32,6 +34,7 @@ protected:
 	float mSpeed;
 	int mHitPoints;
 	float mTerminateYPos;
+	float mRotationSpeed;
 };
 
 #endif

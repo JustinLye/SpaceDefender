@@ -103,12 +103,17 @@ void SpaceDefender::Run()
 	float dt = 1.0f / refresh_rate;
 	time_point<steady_clock> frame_start = high_resolution_clock::now();
 	auto wait_time = milliseconds(9);
+	bool show_overheat_warn = false;
+	time_point<steady_clock> last_show_overheat_warn_swap = high_resolution_clock::now();
+	long show_overheat_warn_interval = 175; // in milliseconds
+
 	while (!glfwWindowShouldClose(mWindow))
 	{
 
 		double start_frame_time = glfwGetTime();
 		auto now = high_resolution_clock::now().time_since_epoch();
 		auto target_time = now + wait_time;
+		
 		switch (mGameState)
 		{
 		case game_state_t::ACTIVE_GAMEPLAY:
@@ -124,12 +129,25 @@ void SpaceDefender::Run()
 			DoCollisionDetection(dt);
 			if (mPlayer->GunOverHeated())
 			{
-				mWarningMessage->Message("GUN IS OVERHEATED!!");
-			} else
+				if (duration_cast<milliseconds>(high_resolution_clock::now() - last_show_overheat_warn_swap).count() > show_overheat_warn_interval)
+				{
+					show_overheat_warn = !show_overheat_warn;
+					last_show_overheat_warn_swap = high_resolution_clock::now();
+				}
+			}
+			else
+			{
+				show_overheat_warn = false;
+			}
+			if (show_overheat_warn)
+			{
+				mWarningMessage->Message("GUN IS OVERHEATED!");
+			}
+			else
 			{
 				mWarningMessage->Message("");
-				mGunTempText->Message("Gun Temp: " + boost::lexical_cast<std::string>((int)mPlayer->CurrentGunTemp()));
 			}
+			mGunTempText->Message("Gun Temp: " + boost::lexical_cast<std::string>((int)mPlayer->CurrentGunTemp()));
 			Render();
 			static_background->Render(Constants::Geometry::IDENTITY_MATRIX, Constants::Geometry::IDENTITY_MATRIX);
 			static_background->Offset(glm::vec3(0.0f, scroll_speed, 0.0f), background);
@@ -378,6 +396,8 @@ void SpaceDefender::InitAstroids()
 	mAstroidSpawner->MaxRespawnWaitTime(700);
 	mAstroidSpawner->MinHitPoints(3);
 	mAstroidSpawner->MaxHitPoints(9);
+	mAstroidSpawner->MaxRotationSpeed(1.0f);
+	mAstroidSpawner->MinRotationSpeed(-1.0f);
 	mAstroidSpawner->ProbabilityOfSpawn(10.0f);
 	mAstroidSpawner->MaxXPos(mBoundries.mRight - (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));
 	mAstroidSpawner->MinXPos(mBoundries.mLeft + (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));

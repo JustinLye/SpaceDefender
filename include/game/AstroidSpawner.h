@@ -37,6 +37,8 @@ public:
 	const float& MaxScale() const;
 	const int& MinHitPoints() const;
 	const int& MaxHitPoints() const;
+	const float& MinRotationSpeed() const;
+	const float& MaxRotationSpeed() const;
 
 	const Transform& GetTransform() const;
 	Transform& GetTransform();
@@ -57,6 +59,8 @@ public:
 	void MaxScale(const float&);
 	void MinHitPoints(const int&);
 	void MaxHitPoints(const int&);
+	void MinRotationSpeed(const float&);
+	void MaxRotationSpeed(const float&);
 
 	void Init() override;
 
@@ -78,6 +82,8 @@ protected:
 	std::uniform_real_distribution<> mPosDist;
 	std::uniform_real_distribution<> mSpeedDist;
 	std::uniform_real_distribution<> mScaleDist;
+	std::uniform_real_distribution<> mRotateDist;
+
 	std::chrono::time_point<
 		std::chrono::high_resolution_clock,
 		std::chrono::duration<float, std::milli>> mLastSpawnTime;

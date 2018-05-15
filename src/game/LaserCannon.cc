@@ -15,8 +15,8 @@ LaserCannon::LaserCannon(DrawableObject* laser, ShaderProgram* shader) :
 	mLaserTermYPos(0.0f),
 	mOverheatCooldownTime(0.0f),
 	mMaxGunTemp(100.0f),
-	mCoolDownTemp(40.0f),
-	mShotTemp(10.0f),
+	mCoolDownTemp(20.0f),
+	mShotTemp(5.8f),
 	mCoolDownStepTemp(0.30f),
 	mCurrentGunTemp(0.0f),
 	mGunOverHeated(false)
@@ -102,6 +102,17 @@ bool LaserCannon::DestructionPred(Laser* object) const
 void LaserCannon::AttachTo(const GameObject& object)
 {
 	mTransform.Match(object.GetTransform());
+}
+
+void LaserCannon::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
+{
+	std::list<unsigned int>::iterator iter = mActiveIndices.begin();
+	while (iter != mActiveIndices.end())
+	{
+		reinterpret_cast<TexRenderer*>(mRenderer)->MixInColor(mObjects[*iter]->Color());
+		mObjects[*iter]->Render(proj_mat, view_mat);
+		++iter;
+	}
 }
 
 unsigned int LaserCannon::Fire()
@@ -209,6 +220,11 @@ void LaserCannon::CustomAllocOps(const unsigned int& index)
 	Laser* object = mObjects[index];
 	object->Spawn(mTransform);
 	object->Scale(0.40f);
+	float gun_temp_ratio = mCurrentGunTemp / mMaxGunTemp;
+#ifdef LASER_CANNON_DEBUG
+	DebugMessage("gun_time_ratio = " + boost::lexical_cast<std::string>(gun_temp_ratio));
+#endif
+	object->Color(glm::vec4(gun_temp_ratio, 1.0f - gun_temp_ratio, 0.0f, 1.0f));
 }
 
 void LaserCannon::CustomDeallocOps(const unsigned int& index)
@@ -220,6 +236,7 @@ void LaserCannon::CustomInitOps()
 {
 	mRenderer = new TexRenderer(mShaderProg, GL_FILL);
 	mCollider = new Collider();
+	reinterpret_cast<TexRenderer*>(mRenderer)->UseMixInColor(true);
 }
 
 void LaserCannon::CustomUpdateOps(const float& dt)

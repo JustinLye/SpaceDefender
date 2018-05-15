@@ -19,6 +19,7 @@ AstroidSpawner::AstroidSpawner(DrawableObject* shape, ShaderProgram* shader_prog
 	mPosDist(0.0f, 0.0f),
 	mSpeedDist(0.0f, 0.0f),
 	mScaleDist(0.0f, 0.0f),
+	mRotateDist(0.0f, 0.0f),
 	mLastSpawnTime(std::chrono::high_resolution_clock::now())
 {
 	Init();
@@ -90,6 +91,16 @@ const int& AstroidSpawner::MaxHitPoints() const
 	return mMaxHitPoints;
 }
 
+const float& AstroidSpawner::MinRotationSpeed() const
+{
+	return mRotateDist.min();
+}
+
+const float& AstroidSpawner::MaxRotationSpeed() const
+{
+	return mRotateDist.max();
+}
+
 const Transform& AstroidSpawner::GetTransform() const
 {
 	return mTransform;
@@ -142,6 +153,15 @@ void AstroidSpawner::MaxXPos(const float& xpos)
 {
 	mPosDist.param(std::uniform_real_distribution<>::param_type(mPosDist.min(), xpos));
 }
+void AstroidSpawner::MinRotationSpeed(const float& speed)
+{
+	mRotateDist.param(std::uniform_real_distribution<>::param_type(speed, mRotateDist.max()));
+}
+void AstroidSpawner::MaxRotationSpeed(const float& speed)
+{
+	mRotateDist.param(std::uniform_real_distribution<>::param_type(mRotateDist.min(), speed));
+}
+
 void AstroidSpawner::TerminateYPos(const float& ypos)
 {
 	mTerminateYPos = ypos;
@@ -316,6 +336,7 @@ void AstroidSpawner::CustomAllocOps(const unsigned int& index)
 	astroid->Scale(mScaleDist(mGen));
 	astroid->HitPoints((int)((astroid->Scale().x / mScaleDist.max()) * (mMaxHitPoints - mMinHitPoints) + mMinHitPoints));
 	astroid->Mass(astroid->Scale().x);
+	astroid->RotationSpeed(mRotateDist(mGen));
 }
 
 void AstroidSpawner::CustomDeallocOps(const unsigned int& index)
