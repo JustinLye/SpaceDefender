@@ -4,7 +4,7 @@ SpaceDefender::SpaceDefender(const OpenGLOptions& opts) :
 	mOptions(opts),
 	mPlayer(nullptr),
 	mWindow(nullptr),
-	mAstroidSpawner(nullptr),
+	mAsteroidSpawner(nullptr),
 	mViewMat(Constants::Geometry::IDENTITY_MATRIX),
 	mProjMat(Constants::Geometry::IDENTITY_MATRIX),
 	mScoreText(nullptr),
@@ -28,7 +28,7 @@ void SpaceDefender::Init()
 	InitUI();
 	InitTextures();
 	InitPlayer();
-	InitAstroids();
+	InitAsteroids();
 	InitExplosions();
 	InitCollisionDetection();
 }
@@ -217,14 +217,14 @@ GLFWwindow* SpaceDefender::GetWindow()
 void SpaceDefender::Update(const float& dt)
 {
 	mPlayer->Update(dt);
-	mAstroidSpawner->Update(dt);
+	mAsteroidSpawner->Update(dt);
 	mExplosionManager->Update(dt);
 }
 
 void SpaceDefender::Render()
 {
 	mPlayer->Render(mProjMat, mViewMat);
-	mAstroidSpawner->Render(mProjMat, mViewMat);
+	mAsteroidSpawner->Render(mProjMat, mViewMat);
 	mExplosionManager->Render(mProjMat, mViewMat);
 	mCanvas->Render();
 }
@@ -342,7 +342,7 @@ void SpaceDefender::InitTextures()
 	}
 	mTextures[texture_t::PLAYER_SHIP]->LoadFromFile(EngineTexPath(PLAYER_SHIP_TEXTURE_FILENAME));
 	mTextures[texture_t::GREEN_LASER]->LoadFromFile(EngineTexPath(GREEN_LASER_TEXTURE_FILENAME));
-	mTextures[texture_t::CARTOON_ASTROID]->LoadFromFile(EngineTexPath(CARTOON_ASTROID_TEXTURE_FILENAME));
+	mTextures[texture_t::CARTOON_ASTEROID]->LoadFromFile(EngineTexPath(CARTOON_ASTEROID_TEXTURE_FILENAME));
 	mTextures[texture_t::SPACE_BACKGROUND]->LoadFromFile(EngineTexPath(SPACE_BACKGROUND_TEXTURE_FILENAME));
 	mTextures[texture_t::SPACE_BACKGROUND2]->LoadFromFile(EngineTexPath(SPACE_BACKGROUND2_TEXTURE_FILENAME));
 	mTextures[texture_t::EXPLOSION]->LoadFromFile(EngineTexPath(EXPLOSION_TEXTURE_FILENAME));
@@ -383,27 +383,27 @@ void SpaceDefender::InitPlayer()
 #endif
 }
 
-void SpaceDefender::InitAstroids()
+void SpaceDefender::InitAsteroids()
 {
 
-	mAstroidSpawner = new AstroidSpawner(mTextures[texture_t::CARTOON_ASTROID], mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG]);
+	mAsteroidSpawner = new AsteroidSpawner(mTextures[texture_t::CARTOON_ASTEROID], mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG]);
 	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
-	mAstroidSpawner->MaxProjectileSpeed(sw*0.010f);
-	mAstroidSpawner->MinProjectileSpeed(sw*0.0005f);
-	mAstroidSpawner->MaxScale(sw*0.03f);
-	mAstroidSpawner->MinScale(sw*0.005f);
-	mAstroidSpawner->MinRespawnWaitTime(100);
-	mAstroidSpawner->MaxRespawnWaitTime(700);
-	mAstroidSpawner->MinHitPoints(3);
-	mAstroidSpawner->MaxHitPoints(9);
-	mAstroidSpawner->MaxRotationSpeed(1.0f);
-	mAstroidSpawner->MinRotationSpeed(-1.0f);
-	mAstroidSpawner->ProbabilityOfSpawn(10.0f);
-	mAstroidSpawner->MaxXPos(mBoundries.mRight - (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));
-	mAstroidSpawner->MinXPos(mBoundries.mLeft + (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));
-	mAstroidSpawner->StartingYPos(mBoundries.mTop + (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.05f));
-	mAstroidSpawner->TerminateYPos(mBoundries.mBottom - (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.05f));
-	mAstroidSpawner->AddObserver(mScoreText);
+	mAsteroidSpawner->MaxProjectileSpeed(sw*0.010f);
+	mAsteroidSpawner->MinProjectileSpeed(sw*0.0005f);
+	mAsteroidSpawner->MaxScale(sw*0.03f);
+	mAsteroidSpawner->MinScale(sw*0.005f);
+	mAsteroidSpawner->MinRespawnWaitTime(100);
+	mAsteroidSpawner->MaxRespawnWaitTime(700);
+	mAsteroidSpawner->MinHitPoints(3);
+	mAsteroidSpawner->MaxHitPoints(9);
+	mAsteroidSpawner->MaxRotationSpeed(1.0f);
+	mAsteroidSpawner->MinRotationSpeed(-1.0f);
+	mAsteroidSpawner->ProbabilityOfSpawn(10.0f);
+	mAsteroidSpawner->MaxXPos(mBoundries.mRight - (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));
+	mAsteroidSpawner->MinXPos(mBoundries.mLeft + (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));
+	mAsteroidSpawner->StartingYPos(mBoundries.mTop + (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.05f));
+	mAsteroidSpawner->TerminateYPos(mBoundries.mBottom - (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.05f));
+	mAsteroidSpawner->AddObserver(mScoreText);
 	
 }
 
@@ -420,7 +420,7 @@ void SpaceDefender::InitExplosions()
 void SpaceDefender::InitCollisionDetection()
 {
 	mCollisionDetector = new CollisionDetector();
-	mAstroidSpawner->AddObserver(mCollisionDetector);
+	mAsteroidSpawner->AddObserver(mCollisionDetector);
 	mPlayer->AddObserver(mCollisionDetector);
 }
 

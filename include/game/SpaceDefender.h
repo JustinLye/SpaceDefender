@@ -21,7 +21,7 @@
 #include"engine/graphics/TextureShader.h"
 #include"engine/objects/TexRenderer.h"
 #include"game/Player.h"
-#include"game/AstroidSpawner.h"
+#include"game/AsteroidSpawner.h"
 #include"game/CollisionDetector.h"
 #include"game/ScoreText.h"
 #include"game/ExplosionManager.h"
@@ -56,7 +56,7 @@ protected:
 	ShapeData* mShapeData[shape_t::TOTAL_SHAPES];
 	ShaderProgram* mShaders[shader_prog_t::TOTAL_SHADERS];
 	Texture* mTextures[texture_t::TOTAL_GAME_TEXTURES];
-	AstroidSpawner* mAstroidSpawner;
+	AsteroidSpawner* mAsteroidSpawner;
 	CollisionDetector* mCollisionDetector;
 	ExplosionManager* mExplosionManager;
 
@@ -84,7 +84,7 @@ protected:
 	void InitUI();
 	void InitTextures();
 	void InitPlayer();
-	void InitAstroids();
+	void InitAsteroids();
 	void InitExplosions();
 	void InitCollisionDetection();
 	void InitKeyStateMap();

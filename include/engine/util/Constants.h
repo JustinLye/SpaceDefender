@@ -36,7 +36,7 @@ namespace Constants
 		const glm::vec4 SCORE_TEXT_COLOR = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
 		const std::string PLAYER_SHIP_TEXTURE_FILENAME = "g3829.png";
 		const std::string GREEN_LASER_TEXTURE_FILENAME = "green-laser.png";
-		const std::string CARTOON_ASTROID_TEXTURE_FILENAME = "astroid.png";
+		const std::string CARTOON_ASTEROID_TEXTURE_FILENAME = "asteroid.png";
 		const std::string SPACE_BACKGROUND_TEXTURE_FILENAME = "spr_stars02.png";
 		const std::string SPACE_BACKGROUND2_TEXTURE_FILENAME = "spr_stars01.png";
 		const std::string EXPLOSION_TEXTURE_FILENAME = "explosion6.png";
@@ -99,8 +99,8 @@ namespace Constants
 			TERMINATED_COLLIDABLE_OBJECT,
 			OBJECT_OUT_OF_BOUNDS,
 			COLLISION_REPORTED,
-			ASTROID_TO_ASTROID_COLLISION,
-			PLAYER_DESTROYED_ASTROID,
+			ASTEROID_TO_ASTEROID_COLLISION,
+			PLAYER_DESTROYED_ASTEROID,
 			EXPLOSION_SCALE_MAXED_OUT,
 			TOTAL_EVENTS
 		};
@@ -109,7 +109,7 @@ namespace Constants
 		{
 			GENERIC_OBJECT,
 			LASER,
-			ASTROID,
+			ASTEROID,
 			PLAYER,
 			EXPLOSION_OBJECT,
 			TOTAL_GAME_OBJECT_TYPES
@@ -141,7 +141,7 @@ namespace Constants
 		{
 			PLAYER_SHIP,
 			GREEN_LASER,
-			CARTOON_ASTROID,
+			CARTOON_ASTEROID,
 			SPACE_BACKGROUND,
 			SPACE_BACKGROUND2,
 			EXPLOSION,

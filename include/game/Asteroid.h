@@ -1,15 +1,15 @@
-#ifndef ASTROID_HEADER_INCLUDED
-#define ASTROID_HEADER_INCLUDED
+#ifndef ASTEROID_HEADER_INCLUDED
+#define ASTEROID_HEADER_INCLUDED
 
 #include"engine/objects/GameObject.h"
-#include"game/AstroidCollision.h"
+#include"game/AsteroidCollision.h"
 using namespace Constants::Types;
-class Astroid :
+class Asteroid :
 	public GameObject
 {
 public:
-	Astroid();
-	~Astroid();
+	Asteroid();
+	~Asteroid();
 	
 	const object_t& Type() const override;
 	void Collide(const GameObject&) const override;
@@ -26,7 +26,7 @@ public:
 	bool Terminate() const;
 	void HitPoints(const int&);
 	const int& HitPoints() const;
-	void ReportAstroidCollision(const Astroid&) const;
+	void ReportAsteroidCollision(const Asteroid&) const;
 
 	void Despawn() const override;
 

@@ -4,7 +4,7 @@
 #include"engine/objects/Observer.h"
 #include"engine/objects/Subject.h"
 #include"engine/objects/GameObject.h"
-#include"game/Astroid.h"
+#include"game/Asteroid.h"
 #include"game/Laser.h"
 class CollisionDetector :
 	public Subject,
@@ -16,7 +16,7 @@ public:
 	void DoDetection(const float&);
 	void OnNotify(const GameObject&, const Constants::Types::event_t&);
 protected:
-	std::map<unsigned int, const Astroid*> mAstroidMap;
+	std::map<unsigned int, const Asteroid*> mAsteroidMap;
 	std::map<unsigned int, const Laser*> mLaserMap;
 
 };

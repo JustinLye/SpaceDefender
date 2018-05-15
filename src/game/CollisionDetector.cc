@@ -17,26 +17,26 @@ void CollisionDetector::DoDetection(const float& dt)
 	while (laser_iter != mLaserMap.cend())
 	{
 		bool collision_detected = false;
-		std::map<unsigned int, const Astroid*>::const_iterator astroid_iter = mAstroidMap.cbegin();
+		std::map<unsigned int, const Asteroid*>::const_iterator asteroid_iter = mAsteroidMap.cbegin();
 
-		while (astroid_iter != mAstroidMap.cend())
+		while (asteroid_iter != mAsteroidMap.cend())
 		{
 			
-			collision_detected = laser_iter->second->CollisionDetected(*astroid_iter->second);
+			collision_detected = laser_iter->second->CollisionDetected(*asteroid_iter->second);
 			if (collision_detected)
 			{
 				break;
 			}
-			++astroid_iter;
+			++asteroid_iter;
 		}
 		if (collision_detected)
 		{
-			laser_iter->second->Collide(*astroid_iter->second);
-			astroid_iter->second->Collide(*laser_iter->second);
+			laser_iter->second->Collide(*asteroid_iter->second);
+			asteroid_iter->second->Collide(*laser_iter->second);
 			laser_iter = mLaserMap.erase(laser_iter);
-			if (astroid_iter->second->HitPoints() <= 0)
+			if (asteroid_iter->second->HitPoints() <= 0)
 			{
-				astroid_iter = mAstroidMap.erase(astroid_iter);
+				asteroid_iter = mAsteroidMap.erase(asteroid_iter);
 			}
 		}
 		else
@@ -44,27 +44,27 @@ void CollisionDetector::DoDetection(const float& dt)
 			++laser_iter;
 		}
 	}
-	std::map<unsigned int, const Astroid*>::const_iterator curr_astroid_iter = mAstroidMap.cbegin();
-	while (curr_astroid_iter != mAstroidMap.cend())
+	std::map<unsigned int, const Asteroid*>::const_iterator curr_asteroid_iter = mAsteroidMap.cbegin();
+	while (curr_asteroid_iter != mAsteroidMap.cend())
 	{
 		bool collision_detected = false;
-		std::map<unsigned int, const Astroid*>::const_iterator astroid_iter = curr_astroid_iter;
-		astroid_iter++;
-		while (astroid_iter != mAstroidMap.cend())
+		std::map<unsigned int, const Asteroid*>::const_iterator asteroid_iter = curr_asteroid_iter;
+		asteroid_iter++;
+		while (asteroid_iter != mAsteroidMap.cend())
 		{
-			collision_detected = curr_astroid_iter->second->CollisionDetected(*astroid_iter->second);
+			collision_detected = curr_asteroid_iter->second->CollisionDetected(*asteroid_iter->second);
 			if (collision_detected)
 			{
 				break;
 			}
-			++astroid_iter;
+			++asteroid_iter;
 		}
 		if (collision_detected)
 		{
-			curr_astroid_iter->second->Collide(*astroid_iter->second);
-			astroid_iter->second->Collide(*curr_astroid_iter->second);
+			curr_asteroid_iter->second->Collide(*asteroid_iter->second);
+			asteroid_iter->second->Collide(*curr_asteroid_iter->second);
 		}
-		++curr_astroid_iter;
+		++curr_asteroid_iter;
 	}
 }
 
@@ -73,9 +73,9 @@ void CollisionDetector::OnNotify(const GameObject& object, const Constants::Type
 	switch (event_name)
 	{
 	case Constants::Types::event_t::ACTIVATED_COLLIDABLE_OBJECT:
-		if (object.Type() == Constants::Types::object_t::ASTROID)
+		if (object.Type() == Constants::Types::object_t::ASTEROID)
 		{
-			mAstroidMap.insert({ object.Id(), reinterpret_cast<const Astroid*>(&object) });
+			mAsteroidMap.insert({ object.Id(), reinterpret_cast<const Asteroid*>(&object) });
 		}
 		else if (object.Type() == Constants::Types::object_t::LASER)
 		{
@@ -83,9 +83,9 @@ void CollisionDetector::OnNotify(const GameObject& object, const Constants::Type
 		}
 		break;
 	case Constants::Types::event_t::OBJECT_OUT_OF_BOUNDS:
-		if (object.Type() == Constants::Types::object_t::ASTROID)
+		if (object.Type() == Constants::Types::object_t::ASTEROID)
 		{
-			mAstroidMap.erase(object.Id());
+			mAsteroidMap.erase(object.Id());
 		}
 		else if (object.Type() == Constants::Types::object_t::LASER)
 		{

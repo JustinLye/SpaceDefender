@@ -54,9 +54,9 @@
     <ClCompile Include="..\..\..\src\engine\util\OpenGLOptions.cc" />
     <ClCompile Include="..\..\..\src\engine\util\ShaderProgram.cc" />
     <ClCompile Include="..\..\..\src\engine\util\TextShader.cc" />
-    <ClCompile Include="..\..\..\src\game\Astroid.cc" />
-    <ClCompile Include="..\..\..\src\game\AstroidCollision.cc" />
-    <ClCompile Include="..\..\..\src\game\AstroidSpawner.cc" />
+    <ClCompile Include="..\..\..\src\game\Asteroid.cc" />
+    <ClCompile Include="..\..\..\src\game\AsteroidCollision.cc" />
+    <ClCompile Include="..\..\..\src\game\AsteroidSpawner.cc" />
     <ClCompile Include="..\..\..\src\game\CollisionDetector.cc" />
     <ClCompile Include="..\..\..\src\game\Explosion.cc" />
     <ClCompile Include="..\..\..\src\game\ExplosionManager.cc" />
@@ -105,9 +105,9 @@
     <ClInclude Include="..\..\..\include\engine\util\Paths.h" />
     <ClInclude Include="..\..\..\include\engine\util\ShaderProgram.h" />
     <ClInclude Include="..\..\..\include\engine\util\TextShader.h" />
-    <ClInclude Include="..\..\..\include\game\Astroid.h" />
-    <ClInclude Include="..\..\..\include\game\AstroidCollision.h" />
-    <ClInclude Include="..\..\..\include\game\AstroidSpawner.h" />
+    <ClInclude Include="..\..\..\include\game\Asteroid.h" />
+    <ClInclude Include="..\..\..\include\game\AsteroidCollision.h" />
+    <ClInclude Include="..\..\..\include\game\AsteroidSpawner.h" />
     <ClInclude Include="..\..\..\include\game\CollisionDetector.h" />
     <ClInclude Include="..\..\..\include\game\Explosion.h" />
     <ClInclude Include="..\..\..\include\game\ExplosionManager.h" />

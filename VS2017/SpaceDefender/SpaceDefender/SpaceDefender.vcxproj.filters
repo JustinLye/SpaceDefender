@@ -138,12 +138,6 @@
     <ClCompile Include="..\..\..\src\engine\objects\Observer.cc">
       <Filter>src\engine\objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\game\Astroid.cc">
-      <Filter>src\game</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\game\AstroidSpawner.cc">
-      <Filter>src\game</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\game\CollisionDetector.cc">
       <Filter>src\game</Filter>
     </ClCompile>
@@ -152,9 +146,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\engine\objects\RigidBody.cc">
       <Filter>src\engine\objects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\game\AstroidCollision.cc">
-      <Filter>src\game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\engine\font\Font.cc">
       <Filter>src\engine\font</Filter>
@@ -202,6 +193,15 @@
       <Filter>src\game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\game\ExplosionManager.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\game\Asteroid.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\game\AsteroidCollision.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\game\AsteroidSpawner.cc">
       <Filter>src\game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -287,20 +287,11 @@
     <ClInclude Include="..\..\..\include\game\CollisionDetector.h">
       <Filter>include\game</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\game\Astroid.h">
-      <Filter>include\game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\game\AstroidSpawner.h">
-      <Filter>include\game</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\engine\util\KeyMap.h">
       <Filter>include\engine\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\engine\objects\RigidBody.h">
       <Filter>include\engine\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\game\AstroidCollision.h">
-      <Filter>include\game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\engine\util\TextShader.h">
       <Filter>include\engine\util</Filter>
@@ -351,6 +342,15 @@
       <Filter>include\game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\game\ExplosionManager.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\Asteroid.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\AsteroidCollision.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\AsteroidSpawner.h">
       <Filter>include\game</Filter>
     </ClInclude>
   </ItemGroup>

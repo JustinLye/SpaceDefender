@@ -1,6 +1,6 @@
-#include"game/Astroid.h"
+#include"game/Asteroid.h"
 
-Astroid::Astroid() :
+Asteroid::Asteroid() :
 	GameObject(),
 	mSpeed(0.0f),
 	mHitPoints(2),
@@ -9,17 +9,17 @@ Astroid::Astroid() :
 
 }
 
-Astroid::~Astroid()
+Asteroid::~Asteroid()
 {
 
 }
 
-const Constants::Types::object_t& Astroid::Type() const
+const Constants::Types::object_t& Asteroid::Type() const
 {
-	return Constants::Types::object_t::ASTROID;
+	return Constants::Types::object_t::ASTEROID;
 }
 
-void Astroid::Collide(const GameObject& object) const
+void Asteroid::Collide(const GameObject& object) const
 {
 	switch (object.Type())
 	{
@@ -31,13 +31,13 @@ void Astroid::Collide(const GameObject& object) const
 			Despawn();
 		}
 		break;
-	case object_t::ASTROID:
-		ReportAstroidCollision((const Astroid&)object);
+	case object_t::ASTEROID:
+		ReportAsteroidCollision((const Asteroid&)object);
 		break;
 	}
 }
 
-void Astroid::Despawn() const
+void Asteroid::Despawn() const
 {
 	if (mColliderMap.size() > 0)
 	{
@@ -45,57 +45,57 @@ void Astroid::Despawn() const
 	}
 	if (mHitPoints <= 0)
 	{
-		Notify(*this, event_t::PLAYER_DESTROYED_ASTROID);
+		Notify(*this, event_t::PLAYER_DESTROYED_ASTEROID);
 	}
 }
 
-void Astroid::ReportAstroidCollision(const Astroid& astroid) const
+void Asteroid::ReportAsteroidCollision(const Asteroid& asteroid) const
 {
-	AstroidCollision collision(this->Id(), astroid.Id());
-	Notify(collision, event_t::ASTROID_TO_ASTROID_COLLISION);
+	AsteroidCollision collision(this->Id(), asteroid.Id());
+	Notify(collision, event_t::ASTEROID_TO_ASTEROID_COLLISION);
 }
 
-const float& Astroid::Speed() const
+const float& Asteroid::Speed() const
 {
 	return mSpeed;
 }
 
-const float& Astroid::TerminateYPos() const
+const float& Asteroid::TerminateYPos() const
 {
 	return mTerminateYPos;
 }
 
-const float& Astroid::RotationSpeed() const
+const float& Asteroid::RotationSpeed() const
 {
 	return mRotationSpeed;
 }
 
-const int& Astroid::HitPoints() const
+const int& Asteroid::HitPoints() const
 {
 	return mHitPoints;
 }
 
-void Astroid::Speed(const float& speed)
+void Asteroid::Speed(const float& speed)
 {
 	mSpeed = speed;
 }
 
-void Astroid::TerminateYPos(const float& ypos)
+void Asteroid::TerminateYPos(const float& ypos)
 {
 	mTerminateYPos = ypos;
 }
 
-void Astroid::RotationSpeed(const float& speed)
+void Asteroid::RotationSpeed(const float& speed)
 {
 	mRotationSpeed = speed;
 }
 
-void Astroid::HitPoints(const int& points)
+void Asteroid::HitPoints(const int& points)
 {
 	mHitPoints = points;
 }
 
-void Astroid::Update(const float& dt)
+void Asteroid::Update(const float& dt)
 {
 	if (mRigidBody != nullptr)
 	{
@@ -114,7 +114,7 @@ void Astroid::Update(const float& dt)
 	
 }
 
-bool Astroid::Terminate() const
+bool Asteroid::Terminate() const
 {
 	return mTerminateYPos > mTransform.Position().y;
 }

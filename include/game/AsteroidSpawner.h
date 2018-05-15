@@ -1,5 +1,5 @@
-#ifndef ASTROID_SPAWNER_HEADER_INCLUDED
-#define ASTROID_SPAWNER_HEADER_INCLUDED
+#ifndef ASTEROID_SPAWNER_HEADER_INCLUDED
+#define ASTEROID_SPAWNER_HEADER_INCLUDED
 #include<random>
 #include<chrono>
 #include"engine/objects/Subject.h"
@@ -7,17 +7,17 @@
 #include"engine/containers/ObjectManager.h"
 #include"engine/objects/RigidBody.h"
 #include"engine/objects/TexRenderer.h"
-#include"game/Astroid.h"
-#include"game/AstroidCollision.h"
+#include"game/Asteroid.h"
+#include"game/AsteroidCollision.h"
 using namespace Constants::Types;
-class AstroidSpawner :
+class AsteroidSpawner :
 	Subject,
 	Observer,
-	public ObjectManager<Astroid>
+	public ObjectManager<Asteroid>
 {
 public:
-	AstroidSpawner(DrawableObject*, ShaderProgram*);
-	~AstroidSpawner();
+	AsteroidSpawner(DrawableObject*, ShaderProgram*);
+	~AsteroidSpawner();
 	int MaxCapacity();
 	int MaxActiveCapacity();
 
@@ -75,7 +75,7 @@ protected:
 	Transform mTransform;
 	DrawableObject* mShape;
 	TexRenderer* mRenderer;
-	std::map<unsigned int, unsigned int> mAstroidToIndexMap;
+	std::map<unsigned int, unsigned int> mAsteroidToIndexMap;
 	std::random_device mRd;
 	std::mt19937 mGen;
 	std::uniform_real_distribution<> mSpawnDist;
@@ -89,14 +89,14 @@ protected:
 		std::chrono::duration<float, std::milli>> mLastSpawnTime;
 
 	void OnNotify(const GameObject&, const Constants::Types::event_t&);
-	Astroid* ConstructObject();
+	Asteroid* ConstructObject();
 	void CustomAllocOps(const unsigned int&) override;
 	void CustomDeallocOps(const unsigned int&) override;
 	void CustomUpdateOps(const float&) override;
-	bool DestructionPred(Astroid*) const override;
+	bool DestructionPred(Asteroid*) const override;
 
 	void TrySpawn();
-	Astroid* LookUpAstroid(const unsigned int&);
+	Asteroid* LookUpAsteroid(const unsigned int&);
 
 };
 

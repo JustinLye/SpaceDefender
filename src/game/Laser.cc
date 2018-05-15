@@ -53,7 +53,7 @@ void Laser::Collide(const GameObject& object) const
 {
 	switch (object.Type())
 	{
-	case Constants::Types::object_t::ASTROID:
+	case Constants::Types::object_t::ASTEROID:
 		Despawn();
 		break;
 	}
