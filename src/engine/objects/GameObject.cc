@@ -264,6 +264,15 @@ void GameObject::Scale(const float& scale, GameObject* object)
 	GetGameObject(object)->second->Scale(scale);
 }
 
+void GameObject::Scale(const glm::vec3& scale)
+{
+	mTransform.Scale(scale);
+	ScaleDrawableObjects(scale);
+	ScaleColliders(scale);
+	ScaleObjects(scale);
+	CustomScaleActions(scale);
+}
+
 const glm::vec3& GameObject::Scale() const
 {
 	return mTransform.Scale();
@@ -578,6 +587,16 @@ void GameObject::ScaleDrawableObjects(const float& scale)
 	}
 }
 
+void GameObject::ScaleDrawableObjects(const glm::vec3& scale)
+{
+	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::iterator iter = mDrawableObjectMap.begin();
+	while (iter != mDrawableObjectMap.end())
+	{
+		iter->second.Scale(scale);
+		++iter;
+	}
+}
+
 void GameObject::ScaleColliders(const float& scale)
 {
 	std::map<Collider*, Collider*, CompareTransPtr>::iterator iter = mColliderMap.begin();
@@ -588,7 +607,27 @@ void GameObject::ScaleColliders(const float& scale)
 	}
 }
 
+void GameObject::ScaleColliders(const glm::vec3& scale)
+{
+	std::map<Collider*, Collider*, CompareTransPtr>::iterator iter = mColliderMap.begin();
+	while (iter != mColliderMap.end())
+	{
+		iter->second->Scale(scale);
+		++iter;
+	}
+}
+
 void GameObject::ScaleObjects(const float& scale)
+{
+	std::map<GameObject*, GameObject*, CompareGameObjectPtr>::iterator iter = mGameObjectMap.begin();
+	while (iter != mGameObjectMap.end())
+	{
+		iter->second->Scale(scale);
+		++iter;
+	}
+}
+
+void GameObject::ScaleObjects(const glm::vec3& scale)
 {
 	std::map<GameObject*, GameObject*, CompareGameObjectPtr>::iterator iter = mGameObjectMap.begin();
 	while (iter != mGameObjectMap.end())

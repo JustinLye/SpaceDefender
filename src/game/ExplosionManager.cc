@@ -37,7 +37,8 @@ void ExplosionManager::OnNotify(const GameObject& object, const event_t& event_n
 	case event_t::TERMINATED_COLLIDABLE_OBJECT:
 		if (object.Type() == object_t::LASER)
 		{
-			mTransform.Match(object.GetTransform());
+			//mTransform.Match(object.GetTransform());
+			mTransform.Translate(object.Position() - mTransform.Position());
 			Alloc();
 		}
 		break;
@@ -141,7 +142,6 @@ void ExplosionManager::CustomAllocOps(const unsigned int& index)
 		object->Scale(mInitScale);
 	}
 	object->Translate(glm::vec3(0.0f, 0.0f, 0.50f));
-	
 }
 
 void ExplosionManager::CustomInitOps()

@@ -39,6 +39,7 @@ public:
 	const Transform& GetTransform() const;
 	Transform& GetTransform();
 	void Scale(const float&);
+	void ScaleLasers(const glm::vec3&);
 	void Translate(const glm::vec3&);
 	unsigned int Fire();
 	void ProjectileSpeed(const float&);

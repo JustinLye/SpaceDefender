@@ -36,6 +36,8 @@ namespace Constants
 		const glm::vec4 SCORE_TEXT_COLOR = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
 		const std::string PLAYER_SHIP_TEXTURE_FILENAME = "g3829.png";
 		const std::string GREEN_LASER_TEXTURE_FILENAME = "green-laser.png";
+		const std::string WHITE_LASER_TEXTURE_FILE_NAME = "white-laser.png";
+		const std::string BRIGHTNESS_STEPS_LASER_TEXTURE_FILE_NAME = "brightness-steps-laser.png";
 		const std::string CARTOON_ASTEROID_TEXTURE_FILENAME = "asteroid.png";
 		const std::string SPACE_BACKGROUND_TEXTURE_FILENAME = "spr_stars02.png";
 		const std::string SPACE_BACKGROUND2_TEXTURE_FILENAME = "spr_stars01.png";
@@ -141,6 +143,8 @@ namespace Constants
 		{
 			PLAYER_SHIP,
 			GREEN_LASER,
+			WHITE_LASER,
+			BRIGHTNESS_STEPS_LASER,
 			CARTOON_ASTEROID,
 			SPACE_BACKGROUND,
 			SPACE_BACKGROUND2,

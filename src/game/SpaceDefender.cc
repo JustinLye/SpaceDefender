@@ -342,11 +342,14 @@ void SpaceDefender::InitTextures()
 	}
 	mTextures[texture_t::PLAYER_SHIP]->LoadFromFile(EngineTexPath(PLAYER_SHIP_TEXTURE_FILENAME));
 	mTextures[texture_t::GREEN_LASER]->LoadFromFile(EngineTexPath(GREEN_LASER_TEXTURE_FILENAME));
+	mTextures[texture_t::WHITE_LASER]->LoadFromFile(EngineTexPath(WHITE_LASER_TEXTURE_FILE_NAME));
+	mTextures[texture_t::BRIGHTNESS_STEPS_LASER]->LoadFromFile(EngineTexPath(BRIGHTNESS_STEPS_LASER_TEXTURE_FILE_NAME));
 	mTextures[texture_t::CARTOON_ASTEROID]->LoadFromFile(EngineTexPath(CARTOON_ASTEROID_TEXTURE_FILENAME));
 	mTextures[texture_t::SPACE_BACKGROUND]->LoadFromFile(EngineTexPath(SPACE_BACKGROUND_TEXTURE_FILENAME));
 	mTextures[texture_t::SPACE_BACKGROUND2]->LoadFromFile(EngineTexPath(SPACE_BACKGROUND2_TEXTURE_FILENAME));
 	mTextures[texture_t::EXPLOSION]->LoadFromFile(EngineTexPath(EXPLOSION_TEXTURE_FILENAME));
 	mTextures[texture_t::LASER_EXPLOSION]->LoadFromFile(EngineTexPath(LASER_EXPLOSION_TEXTURE_FILENAME));
+	
 }
 
 void SpaceDefender::InitPlayer()
@@ -356,7 +359,7 @@ void SpaceDefender::InitPlayer()
 
 	// Setup laser cannon
 	
-	LaserCannon* laser_cannon = new LaserCannon(mTextures[texture_t::GREEN_LASER], mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG]);
+	LaserCannon* laser_cannon = new LaserCannon(mTextures[texture_t::BRIGHTNESS_STEPS_LASER], mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG]);
 	laser_cannon->LaserTermYPos(mBoundries.mTop * 1.01f);
 	laser_cannon->ProjectileSpeed(sh * 0.10f);
 	laser_cannon->CooldownTime(80.0f);

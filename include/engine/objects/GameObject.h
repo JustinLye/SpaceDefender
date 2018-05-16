@@ -72,6 +72,7 @@ public:
 	virtual void Scale(const float&, DrawableObject*);
 	virtual void Scale(const float&, Collider*);
 	virtual void Scale(const float&, GameObject*);
+	virtual void Scale(const glm::vec3&);
 	const glm::vec3& Scale() const;
 	const glm::vec3& Scale(DrawableObject*) const;
 	const glm::vec3& Scale(Collider*) const;
@@ -153,8 +154,11 @@ protected:
 	std::map<GameObject*, GameObject*, CompareGameObjectPtr> mGameObjectMap;
 
 	virtual void ScaleDrawableObjects(const float&);
+	virtual void ScaleDrawableObjects(const glm::vec3&);
 	virtual void ScaleColliders(const float&);
+	virtual void ScaleColliders(const glm::vec3&);
 	virtual void ScaleObjects(const float&);
+	virtual void ScaleObjects(const glm::vec3&);
 	virtual void TranslateDrawableObjects(const glm::vec3&);
 	virtual void TranslateColliders(const glm::vec3&);
 	virtual void TranslateObjects(const glm::vec3&);
@@ -170,7 +174,7 @@ protected:
 
 	virtual void CustomScaleActions(const float&) {}
 	virtual void CustomScaleActions(const float&, DrawableObject*) {}
-
+	virtual void CustomScaleActions(const glm::vec3&) {}
 	virtual void CustomTranslateActions(const glm::vec3&) {}
 
 	virtual void RenderDrawableObjects(const glm::mat4&, const glm::mat4&);

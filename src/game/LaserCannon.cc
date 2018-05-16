@@ -219,12 +219,13 @@ void LaserCannon::CustomAllocOps(const unsigned int& index)
 	}
 	Laser* object = mObjects[index];
 	object->Spawn(mTransform);
-	object->Scale(0.40f);
+	object->Scale(0.50f);
+	object->Scale(glm::vec3(1.0f, 2.0f, 1.0f));
 	float gun_temp_ratio = mCurrentGunTemp / mMaxGunTemp;
 #ifdef LASER_CANNON_DEBUG
 	DebugMessage("gun_time_ratio = " + boost::lexical_cast<std::string>(gun_temp_ratio));
 #endif
-	object->Color(glm::vec4(gun_temp_ratio, 1.0f - gun_temp_ratio, 0.0f, 1.0f));
+	object->Color(glm::vec4(gun_temp_ratio, 1.0f - gun_temp_ratio, gun_temp_ratio / 3.0f, 1.0f));
 }
 
 void LaserCannon::CustomDeallocOps(const unsigned int& index)
@@ -293,6 +294,17 @@ void LaserCannon::Scale(const float& scale)
 		mObjects[i]->Scale(scale*0.6f);
 	}
 }
+
+void LaserCannon::ScaleLasers(const glm::vec3& scale)
+{
+	for (int i = 0; i < mMaxCapacity; ++i)
+	{
+		mObjects[i]->Scale(scale);
+	}
+}
+
+
+
 
 void LaserCannon::Translate(const glm::vec3& translation)
 {
