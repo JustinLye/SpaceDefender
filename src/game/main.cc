@@ -8,15 +8,34 @@
 #include<glm/gtc/type_ptr.hpp>
 #include"game/SpaceDefender.h"
 
+#include"engine/containers/Container.h"
+
 #ifdef ENGINE_DEBUG
 Player* player;
 #endif
 
+class TestContainer :
+	public Container
+{
+public:
+	TestContainer(const unsigned int& max_cap = 10) :
+		Container(),
+		mMaxCap(max_cap)
+	{
+		Initialize(); 
+	}
+	~TestContainer() {}
+	const unsigned int& MaxCapacity() const { return mMaxCap; }
+	unsigned int mMaxCap;
+};
 
+void TestFunction();
 int main(int argc, char* argv[])
 {
 	try
 	{
+		TestFunction();
+		return EXIT_SUCCESS;
 		OpenGLUtility::Init();
 		OpenGLOptions opts;
 		int monitor_count;
@@ -35,3 +54,15 @@ int main(int argc, char* argv[])
 	return EXIT_SUCCESS;
 }
 
+
+void TestFunction()
+{
+	TestContainer container;
+	TestContainer::iterator b = container.begin();
+
+	while (b != container.end())
+	{
+		std::cout << *b << '\n';
+		++b;
+	}
+}

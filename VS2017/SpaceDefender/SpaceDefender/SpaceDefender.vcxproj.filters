@@ -210,6 +210,9 @@
     <ClCompile Include="..\..\..\src\game\EnemyShipManager.cc">
       <Filter>src\game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\containers\Container.cc">
+      <Filter>src\engine\containers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\engine\objects\Collider.h">
@@ -364,6 +367,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\engine\util\UtiliDefs.h">
       <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\containers\Container.h">
+      <Filter>include\engine\containers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

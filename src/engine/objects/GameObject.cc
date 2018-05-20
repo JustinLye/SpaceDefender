@@ -9,7 +9,7 @@ GameObject::GameObject() :
 	mRigidBody(nullptr),
 	mId(++NextObjectId)
 {
-
+	DebugMessage(std::string("Next object id: " + boost::lexical_cast<std::string>(NextObjectId)));
 };
 
 GameObject::~GameObject()

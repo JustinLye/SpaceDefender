@@ -6,6 +6,10 @@
 
 namespace Constants
 {
+	namespace Containers
+	{
+		const unsigned int NULL_ELEMENT_INDEX = ~0;
+	};
 	namespace Shaders
 	{
 		const int VERTEX_ATTRIB_POS = 0; ///< all vertex shaders used to render Shapes must have the vertex attribute location = 0
