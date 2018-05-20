@@ -37,6 +37,20 @@ void EnemyShip::Update(const float& dt)
 	}
 }
 
+void EnemyShip::Collide(const GameObject& object) const
+{
+	switch (object.Type())
+	{
+	case object_t::LASER:
+		ReportCollision(); // Will notify manager. Manager should update hitpoints, etc. as needed.
+		if (mHitPoints <= 0)
+		{
+			Despawn();
+		}
+		break;
+	}
+}
+
 bool EnemyShip::Terminate() const
 {
 	return mTransform.Position().y < mTerminateYPos;
@@ -44,13 +58,17 @@ bool EnemyShip::Terminate() const
 
 void EnemyShip::Despawn() const
 {
+	if (mColliderMap.size() > 0)
+	{
+		Notify(*this, event_t::TERMINATED_COLLIDABLE_OBJECT);
+	}
 	if (mHitPoints <= 0)
 	{
 		Notify(*this, event_t::PLAYER_DESTROYED_ENEMY_SHIP);
 	}
 	else
 	{
-		Notify(*this, event_t::TERMINATED_COLLIDABLE_OBJECT);
+		Notify(*this, event_t::OBJECT_OUT_OF_BOUNDS);
 	}
 }
 

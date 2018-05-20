@@ -5,6 +5,7 @@
 #endif
 #include"engine/objects/GameObject.h"
 
+using namespace Constants::Types;
 
 class Laser :
 	public GameObject

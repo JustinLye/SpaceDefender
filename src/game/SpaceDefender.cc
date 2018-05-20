@@ -372,6 +372,11 @@ void SpaceDefender::InitPlayer()
 	mPlayer = new Player();
 	mPlayer->AddRenderer(renderer);
 	mPlayer->AddDrawableObject(mTextures[texture_t::PLAYER_SHIP]);
+#ifdef COLLISION_DEBUG
+	Shape* detection_circle = new Shape();
+	detection_circle->Buffer(mShapeData[Constants::Types::shape_t::CIRCLE]);
+	mPlayer->AddDrawableObject(detection_circle);
+#endif
 	mPlayer->AddCollider(collider);
 	mPlayer->AddRigidBody(rb);
 	mPlayer->Mass(0.65f);
@@ -382,11 +387,7 @@ void SpaceDefender::InitPlayer()
 	laser_cannon->Translate(glm::vec3(1.0f, sh * 0.05f, 0.0f)); // adjust laser cannon
 	laser_cannon->Scale(0.5f);
 	
-#ifdef COLLISION_DEBUG
-	Shape* detection_circle = new Shape();
-	detection_circle->Buffer(mShapeData[Constants::Types::shape_t::CIRCLE]);
-	mPlayer->AddDrawableObject(detection_circle);
-#endif
+
 }
 
 void SpaceDefender::InitAsteroids()
@@ -397,7 +398,7 @@ void SpaceDefender::InitAsteroids()
 	float sh = OpenGLUtility::GetScreenHeight(mOptions.mMonitor);
 	//mAsteroidSpawner->MaxProjectileSpeed(sw*0.010f);
 	//mAsteroidSpawner->MinProjectileSpeed(sw*0.0005f);
-	mAsteroidSpawner->MaxProjectileSpeed(sh*0.0010f);
+	mAsteroidSpawner->MaxProjectileSpeed(sh*0.010f);
 	mAsteroidSpawner->MinProjectileSpeed(sh*0.0005f);
 	mAsteroidSpawner->MaxScale(sw*0.03f);
 	mAsteroidSpawner->MinScale(sw*0.005f);
@@ -431,8 +432,8 @@ void SpaceDefender::InitEnemyShips()
 	mEnemyShipManager = new EnemyShipManager(mTextures[texture_t::ENEMY_SHIP_TEXTURE], mShaders[shader_prog_t::TEXTURE_SHADER_PROG]);
 	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
 	float sh = OpenGLUtility::GetScreenHeight(mOptions.mMonitor);
-	mEnemyShipManager->MaxProjectileSpeed(sh*0.020f);
-	mEnemyShipManager->MinProjectileSpeed(sh*0.010f);
+	mEnemyShipManager->MaxProjectileSpeed(sh*0.00020f);
+	mEnemyShipManager->MinProjectileSpeed(sh*0.00020f);
 	mEnemyShipManager->ShipScale(glm::vec3(sw*0.02f));
 	mEnemyShipManager->MinRespawnWaitTime(600);
 	mEnemyShipManager->MaxRespawnWaitTime(2000);
@@ -450,6 +451,7 @@ void SpaceDefender::InitCollisionDetection()
 	mCollisionDetector = new CollisionDetector();
 	mAsteroidSpawner->AddObserver(mCollisionDetector);
 	mPlayer->AddObserver(mCollisionDetector);
+	mEnemyShipManager->AddObserver(mCollisionDetector);
 }
 
 void SpaceDefender::InitKeyStateMap()

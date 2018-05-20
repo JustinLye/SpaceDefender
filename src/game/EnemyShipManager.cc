@@ -221,25 +221,40 @@ void EnemyShipManager::Init()
 
 void EnemyShipManager::OnNotify(const GameObject& object, const Constants::Types::event_t& event_name)
 {
-	switch (event_name)
+	
+	if (object.Type() == object_t::ENEMY_SHIP)
 	{
-	case event_t::TERMINATED_COLLIDABLE_OBJECT:
-	case event_t::PLAYER_DESTROYED_ENEMY_SHIP:
-		if (object.Type() == object_t::ENEMY_SHIP)
+		std::map<unsigned int, unsigned int>::iterator ship_iter = mEnemyShipToIndexMap.find(object.Id());
+		if (ship_iter == mEnemyShipToIndexMap.end())
 		{
-			std::list<unsigned int>::iterator iter = mActiveIndices.begin();
-			unsigned int index = mEnemyShipToIndexMap[object.Id()];
-			while (iter != mActiveIndices.end())
-			{
-				if (*iter == index)
-				{
-					iter = Dealloc(iter);
-					return;
-				}
-				++iter;
-			}
+			return;
 		}
-		break;
+		EnemyShip* ship = nullptr;
+		std::list<unsigned int>::iterator iter;
+		unsigned int index = NOT_INDEX;
+		switch (event_name)
+		{
+		case event_t::PLAYER_DESTROYED_ENEMY_SHIP:
+			if (object.Type() == object_t::ENEMY_SHIP)
+			{
+				iter = mActiveIndices.begin();
+				index = mEnemyShipToIndexMap[object.Id()];
+				while (iter != mActiveIndices.end())
+				{
+					if (*iter == index)
+					{
+						iter = Dealloc(iter);
+						return;
+					}
+					++iter;
+				}
+			}
+			break;
+			case event_t::COLLISION_REPORTED:
+				ship = mObjects[ship_iter->second];
+				ship->HitPoints(ship->HitPoints() - 1);
+				break;
+		}
 	}
 }
 
@@ -262,11 +277,8 @@ void EnemyShipManager::CustomAllocOps(const unsigned int& index)
 	{
 		return;
 	}
-#ifdef ENEMY_SHIP_DEBUG
-	DebugMessage(std::string("Allocating ship. Active ships: ") + boost::lexical_cast<std::string>(mActiveIndices.size()));
-#endif
 	EnemyShip* ship = mObjects[index];
-	ship->Match(mTransform);
+	ship->Spawn(mTransform);
 	if (ship->Scale() != mShipScale)
 	{
 		ship->ResetScale();
@@ -283,10 +295,6 @@ void EnemyShipManager::CustomDeallocOps(const unsigned int& index)
 	{
 		return;
 	}
-#ifdef ENEMY_SHIP_DEBUG
-	DebugMessage(std::string("Deallocating ship. Active ships: ") + boost::lexical_cast<std::string>(mActiveIndices.size()));
-#endif // ENEMY_SHIP_DEBUG
-
 	mObjects[index]->ResetRigidBody();
 }
 

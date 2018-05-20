@@ -38,12 +38,33 @@ void CollisionDetector::DoDetection(const float& dt)
 			{
 				asteroid_iter = mAsteroidMap.erase(asteroid_iter);
 			}
+			continue;
 		}
-		else
+
+		std::map<unsigned int, const EnemyShip*>::const_iterator enemy_ship_iter = mEnemyShipMap.cbegin();
+		while (enemy_ship_iter != mEnemyShipMap.cend())
 		{
-			++laser_iter;
+			collision_detected = laser_iter->second->CollisionDetected(*enemy_ship_iter->second);
+			if (collision_detected)
+			{
+				break;
+			}
+			++enemy_ship_iter;
 		}
+		if (collision_detected)
+		{
+			laser_iter->second->Collide(*enemy_ship_iter->second);
+			enemy_ship_iter->second->Collide(*laser_iter->second);
+			laser_iter = mLaserMap.erase(laser_iter);
+			if (enemy_ship_iter->second->HitPoints() <= 0)
+			{
+				enemy_ship_iter = mEnemyShipMap.erase(enemy_ship_iter);
+			}
+			continue;
+		}
+		++laser_iter;
 	}
+
 	std::map<unsigned int, const Asteroid*>::const_iterator curr_asteroid_iter = mAsteroidMap.cbegin();
 	while (curr_asteroid_iter != mAsteroidMap.cend())
 	{
@@ -81,8 +102,13 @@ void CollisionDetector::OnNotify(const GameObject& object, const Constants::Type
 		{
 			mLaserMap.insert({ object.Id(), reinterpret_cast<const Laser*>(&object) });
 		}
+		else if (object.Type() == object_t::ENEMY_SHIP)
+		{
+			mEnemyShipMap.insert({ object.Id(), reinterpret_cast<const EnemyShip*>(&object) });
+		}
 		break;
 	case Constants::Types::event_t::OBJECT_OUT_OF_BOUNDS:
+		DebugMessage("Object out-of-bounds notifcation");
 		if (object.Type() == Constants::Types::object_t::ASTEROID)
 		{
 			mAsteroidMap.erase(object.Id());
@@ -91,5 +117,10 @@ void CollisionDetector::OnNotify(const GameObject& object, const Constants::Type
 		{
 			mLaserMap.erase(object.Id());
 		}
+		else if (object.Type() == object_t::ENEMY_SHIP)
+		{
+			mLaserMap.erase(object.Id());
+		}
+		break;
 	}
 }

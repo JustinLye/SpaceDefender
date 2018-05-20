@@ -230,7 +230,10 @@ void LaserCannon::CustomAllocOps(const unsigned int& index)
 
 void LaserCannon::CustomDeallocOps(const unsigned int& index)
 {
-
+	if (DestructionPred(mObjects[index]))
+	{
+		Notify(*mObjects[index], event_t::OBJECT_OUT_OF_BOUNDS);
+	}
 }
 
 void LaserCannon::CustomInitOps()

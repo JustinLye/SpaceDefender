@@ -26,7 +26,6 @@ void Asteroid::Collide(const GameObject& object) const
 	{
 	case object_t::LASER:
 		ReportCollision();
-		std::cout << "hit points: " << mHitPoints << "\n";
 		if (mHitPoints <= 0)
 		{
 			Despawn();
@@ -47,6 +46,10 @@ void Asteroid::Despawn() const
 	if (mHitPoints <= 0)
 	{
 		Notify(*this, event_t::PLAYER_DESTROYED_ASTEROID);
+	}
+	else
+	{
+		Notify(*this, event_t::OBJECT_OUT_OF_BOUNDS);
 	}
 }
 

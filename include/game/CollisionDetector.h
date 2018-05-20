@@ -6,6 +6,14 @@
 #include"engine/objects/GameObject.h"
 #include"game/Asteroid.h"
 #include"game/Laser.h"
+#include"game/EnemyShip.h"
+
+#ifdef ENGINE_DEBUG
+#include"engine/util/DebugFunctions.h"
+#endif
+
+using namespace Constants::Types;
+
 class CollisionDetector :
 	public Subject,
 	public Observer
@@ -18,6 +26,7 @@ public:
 protected:
 	std::map<unsigned int, const Asteroid*> mAsteroidMap;
 	std::map<unsigned int, const Laser*> mLaserMap;
+	std::map<unsigned int, const EnemyShip*> mEnemyShipMap;
 
 };
 #endif

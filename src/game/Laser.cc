@@ -44,16 +44,17 @@ bool Laser::Terminate() const
 	return (std::abs(term_ypos) > 0.0f && ((term_ypos > 0.0f && curr_ypos > term_ypos) || (term_ypos < 0.0f && curr_ypos < term_ypos)));
 }
 
-const Constants::Types::object_t& Laser::Type() const
+const object_t& Laser::Type() const
 {
-	return Constants::Types::object_t::LASER;
+	return object_t::LASER;
 }
 
 void Laser::Collide(const GameObject& object) const
 {
 	switch (object.Type())
 	{
-	case Constants::Types::object_t::ASTEROID:
+	case object_t::ASTEROID:
+	case object_t::ENEMY_SHIP:
 		Despawn();
 		break;
 	}

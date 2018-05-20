@@ -16,6 +16,7 @@ public:
 
 	const object_t& Type() const override;
 	void Update(const float&) override;
+	void Collide(const GameObject&) const override;
 
 	bool Terminate() const;
 	void Despawn() const;

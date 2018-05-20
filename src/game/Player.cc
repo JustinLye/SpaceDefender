@@ -47,20 +47,9 @@ void Player::Update(const float& dt)
 	{
 		Translate(glm::vec3(delta_x, 0.0f, 0.0f));
 	}*/
-	static int i = 61;
 	if (mRigidBody != nullptr)
 	{
 		mRigidBody->Update(dt);
-		if (i > 60)
-		{
-			i = 0;
-			std::cout << "Velocity: " << mRigidBody->Velocity().x << " InverseMass: " << mRigidBody->InverseMass() << '\n';
-		}
-		else
-		{
-			++i;
-		}
-		
 		Translate(mRigidBody->Velocity());
 	}
 	
@@ -107,10 +96,6 @@ void Player::FireCannon()
 	if (mLaserCannon)
 	{
 		unsigned int result = mLaserCannon->Fire();
-		if (result != LaserCannon::NOT_INDEX)
-		{
-			std::cout << "cannon fired\n";
-		}
 	}
 }
 

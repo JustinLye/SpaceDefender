@@ -368,6 +368,10 @@ void AsteroidSpawner::CustomAllocOps(const unsigned int& index)
 void AsteroidSpawner::CustomDeallocOps(const unsigned int& index)
 {
 	mObjects[index]->ResetRigidBody();
+	if (mObjects[index]->HitPoints() > 0)
+	{
+		Notify(*mObjects[index], event_t::OBJECT_OUT_OF_BOUNDS);
+	}
 }
 
 void AsteroidSpawner::CustomUpdateOps(const float& dt)
