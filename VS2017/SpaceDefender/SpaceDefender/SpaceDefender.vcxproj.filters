@@ -204,6 +204,12 @@
     <ClCompile Include="..\..\..\src\game\AsteroidSpawner.cc">
       <Filter>src\game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\game\EnemyShip.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\game\EnemyShipManager.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\engine\objects\Collider.h">
@@ -341,9 +347,6 @@
     <ClInclude Include="..\..\..\include\game\Explosion.h">
       <Filter>include\game</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\game\ExplosionManager.h">
-      <Filter>include\game</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\game\Asteroid.h">
       <Filter>include\game</Filter>
     </ClInclude>
@@ -352,6 +355,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\game\AsteroidSpawner.h">
       <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\EnemyShip.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\EnemyShipManager.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\util\UtiliDefs.h">
+      <Filter>include\engine\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

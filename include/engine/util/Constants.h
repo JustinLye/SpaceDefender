@@ -43,6 +43,7 @@ namespace Constants
 		const std::string SPACE_BACKGROUND2_TEXTURE_FILENAME = "spr_stars01.png";
 		const std::string EXPLOSION_TEXTURE_FILENAME = "explosion6.png";
 		const std::string LASER_EXPLOSION_TEXTURE_FILENAME = "laser-explosion-tex2.png";
+		const std::string ENEMY_SHIP_TEXTURE_FILENAME = "enemy-ship.png";
 	}
 	namespace Geometry
 	{
@@ -103,6 +104,7 @@ namespace Constants
 			COLLISION_REPORTED,
 			ASTEROID_TO_ASTEROID_COLLISION,
 			PLAYER_DESTROYED_ASTEROID,
+			PLAYER_DESTROYED_ENEMY_SHIP,
 			EXPLOSION_SCALE_MAXED_OUT,
 			TOTAL_EVENTS
 		};
@@ -114,6 +116,7 @@ namespace Constants
 			ASTEROID,
 			PLAYER,
 			EXPLOSION_OBJECT,
+			ENEMY_SHIP,
 			TOTAL_GAME_OBJECT_TYPES
 		};
 
@@ -150,6 +153,7 @@ namespace Constants
 			SPACE_BACKGROUND2,
 			EXPLOSION,
 			LASER_EXPLOSION,
+			ENEMY_SHIP_TEXTURE,
 			TOTAL_GAME_TEXTURES
 		};
 	}

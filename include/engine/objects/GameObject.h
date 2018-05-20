@@ -68,7 +68,10 @@ public:
 
 	// Transform Interface and individual Shape/Collider/GameObject tranforms
 	const Transform& GetTransform() const;
+	virtual void JumpToPosition(const Transform&);
+	virtual void JumpToPosition(const glm::vec3&);
 	virtual void Scale(const float&);
+	virtual void ResetScale();
 	virtual void Scale(const float&, DrawableObject*);
 	virtual void Scale(const float&, Collider*);
 	virtual void Scale(const float&, GameObject*);
@@ -159,6 +162,9 @@ protected:
 	virtual void ScaleColliders(const glm::vec3&);
 	virtual void ScaleObjects(const float&);
 	virtual void ScaleObjects(const glm::vec3&);
+	virtual void ResetScaleOnDrawableObjects();
+	virtual void ResetScaleOnColliders();
+	virtual void ResetScaleOnObjects();
 	virtual void TranslateDrawableObjects(const glm::vec3&);
 	virtual void TranslateColliders(const glm::vec3&);
 	virtual void TranslateObjects(const glm::vec3&);
@@ -176,6 +182,11 @@ protected:
 	virtual void CustomScaleActions(const float&, DrawableObject*) {}
 	virtual void CustomScaleActions(const glm::vec3&) {}
 	virtual void CustomTranslateActions(const glm::vec3&) {}
+
+	virtual void JumpToPositionOnDrawableObjects(const glm::vec3&);
+	virtual void JumpToPositionOnColliders(const glm::vec3&);
+	virtual void JumpToPositionOnObjects(const glm::vec3&);
+
 
 	virtual void RenderDrawableObjects(const glm::mat4&, const glm::mat4&);
 	virtual void RenderGameObjects(const glm::mat4&, const glm::mat4&);

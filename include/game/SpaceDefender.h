@@ -25,6 +25,7 @@
 #include"game/CollisionDetector.h"
 #include"game/ScoreText.h"
 #include"game/ExplosionManager.h"
+#include"game/EnemyShipManager.h"
 
 using namespace Constants::Input;
 using namespace Constants::Types;
@@ -59,6 +60,7 @@ protected:
 	AsteroidSpawner* mAsteroidSpawner;
 	CollisionDetector* mCollisionDetector;
 	ExplosionManager* mExplosionManager;
+	EnemyShipManager* mEnemyShipManager;
 
 	BoundryBox mBoundries;
 	glm::mat4 mViewMat;
@@ -86,6 +88,7 @@ protected:
 	void InitPlayer();
 	void InitAsteroids();
 	void InitExplosions();
+	void InitEnemyShips();
 	void InitCollisionDetection();
 	void InitKeyStateMap();
 	void HandleInput();

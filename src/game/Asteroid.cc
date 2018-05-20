@@ -1,3 +1,4 @@
+
 #include"game/Asteroid.h"
 
 Asteroid::Asteroid() :

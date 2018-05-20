@@ -124,7 +124,7 @@ unsigned int LaserCannon::Fire()
 		mCurrentGunTemp += mShotTemp;
 		return Alloc();
 	}
-#ifdef ENGINE_DEBUG
+#ifdef LASER_CANNON_DEBUG
 	else if (mGunOverHeated)
 	{
 		DebugMessage("Gun is overheated. Current temp is: " + boost::lexical_cast<std::string>(mCurrentGunTemp));
@@ -242,7 +242,7 @@ void LaserCannon::CustomInitOps()
 
 void LaserCannon::CustomUpdateOps(const float& dt)
 {
-#ifdef ENGINE_DEBUG
+#ifdef LASER_CANNON_DEBUG
 	static int counter = 25;
 	++counter;
 	if (counter >= 25)
@@ -302,9 +302,6 @@ void LaserCannon::ScaleLasers(const glm::vec3& scale)
 		mObjects[i]->Scale(scale);
 	}
 }
-
-
-
 
 void LaserCannon::Translate(const glm::vec3& translation)
 {

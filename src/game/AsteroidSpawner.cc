@@ -36,6 +36,32 @@ int AsteroidSpawner::MaxActiveCapacity()
 {
 	return 15;
 }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+///\fn std::vector<const Asteroid*> AsteroidSpawner::ActiveAsteroidList() const
+///\brief Access to active asteroids
+///\returns vector full of const pointers to active Asteriod objects
+///
+///\date 05/19/2018
+///\author Justin Lye
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::vector<const Asteroid*> AsteroidSpawner::ActiveAsteroidList() const
+{
+	// init result vector
+	std::vector<const Asteroid*> result;
+	result.reserve(mActiveIndices.size());
+
+	// fill result vector
+	std::list<unsigned int>::const_iterator iter = mActiveIndices.cbegin();
+	while (iter != mActiveIndices.cend())
+	{
+		result.push_back(const_cast<const Asteroid*>(mObjects[*iter]));
+		++iter;
+	}
+	return result;
+}
 const int& AsteroidSpawner::MinRespawnWaitTime() const
 {
 	return mMinRespawnWaitTime;
@@ -352,7 +378,8 @@ void AsteroidSpawner::CustomUpdateOps(const float& dt)
 void AsteroidSpawner::TrySpawn()
 {
 	float elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - mLastSpawnTime).count();
-	if (elapsed >= mMaxRespawnWaitTime || (elapsed >= mMinRespawnWaitTime && ((mProbabilityOfSpawn)*((float)mMinRespawnWaitTime/(float)mMaxRespawnWaitTime) > mSpawnDist(mGen))))
+	//if (elapsed >= mMaxRespawnWaitTime || (elapsed >= mMinRespawnWaitTime && ((mProbabilityOfSpawn)*((float)mMinRespawnWaitTime/(float)mMaxRespawnWaitTime) > mSpawnDist(mGen))))
+	if (elapsed >= mMaxRespawnWaitTime || (elapsed >= mMinRespawnWaitTime && (mProbabilityOfSpawn > mSpawnDist(mGen))))
 	{
 		if (mActiveIndices.size() < mMaxActiveCapacity)
 		{
