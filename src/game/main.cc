@@ -8,26 +8,12 @@
 #include<glm/gtc/type_ptr.hpp>
 #include"game/SpaceDefender.h"
 
-#include"engine/containers/Container.h"
+#include"engine/containers/IndexQueue.h"
 
 #ifdef ENGINE_DEBUG
 Player* player;
 #endif
 
-class TestContainer :
-	public Container
-{
-public:
-	TestContainer(const unsigned int& max_cap = 10) :
-		Container(),
-		mMaxCap(max_cap)
-	{
-		Initialize(); 
-	}
-	~TestContainer() {}
-	const unsigned int& MaxCapacity() const { return mMaxCap; }
-	unsigned int mMaxCap;
-};
 
 void TestFunction();
 int main(int argc, char* argv[])
@@ -57,12 +43,21 @@ int main(int argc, char* argv[])
 
 void TestFunction()
 {
-	TestContainer container;
-	TestContainer::iterator b = container.begin();
-
-	while (b != container.end())
-	{
-		std::cout << *b << '\n';
-		++b;
-	}
+	Index i;
+	std::cout << i << '\n';
+	std::cout << std::boolalpha << (!i) << '\n';
+	Index y(10);
+	std::cout << y << '\n';
+	std::cout << std::boolalpha << (y == 10) << '\n';
+	std::cout << std::boolalpha << (y == 11) << '\n';
+	std::cout << std::boolalpha << (y == i) << '\n';
+	Index z;
+	std::cout << std::boolalpha << (z == i) << '\n';
+	i = 10;
+	std::cout << std::boolalpha << (i == 10 && i == y) << '\n';
+	y = z;
+	std::cout << std::boolalpha << (i == 10 && i == y) << '\n';
+	Index::size_t q[3] = { 99, 42, 12 };
+	y = 1;
+	std::cout << q[y] << '\n';
 }

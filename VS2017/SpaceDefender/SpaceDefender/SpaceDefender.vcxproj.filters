@@ -210,7 +210,7 @@
     <ClCompile Include="..\..\..\src\game\EnemyShipManager.cc">
       <Filter>src\game</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\engine\containers\Container.cc">
+    <ClCompile Include="..\..\..\src\engine\containers\IndexQueue.cc">
       <Filter>src\engine\containers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -368,7 +368,7 @@
     <ClInclude Include="..\..\..\include\engine\util\UtiliDefs.h">
       <Filter>include\engine\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\engine\containers\Container.h">
+    <ClInclude Include="..\..\..\include\engine\containers\IndexQueue.h">
       <Filter>include\engine\containers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\external\glad\src\glad.c" />
-    <ClCompile Include="..\..\..\src\engine\containers\Container.cc" />
+    <ClCompile Include="..\..\..\src\engine\containers\IndexQueue.cc" />
     <ClCompile Include="..\..\..\src\engine\containers\ObjectManager.cc" />
     <ClCompile Include="..\..\..\src\engine\font\ArialFontData.cc" />
     <ClCompile Include="..\..\..\src\engine\font\Font.cc" />
@@ -71,7 +71,7 @@
     <ClCompile Include="..\..\..\src\game\SpaceDefender.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\engine\containers\Container.h" />
+    <ClInclude Include="..\..\..\include\engine\containers\IndexQueue.h" />
     <ClInclude Include="..\..\..\include\engine\containers\ObjectManager.h" />
     <ClInclude Include="..\..\..\include\engine\font\ArialFontData.h" />
     <ClInclude Include="..\..\..\include\engine\font\Font.h" />

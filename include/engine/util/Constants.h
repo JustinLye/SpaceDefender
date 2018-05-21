@@ -3,7 +3,6 @@
 #include<string>
 #include<glad/glad.h>
 #include<glm/glm.hpp>
-
 namespace Constants
 {
 	namespace Containers
