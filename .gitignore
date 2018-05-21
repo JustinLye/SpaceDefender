@@ -17,7 +17,7 @@ external/ft29/freetype-2.9/*.sed
 external/ft29/freetype-2.9/*.com
 external/ft29/freetype-2.9/*.sh
 external/ft29/freetype-2.9/*Jam*
-external/ft29/freetype-2.9/objs/*
+#external/ft29/freetype-2.9/objs/*
 external/ft29/freetype-2.9/*Make*
 external/Boost/*
 VS2017/SpaceDefender/Debug/*
