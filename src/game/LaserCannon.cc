@@ -124,7 +124,7 @@ unsigned int LaserCannon::Fire()
 		mCurrentGunTemp += mShotTemp;
 		return Alloc();
 	}
-#ifdef ENGINE_DEBUG
+#ifdef LASER_CANNON_DEBUG
 	else if (mGunOverHeated)
 	{
 		DebugMessage("Gun is overheated. Current temp is: " + boost::lexical_cast<std::string>(mCurrentGunTemp));
@@ -230,19 +230,22 @@ void LaserCannon::CustomAllocOps(const unsigned int& index)
 
 void LaserCannon::CustomDeallocOps(const unsigned int& index)
 {
-
+	if (DestructionPred(mObjects[index]))
+	{
+		Notify(*mObjects[index], event_t::OBJECT_OUT_OF_BOUNDS);
+	}
 }
 
 void LaserCannon::CustomInitOps()
 {
-	mRenderer = new TexRenderer(mShaderProg, GL_FILL);
+	mRenderer = new TexRenderer(mShaderProg, { GL_FILL, GL_FILL });
 	mCollider = new Collider();
 	reinterpret_cast<TexRenderer*>(mRenderer)->UseMixInColor(true);
 }
 
 void LaserCannon::CustomUpdateOps(const float& dt)
 {
-#ifdef ENGINE_DEBUG
+#ifdef LASER_CANNON_DEBUG
 	static int counter = 25;
 	++counter;
 	if (counter >= 25)
@@ -302,9 +305,6 @@ void LaserCannon::ScaleLasers(const glm::vec3& scale)
 		mObjects[i]->Scale(scale);
 	}
 }
-
-
-
 
 void LaserCannon::Translate(const glm::vec3& translation)
 {

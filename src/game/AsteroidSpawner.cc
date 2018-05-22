@@ -13,7 +13,7 @@ AsteroidSpawner::AsteroidSpawner(DrawableObject* shape, ShaderProgram* shader_pr
 	mMaxHitPoints(1),
 	mTransform(Transform()),
 	mShape(shape),
-	mRenderer(new TexRenderer(shader_prog, GL_FILL)),
+	mRenderer(new TexRenderer(shader_prog, { GL_FILL, GL_FILL })),
 	mGen(mRd()),
 	mSpawnDist(0.0f, 100.0f),
 	mPosDist(0.0f, 0.0f),
@@ -35,6 +35,32 @@ int AsteroidSpawner::MaxCapacity()
 int AsteroidSpawner::MaxActiveCapacity()
 {
 	return 15;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+///\fn std::vector<const Asteroid*> AsteroidSpawner::ActiveAsteroidList() const
+///\brief Access to active asteroids
+///\returns vector full of const pointers to active Asteriod objects
+///
+///\date 05/19/2018
+///\author Justin Lye
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::vector<const Asteroid*> AsteroidSpawner::ActiveAsteroidList() const
+{
+	// init result vector
+	std::vector<const Asteroid*> result;
+	result.reserve(mActiveIndices.size());
+
+	// fill result vector
+	std::list<unsigned int>::const_iterator iter = mActiveIndices.cbegin();
+	while (iter != mActiveIndices.cend())
+	{
+		result.push_back(const_cast<const Asteroid*>(mObjects[*iter]));
+		++iter;
+	}
+	return result;
 }
 const int& AsteroidSpawner::MinRespawnWaitTime() const
 {
@@ -342,6 +368,10 @@ void AsteroidSpawner::CustomAllocOps(const unsigned int& index)
 void AsteroidSpawner::CustomDeallocOps(const unsigned int& index)
 {
 	mObjects[index]->ResetRigidBody();
+	if (mObjects[index]->HitPoints() > 0)
+	{
+		Notify(*mObjects[index], event_t::OBJECT_OUT_OF_BOUNDS);
+	}
 }
 
 void AsteroidSpawner::CustomUpdateOps(const float& dt)
@@ -352,7 +382,8 @@ void AsteroidSpawner::CustomUpdateOps(const float& dt)
 void AsteroidSpawner::TrySpawn()
 {
 	float elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - mLastSpawnTime).count();
-	if (elapsed >= mMaxRespawnWaitTime || (elapsed >= mMinRespawnWaitTime && ((mProbabilityOfSpawn)*((float)mMinRespawnWaitTime/(float)mMaxRespawnWaitTime) > mSpawnDist(mGen))))
+	//if (elapsed >= mMaxRespawnWaitTime || (elapsed >= mMinRespawnWaitTime && ((mProbabilityOfSpawn)*((float)mMinRespawnWaitTime/(float)mMaxRespawnWaitTime) > mSpawnDist(mGen))))
+	if (elapsed >= mMaxRespawnWaitTime || (elapsed >= mMinRespawnWaitTime && (mProbabilityOfSpawn > mSpawnDist(mGen))))
 	{
 		if (mActiveIndices.size() < mMaxActiveCapacity)
 		{

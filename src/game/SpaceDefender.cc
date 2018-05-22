@@ -30,6 +30,7 @@ void SpaceDefender::Init()
 	InitPlayer();
 	InitAsteroids();
 	InitExplosions();
+	InitEnemyShips();
 	InitCollisionDetection();
 }
 
@@ -49,7 +50,7 @@ void SpaceDefender::Run()
 	button_shape->Buffer(quad_data);
 	button->AddDrawableObject(button_shape);
 	button->Scale(glm::vec3(100.0f, 25.0f, 0.0f));
-	button->AddRenderer(new Renderer(mShaders[DEFAULT_SHADER_PROG], GL_LINES));
+	button->AddRenderer(new Renderer(mShaders[DEFAULT_SHADER_PROG]));
 	button->AddText(button_text);
 	button->Translate(glm::vec3(mBoundries.mRight / 2.0f, mBoundries.mTop / 2.0f, 1.0f));
 	button->FillColor(glm::vec4(0.3f, 0.9f, 0.3f, 0.0f));
@@ -219,6 +220,7 @@ void SpaceDefender::Update(const float& dt)
 	mPlayer->Update(dt);
 	mAsteroidSpawner->Update(dt);
 	mExplosionManager->Update(dt);
+	mEnemyShipManager->Update(dt);
 }
 
 void SpaceDefender::Render()
@@ -226,6 +228,7 @@ void SpaceDefender::Render()
 	mPlayer->Render(mProjMat, mViewMat);
 	mAsteroidSpawner->Render(mProjMat, mViewMat);
 	mExplosionManager->Render(mProjMat, mViewMat);
+	mEnemyShipManager->Render(mProjMat, mViewMat);
 	mCanvas->Render();
 }
 
@@ -349,7 +352,7 @@ void SpaceDefender::InitTextures()
 	mTextures[texture_t::SPACE_BACKGROUND2]->LoadFromFile(EngineTexPath(SPACE_BACKGROUND2_TEXTURE_FILENAME));
 	mTextures[texture_t::EXPLOSION]->LoadFromFile(EngineTexPath(EXPLOSION_TEXTURE_FILENAME));
 	mTextures[texture_t::LASER_EXPLOSION]->LoadFromFile(EngineTexPath(LASER_EXPLOSION_TEXTURE_FILENAME));
-	
+	mTextures[texture_t::ENEMY_SHIP_TEXTURE]->LoadFromFile(EngineTexPath(ENEMY_SHIP_TEXTURE_FILENAME));
 }
 
 void SpaceDefender::InitPlayer()
@@ -363,12 +366,17 @@ void SpaceDefender::InitPlayer()
 	laser_cannon->LaserTermYPos(mBoundries.mTop * 1.01f);
 	laser_cannon->ProjectileSpeed(sh * 0.10f);
 	laser_cannon->CooldownTime(80.0f);
-	TexRenderer* renderer = new TexRenderer(mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG], GL_FILL);
+	TexRenderer* renderer = new TexRenderer(mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG], { GL_FILL, GL_FILL });
 	Collider* collider = new Collider();
 	RigidBody* rb = new RigidBody();
 	mPlayer = new Player();
 	mPlayer->AddRenderer(renderer);
 	mPlayer->AddDrawableObject(mTextures[texture_t::PLAYER_SHIP]);
+#ifdef COLLISION_DEBUG
+	Shape* detection_circle = new Shape();
+	detection_circle->Buffer(mShapeData[Constants::Types::shape_t::CIRCLE]);
+	mPlayer->AddDrawableObject(detection_circle);
+#endif
 	mPlayer->AddCollider(collider);
 	mPlayer->AddRigidBody(rb);
 	mPlayer->Mass(0.65f);
@@ -379,11 +387,7 @@ void SpaceDefender::InitPlayer()
 	laser_cannon->Translate(glm::vec3(1.0f, sh * 0.05f, 0.0f)); // adjust laser cannon
 	laser_cannon->Scale(0.5f);
 	
-#ifdef COLLISION_DEBUG
-	Shape* detection_circle = new Shape();
-	detection_circle->Buffer(mShapeData[Constants::Types::shape_t::CIRCLE]);
-	mPlayer->AddDrawableObject(detection_circle);
-#endif
+
 }
 
 void SpaceDefender::InitAsteroids()
@@ -391,8 +395,11 @@ void SpaceDefender::InitAsteroids()
 
 	mAsteroidSpawner = new AsteroidSpawner(mTextures[texture_t::CARTOON_ASTEROID], mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG]);
 	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
-	mAsteroidSpawner->MaxProjectileSpeed(sw*0.010f);
-	mAsteroidSpawner->MinProjectileSpeed(sw*0.0005f);
+	float sh = OpenGLUtility::GetScreenHeight(mOptions.mMonitor);
+	//mAsteroidSpawner->MaxProjectileSpeed(sw*0.010f);
+	//mAsteroidSpawner->MinProjectileSpeed(sw*0.0005f);
+	mAsteroidSpawner->MaxProjectileSpeed(sh*0.010f);
+	mAsteroidSpawner->MinProjectileSpeed(sh*0.0005f);
 	mAsteroidSpawner->MaxScale(sw*0.03f);
 	mAsteroidSpawner->MinScale(sw*0.005f);
 	mAsteroidSpawner->MinRespawnWaitTime(100);
@@ -401,10 +408,10 @@ void SpaceDefender::InitAsteroids()
 	mAsteroidSpawner->MaxHitPoints(9);
 	mAsteroidSpawner->MaxRotationSpeed(1.0f);
 	mAsteroidSpawner->MinRotationSpeed(-1.0f);
-	mAsteroidSpawner->ProbabilityOfSpawn(10.0f);
+	mAsteroidSpawner->ProbabilityOfSpawn(20.0f);
 	mAsteroidSpawner->MaxXPos(mBoundries.mRight - (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));
 	mAsteroidSpawner->MinXPos(mBoundries.mLeft + (OpenGLUtility::GetScreenWidth(mOptions.mMonitor)*0.05f));
-	mAsteroidSpawner->StartingYPos(mBoundries.mTop + (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.05f));
+	mAsteroidSpawner->StartingYPos(mBoundries.mTop + (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.075f));
 	mAsteroidSpawner->TerminateYPos(mBoundries.mBottom - (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.05f));
 	mAsteroidSpawner->AddObserver(mScoreText);
 	
@@ -420,11 +427,31 @@ void SpaceDefender::InitExplosions()
 	mPlayer->AddObserver(mExplosionManager);
 }
 
+void SpaceDefender::InitEnemyShips()
+{
+	mEnemyShipManager = new EnemyShipManager(mTextures[texture_t::ENEMY_SHIP_TEXTURE], mShaders[shader_prog_t::TEXTURE_SHADER_PROG]);
+	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
+	float sh = OpenGLUtility::GetScreenHeight(mOptions.mMonitor);
+	mEnemyShipManager->MaxProjectileSpeed(sh*0.00020f);
+	mEnemyShipManager->MinProjectileSpeed(sh*0.00020f);
+	mEnemyShipManager->ShipScale(glm::vec3(sw*0.02f));
+	mEnemyShipManager->MinRespawnWaitTime(600);
+	mEnemyShipManager->MaxRespawnWaitTime(2000);
+	mEnemyShipManager->HitPoints(2);
+	mEnemyShipManager->ProbabilityOfSpawn(10.0f);
+	mEnemyShipManager->MaxXPos(mBoundries.mRight - (sw * 0.05f));
+	mEnemyShipManager->MinXPos(mBoundries.mLeft + (sw *0.05f));
+	mEnemyShipManager->StartingYPos(mBoundries.mTop + (sh * 0.075f));
+	mEnemyShipManager->TerminateYPos(mBoundries.mBottom - (sh * 0.05f));
+	mEnemyShipManager->AddObserver(mScoreText);
+}
+
 void SpaceDefender::InitCollisionDetection()
 {
 	mCollisionDetector = new CollisionDetector();
 	mAsteroidSpawner->AddObserver(mCollisionDetector);
 	mPlayer->AddObserver(mCollisionDetector);
+	mEnemyShipManager->AddObserver(mCollisionDetector);
 }
 
 void SpaceDefender::InitKeyStateMap()

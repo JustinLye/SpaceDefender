@@ -9,7 +9,7 @@ GameObject::GameObject() :
 	mRigidBody(nullptr),
 	mId(++NextObjectId)
 {
-
+	DebugMessage(std::string("Next object id: " + boost::lexical_cast<std::string>(NextObjectId)));
 };
 
 GameObject::~GameObject()
@@ -146,6 +146,19 @@ const Transform& GameObject::GetTransform() const
 	return mTransform;
 }
 
+void GameObject::JumpToPosition(const Transform& transform)
+{
+	JumpToPosition(transform.Position());
+}
+
+void GameObject::JumpToPosition(const glm::vec3& pos)
+{
+	mTransform.JumpToPosition(pos);
+	JumpToPositionOnDrawableObjects(pos);
+	JumpToPositionOnColliders(pos);
+	JumpToPositionOnObjects(pos);
+}
+
 void GameObject::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 {
 	RenderGameObjects(proj_mat, view_mat);
@@ -247,6 +260,14 @@ void GameObject::Scale(const float& scale)
 	ScaleColliders(scale);
 	ScaleObjects(scale);
 	CustomScaleActions(scale);
+}
+
+void GameObject::ResetScale()
+{
+	mTransform.ResetScale();
+	ResetScaleOnDrawableObjects();
+	ResetScaleOnColliders();
+	ResetScaleOnObjects();
 }
 
 void GameObject::Scale(const float& scale, DrawableObject* object)
@@ -471,20 +492,20 @@ glm::mat4 GameObject::Model(GameObject* object)
 	return GetGameObject(object)->second->Model();
 }
 
-void GameObject::PolyMode(const GLenum& poly_mode)
+void GameObject::PolyMode(const OpenGLPolyMode::face_t& face, const GLenum& poly_mode)
 {
 #ifdef ENGINE_DEBUG
 	assert(mRenderer != nullptr);
 #endif
-	mRenderer->PolyMode(poly_mode);
+	mRenderer->PolyMode(face, poly_mode);
 }
 
-const GLenum& GameObject::PolyMode() const
+const GLenum& GameObject::PolyMode(const OpenGLPolyMode::face_t& face) const
 {
 #ifdef ENGINE_DEBUG
 	assert(mRenderer != nullptr);
 #endif
-	return mRenderer->PolyMode();
+	return mRenderer->PolyMode(face);
 }
 
 void GameObject::AddCollider(Collider* collider)
@@ -637,6 +658,36 @@ void GameObject::ScaleObjects(const glm::vec3& scale)
 	}
 }
 
+void GameObject::ResetScaleOnDrawableObjects()
+{
+	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::iterator iter = mDrawableObjectMap.begin();
+	while (iter != mDrawableObjectMap.end())
+	{
+		iter->second.ResetScale();
+		++iter;
+	}
+}
+
+void GameObject::ResetScaleOnColliders()
+{
+	std::map<Collider*, Collider*, CompareTransPtr>::iterator iter = mColliderMap.begin();
+	while (iter != mColliderMap.end())
+	{
+		iter->second->ResetScale();
+		++iter;
+	}
+}
+
+void GameObject::ResetScaleOnObjects()
+{
+	std::map<GameObject*, GameObject*, CompareGameObjectPtr>::iterator iter = mGameObjectMap.begin();
+	while (iter != mGameObjectMap.end())
+	{
+		iter->second->ResetScale();
+		++iter;
+	}
+}
+
 void GameObject::TranslateDrawableObjects(const glm::vec3& translation)
 {
 	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::iterator iter = mDrawableObjectMap.begin();
@@ -753,6 +804,36 @@ void GameObject::OffsetObjects(const glm::vec3& offset_vec)
 	while (iter != mGameObjectMap.end())
 	{
 		iter->second->Offset(offset_vec);
+		++iter;
+	}
+}
+
+void GameObject::JumpToPositionOnDrawableObjects(const glm::vec3& pos)
+{
+	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::iterator iter = mDrawableObjectMap.begin();
+	while (iter != mDrawableObjectMap.end())
+	{
+		iter->second.Offset(pos);
+		++iter;
+	}
+}
+
+void GameObject::JumpToPositionOnColliders(const glm::vec3& pos)
+{
+	std::map<Collider*, Collider*, CompareTransPtr>::iterator iter = mColliderMap.begin();
+	while (iter != mColliderMap.end())
+	{
+		iter->second->Offset(pos);
+		++iter;
+	}
+}
+
+void GameObject::JumpToPositionOnObjects(const glm::vec3& pos)
+{
+	std::map<GameObject*, GameObject*, CompareGameObjectPtr>::iterator iter = mGameObjectMap.begin();
+	while (iter != mGameObjectMap.end())
+	{
+		iter->second->JumpToPosition(pos);
 		++iter;
 	}
 }

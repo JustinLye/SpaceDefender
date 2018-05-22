@@ -1,5 +1,9 @@
 #ifndef LASER_CANNON_HEADER_INCLUDED
 #define LASER_CANNON_HEADER_INCLUDED
+#ifdef LASER_CANNON_DEBUG
+#include"engine/util/DebugFunctions.h"
+#endif // LASER_CANNON_DEBUG
+
 #include<chrono>
 #include"engine/objects/Observer.h"
 #include"engine/objects/Subject.h"

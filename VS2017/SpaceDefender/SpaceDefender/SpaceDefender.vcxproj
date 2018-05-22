@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\external\glad\src\glad.c" />
+    <ClCompile Include="..\..\..\src\engine\containers\IndexQueue.cc" />
     <ClCompile Include="..\..\..\src\engine\containers\ObjectManager.cc" />
     <ClCompile Include="..\..\..\src\engine\font\ArialFontData.cc" />
     <ClCompile Include="..\..\..\src\engine\font\Font.cc" />
@@ -58,6 +59,8 @@
     <ClCompile Include="..\..\..\src\game\AsteroidCollision.cc" />
     <ClCompile Include="..\..\..\src\game\AsteroidSpawner.cc" />
     <ClCompile Include="..\..\..\src\game\CollisionDetector.cc" />
+    <ClCompile Include="..\..\..\src\game\EnemyShip.cc" />
+    <ClCompile Include="..\..\..\src\game\EnemyShipManager.cc" />
     <ClCompile Include="..\..\..\src\game\Explosion.cc" />
     <ClCompile Include="..\..\..\src\game\ExplosionManager.cc" />
     <ClCompile Include="..\..\..\src\game\Laser.cc" />
@@ -68,6 +71,7 @@
     <ClCompile Include="..\..\..\src\game\SpaceDefender.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\engine\containers\IndexQueue.h" />
     <ClInclude Include="..\..\..\include\engine\containers\ObjectManager.h" />
     <ClInclude Include="..\..\..\include\engine\font\ArialFontData.h" />
     <ClInclude Include="..\..\..\include\engine\font\Font.h" />
@@ -105,12 +109,14 @@
     <ClInclude Include="..\..\..\include\engine\util\Paths.h" />
     <ClInclude Include="..\..\..\include\engine\util\ShaderProgram.h" />
     <ClInclude Include="..\..\..\include\engine\util\TextShader.h" />
+    <ClInclude Include="..\..\..\include\engine\util\UtiliDefs.h" />
     <ClInclude Include="..\..\..\include\game\Asteroid.h" />
     <ClInclude Include="..\..\..\include\game\AsteroidCollision.h" />
     <ClInclude Include="..\..\..\include\game\AsteroidSpawner.h" />
     <ClInclude Include="..\..\..\include\game\CollisionDetector.h" />
+    <ClInclude Include="..\..\..\include\game\EnemyShip.h" />
+    <ClInclude Include="..\..\..\include\game\EnemyShipManager.h" />
     <ClInclude Include="..\..\..\include\game\Explosion.h" />
-    <ClInclude Include="..\..\..\include\game\ExplosionManager.h" />
     <ClInclude Include="..\..\..\include\game\Laser.h" />
     <ClInclude Include="..\..\..\include\game\LaserCannon.h" />
     <ClInclude Include="..\..\..\include\game\Player.h" />
@@ -176,7 +182,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external\stb;C:\SpaceDefender\external;C:\SpaceDefender\external\glfw\include;C:\SpaceDefender\external\ft29\freetype-2.9\include;C:\SpaceDefender\external\glad\include;C:\SpaceDefender\external\Boost\include;C:\SpaceDefender\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/DENGINE_DEBUG /DFONT_DEBUG /DGRAPHICS_DEBUG /DLASER_CANNON_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/DENGINE_DEBUG /DFONT_DEBUG /DGRAPHICS_DEBUG /DENEMY_SHIP_DEBUG %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\SpaceDefender\external\glfw\lib-vc2015;C:\SpaceDefender\external\ft29\freetype-2.9\objs\Win32\Release Static;C:\SpaceDefender\external\Boost\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

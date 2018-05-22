@@ -85,6 +85,21 @@ void Transform::Match(const Transform& other)
 	mTransformData.mOffset = other.Offset();
 }
 
+void Transform::JumpToPosition(const Transform& other)
+{
+	mTransformData.mPosition = other.Position();
+}
+
+void Transform::JumpToPosition(const glm::vec3& pos)
+{
+	mTransformData.mPosition = pos;
+}
+
+void Transform::ResetScale()
+{
+	mTransformData.mScale *= 1.0f / mTransformData.mScale;
+}
+
 Transform& Transform::operator=(const Transform& other)
 {
 	this->mTransformData = other.mTransformData;
@@ -122,16 +137,37 @@ bool Transform::operator<(const Transform& other) const
 	return false;
 }
 
+Transform::operator std::string() const
+{
+	return ToString();
+}
+
 std::ostream& operator<<(std::ostream& out, const Transform& transform)
 {
 	transform.Output(out);
 	return out;
 }
 
+std::string& operator+(std::string& str, const Transform& transform)
+{
+	return str += transform.ToString();
+}
+
 void Transform::Output(std::ostream& out) const
 {
-	out << "pos: [" << mTransformData.mPosition.x << ", " << mTransformData.mPosition.y << ", " << mTransformData.mPosition.z << "]";
+	out << ToString() << '\n';
+	/*out << "pos: [" << mTransformData.mPosition.x << ", " << mTransformData.mPosition.y << ", " << mTransformData.mPosition.z << "]";
 	out << "\tscale: [" << mTransformData.mScale.x << ", " << mTransformData.mScale.y << ", " << mTransformData.mScale.z << "]";
 	out << "\toffset: [" << mTransformData.mOffset.x << ", " << mTransformData.mOffset.y << ", " << mTransformData.mOffset.z << "]";
-	out << "\trotation: [" << mTransformData.mRotation.x << ", " << mTransformData.mRotation.y << ", " << mTransformData.mRotation.z << ", " << mTransformData.mRotation.w << "]\n";
+	out << "\trotation: [" << mTransformData.mRotation.x << ", " << mTransformData.mRotation.y << ", " << mTransformData.mRotation.z << ", " << mTransformData.mRotation.w << "]\n";*/
+}
+
+std::string Transform::ToString() const
+{
+	std::string result;
+	result = std::string("pos: ") + Vec3ToString(mTransformData.mPosition);
+	result += std::string("\tscale: ") + Vec3ToString(mTransformData.mScale);
+	result += std::string("\toffset: ") + Vec3ToString(mTransformData.mOffset);
+	result += std::string("\trotation: ") + Vec4ToString(mTransformData.mRotation);
+	return result;
 }

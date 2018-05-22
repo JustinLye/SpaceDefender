@@ -1,9 +1,12 @@
 #ifndef TRANSFORM_HEADER_INCLUDED
 #define TRANSFORM_HEADER_INCLUDED
 #include<iostream>
+#include<string>
+#include<boost/lexical_cast.hpp>
 #include<glm/gtc/matrix_transform.hpp>
 #include"engine/objects/TransformData.h"
 #include"engine/util/Constants.h"
+#include"engine/util/UtiliDefs.h"
 
 
 class Transform
@@ -26,15 +29,21 @@ public:
 	glm::mat4 Model();
 	
 	virtual void Match(const Transform&);
-
+	virtual void JumpToPosition(const Transform&);
+	virtual void JumpToPosition(const glm::vec3&);
+	virtual void ResetScale();
 	Transform& operator =(const Transform&);
 	bool operator<(const Transform&) const;
+	operator std::string() const;
 	friend std::ostream& operator<<(std::ostream&, const Transform&);
+	friend std::string& operator+(std::string&, const Transform&);
+
 protected:
 	TransformData mTransformData;
 	glm::mat4 mModel;
 
 	void Output(std::ostream&) const;
+	std::string ToString() const;
 };
 
 #endif

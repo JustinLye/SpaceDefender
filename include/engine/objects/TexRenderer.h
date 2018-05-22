@@ -9,7 +9,7 @@ class TexRenderer :
 	public Renderer
 {
 public:
-	TexRenderer(ShaderProgram* = nullptr, const GLenum& = DFLT_POLY_MODE);
+	TexRenderer(ShaderProgram* = nullptr, const OpenGLPolyMode& = OpenGLOptions::DEFAULT_POLY_MODE);
 	virtual ~TexRenderer();
 	virtual void SetCustomUniforms() override;
 

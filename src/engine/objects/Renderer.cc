@@ -1,6 +1,6 @@
  #include"engine/objects/Renderer.h"
 
-Renderer::Renderer(ShaderProgram* shader_program, const GLenum& poly_mode) :
+Renderer::Renderer(ShaderProgram* shader_program, const OpenGLPolyMode& poly_mode) :
 	mShader(shader_program),
 	mPolyMode(poly_mode),
 	mColor(DFLT_SHAPE_COLOR)
@@ -25,12 +25,10 @@ void Renderer::Render(DrawableObject* object, const float* MVP)
 	object->Activate();
 	glUniformMatrix4fv(mShader->operator()(DFLT_MVP_UNIFORM_NAME), 1, GL_FALSE, MVP);
 	SetCustomUniforms();
-	GLint prev_poly_mode;
-	glGetIntegerv(GL_POLYGON_MODE, &prev_poly_mode);
-	glPolygonMode(GL_FRONT_AND_BACK, mPolyMode);
+	glPolygonMode(GL_FRONT, mPolyMode[OpenGLPolyMode::face_t::FRONT]);
+	glPolygonMode(GL_BACK, mPolyMode[OpenGLPolyMode::face_t::BACK]);
 	object->Draw();
 	object->Deactivate();
-	glPolygonMode(GL_FRONT_AND_BACK, prev_poly_mode);
 	mShader->UnUse();
 
 }
@@ -78,15 +76,16 @@ void Renderer::Shader(ShaderProgram* shader)
 }
 
 
-void Renderer::PolyMode(const GLenum& poly_mode)
+void Renderer::PolyMode(const OpenGLPolyMode::face_t& face, const GLenum& poly_mode)
 {
-	mPolyMode = poly_mode;
+	mPolyMode[face] = poly_mode;
 }
 
-const GLenum& Renderer::PolyMode() const
+const GLenum& Renderer::PolyMode(const OpenGLPolyMode::face_t& face) const
 {
-	return mPolyMode;
+	return mPolyMode[face];
 }
+
 
 void Renderer::Color(const glm::vec4& color)
 {
