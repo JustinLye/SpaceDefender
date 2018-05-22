@@ -27,6 +27,8 @@ private:
 	static int sVersionArrayIndex;
 	static OpenGLVersion sOpenGLVersion;
 	static bool sFilledInRemainingOpts;
+	static int sRetryAttempts;
+	static const int MAX_RETRY_ATTEMPTS;
 	OpenGLUtility() {}
 	OpenGLUtility(const OpenGLUtility&) {}
 	OpenGLUtility(OpenGLUtility&&) {}

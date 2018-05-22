@@ -5,6 +5,8 @@ int OpenGLUtility::sLastOpenGLErrorCode = 0;
 int OpenGLUtility::sVersionArrayIndex = 0;
 OpenGLVersion OpenGLUtility::sOpenGLVersion = { OpenGLOptions::DEFAULT_MAJOR_V, OpenGLOptions::DEFAULT_MINOR_V };
 bool OpenGLUtility::sFilledInRemainingOpts = false;
+int OpenGLUtility::sRetryAttempts = 0;
+const int OpenGLUtility::MAX_RETRY_ATTEMPTS = 20;
 
 void OpenGLUtility::Init()
 {
@@ -158,8 +160,19 @@ void OpenGLUtility::FillInRemainingOpts()
 
 bool OpenGLUtility::TryAgain()
 {
+	++sRetryAttempts;
+	if (sRetryAttempts > MAX_RETRY_ATTEMPTS)
+	{
+		return false;
+	}
 	switch (sLastOpenGLErrorCode)
 	{
+	case GLFW_INVALID_VALUE:
+		if (sOpenGLOpts.mProfileMode != GLFW_OPENGL_ANY_PROFILE)
+		{
+			sOpenGLOpts.mProfileMode = GLFW_OPENGL_ANY_PROFILE;
+		}
+		break;
 	case GLFW_VERSION_UNAVAILABLE:
 		++sVersionArrayIndex;
 		if (sVersionArrayIndex >= OpenGLOptions::OPENGL_VERSION_COUNT)
