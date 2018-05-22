@@ -13,7 +13,7 @@ EnemyShipManager::EnemyShipManager(DrawableObject* shape, ShaderProgram* shader_
 	mShipScale(glm::vec3(1.0f)),
 	mTransform(Transform()),
 	mShape(shape),
-	mRenderer(new TexRenderer(shader_prog, GL_FILL)),
+	mRenderer(new TexRenderer(shader_prog, { GL_FILL, GL_FILL })),
 	mEnemyShipToIndexMap(std::map<unsigned int, unsigned int>()),
 	mGen(mRd()),
 	mSpawnDist(0.0f, 100.0f),

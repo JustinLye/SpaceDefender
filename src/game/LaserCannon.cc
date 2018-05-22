@@ -238,7 +238,7 @@ void LaserCannon::CustomDeallocOps(const unsigned int& index)
 
 void LaserCannon::CustomInitOps()
 {
-	mRenderer = new TexRenderer(mShaderProg, GL_FILL);
+	mRenderer = new TexRenderer(mShaderProg, { GL_FILL, GL_FILL });
 	mCollider = new Collider();
 	reinterpret_cast<TexRenderer*>(mRenderer)->UseMixInColor(true);
 }

@@ -146,7 +146,7 @@ void ExplosionManager::CustomAllocOps(const unsigned int& index)
 
 void ExplosionManager::CustomInitOps()
 {
-	mRenderer = new TexRenderer(mShaderProg, GL_FILL);
+	mRenderer = new TexRenderer(mShaderProg, { GL_FILL, GL_FILL });
 }
 
 bool ExplosionManager::DestructionPred(Explosion* object) const
