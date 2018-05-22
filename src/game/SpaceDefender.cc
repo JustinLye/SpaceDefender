@@ -50,7 +50,7 @@ void SpaceDefender::Run()
 	button_shape->Buffer(quad_data);
 	button->AddDrawableObject(button_shape);
 	button->Scale(glm::vec3(100.0f, 25.0f, 0.0f));
-	button->AddRenderer(new Renderer(mShaders[DEFAULT_SHADER_PROG], GL_LINES));
+	button->AddRenderer(new Renderer(mShaders[DEFAULT_SHADER_PROG]));
 	button->AddText(button_text);
 	button->Translate(glm::vec3(mBoundries.mRight / 2.0f, mBoundries.mTop / 2.0f, 1.0f));
 	button->FillColor(glm::vec4(0.3f, 0.9f, 0.3f, 0.0f));
@@ -366,7 +366,7 @@ void SpaceDefender::InitPlayer()
 	laser_cannon->LaserTermYPos(mBoundries.mTop * 1.01f);
 	laser_cannon->ProjectileSpeed(sh * 0.10f);
 	laser_cannon->CooldownTime(80.0f);
-	TexRenderer* renderer = new TexRenderer(mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG], GL_FILL);
+	TexRenderer* renderer = new TexRenderer(mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG], { GL_FILL, GL_FILL });
 	Collider* collider = new Collider();
 	RigidBody* rb = new RigidBody();
 	mPlayer = new Player();

@@ -1,5 +1,11 @@
 #include"engine/util/OpenGLUtility.h"
 
+OpenGLOptions OpenGLUtility::sOpenGLOpts;
+int OpenGLUtility::sLastOpenGLErrorCode = 0;
+int OpenGLUtility::sVersionArrayIndex = 0;
+OpenGLVersion OpenGLUtility::sOpenGLVersion = { OpenGLOptions::DEFAULT_MAJOR_V, OpenGLOptions::DEFAULT_MINOR_V };
+bool OpenGLUtility::sFilledInRemainingOpts = false;
+
 void OpenGLUtility::Init()
 {
 	glfwInit();
@@ -7,56 +13,22 @@ void OpenGLUtility::Init()
 
 GLFWwindow* OpenGLUtility::InitWindow(const OpenGLOptions& opts)
 {
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, opts.mMajorV);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, opts.mMinorV);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, opts.mProfileMode);
-	glfwWindowHint(GLFW_RESIZABLE, opts.mWindowResizable);
-	glfwWindowHint(GLFW_DECORATED, opts.mWindowDecorated);
-	glfwWindowHint(GLFW_MAXIMIZED, opts.mWindowMaximized);
-	int window_width = opts.mWindowW;
-	int window_height = opts.mWindowH;
-	int refresh_rate = 0;
-	GLFWmonitor* monitor = opts.mMonitor;
-	if (!monitor)
+	sOpenGLOpts = opts;
+	SetErrorCB();	
+	GLFWwindow* window = nullptr;
+	bool try_again = true;
+	while (try_again)
 	{
-		monitor = glfwGetPrimaryMonitor();
+		SetWindowHints();
+		window = glfwCreateWindow(sOpenGLOpts.mWindowW, sOpenGLOpts.mWindowH, sOpenGLOpts.mWindowTitle, sOpenGLOpts.mMonitor, NULL);
+		try_again = (window) ? false : TryAgain();
 	}
-#ifdef ENGINE_DEBUG
-	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-	if (opts.mUseNativeAspectRatio)
+	if (!window)
 	{
-		window_width = mode->width;
-		window_height = mode->height;
+		throw std::runtime_error("FATALITY!! OpenGL could not be initialized.");
 	}
 
-	glfwSwapInterval(1);
-	std::cout << "Refresh rate: " << mode->refreshRate << '\n';
-#endif
-	GLFWwindow* window = glfwCreateWindow(window_width, window_height, opts.mWindowTitle, monitor, NULL);
-	glfwMakeContextCurrent(window);
-	int sw, sh;
-	glfwGetFramebufferSize(window, &sw, &sh);
-	if (opts.mKeyCB == nullptr)
-	{
-		glfwSetKeyCallback(window, OpenGLUtility::HandleKeyCB);
-	}
-	else
-	{
-		glfwSetKeyCallback(window, opts.mKeyCB);
-	}
-	glfwSetWindowFocusCallback(window, OpenGLUtility::HandleWindowFocusCB);
-	
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		throw std::runtime_error("Failed to initialize GLAD");
-	}
-	
-	glPolygonMode(opts.mPolyMode.first, opts.mPolyMode.second);
-	glViewport(0, 0, sw, sh);
-	for (auto opt : opts.mEnableOptions)
-	{
-		glEnable(opt);
-	}
+	FinishUpInitialization(window);
 	return window;
 }
 
@@ -82,6 +54,12 @@ void OpenGLUtility::HandleWindowFocusCB(GLFWwindow* window, int focused)
 	}
 }
 
+void OpenGLUtility::HandleErrorCB(int error_code, const char* description)
+{
+	std::cout << "OpenGL ERROR [" << error_code << "] " << description << '\n';
+	sLastOpenGLErrorCode = error_code;
+}
+
 std::pair<int, int> OpenGLUtility::GetScreenResolution(GLFWmonitor* monitor)
 {
 	const GLFWvidmode* mode = GetVidMode(monitor);
@@ -92,6 +70,11 @@ int OpenGLUtility::GetRefreshRate(GLFWmonitor* monitor)
 {
 	const GLFWvidmode* mode = GetVidMode(monitor);
 	return mode->refreshRate;
+}
+
+int OpenGLUtility::LastOpenGLErrorCode()
+{
+	return sLastOpenGLErrorCode;
 }
 
 const GLFWvidmode* OpenGLUtility::GetVidMode(GLFWmonitor* monitor)
@@ -120,4 +103,99 @@ float OpenGLUtility::GetScreenWidth(GLFWmonitor* monitor)
 bool OpenGLUtility::KeyDown(GLFWwindow* window, int key)
 {
 	return (glfwGetKey(window, key) != GLFW_RELEASE);
+}
+
+void OpenGLUtility::SetErrorCB()
+{
+	if (sOpenGLOpts.mErrorCB == nullptr)
+	{
+		sOpenGLOpts.mErrorCB = &OpenGLUtility::HandleErrorCB;
+	}
+	glfwSetErrorCallback(sOpenGLOpts.mErrorCB);
+}
+
+void OpenGLUtility::SetWindowHints()
+{
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, sOpenGLOpts.mOpenGLVersion.mMajor);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, sOpenGLOpts.mOpenGLVersion.mMinor);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, sOpenGLOpts.mProfileMode);
+	glfwWindowHint(GLFW_RESIZABLE, sOpenGLOpts.mWindowResizable);
+	glfwWindowHint(GLFW_DECORATED, sOpenGLOpts.mWindowDecorated);
+	glfwWindowHint(GLFW_MAXIMIZED, sOpenGLOpts.mWindowMaximized);
+	FillInRemainingOpts();
+}
+
+void OpenGLUtility::FillInRemainingOpts()
+{
+	if (sFilledInRemainingOpts)
+	{
+		return;
+	}
+	sFilledInRemainingOpts = true;
+	if (sOpenGLOpts.mMonitor == nullptr)
+	{
+		sOpenGLOpts.mMonitor = glfwGetPrimaryMonitor();
+	}
+	if (sOpenGLOpts.mUseNativeAspectRatio)
+	{
+		const GLFWvidmode* mode = glfwGetVideoMode(sOpenGLOpts.mMonitor);
+		sOpenGLOpts.mWindowW = mode->width;
+		sOpenGLOpts.mWindowH = mode->height;
+	}
+	if (sOpenGLOpts.mEnableVsync)
+	{
+		glfwSwapInterval(1);
+	}
+	if (sOpenGLOpts.mKeyCB == nullptr)
+	{
+		sOpenGLOpts.mKeyCB = &OpenGLUtility::HandleKeyCB;
+	}
+	if (sOpenGLOpts.mFocusCB == nullptr)
+	{
+		sOpenGLOpts.mFocusCB = &OpenGLUtility::HandleWindowFocusCB;
+	}
+}
+
+bool OpenGLUtility::TryAgain()
+{
+	switch (sLastOpenGLErrorCode)
+	{
+	case GLFW_VERSION_UNAVAILABLE:
+		++sVersionArrayIndex;
+		if (sVersionArrayIndex >= OpenGLOptions::OPENGL_VERSION_COUNT)
+		{
+			return false;
+		}
+		sOpenGLOpts.mOpenGLVersion = OpenGLOptions::OPENGL_VERSION_ARRAY[sVersionArrayIndex];
+		if (sOpenGLOpts.mOpenGLVersion.mMajor < 3 || (sOpenGLOpts.mOpenGLVersion.mMajor == 3 && sOpenGLOpts.mOpenGLVersion.mMajor < 3))
+		{
+			sOpenGLOpts.mProfileMode = GLFW_OPENGL_ANY_PROFILE;
+		}
+		break;
+	}
+	return true;
+
+}
+
+void OpenGLUtility::FinishUpInitialization(GLFWwindow* window)
+{
+	glfwMakeContextCurrent(window);
+	glfwSetKeyCallback(window, sOpenGLOpts.mKeyCB);
+	glfwSetWindowFocusCallback(window, OpenGLUtility::HandleWindowFocusCB);
+	
+	int sw, sh;
+	glfwGetFramebufferSize(window, &sw, &sh);
+
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		throw std::runtime_error("Failed to initialize GLAD");
+	}
+
+	glPolygonMode(GL_FRONT, sOpenGLOpts.mPolyMode.FRONT);
+	glPolygonMode(GL_BACK, sOpenGLOpts.mPolyMode.BACK);
+	glViewport(0, 0, sw, sh);
+	for (auto opt : sOpenGLOpts.mEnableOptions)
+	{
+		glEnable(opt);
+	}
 }

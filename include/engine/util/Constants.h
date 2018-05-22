@@ -5,6 +5,7 @@
 #include<glm/glm.hpp>
 namespace Constants
 {
+
 	namespace Containers
 	{
 		const unsigned int NULL_ELEMENT_INDEX = ~0;

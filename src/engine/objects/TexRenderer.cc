@@ -1,6 +1,6 @@
 #include"engine/objects/TexRenderer.h"
 
-TexRenderer::TexRenderer(ShaderProgram* shader_prog, const GLenum& poly_mode) :
+TexRenderer::TexRenderer(ShaderProgram* shader_prog, const OpenGLPolyMode& poly_mode) :
 	Renderer(nullptr, poly_mode),
 	mUseMixInColor(0),
 	mMixInColor(glm::vec4(DFLT_SHAPE_COLOR.x, DFLT_SHAPE_COLOR.y, DFLT_SHAPE_COLOR.z, 0.0f))

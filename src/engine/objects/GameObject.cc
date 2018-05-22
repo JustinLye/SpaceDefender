@@ -492,20 +492,20 @@ glm::mat4 GameObject::Model(GameObject* object)
 	return GetGameObject(object)->second->Model();
 }
 
-void GameObject::PolyMode(const GLenum& poly_mode)
+void GameObject::PolyMode(const OpenGLPolyMode::face_t& face, const GLenum& poly_mode)
 {
 #ifdef ENGINE_DEBUG
 	assert(mRenderer != nullptr);
 #endif
-	mRenderer->PolyMode(poly_mode);
+	mRenderer->PolyMode(face, poly_mode);
 }
 
-const GLenum& GameObject::PolyMode() const
+const GLenum& GameObject::PolyMode(const OpenGLPolyMode::face_t& face) const
 {
 #ifdef ENGINE_DEBUG
 	assert(mRenderer != nullptr);
 #endif
-	return mRenderer->PolyMode();
+	return mRenderer->PolyMode(face);
 }
 
 void GameObject::AddCollider(Collider* collider)

@@ -121,8 +121,8 @@ public:
 	virtual void Render(const glm::mat4&, const glm::mat4&, DrawableObject*);
 	virtual void Render(const glm::mat4&, const glm::mat4&, GameObject*);
 
-	virtual void PolyMode(const GLenum&);
-	const GLenum& PolyMode() const;
+	virtual void PolyMode(const OpenGLPolyMode::face_t&, const GLenum&);
+	const GLenum& PolyMode(const OpenGLPolyMode::face_t&) const;
 
 	// Collider Interface
 	virtual void AddCollider(Collider*);

@@ -20,16 +20,15 @@ int main(int argc, char* argv[])
 {
 	try
 	{
-		TestFunction();
-		return EXIT_SUCCESS;
+		/*TestFunction();
+		return EXIT_SUCCESS;*/
 		OpenGLUtility::Init();
 		OpenGLOptions opts;
-		int monitor_count;
-		GLFWmonitor** monitors = glfwGetMonitors(&monitor_count);
-		opts.mMonitor = monitors[0];
 		SpaceDefender space_defender(opts);
 		space_defender.Init();
+		//??????
 		player = space_defender.GetPlayer();
+		//??????
 		space_defender.Run();
 	}
 	catch (std::exception& error)
