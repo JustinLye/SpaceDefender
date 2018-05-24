@@ -7,7 +7,7 @@
 #include<stdexcept>
 #include"engine/util/UtiliDefs.h"
 #include"engine/util/Constants.h"
-
+#include"engine/util/DebugFunctions.h"
 using namespace Constants::Containers;
 
 struct Index
@@ -22,9 +22,11 @@ struct Index
 	Index& operator=(const size_t&);
 	bool operator!() const;
 	operator size_t();
+	operator const size_t&() const;
 
-protected:
+//protected:
 	friend class IndexQueue;
+	friend class IndexList;
 	friend class IdxQueueIter;
 	size_t mId;
 	Index* mNext;
@@ -45,23 +47,22 @@ public:
 	IdxQueueIter(const IdxQueueIter&);
 	~IdxQueueIter();
 
-	void swap(const IdxQueueIter&);
+	void swap(IdxQueueIter&);
 
 	reference operator*();
-	reference operator->();
-	reference operator++();
-	value_type operator++(int);
-	reference operator--();
-	value_type operator--(int);
+	pointer operator->();
+	IdxQueueIter& operator++();
+	IdxQueueIter operator++(int);
+	IdxQueueIter& operator--();
+	IdxQueueIter operator--(int);
 
 	bool operator==(const IdxQueueIter&);
 	bool operator!=(const IdxQueueIter&);
 
 	IdxQueueIter& operator=(const IdxQueueIter&);
 
-
 protected:
-	Index* idx;
+	Index* mIdx;
 };
 
 
@@ -69,9 +70,50 @@ protected:
 class IndexQueue
 {
 public:
+	typedef unsigned int size_t;
+	IndexQueue(const size_t&);
+	virtual ~IndexQueue();
+	
+	void Insert(const Index&);
+	void Pop();
+	void Clear();
+
+	const Index& Front() const;
+	const Index& Back() const;
+	IdxQueueIter Begin();
+	IdxQueueIter End();
+	bool Empty() const;
+	const size_t& Size() const;
+	const size_t& MaxCap() const;
 
 protected:
+	size_t mSize;
+	size_t mMaxCap;
 	Index* mIndices;
+	Index* mFront;
+	Index* mTail;
+
+	virtual void Initialize();
+};
+
+class IndexList :
+	protected IndexQueue
+{
+public:
+	using IndexQueue::size_t;
+	using IndexQueue::Insert;
+	using IndexQueue::Clear;
+	using IndexQueue::Begin;
+	using IndexQueue::End;
+	using IndexQueue::Empty;
+	using IndexQueue::Size;
+	using IndexQueue::MaxCap;
+	IndexList(const size_t&);
+	virtual ~IndexList();
+
+	void Remove(const Index&);
+protected:
+
 };
 
 #endif
