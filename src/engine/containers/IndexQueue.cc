@@ -160,18 +160,15 @@ IndexQueue::~IndexQueue()
 void IndexQueue::Insert(const Index& index)
 {
 	assert(index >= 0 && index < mMaxCap);
-	DebugMessage("");
 	if (mIndices[index] == *Index::PAST_END_INDEX)
 	{
 		if (mFront == Index::PAST_END_INDEX)
 		{
-			DebugMessage("");
 			mFront = &mIndices[index];
 			mTail = mFront;
 		}
 		else
 		{
-			DebugMessage("");
 			Index* temp = mTail;
 			mTail = &mIndices[index];
 			temp->mNext = mTail;
@@ -283,25 +280,21 @@ void IndexList::Remove(const Index& index)
 		Index* temp = &mIndices[index];
 		if (mSize == 1)
 		{
-			DebugMessage("");
 			Clear();
 			return;
 		}
 		else if (temp == mFront)
 		{
-			DebugMessage("");
 			mFront = mFront->mNext;
 			mFront->mPrev = Index::PAST_END_INDEX;
 		}
 		else if (temp == mTail)
 		{
-			DebugMessage("");
 			mTail = mTail->mPrev;
 			mTail->mNext = Index::PAST_END_INDEX;
 		}
 		else
 		{
-			DebugMessage("");
 			temp->mNext->mPrev = temp->mPrev;
 			temp->mPrev->mNext = temp->mNext;
 		}

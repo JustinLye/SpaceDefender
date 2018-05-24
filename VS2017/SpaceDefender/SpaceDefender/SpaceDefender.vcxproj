@@ -175,7 +175,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -183,6 +185,8 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external\stb;C:\SpaceDefender\external;C:\SpaceDefender\external\glfw\include;C:\SpaceDefender\external\ft29\freetype-2.9\include;C:\SpaceDefender\external\glad\include;C:\SpaceDefender\external\Boost\include;C:\SpaceDefender\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/DENGINE_DEBUG /DFONT_DEBUG /DGRAPHICS_DEBUG /DENEMY_SHIP_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\SpaceDefender\external\glfw\lib-vc2015;C:\SpaceDefender\external\ft29\freetype-2.9\objs\Win32\Release Static;C:\SpaceDefender\external\Boost\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
