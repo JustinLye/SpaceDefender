@@ -163,5 +163,4 @@ namespace Constants
 	}
 };
 
-
 #endif

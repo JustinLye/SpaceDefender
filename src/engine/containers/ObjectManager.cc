@@ -24,14 +24,27 @@ unsigned int ObjectManager<T>::ActiveObjectCount() const
 template<class T>
 void ObjectManager<T>::Init()
 {
+#ifdef ENGINE_DEBUG
+	DebugMessage("");
+#endif
 	CustomInitOps();
 	mMaxCapacity = MaxCapacity();
 	mMaxActiveCapacity = MaxActiveCapacity();
 	mObjects = new T*[mMaxCapacity];
+#ifdef ENGINE_DEBUG
+	DebugMessage(mMaxActiveCapacity);
+	if (mMaxCapacity <= 0)
+	{
+		DebugMessage("WARNING: Max Capacity is less than or equal to 0");
+	}
+#endif
+	mIndexQueue.Initialize(MaxCapacity());
+	DebugMessage(mIndexQueue.MaxCap());
+	
 	for (int i = 0; i < mMaxCapacity; ++i)
 	{
 		mObjects[i] = ConstructObject();
-		mIndexQueue.push(i);
+		//mIndexQueue.push(i);
 	}
 }
 
@@ -79,10 +92,12 @@ template<class T>
 unsigned int ObjectManager<T>::Alloc()
 {
 	unsigned int result = NOT_INDEX;
-	if (!mIndexQueue.empty() && (int)mActiveIndices.size() < mMaxActiveCapacity)
+	if (!mIndexQueue.Empty() && (int)mActiveIndices.size() < mMaxActiveCapacity)
 	{
-		result = mIndexQueue.front();
-		mIndexQueue.pop();
+		//result = mIndexQueue.front();
+		result = mIndexQueue.Front();
+		//mIndexQueue.pop();
+		mIndexQueue.Pop();
 		CustomAllocOps(result);
 		mActiveIndices.push_back(result);
 	}
@@ -117,7 +132,8 @@ void ObjectManager<T>::CustomUpdateOps(const float& dt)
 template<class T>
 std::list<unsigned int>::iterator ObjectManager<T>::Dealloc(std::list<unsigned int>::iterator iter)
 {
-	mIndexQueue.push(*iter);
+	//mIndexQueue.push(*iter);
+	mIndexQueue.Insert(*iter);
 	CustomDeallocOps(*iter);
 	return mActiveIndices.erase(iter);
 }

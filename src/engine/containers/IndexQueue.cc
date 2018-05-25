@@ -135,31 +135,41 @@ IdxQueueIter& IdxQueueIter::operator=(const IdxQueueIter& other)
 }
 
 
-IndexQueue::IndexQueue(const size_t& max_cap) :
-	mSize(max_cap),
-	mMaxCap(max_cap),
-	mIndices(new Index[max_cap]),
+IndexQueue::IndexQueue() :
+	mSize(0),
+	mMaxCap(0),
+	mIndices(nullptr),
 	mFront(Index::PAST_END_INDEX),
 	mTail(Index::PAST_END_INDEX)
 {
-	Initialize();
 }
 
 IndexQueue::~IndexQueue()
 {
-	try
+	if (mIndices != nullptr)
 	{
-		delete[] mIndices;
-	}
-	catch (...)
-	{
+		try
+		{
+			delete[] mIndices;
+		} catch (...)
+		{
 
+		}
 	}
 }
 
 void IndexQueue::Insert(const Index& index)
 {
-	assert(index >= 0 && index < mMaxCap);
+#ifdef ENGINE_DEBUG
+
+	if (!(index >= 0 && index < mMaxCap))
+	{
+		DebugMessage(boost::lexical_cast<std::string>(index) + std::string(" is out of bounds [") + boost::lexical_cast<std::string>(0) + std::string(", ") + boost::lexical_cast<std::string>(mMaxCap) + std::string("]"));
+		throw std::runtime_error("Attempted to insert value outside bounds");
+	}
+	assert(mIndices != nullptr);
+#endif
+	
 	if (mIndices[index] == *Index::PAST_END_INDEX)
 	{
 		if (mFront == Index::PAST_END_INDEX)
@@ -244,8 +254,17 @@ const IndexQueue::size_t& IndexQueue::MaxCap() const
 	return mMaxCap;
 }
 
-void IndexQueue::Initialize()
+void IndexQueue::Initialize(const size_t& max_cap)
 {
+#ifdef ENGINE_DEBUG
+	assert(max_cap > 0);
+	assert(mIndices == nullptr);
+	DebugMessage(max_cap);
+#endif
+	mMaxCap = max_cap;
+	DebugMessage(mMaxCap);
+	mSize = max_cap;
+	mIndices = new Index[mMaxCap];
 	for (size_t i = 0; i < mMaxCap; ++i)
 	{
 		mIndices[i] = i;
@@ -262,8 +281,8 @@ void IndexQueue::Initialize()
 	mTail = &mIndices[mMaxCap - 1];
 }
 
-IndexList::IndexList(const size_t& max_cap) :
-	IndexQueue(max_cap)
+IndexList::IndexList() :
+	IndexQueue()
 {
 	Clear();
 }
@@ -275,6 +294,9 @@ IndexList::~IndexList()
 
 void IndexList::Remove(const Index& index)
 {
+#ifdef ENGINE_DEBUG
+	assert(mIndices != nullptr);
+#endif
 	if (mIndices[index] != *Index::PAST_END_INDEX)
 	{
 		Index* temp = &mIndices[index];

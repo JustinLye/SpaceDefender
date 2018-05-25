@@ -40,6 +40,8 @@ public:
 	};
 
 	GameObject();
+	GameObject(const GameObject&);
+	GameObject(GameObject&&);
 	virtual ~GameObject();
 
 	const unsigned int& Id() const;

@@ -7,6 +7,14 @@ Asteroid::Asteroid() :
 	mHitPoints(2),
 	mRotationSpeed(0.0f)
 {
+}
+
+Asteroid::Asteroid(const Asteroid& other) :
+	GameObject(other),
+	mSpeed(other.mSpeed),
+	mHitPoints(other.mHitPoints),
+	mRotationSpeed(other.mRotationSpeed)
+{
 
 }
 
@@ -32,7 +40,7 @@ void Asteroid::Collide(const GameObject& object) const
 		}
 		break;
 	case object_t::ASTEROID:
-		ReportAsteroidCollision((const Asteroid&)object);
+		ReportAsteroidCollision(dynamic_cast<const Asteroid&>(object));
 		break;
 	}
 }

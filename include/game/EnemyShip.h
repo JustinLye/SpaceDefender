@@ -12,6 +12,7 @@ class EnemyShip :
 {
 public:
 	EnemyShip();
+	EnemyShip(const EnemyShip&);
 	~EnemyShip();
 
 	const object_t& Type() const override;

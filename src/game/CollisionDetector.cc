@@ -96,7 +96,9 @@ void CollisionDetector::OnNotify(const GameObject& object, const Constants::Type
 	case Constants::Types::event_t::ACTIVATED_COLLIDABLE_OBJECT:
 		if (object.Type() == Constants::Types::object_t::ASTEROID)
 		{
+			DebugMessage("");
 			mAsteroidMap.insert({ object.Id(), reinterpret_cast<const Asteroid*>(&object) });
+			DebugMessage("");
 		}
 		else if (object.Type() == Constants::Types::object_t::LASER)
 		{
@@ -108,10 +110,11 @@ void CollisionDetector::OnNotify(const GameObject& object, const Constants::Type
 		}
 		break;
 	case Constants::Types::event_t::OBJECT_OUT_OF_BOUNDS:
-		DebugMessage("Object out-of-bounds notifcation");
 		if (object.Type() == Constants::Types::object_t::ASTEROID)
 		{
+			DebugMessage("");
 			mAsteroidMap.erase(object.Id());
+			DebugMessage("");
 		}
 		else if (object.Type() == Constants::Types::object_t::LASER)
 		{

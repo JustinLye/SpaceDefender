@@ -227,10 +227,11 @@ void AsteroidSpawner::Init()
 	mMaxCapacity = MaxCapacity();
 	mMaxActiveCapacity = MaxActiveCapacity();
 	mObjects = new Asteroid*[mMaxCapacity];
+	mIndexQueue.Initialize(mMaxCapacity);
 	for (int i = 0; i < mMaxCapacity; ++i)
 	{
 		mObjects[i] = ConstructObject();
-		mIndexQueue.push(i);
+		mIndexQueue.Insert(i);
 		mAsteroidToIndexMap.insert({ mObjects[i]->Id(), i });
 	}
 }

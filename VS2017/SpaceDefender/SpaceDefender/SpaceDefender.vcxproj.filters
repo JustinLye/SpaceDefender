@@ -87,9 +87,6 @@
     <ClCompile Include="..\..\..\src\game\main.cc">
       <Filter>src\game</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\external\glad\src\glad.c">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\engine\objects\TransformData.cc">
       <Filter>src\engine\objects</Filter>
     </ClCompile>
@@ -212,6 +209,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\engine\containers\IndexQueue.cc">
       <Filter>src\engine\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\src\glad.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\UtiliDefs.cc">
+      <Filter>src\engine\util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

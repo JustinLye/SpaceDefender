@@ -10,6 +10,16 @@ EnemyShip::EnemyShip() :
 
 }
 
+EnemyShip::EnemyShip(const EnemyShip& other) :
+	GameObject(other),
+	mSpeed(other.mSpeed),
+	mHitPoints(other.mHitPoints),
+	mTerminateYPos(other.mTerminateYPos),
+	mType(other.mType)
+{
+
+}
+
 EnemyShip::~EnemyShip()
 {
 

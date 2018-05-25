@@ -9,8 +9,25 @@ GameObject::GameObject() :
 	mRigidBody(nullptr),
 	mId(++NextObjectId)
 {
-	DebugMessage(std::string("Next object id: " + boost::lexical_cast<std::string>(NextObjectId)));
 };
+
+GameObject::GameObject(const GameObject& other) :
+	Subject(other),
+	mTransform(other.mTransform),
+	mRenderer(other.mRenderer),
+	mRigidBody(other.mRigidBody),
+	mId(other.mId)
+{
+}
+
+GameObject::GameObject(GameObject&& other) :
+	Subject(std::move(other)),
+	mTransform(std::move(other.mTransform)),
+	mRenderer(std::move(other.mRenderer)),
+	mRigidBody(std::move(other.mRigidBody)),
+	mId(std::move(other.mId))
+{
+}
 
 GameObject::~GameObject()
 {

@@ -9,6 +9,7 @@ class Asteroid :
 {
 public:
 	Asteroid();
+	Asteroid(const Asteroid&);
 	~Asteroid();
 	
 	const object_t& Type() const override;

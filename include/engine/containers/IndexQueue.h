@@ -71,7 +71,7 @@ class IndexQueue
 {
 public:
 	typedef unsigned int size_t;
-	IndexQueue(const size_t&);
+	IndexQueue();
 	virtual ~IndexQueue();
 	
 	void Insert(const Index&);
@@ -85,6 +85,7 @@ public:
 	bool Empty() const;
 	const size_t& Size() const;
 	const size_t& MaxCap() const;
+	virtual void Initialize(const size_t&);
 
 protected:
 	size_t mSize;
@@ -93,7 +94,7 @@ protected:
 	Index* mFront;
 	Index* mTail;
 
-	virtual void Initialize();
+	
 };
 
 class IndexList :
@@ -108,7 +109,9 @@ public:
 	using IndexQueue::Empty;
 	using IndexQueue::Size;
 	using IndexQueue::MaxCap;
-	IndexList(const size_t&);
+	using IndexQueue::Initialize;
+
+	IndexList();
 	virtual ~IndexList();
 
 	void Remove(const Index&);

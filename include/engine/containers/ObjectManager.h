@@ -7,6 +7,8 @@
 #include<list>
 #include<glm/glm.hpp>
 #include"engine/util/Constants.h"
+#include"engine/containers/IndexQueue.h"
+
 //////////////////////////////////////////////////
 ///\ class ObjectManager
 ///\ brief Provoides generic interface for object
@@ -45,7 +47,7 @@ public:
 protected:
 	int mMaxCapacity;
 	int mMaxActiveCapacity;
-	std::queue<unsigned int> mIndexQueue;
+	IndexQueue mIndexQueue;
 	std::list<unsigned int> mActiveIndices;
 	T** mObjects;
 

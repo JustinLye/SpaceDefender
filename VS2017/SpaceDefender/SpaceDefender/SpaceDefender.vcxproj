@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\external\glad\src\glad.c" />
+    <ClCompile Include="..\..\..\external\src\glad.c" />
     <ClCompile Include="..\..\..\src\engine\containers\IndexQueue.cc" />
     <ClCompile Include="..\..\..\src\engine\containers\ObjectManager.cc" />
     <ClCompile Include="..\..\..\src\engine\font\ArialFontData.cc" />
@@ -49,6 +49,7 @@
     <ClCompile Include="..\..\..\src\engine\shapes\Shape.cc" />
     <ClCompile Include="..\..\..\src\engine\shapes\ShapeData.cc" />
     <ClCompile Include="..\..\..\src\engine\shapes\TriangleData.cc" />
+    <ClCompile Include="..\..\..\src\engine\UtiliDefs.cc" />
     <ClCompile Include="..\..\..\src\engine\util\DebugFunctions.cc" />
     <ClCompile Include="..\..\..\src\engine\util\KeyMap.cc" />
     <ClCompile Include="..\..\..\src\engine\util\OpenGLUtility.cc" />
@@ -128,7 +129,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{9934DDD7-6773-43A4-8B7E-99F50A894660}</ProjectGuid>
     <RootNamespace>SpaceDefender</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -183,13 +184,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external\stb;C:\SpaceDefender\external;C:\SpaceDefender\external\glfw\include;C:\SpaceDefender\external\ft29\freetype-2.9\include;C:\SpaceDefender\external\glad\include;C:\SpaceDefender\external\Boost\include;C:\SpaceDefender\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/DENGINE_DEBUG /DFONT_DEBUG /DGRAPHICS_DEBUG /DENEMY_SHIP_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external\include;C:\SpaceDefender\include;</AdditionalIncludeDirectories>
+      <AdditionalOptions>/DENGINE_DEBUG /DFONT_DEBUG /DGRAPHICS_DEBUG /DENEMY_SHIP_DEBUG  /DGAME_OBJECT_DEBUG %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\SpaceDefender\external\glfw\lib-vc2015;C:\SpaceDefender\external\ft29\freetype-2.9\objs\Win32\Release Static;C:\SpaceDefender\external\Boost\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\SpaceDefender\external\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
