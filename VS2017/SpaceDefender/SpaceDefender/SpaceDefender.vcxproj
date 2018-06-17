@@ -239,7 +239,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external;C:\SpaceDefender\include;C:\SpaceDefender\external\glad\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external;C:\SpaceDefender\include</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
