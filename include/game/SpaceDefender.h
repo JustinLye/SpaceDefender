@@ -20,6 +20,7 @@
 #include"engine/objects/Button.h"
 #include"engine/graphics/TextureShader.h"
 #include"engine/objects/TexRenderer.h"
+#include"engine/objects/ScrollingBackground.h"
 #include"game/Player.h"
 #include"game/AsteroidSpawner.h"
 #include"game/CollisionDetector.h"
@@ -34,6 +35,7 @@ using namespace Constants::Font;
 using namespace Constants::Shaders;
 using namespace Constants::Rendering;
 using namespace std::chrono;
+using namespace Constants::Geometry;
 
 class SpaceDefender
 {
@@ -63,6 +65,7 @@ protected:
 	ExplosionManager* mExplosionManager;
 	EnemyShipManager* mEnemyShipManager;
 	ActiveObjectTracker* mTracker;
+	ScrollingBackground* mBackground;
 
 	BoundryBox mBoundries;
 	glm::mat4 mViewMat;
@@ -86,6 +89,7 @@ protected:
 	void InitFonts();
 	void InitUI();
 	void InitTextures();
+	void InitBackground();
 	void InitPlayer();
 	void InitTracker();
 	void InitAsteroids();

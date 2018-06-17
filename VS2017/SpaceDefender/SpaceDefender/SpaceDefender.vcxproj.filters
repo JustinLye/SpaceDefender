@@ -240,6 +240,9 @@
     <ClCompile Include="..\..\..\src\engine\util\DistanceEntry.cc">
       <Filter>src\engine\util</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\objects\ScrollingBackground.cc">
+      <Filter>src\engine\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\engine\objects\Collider.h">
@@ -433,6 +436,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\engine\util\DistanceEntry.h">
       <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\objects\ScrollingBackground.h">
+      <Filter>include\engine\objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
