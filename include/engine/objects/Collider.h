@@ -13,6 +13,7 @@ public:
 	Collider();
 	virtual ~Collider();
 	virtual bool CollisionDetected(const Collider&) const;
+	static bool CollisionDetected(const Transform&, const Transform&);
 protected:
 	float mRadius;
 

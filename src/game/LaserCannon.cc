@@ -234,6 +234,7 @@ void LaserCannon::CustomDeallocOps(const unsigned int& index)
 	{
 		Notify(*mObjects[index], event_t::OBJECT_OUT_OF_BOUNDS);
 	}
+	Notify(*mObjects[index], event_t::DESPAWNED_OBJECT);
 }
 
 void LaserCannon::CustomInitOps()

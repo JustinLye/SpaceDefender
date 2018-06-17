@@ -5,13 +5,15 @@
 #include"engine/objects/GameObject.h"
 #include"game/LaserCannon.h"
 
+using namespace Constants::Types;
+
 class Player :
 	public GameObject
 {
 public:
 	Player();
 	virtual ~Player();
-	const Constants::Types::object_t& Type() const override;
+	object_t Type() const override;
 	void Render(const glm::mat4&, const glm::mat4&) override;
 	void HandleKeyboardInput(GLFWwindow*);
 	void AttachCannon(LaserCannon*);

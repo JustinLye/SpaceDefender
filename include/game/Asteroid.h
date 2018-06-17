@@ -3,6 +3,8 @@
 
 #include"engine/objects/GameObject.h"
 #include"game/AsteroidCollision.h"
+#include"game/ActiveObjectTracker.h"
+
 using namespace Constants::Types;
 class Asteroid :
 	public GameObject
@@ -12,7 +14,7 @@ public:
 	Asteroid(const Asteroid&);
 	~Asteroid();
 	
-	const object_t& Type() const override;
+	object_t Type() const override;
 	void Collide(const GameObject&) const override;
 	const float& Speed() const;
 	const float& TerminateYPos() const;
@@ -28,7 +30,7 @@ public:
 	void HitPoints(const int&);
 	const int& HitPoints() const;
 	void ReportAsteroidCollision(const Asteroid&) const;
-
+	void AddActiveObjectTracker(const ActiveObjectTracker*);
 	void Despawn() const override;
 
 protected:
@@ -36,6 +38,7 @@ protected:
 	int mHitPoints;
 	float mTerminateYPos;
 	float mRotationSpeed;
+	const ActiveObjectTracker* mTracker;
 };
 
 #endif

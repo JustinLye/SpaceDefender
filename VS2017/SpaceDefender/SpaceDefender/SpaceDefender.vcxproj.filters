@@ -210,10 +210,34 @@
     <ClCompile Include="..\..\..\src\engine\containers\IndexQueue.cc">
       <Filter>src\engine\containers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\external\src\glad.c">
+    <ClCompile Include="..\..\..\src\engine\UtiliDefs.cc">
+      <Filter>src\engine\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\glad\src\glad.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\engine\UtiliDefs.cc">
+    <ClCompile Include="..\..\..\src\engine\containers\Iterator.cc">
+      <Filter>src\engine\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\containers\IterItem.cc">
+      <Filter>src\engine\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\containers\ObjectQueue.cc">
+      <Filter>src\engine\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\game\ActiveObjectTracker.cc">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\util\MailBox.cc">
+      <Filter>src\engine\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\util\Thread.cc">
+      <Filter>src\engine\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\util\Logger.cc">
+      <Filter>src\engine\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\engine\util\DistanceEntry.cc">
       <Filter>src\engine\util</Filter>
     </ClCompile>
   </ItemGroup>
@@ -373,6 +397,42 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\engine\containers\IndexQueue.h">
       <Filter>include\engine\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\shapes\Rectangle.h">
+      <Filter>include\engine\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\containers\Detector.h">
+      <Filter>include\engine\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\containers\ObjectQueue.h">
+      <Filter>include\engine\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\containers\RedBlackTree.h">
+      <Filter>include\engine\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\containers\BaseObjectContainer.h">
+      <Filter>include\engine\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\containers\Iterator.h">
+      <Filter>include\engine\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\containers\IterItem.h">
+      <Filter>include\engine\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\game\ActiveObjectTracker.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\util\Logger.h">
+      <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\util\MailBox.h">
+      <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\util\Thread.h">
+      <Filter>include\engine\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\engine\util\DistanceEntry.h">
+      <Filter>include\engine\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

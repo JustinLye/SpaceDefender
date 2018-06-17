@@ -17,3 +17,11 @@ bool Collider::CollisionDetected(const Collider& other) const
 	float dist = glm::length(diff);
 	return dist < radius_sum;
 }
+
+bool Collider::CollisionDetected(const Transform& lhs, const Transform& rhs)
+{
+	float radius_sum = lhs.Scale().x + rhs.Scale().x;
+	glm::vec3 diff = lhs.Position() - rhs.Position();
+	float dist = glm::length(diff);
+	return dist < radius_sum;
+}

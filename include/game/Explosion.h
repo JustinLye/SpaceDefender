@@ -12,7 +12,7 @@ public:
 	Explosion();
 	virtual ~Explosion();
 
-	const object_t& Type() const override;
+	object_t Type() const override;
 	virtual void Update(const float&) override;
 	bool Terminate() const;
 

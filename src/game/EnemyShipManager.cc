@@ -19,8 +19,14 @@ EnemyShipManager::EnemyShipManager(DrawableObject* shape, ShaderProgram* shader_
 	mSpawnDist(0.0f, 100.0f),
 	mPosDist(0.0f, 0.0f),
 	mSpeedDist(0.0f, 0.0f),
-	mLastSpawnTime(high_resolution_clock::now())
+	mLastSpawnTime(high_resolution_clock::now()),
+	mNextXPos(0.0f),
+	mMaxPlacementAttempts(1),
+	mTracker(nullptr)
 {
+	std::string p = LogFilePath("enemy-shp-mgr.log");
+	mLogger = new Logger(p.c_str());
+	mLogger->Launch();
 	Init();
 }
 
@@ -31,13 +37,14 @@ EnemyShipManager::~EnemyShipManager()
 
 int EnemyShipManager::MaxCapacity()
 {
-	return 6;
+	return 10;
 }
 
 int EnemyShipManager::MaxActiveCapacity()
 {
-	return 4;
+	return 8;
 }
+
 
 std::vector<const EnemyShip*> EnemyShipManager::ActiveEnemyShipList() const
 {
@@ -73,6 +80,15 @@ void EnemyShipManager::RemoveObserver(Observer* observer)
 	for (int i = 0; i < mMaxCapacity; ++i)
 	{
 		mObjects[i]->RemoveObserver(observer);
+	}
+}
+
+void EnemyShipManager::AddActiveObjectTracker(const ActiveObjectTracker* tracker)
+{
+	mTracker = tracker;
+	for (int i = 0; i < mMaxCapacity; ++i)
+	{
+		mObjects[i]->AddActiveObjectTracker(tracker);
 	}
 }
 
@@ -129,6 +145,11 @@ const int& EnemyShipManager::HitPoints() const
 const glm::vec3& EnemyShipManager::ShipScale() const
 {
 	return mShipScale;
+}
+
+const int& EnemyShipManager::MaxPlacementAttempts() const
+{
+	return mMaxPlacementAttempts;
 }
 
 const Transform& EnemyShipManager::GetTransform() const
@@ -205,6 +226,11 @@ void EnemyShipManager::ShipScale(const float& scale)
 	mShipScale = glm::vec3(scale);
 }
 
+void EnemyShipManager::MaxPlacementAttempts(const int& attempts)
+{
+	mMaxPlacementAttempts = attempts;
+}
+
 void EnemyShipManager::Init()
 {
 	CustomInitOps();
@@ -269,6 +295,7 @@ EnemyShip* EnemyShipManager::ConstructObject()
 	ship->HitPoints(mHitPoints);
 	ship->AddRigidBody(new RigidBody());
 	ship->TerminateYPos(mTerminateYPos);
+	ship->Up(glm::vec3(0.0f, -1.0f, 0.0f));
 	return ship;
 }
 
@@ -286,8 +313,11 @@ void EnemyShipManager::CustomAllocOps(const unsigned int& index)
 		ship->Scale(mShipScale);
 	}
 	ship->Speed(mSpeedDist(mGen));
-	ship->Translate(glm::vec3(mPosDist(mGen), mStartingYPos - mTransform.Position().y, 0.0f));
+	ship->Translate(glm::vec3(mNextXPos, mStartingYPos - mTransform.Position().y, 0.0f));
 	ship->HitPoints(mHitPoints);
+	/*float rad = DegToRad(180.0f);
+	mLogger->Log(std::string("rads ") + boost::lexical_cast<std::string>(rad));
+	ship->Rotate(DegToRad(180.0f), glm::vec3(0.0f, 0.0f, 1.0f));*/
 }
 
 void EnemyShipManager::CustomDeallocOps(const unsigned int& index)
@@ -297,6 +327,7 @@ void EnemyShipManager::CustomDeallocOps(const unsigned int& index)
 		return;
 	}
 	mObjects[index]->ResetRigidBody();
+	Notify(*mObjects[index], event_t::DESPAWNED_OBJECT);
 }
 
 void EnemyShipManager::CustomUpdateOps(const float& dt)
@@ -346,5 +377,33 @@ bool EnemyShipManager::CanSpawn()
 	}
 
 	// Roll for chance to spawn
-	return (mProbabilityOfSpawn > mSpawnDist(mGen));
+	if (mProbabilityOfSpawn > mSpawnDist(mGen))
+	{
+		if (mTracker != nullptr)
+		{
+			// Make sure don't set the ship on top of another object
+			int attempts = 0;
+			std::vector<const GameObject*> close_objects;
+			Transform probe = mTransform;
+			mNextXPos = mPosDist(mGen);
+			probe.Translate(glm::vec3(mNextXPos, mStartingYPos - mTransform.Position().y, 0.0f));
+			if (probe.Scale() != mShipScale)
+			{
+				probe.ResetScale();
+				probe.Scale(mShipScale*2.5f);
+			}
+
+			mTracker->ObjectScan(probe, close_objects);
+
+			if (close_objects.size() == 0)
+			{
+				return true;
+			}
+		}
+		else
+		{
+			return true;
+		}
+	}
+	return false;
 }

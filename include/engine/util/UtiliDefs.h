@@ -14,8 +14,19 @@ using namespace Constants::Types;
 #ifndef MESSAGE_STR
 #define MessageStr(msg) std::string(std::string(__FILE__) + std::string("    ") + std::string(__FUNCTION__) + std::string(" [") + std::string(__LINE__) + std::string("] ") + boost::lexical_cast<std::string>(msg))
 #endif
+#ifndef PI
+#define	PI 3.14159265359
+#endif // !PI
+#ifndef DEG_TO_RAD
+#define DegToRad(deg) (float)deg * ((float)PI/180.0f)
+#endif // !DEG_TO_RAD
+#ifndef RAD_TO_DEG
+#define RadToDeg(rad) (float)rad * (180.0f/(float)PI)
+#endif // !RAD_TO_DEG
 
-const std::string& TypeToString(const object_t& obj);
+
+std::string TypeToString(const object_t& obj);
 std::ostream& operator<<(std::ostream& os, const object_t& obj);
+float VecToVecAngle(const glm::vec3&, const glm::vec3&);
 
 #endif

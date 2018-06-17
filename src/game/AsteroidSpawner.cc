@@ -34,7 +34,7 @@ int AsteroidSpawner::MaxCapacity()
 }
 int AsteroidSpawner::MaxActiveCapacity()
 {
-	return 15;
+	return 12;
 }
 
 
@@ -72,11 +72,11 @@ const int& AsteroidSpawner::MaxRespawnWaitTime() const
 }
 const float& AsteroidSpawner::MinProjectileSpeed() const
 {
-	return mSpeedDist.min();
+	return (float)mSpeedDist.min();
 }
 const float& AsteroidSpawner::MaxProjectileSpeed() const
 {
-	return mSpeedDist.max();
+	return (float)mSpeedDist.max();
 }
 const float& AsteroidSpawner::StartingYPos() const
 {
@@ -84,11 +84,11 @@ const float& AsteroidSpawner::StartingYPos() const
 }
 const float& AsteroidSpawner::MinXPos() const
 {
-	return mPosDist.min();
+	return (float)mPosDist.min();
 }
 const float& AsteroidSpawner::MaxXPos() const
 {
-	return mPosDist.max();
+	return (float)mPosDist.max();
 }
 const float& AsteroidSpawner::TerminateYPos() const
 {
@@ -100,11 +100,11 @@ const float& AsteroidSpawner::ProbabilityOfSpawn() const
 }
 const float& AsteroidSpawner::MinScale() const
 {
-	return mScaleDist.min();
+	return (float)mScaleDist.min();
 }
 const float& AsteroidSpawner::MaxScale() const
 {
-	return mScaleDist.max();
+	return (float)mScaleDist.max();
 }
 
 const int& AsteroidSpawner::MinHitPoints() const
@@ -119,12 +119,12 @@ const int& AsteroidSpawner::MaxHitPoints() const
 
 const float& AsteroidSpawner::MinRotationSpeed() const
 {
-	return mRotateDist.min();
+	return (float)mRotateDist.min();
 }
 
 const float& AsteroidSpawner::MaxRotationSpeed() const
 {
-	return mRotateDist.max();
+	return (float)mRotateDist.max();
 }
 
 const Transform& AsteroidSpawner::GetTransform() const
@@ -260,6 +260,14 @@ void AsteroidSpawner::RemoveObserver(Observer* observer)
 	}
 }
 
+void AsteroidSpawner::AddActiveObjectTracker(const ActiveObjectTracker* tracker)
+{
+	for (int i = 0; i < mMaxCapacity; ++i)
+	{
+		mObjects[i]->AddActiveObjectTracker(tracker);
+	}
+}
+
 void AsteroidSpawner::OnNotify(const GameObject& object, const Constants::Types::event_t& event_name)
 {
 	switch (event_name)
@@ -373,6 +381,8 @@ void AsteroidSpawner::CustomDeallocOps(const unsigned int& index)
 	{
 		Notify(*mObjects[index], event_t::OBJECT_OUT_OF_BOUNDS);
 	}
+	Notify(*mObjects[index], event_t::DESPAWNED_OBJECT);
+
 }
 
 void AsteroidSpawner::CustomUpdateOps(const float& dt)

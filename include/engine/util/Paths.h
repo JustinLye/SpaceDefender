@@ -14,4 +14,12 @@
 #define ENGINE_TEX_BASE_PATH "C:\\SpaceDefender\\textures\\"
 #define EngineTexPath(filename) ENGINE_TEX_BASE_PATH + boost::lexical_cast<std::string>(filename)
 #endif
+
+#ifndef ENGINE_LOG_BASE_PATH
+#define ENGINE_LOG_BASE_PATH "C:\\SpaceDefender\\logs\\"
+#define LogFilePath(filename) ENGINE_LOG_BASE_PATH + boost::lexical_cast<std::string>(filename)
+#endif // !ENGINE_LOG_BASE_PATH
+
+
+
 #endif

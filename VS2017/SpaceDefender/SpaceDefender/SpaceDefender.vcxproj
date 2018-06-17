@@ -19,9 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\external\src\glad.c" />
+    <ClCompile Include="..\..\..\external\glad\src\glad.c" />
     <ClCompile Include="..\..\..\src\engine\containers\IndexQueue.cc" />
+    <ClCompile Include="..\..\..\src\engine\containers\Iterator.cc" />
+    <ClCompile Include="..\..\..\src\engine\containers\IterItem.cc" />
     <ClCompile Include="..\..\..\src\engine\containers\ObjectManager.cc" />
+    <ClCompile Include="..\..\..\src\engine\containers\ObjectQueue.cc" />
     <ClCompile Include="..\..\..\src\engine\font\ArialFontData.cc" />
     <ClCompile Include="..\..\..\src\engine\font\Font.cc" />
     <ClCompile Include="..\..\..\src\engine\font\FontData.cc" />
@@ -51,11 +54,16 @@
     <ClCompile Include="..\..\..\src\engine\shapes\TriangleData.cc" />
     <ClCompile Include="..\..\..\src\engine\UtiliDefs.cc" />
     <ClCompile Include="..\..\..\src\engine\util\DebugFunctions.cc" />
+    <ClCompile Include="..\..\..\src\engine\util\DistanceEntry.cc" />
     <ClCompile Include="..\..\..\src\engine\util\KeyMap.cc" />
+    <ClCompile Include="..\..\..\src\engine\util\Logger.cc" />
+    <ClCompile Include="..\..\..\src\engine\util\MailBox.cc" />
     <ClCompile Include="..\..\..\src\engine\util\OpenGLUtility.cc" />
     <ClCompile Include="..\..\..\src\engine\util\OpenGLOptions.cc" />
     <ClCompile Include="..\..\..\src\engine\util\ShaderProgram.cc" />
     <ClCompile Include="..\..\..\src\engine\util\TextShader.cc" />
+    <ClCompile Include="..\..\..\src\engine\util\Thread.cc" />
+    <ClCompile Include="..\..\..\src\game\ActiveObjectTracker.cc" />
     <ClCompile Include="..\..\..\src\game\Asteroid.cc" />
     <ClCompile Include="..\..\..\src\game\AsteroidCollision.cc" />
     <ClCompile Include="..\..\..\src\game\AsteroidSpawner.cc" />
@@ -72,8 +80,14 @@
     <ClCompile Include="..\..\..\src\game\SpaceDefender.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\engine\containers\BaseObjectContainer.h" />
+    <ClInclude Include="..\..\..\include\engine\containers\Detector.h" />
     <ClInclude Include="..\..\..\include\engine\containers\IndexQueue.h" />
+    <ClInclude Include="..\..\..\include\engine\containers\Iterator.h" />
+    <ClInclude Include="..\..\..\include\engine\containers\IterItem.h" />
     <ClInclude Include="..\..\..\include\engine\containers\ObjectManager.h" />
+    <ClInclude Include="..\..\..\include\engine\containers\ObjectQueue.h" />
+    <ClInclude Include="..\..\..\include\engine\containers\RedBlackTree.h" />
     <ClInclude Include="..\..\..\include\engine\font\ArialFontData.h" />
     <ClInclude Include="..\..\..\include\engine\font\Font.h" />
     <ClInclude Include="..\..\..\include\engine\font\FontData.h" />
@@ -98,19 +112,25 @@
     <ClInclude Include="..\..\..\include\engine\shapes\CircleData.h" />
     <ClInclude Include="..\..\..\include\engine\shapes\LineSegmentData.h" />
     <ClInclude Include="..\..\..\include\engine\shapes\QuadData.h" />
+    <ClInclude Include="..\..\..\include\engine\shapes\Rectangle.h" />
     <ClInclude Include="..\..\..\include\engine\shapes\Shape.h" />
     <ClInclude Include="..\..\..\include\engine\shapes\ShapeData.h" />
     <ClInclude Include="..\..\..\include\engine\shapes\TriangleData.h" />
     <ClInclude Include="..\..\..\include\engine\util\BoundryBox.h" />
     <ClInclude Include="..\..\..\include\engine\util\Constants.h" />
     <ClInclude Include="..\..\..\include\engine\util\DebugFunctions.h" />
+    <ClInclude Include="..\..\..\include\engine\util\DistanceEntry.h" />
     <ClInclude Include="..\..\..\include\engine\util\KeyMap.h" />
+    <ClInclude Include="..\..\..\include\engine\util\Logger.h" />
+    <ClInclude Include="..\..\..\include\engine\util\MailBox.h" />
     <ClInclude Include="..\..\..\include\engine\util\OpenGLUtility.h" />
     <ClInclude Include="..\..\..\include\engine\util\OpenGLOptions.h" />
     <ClInclude Include="..\..\..\include\engine\util\Paths.h" />
     <ClInclude Include="..\..\..\include\engine\util\ShaderProgram.h" />
     <ClInclude Include="..\..\..\include\engine\util\TextShader.h" />
+    <ClInclude Include="..\..\..\include\engine\util\Thread.h" />
     <ClInclude Include="..\..\..\include\engine\util\UtiliDefs.h" />
+    <ClInclude Include="..\..\..\include\game\ActiveObjectTracker.h" />
     <ClInclude Include="..\..\..\include\game\Asteroid.h" />
     <ClInclude Include="..\..\..\include\game\AsteroidCollision.h" />
     <ClInclude Include="..\..\..\include\game\AsteroidSpawner.h" />
@@ -179,12 +199,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external\include;C:\SpaceDefender\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external;C:\SpaceDefender\include;C:\SpaceDefender\external\glad\include</AdditionalIncludeDirectories>
       <AdditionalOptions>/DENGINE_DEBUG /DFONT_DEBUG /DGRAPHICS_DEBUG /DENEMY_SHIP_DEBUG  /DGAME_OBJECT_DEBUG %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <MinimalRebuild>false</MinimalRebuild>
@@ -216,10 +239,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external;C:\SpaceDefender\include;C:\SpaceDefender\external\glad\include</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\SpaceDefender\external\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

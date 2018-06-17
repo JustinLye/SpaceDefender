@@ -26,6 +26,7 @@
 #include"game/ScoreText.h"
 #include"game/ExplosionManager.h"
 #include"game/EnemyShipManager.h"
+#include"game/ActiveObjectTracker.h"
 
 using namespace Constants::Input;
 using namespace Constants::Types;
@@ -61,6 +62,7 @@ protected:
 	CollisionDetector* mCollisionDetector;
 	ExplosionManager* mExplosionManager;
 	EnemyShipManager* mEnemyShipManager;
+	ActiveObjectTracker* mTracker;
 
 	BoundryBox mBoundries;
 	glm::mat4 mViewMat;
@@ -73,7 +75,6 @@ protected:
 	ScoreText* mFPSText;
 	ScoreText* mGunTempText;
 	ScoreText* mWarningMessage;
-
 	Canvas* mCanvas;
 	game_state_t mGameState;
 
@@ -86,6 +87,7 @@ protected:
 	void InitUI();
 	void InitTextures();
 	void InitPlayer();
+	void InitTracker();
 	void InitAsteroids();
 	void InitExplosions();
 	void InitEnemyShips();

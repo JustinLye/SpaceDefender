@@ -44,7 +44,7 @@ bool Laser::Terminate() const
 	return (std::abs(term_ypos) > 0.0f && ((term_ypos > 0.0f && curr_ypos > term_ypos) || (term_ypos < 0.0f && curr_ypos < term_ypos)));
 }
 
-const object_t& Laser::Type() const
+object_t Laser::Type() const
 {
 	return object_t::LASER;
 }

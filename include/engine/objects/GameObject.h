@@ -45,7 +45,7 @@ public:
 	virtual ~GameObject();
 
 	const unsigned int& Id() const;
-	virtual const Constants::Types::object_t& Type() const;
+	virtual object_t Type() const;
 	virtual void Collide(const GameObject&) const;
 	virtual void Update(const float&);
 	virtual void AddRenderer(Renderer*);
@@ -149,6 +149,7 @@ public:
 	// Operators
 	bool operator<(const GameObject&) const;
 	bool operator==(const GameObject&) const;
+	GameObject& operator=(const GameObject&);
 
 protected:
 	Transform mTransform;

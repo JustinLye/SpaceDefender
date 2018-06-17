@@ -10,6 +10,8 @@
 #include"engine/objects/TexRenderer.h"
 #include"game/Asteroid.h"
 #include"game/AsteroidCollision.h"
+#include"game/ActiveObjectTracker.h"
+
 using namespace Constants::Types;
 class AsteroidSpawner :
 	Subject,
@@ -25,6 +27,7 @@ public:
 
 	void AddObserver(Observer*) override;
 	void RemoveObserver(Observer*) override;
+	void AddActiveObjectTracker(const ActiveObjectTracker*);
 
 	const int& MinRespawnWaitTime() const;
 	const int& MaxRespawnWaitTime() const;

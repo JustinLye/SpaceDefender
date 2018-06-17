@@ -5,6 +5,7 @@ SpaceDefender::SpaceDefender(const OpenGLOptions& opts) :
 	mPlayer(nullptr),
 	mWindow(nullptr),
 	mAsteroidSpawner(nullptr),
+	mTracker(nullptr),
 	mViewMat(Constants::Geometry::IDENTITY_MATRIX),
 	mProjMat(Constants::Geometry::IDENTITY_MATRIX),
 	mScoreText(nullptr),
@@ -27,6 +28,7 @@ void SpaceDefender::Init()
 	InitFonts();
 	InitUI();
 	InitTextures();
+	InitTracker();
 	InitPlayer();
 	InitAsteroids();
 	InitExplosions();
@@ -41,6 +43,7 @@ void SpaceDefender::Run()
 	Button* button = new Button();
 	QuadData* quad_data = new QuadData();
 	Shape* button_shape = new Shape();
+	button_shape->Buffer(quad_data);
 	Text* button_text = new Text();
 	button_text->FontPtr(mFont[PAUSE_FONT]);
 	button_text->Scale(1.0f);
@@ -386,8 +389,12 @@ void SpaceDefender::InitPlayer()
 	mPlayer->Translate(glm::vec3(sw/2.0f, sh*0.09f, 0.0f));
 	laser_cannon->Translate(glm::vec3(1.0f, sh * 0.05f, 0.0f)); // adjust laser cannon
 	laser_cannon->Scale(0.5f);
-	
+	laser_cannon->AddObserver(mTracker);
+}
 
+void SpaceDefender::InitTracker()
+{
+	mTracker = new ActiveObjectTracker();
 }
 
 void SpaceDefender::InitAsteroids()
@@ -414,6 +421,7 @@ void SpaceDefender::InitAsteroids()
 	mAsteroidSpawner->StartingYPos(mBoundries.mTop + (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.075f));
 	mAsteroidSpawner->TerminateYPos(mBoundries.mBottom - (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.05f));
 	mAsteroidSpawner->AddObserver(mScoreText);
+	mAsteroidSpawner->AddObserver(mTracker);
 	
 }
 
@@ -441,9 +449,13 @@ void SpaceDefender::InitEnemyShips()
 	mEnemyShipManager->ProbabilityOfSpawn(10.0f);
 	mEnemyShipManager->MaxXPos(mBoundries.mRight - (sw * 0.05f));
 	mEnemyShipManager->MinXPos(mBoundries.mLeft + (sw *0.05f));
-	mEnemyShipManager->StartingYPos(mBoundries.mTop + (sh * 0.075f));
+	//mEnemyShipManager->StartingYPos(mBoundries.mTop + (sh * 0.075f));
+	mEnemyShipManager->StartingYPos(mBoundries.mTop - (sh * 0.075f));
 	mEnemyShipManager->TerminateYPos(mBoundries.mBottom - (sh * 0.05f));
+	mEnemyShipManager->MaxPlacementAttempts(5);
 	mEnemyShipManager->AddObserver(mScoreText);
+	mEnemyShipManager->AddObserver(mTracker);
+	mEnemyShipManager->AddActiveObjectTracker(mTracker);
 }
 
 void SpaceDefender::InitCollisionDetection()
@@ -501,6 +513,26 @@ void SpaceDefender::HandleInput()
 		} else if (KeyDown(GLFW_KEY_UP))
 		{
 			mPlayer->FireCannon();
+		}
+	}
+	if (mGameState == game_state_t::PAUSED)
+	{
+		double xpos = 0.0;
+		double ypos = 0.0;
+		glfwGetCursorPos(mWindow, &xpos, &ypos);
+		if (xpos >= mBoundries.mLeft && xpos <= mBoundries.mRight && ypos >= mBoundries.mBottom && ypos <= mBoundries.mTop)
+		{
+			std::cout << "x: " << xpos << '\t' << "y: " << mBoundries.mTop - ypos << '\n';
+			Transform transform;
+			transform.Translate(glm::vec3(xpos, mBoundries.mTop - ypos, 0.0f));
+			float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
+			transform.Scale(sw * 0.002f);
+			std::vector<const GameObject*> close_objects;
+			mTracker->ObjectScan(transform, close_objects);
+			if (close_objects.size() > 0)
+			{
+				std::cout << TypeToString(close_objects[0]->Type()) << '\n';
+			}
 		}
 	}
 

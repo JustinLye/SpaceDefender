@@ -9,12 +9,8 @@
 #include"game/SpaceDefender.h"
 
 #include"engine/containers/IndexQueue.h"
-
-#ifdef ENGINE_DEBUG
+#include"engine/util/UtiliDefs.h"
 Player* player;
-#endif
-
-
 void TestFunction();
 int main(int argc, char* argv[])
 {
@@ -24,6 +20,9 @@ int main(int argc, char* argv[])
 		return EXIT_SUCCESS;*/
 		OpenGLUtility::Init();
 		OpenGLOptions opts;
+		int count;
+		GLFWmonitor** monitors = glfwGetMonitors(&count);
+		opts.mMonitor = monitors[1];
 		SpaceDefender space_defender(opts);
 		space_defender.Init();
 		//??????
@@ -42,4 +41,8 @@ int main(int argc, char* argv[])
 
 void TestFunction()
 {
+	float a = VecToVecAngle({ 2.0f, 1.0f, -2.0f }, { 1.0f, 1.0f, 1.0f });
+	std::cout << a << '\n';
+	a = RadToDeg(a);
+	std::cout << a << '\n';
 }

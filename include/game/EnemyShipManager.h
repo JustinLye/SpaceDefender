@@ -10,7 +10,9 @@
 #include"engine/objects/Observer.h"
 #include"engine/objects/TexRenderer.h"
 #include"engine/containers/ObjectManager.h"
+#include"engine/util/Logger.h"
 #include"game/EnemyShip.h"
+#include"game/ActiveObjectTracker.h"
 
 using namespace Constants::Types;
 using namespace std::chrono;
@@ -30,6 +32,7 @@ public:
 
 	void AddObserver(Observer*) override;
 	void RemoveObserver(Observer*) override;
+	void AddActiveObjectTracker(const ActiveObjectTracker*);
 
 	const int& MinRespawnWaitTime() const;
 	const int& MaxRespawnWaitTime() const;
@@ -42,7 +45,7 @@ public:
 	const float& ProbabilityOfSpawn() const;
 	const int& HitPoints() const;
 	const glm::vec3& ShipScale() const;
-
+	const int& MaxPlacementAttempts() const;
 
 	const Transform& GetTransform() const;
 	Transform& GetTransform();
@@ -59,6 +62,7 @@ public:
 	void HitPoints(const int&);
 	void ShipScale(const glm::vec3&);
 	void ShipScale(const float&);
+	void MaxPlacementAttempts(const int&);
 
 	void Init() override;
 
@@ -83,6 +87,11 @@ protected:
 	std::chrono::time_point<
 		std::chrono::high_resolution_clock,
 		std::chrono::duration<float, std::milli>> mLastSpawnTime;
+
+	float mNextXPos;
+	int mMaxPlacementAttempts;
+	const ActiveObjectTracker* mTracker;
+	Logger* mLogger;
 
 	void OnNotify(const GameObject&, const Constants::Types::event_t&);
 	EnemyShip* ConstructObject();

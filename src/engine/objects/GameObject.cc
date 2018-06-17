@@ -29,6 +29,15 @@ GameObject::GameObject(GameObject&& other) :
 {
 }
 
+GameObject& GameObject::operator=(const GameObject& other)
+{
+	mTransform = other.mTransform;
+	mRenderer = other.mRenderer;
+	mRigidBody = other.mRigidBody;
+	mId = other.mId;
+	return *this;
+}
+
 GameObject::~GameObject()
 {
 }
@@ -38,9 +47,9 @@ const unsigned int& GameObject::Id() const
 	return mId;
 }
 
-const Constants::Types::object_t& GameObject::Type() const
+Constants::Types::object_t GameObject::Type() const
 {
-	return Constants::Types::object_t::GENERIC_OBJECT;
+	return object_t::GENERIC_OBJECT;
 }
 
 void GameObject::Collide(const GameObject& object) const
@@ -179,14 +188,10 @@ void GameObject::JumpToPosition(const glm::vec3& pos)
 void GameObject::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 {
 	RenderGameObjects(proj_mat, view_mat);
-#ifdef ENGINE_DEBUG
 	if (!mRenderer)
 	{
 		return;
 	}
-#else
-	assert(mRenderer != nullptr);
-#endif
 	RenderDrawableObjects(proj_mat, view_mat);
 	
 }
@@ -558,6 +563,7 @@ void GameObject::Spawn(const Transform& transform)
 	{
 		Notify(*this, Constants::Types::event_t::ACTIVATED_COLLIDABLE_OBJECT);
 	}
+	Notify(*this, event_t::SPAWNED_OBJECT);
 }
 
 void GameObject::Despawn() const
@@ -569,6 +575,7 @@ void GameObject::Despawn() const
 	{
 		Notify(*this, Constants::Types::event_t::TERMINATED_COLLIDABLE_OBJECT);
 	}
+	Notify(*this, event_t::DESPAWNED_OBJECT);
 }
 
 void GameObject::OutOfBounds() const

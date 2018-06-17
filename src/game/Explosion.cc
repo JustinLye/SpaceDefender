@@ -13,7 +13,7 @@ Explosion::~Explosion()
 
 }
 
-const object_t& Explosion::Type() const
+object_t Explosion::Type() const
 {
 	return object_t::EXPLOSION_OBJECT;
 }

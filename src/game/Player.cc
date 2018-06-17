@@ -16,9 +16,9 @@ Player::~Player()
 {
 }
 
-const Constants::Types::object_t& Player::Type() const
+Constants::Types::object_t Player::Type() const
 {
-	return Constants::Types::object_t::PLAYER;
+	return object_t::PLAYER;
 }
 
 void Player::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
