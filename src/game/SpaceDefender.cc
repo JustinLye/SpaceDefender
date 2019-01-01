@@ -10,7 +10,8 @@ SpaceDefender::SpaceDefender(const OpenGLOptions& opts) :
 	mProjMat(Constants::Geometry::IDENTITY_MATRIX),
 	mScoreText(nullptr),
 	mGameState(game_state_t::INIT_GAME_STATE),
-	mBackground(nullptr)
+	mBackground(nullptr),
+  mLastObjectInfoPrinted(Constants::NOT_AN_OBJECT)
 {
 
 }
@@ -511,25 +512,27 @@ void SpaceDefender::HandleInput()
 	}
 	if (mGameState == game_state_t::PAUSED)
 	{
-		double xpos = 0.0;
-		double ypos = 0.0;
-		glfwGetCursorPos(mWindow, &xpos, &ypos);
-		if (xpos >= mBoundries.mLeft && xpos <= mBoundries.mRight && ypos >= mBoundries.mBottom && ypos <= mBoundries.mTop)
-		{
-			std::cout << "x: " << xpos << '\t' << "y: " << mBoundries.mTop - ypos << '\n';
-			Transform transform;
-			transform.Translate(glm::vec3(xpos, mBoundries.mTop - ypos, 0.0f));
-			float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
-			transform.Scale(sw * 0.002f);
-			std::vector<const GameObject*> close_objects;
-			mTracker->ObjectScan(transform, close_objects);
-			if (close_objects.size() > 0)
-			{
-				std::cout << TypeToString(close_objects[0]->Type()) << '\n';
-			}
-		}
+    MouseHoverObjectInfo();
 	}
 
+}
+
+void SpaceDefender::MouseHoverObjectInfo() const {
+  double xpos = 0.0;
+  double ypos = 0.0;
+  glfwGetCursorPos(mWindow, &xpos, &ypos);
+  if (xpos >= mBoundries.mLeft && xpos <= mBoundries.mRight && ypos >= mBoundries.mBottom && ypos <= mBoundries.mTop) {
+    Transform transform;
+    transform.Translate(glm::vec3(xpos, mBoundries.mTop - ypos, 0.0f));
+    float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
+    transform.Scale(sw * 0.002f);
+    std::vector<const GameObject*> close_objects;
+    mTracker->ObjectScan(transform, close_objects);
+    if (close_objects.size() > 0 && close_objects[0]->Id() != mLastObjectInfoPrinted) {
+      mLastObjectInfoPrinted = close_objects[0]->Id();
+      std::cout << "Object: " << TypeToString(close_objects[0]->Type()) << '\t' << close_objects[0]->GetTransform() << '\n';
+    }
+  }
 }
 
 void SpaceDefender::HandleLeftMovement()

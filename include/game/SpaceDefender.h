@@ -80,6 +80,7 @@ protected:
 	ScoreText* mWarningMessage;
 	Canvas* mCanvas;
 	game_state_t mGameState;
+  mutable unsigned int mLastObjectInfoPrinted; ///< This is the object id of the last object printed (with mouse hover feature)
 
 	void InitSys();
 	void InitBoundries();
@@ -99,6 +100,7 @@ protected:
 	void InitKeyStateMap();
 	void HandleInput();
 	void UpdateKeyStates();
+  void MouseHoverObjectInfo() const; ///< prints object info 
 
 	void HandleLeftMovement();
 	void HandleRightMovement();

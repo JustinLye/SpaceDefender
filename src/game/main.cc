@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 		OpenGLOptions opts;
 		int count;
 		GLFWmonitor** monitors = glfwGetMonitors(&count);
-		opts.mMonitor = monitors[1];
+		opts.mMonitor = monitors[0];
 		SpaceDefender space_defender(opts);
 		space_defender.Init();
 		//??????
