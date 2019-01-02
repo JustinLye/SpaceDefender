@@ -6,7 +6,8 @@
 #include"engine/objects/GameObject.h"
 
 using namespace Constants::Types;
-
+/** @addtogroup GameComponents */
+/*@{*/
 class Laser :
 	public GameObject
 {
@@ -29,5 +30,5 @@ protected:
 	int mAttackDamage;
 	glm::vec4 mColor;
 };
-
+/*@}*/
 #endif

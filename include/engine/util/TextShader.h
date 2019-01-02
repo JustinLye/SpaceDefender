@@ -4,6 +4,8 @@
 #include"engine/util/Constants.h"
 #include"engine/util/ShaderProgram.h"
 
+/** @addtogroup EngineUtil */
+/*@{*/
 class TextShader :
 	public ShaderProgram
 {
@@ -12,6 +14,6 @@ public:
 	virtual ~TextShader();
 	virtual void Init() override;
 };
-
+/*@}*/
 
 #endif

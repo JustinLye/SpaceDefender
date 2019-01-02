@@ -1,3 +1,4 @@
+/** \cond HIDDEN_SYMBOLS */
 #ifndef CONTAINER_HEADER_INCLUDED
 #define CONTAINER_HEADER_INCLUDED
 
@@ -115,3 +116,4 @@ protected:
 };
 
 #endif
+/** \endcond */

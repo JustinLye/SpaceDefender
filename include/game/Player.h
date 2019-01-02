@@ -6,7 +6,8 @@
 #include"game/LaserCannon.h"
 
 using namespace Constants::Types;
-
+/** @addtogroup GameActors */
+/*@{*/
 class Player :
 	public GameObject
 {
@@ -42,5 +43,5 @@ protected:
 	float mMaxBoost;
 	LaserCannon* mLaserCannon;
 };
-
+/*@}*/
 #endif

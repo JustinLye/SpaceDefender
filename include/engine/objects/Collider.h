@@ -6,6 +6,8 @@
 #include<glm/glm.hpp>
 #include"engine/shapes/CircleData.h"
 #include"engine/objects/Transform.h"
+/** @addtogroup EngineObjects */
+/*@{*/
 class Collider :
 	public Transform
 {
@@ -18,4 +20,6 @@ protected:
 	float mRadius;
 
 };
+
+/*@}*/
 #endif

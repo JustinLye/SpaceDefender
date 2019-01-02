@@ -12,6 +12,9 @@
 
 using namespace Constants::Physics;
 using namespace Constants::Types;
+
+/** @addtogroup EngineObjects */
+/*@{*/
 class GameObject :
 	public Subject
 {
@@ -212,6 +215,8 @@ private:
 	unsigned int mId;
 	
 };
+
+/*@}*/
 
 #endif
 

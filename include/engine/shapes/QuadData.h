@@ -3,6 +3,9 @@
 
 #include"engine/shapes/ShapeData.h"
 
+/** @addtogroup EngineShapes */
+/*@{*/
+
 class QuadData :
 	public ShapeData
 {
@@ -16,4 +19,5 @@ protected:
 	virtual void InitializeData();
 };
 
+/*@}*/
 #endif

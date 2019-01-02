@@ -5,6 +5,9 @@
 #include"engine/containers/Iterator.h"
 #include"engine/util/UtiliDefs.h"
 
+
+/** @addtogroup EngineObjectContainers */
+/*@{*/
 template<class T>
 class ObjectQueue
 {
@@ -38,7 +41,7 @@ protected:
 	virtual void InitializeObject(T&);
 	virtual size_t GetIndex(T*) const;
 };
-
+/*@}*/
 #ifndef OBJECT_QUEUE_CC_INCLUDED
 #include"engine/containers/ObjectQueue.cc"
 #endif // !OBJECT_QUEUE_CC_INCLUDED

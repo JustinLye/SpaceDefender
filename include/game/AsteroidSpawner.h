@@ -12,6 +12,8 @@
 #include"game/AsteroidCollision.h"
 #include"game/ActiveObjectTracker.h"
 
+/** @addtogroup GameWorld */
+/*@{*/
 using namespace Constants::Types;
 class AsteroidSpawner :
 	Subject,
@@ -104,6 +106,6 @@ protected:
 	Asteroid* LookUpAsteroid(const unsigned int&);
 
 };
-
+/*@}*/
 
 #endif

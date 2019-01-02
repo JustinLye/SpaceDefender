@@ -13,7 +13,8 @@
 #endif
 
 using namespace Constants::Types;
-
+/** @addtogroup GameWorld */
+/*@{*/
 class CollisionDetector :
 	public Subject,
 	public Observer
@@ -29,4 +30,5 @@ protected:
 	std::map<unsigned int, const EnemyShip*> mEnemyShipMap;
 
 };
+/*@}*/
 #endif

@@ -13,6 +13,9 @@
 #include"engine/objects/DrawableObject.h"
 using namespace Constants::Shaders;
 
+/** @addtogroup EngineGraphics */
+/*@{*/
+
 class Texture :
 	public TexData,
 	public DrawableObject
@@ -41,5 +44,5 @@ protected:
 
 };
 
-
+/*@}*/
 #endif

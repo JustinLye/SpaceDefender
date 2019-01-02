@@ -5,6 +5,9 @@
 
 using namespace Constants::Types;
 
+/** @addtogroup GameComponents */
+/*@{*/
+
 class Explosion :
 	public GameObject
 {
@@ -26,5 +29,5 @@ protected:
 	float mSpeed;
 	float mMaxScale;
 };
-
+/*@}*/
 #endif

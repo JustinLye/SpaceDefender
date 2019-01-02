@@ -6,6 +6,8 @@
 #include"game/ActiveObjectTracker.h"
 
 using namespace Constants::Types;
+/** @addtogroup GameActors */
+/*@{*/
 class Asteroid :
 	public GameObject
 {
@@ -40,5 +42,5 @@ protected:
 	float mRotationSpeed;
 	const ActiveObjectTracker* mTracker;
 };
-
+/*@}*/
 #endif

@@ -3,6 +3,8 @@
 #include<string>
 #include<glad/glad.h>
 #include<glm/glm.hpp>
+/** @addtogroup EngineUtil */
+/*@{*/
 namespace Constants
 {
   const unsigned int NOT_AN_OBJECT = ~0;
@@ -177,5 +179,5 @@ namespace Constants
 		
 	};
 };
-
+/*@}*/
 #endif

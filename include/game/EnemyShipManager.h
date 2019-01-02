@@ -17,6 +17,8 @@
 using namespace Constants::Types;
 using namespace std::chrono;
 
+/** @addtogroup GameWorld */
+/*@{*/
 class EnemyShipManager :
 	Subject,
 	Observer,
@@ -105,5 +107,5 @@ protected:
 
 };
 
-
+/*@}*/
 #endif

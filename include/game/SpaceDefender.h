@@ -37,6 +37,9 @@ using namespace Constants::Rendering;
 using namespace std::chrono;
 using namespace Constants::Geometry;
 
+/** @addtogroup GameWorld */
+/*@{*/
+
 class SpaceDefender
 {
 public:
@@ -112,6 +115,6 @@ protected:
 
 };
 
-
+/*@}*/
 
 #endif

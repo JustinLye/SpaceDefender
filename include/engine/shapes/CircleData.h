@@ -3,6 +3,8 @@
 
 #include"engine/shapes/ShapeData.h"
 
+/** @addtogroup EngineShapes */
+/*@{*/
 class CircleData :
 	public ShapeData
 {
@@ -16,5 +18,5 @@ protected:
 	virtual void InitializeData();
 
 };
-
+/*@}*/
 #endif

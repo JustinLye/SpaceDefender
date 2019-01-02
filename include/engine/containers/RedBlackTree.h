@@ -4,6 +4,11 @@
 #include"engine/util/Constants.h"
 using namespace Constants::Types;
 
+/** \cond HIDDEN_SYMBOLS */
+
+/** @addtogroup EngineContainers */
+/*@{*/
+
 template<class T>
 class Leaf
 {
@@ -72,5 +77,6 @@ protected:
 	Leaf<T>* mLeaves;
 
 };
-
+/*@}*/
 #endif // !RED_BLACK_TREE_HEADER_INCLUDED
+/** \endcond */

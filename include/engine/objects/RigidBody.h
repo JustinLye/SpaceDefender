@@ -5,6 +5,9 @@
 
 using namespace Constants::Physics;
 
+/** @addtogroup EngineObjects */
+/*@{*/
+
 class RigidBody
 {
 public:
@@ -33,5 +36,7 @@ protected:
 	glm::vec3 mVelocity;
 	glm::vec3 mAcceleration;
 };
+
+/*@}*/
 
 #endif

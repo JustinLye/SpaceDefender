@@ -1,3 +1,5 @@
+/** @addtogroup EngineObjectContainers */
+/*@{*/
 #ifndef BASE_OBJECT_CONTAINER_HEADER_INCLUDED
 #define BASE_OBJECT_CONTAINER_HEADER_INCLUDED
 
@@ -9,5 +11,5 @@ protected:
 	T* mObjectArray;
 
 };
-
 #endif
+/*@}*/

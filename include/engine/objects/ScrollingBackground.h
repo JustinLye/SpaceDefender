@@ -3,6 +3,9 @@
 
 #include"engine/objects/GameObject.h"
 
+/** @addtogroup EngineObjects */
+/*@{*/
+
 class ScrollingBackground :
 	protected GameObject
 {
@@ -27,5 +30,7 @@ protected:
 	float mMaxYOffset;
 	Transform mStartingPosition;
 };
+
+/*@}*/
 
 #endif // !SCROLLING_BACKGROUND_HEADER_INCLUDED

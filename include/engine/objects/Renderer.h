@@ -12,6 +12,8 @@
 
 using namespace Constants::Shaders;
 using namespace Constants::Rendering;
+/** @addtogroup EngineObjects */
+/*@{*/
 class Renderer
 {
 public:
@@ -38,5 +40,5 @@ protected:
 	OpenGLPolyMode mPolyMode;
 	glm::vec4 mColor;
 };
-
+/*@}*/
 #endif

@@ -1,6 +1,9 @@
 #ifndef RECTANGLE_HEADER_INCLUDED
 #define RECTANGLE_HEADER_INCLUDED
 
+
+/** @addtogroup EngineShapes */
+/*@{*/
 struct Origin
 {
 	float x;
@@ -18,5 +21,5 @@ struct Rectangle
 	Origin mOrigin;
 	Size mSize;
 };
-
+/*@}*/
 #endif

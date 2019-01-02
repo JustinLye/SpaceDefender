@@ -9,6 +9,9 @@
 #include<ft2build.h>
 #include FT_FREETYPE_H
 
+/** @addtogroup EngineFonts */
+/*@{*/
+
 struct Character
 {
 	GLuint mTextureId;
@@ -32,5 +35,5 @@ protected:
 	std::map<GLchar, Character> mCharacterMap;
 	GLuint* mTextures;
 };
-
+/*@}*/
 #endif

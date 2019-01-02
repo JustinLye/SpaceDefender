@@ -4,7 +4,8 @@
 #define RENDERABLE_OBJECT_HEADER_INCLUDED
 
 #include"engine/util/ShaderProgram.h"
-
+/** @addtogroup EngineObjects */
+/*@{*/
 class RenderableObject
 {
 public:
@@ -40,5 +41,6 @@ protected:
 	glm::vec4 mColor;
 };
 
+/*@}*/
 
 #endif

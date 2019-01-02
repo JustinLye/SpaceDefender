@@ -3,6 +3,9 @@
 
 #include"engine/objects/Observer.h"
 
+/** @addtogroup EngineObjects */
+/*@{*/
+
 class UIObject :
 	public Observer
 {
@@ -12,5 +15,5 @@ public:
 	virtual void Render() = 0;
 	virtual void OnNotify(const GameObject&, const event_t&);
 };
-
+/*@}*/
 #endif

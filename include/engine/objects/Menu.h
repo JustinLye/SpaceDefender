@@ -5,6 +5,9 @@
 #include"engine/objects/Transform.h"
 #include"engine/objects/Canvas.h"
 
+/** @addtogroup EngineObjects */
+/*@{*/
+
 class Menu :
 	public Subject
 	public Canvas
@@ -17,5 +20,6 @@ protected:
 
 };
 
+/*@}*/
 
 #endif

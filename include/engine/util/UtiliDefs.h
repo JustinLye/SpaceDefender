@@ -5,6 +5,8 @@
 #include<boost/lexical_cast.hpp>
 #include"engine/util/Constants.h"
 using namespace Constants::Types;
+/** @addtogroup EngineUtil */
+/*@{*/
 #ifndef VEC3_TO_STRING
 #define Vec3ToString(vec_3) std::string("[") + boost::lexical_cast<std::string>(vec_3.x) + std::string(", ") + boost::lexical_cast<std::string>(vec_3.y) + std::string(", ") + boost::lexical_cast<std::string>(vec_3.z) + std::string("]")
 #endif
@@ -28,5 +30,5 @@ using namespace Constants::Types;
 std::string TypeToString(const object_t& obj);
 std::ostream& operator<<(std::ostream& os, const object_t& obj);
 float VecToVecAngle(const glm::vec3&, const glm::vec3&);
-
+/*@}*/
 #endif

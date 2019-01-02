@@ -9,7 +9,8 @@
 #include"engine/objects/DrawableObject.h"
 
 
-
+/** @addtogroup EngineShapes */
+/*@{*/
 class Shape :
 	public DrawableObject
 {
@@ -26,5 +27,5 @@ protected:
 	GLuint mIndicesVboId;
 	virtual void Destroy();
 };
-
+/*@}*/
 #endif

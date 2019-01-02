@@ -4,6 +4,9 @@
 #include<glm/glm.hpp>
 #include"engine/objects/GameObject.h"
 
+
+/** @addtogroup EngineUtil */
+/*@{*/
 struct DistanceEntry
 {
 	DistanceEntry(const int& = 0, const float& = 0.0f);
@@ -16,5 +19,5 @@ struct DistanceEntry
 	int mIndex;
 	float mDistance;
 };
-
+/*@}*/
 #endif // !DISTANCE_ENTRY_HEADER_INCLUDED

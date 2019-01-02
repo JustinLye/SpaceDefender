@@ -1,3 +1,4 @@
+/** @cond HIDDEN_SYMBOLS */
 #include"engine/containers/Container.h"
 
 Index::Index(const unsigned int& id) :
@@ -295,3 +296,4 @@ void Container::Allocate()
 }
 
 
+/** @endcond */

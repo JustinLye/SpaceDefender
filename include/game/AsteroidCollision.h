@@ -5,6 +5,9 @@
 #include"game/Asteroid.h"
 
 using namespace Constants::Types;
+
+/** @addtogroup GameWorld */
+/*@{*/
 class AsteroidCollision : 
 	public GameObject
 {
@@ -18,5 +21,5 @@ protected:
 	unsigned int mAsteroid_1;
 	unsigned int mAsteroid_2;
 };
-
+/*@}*/
 #endif

@@ -3,6 +3,9 @@
 #include<iterator>
 #include"engine/containers/IterItem.h"
 
+
+/** @addtogroup EngineIterators */
+/*@{*/
 template<class T>
 class Iterator
 {
@@ -32,7 +35,7 @@ protected:
 protected:
 	IterItem<T> mPtr;
 };
-
+/*@}*/
 #ifndef ITERATOR_CC_INCLUDED
 #include"engine/containers/Iterator.cc"
 #endif // !ITERATOR_CC_INCLUDED

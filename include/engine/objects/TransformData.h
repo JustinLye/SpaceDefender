@@ -4,6 +4,8 @@
 #include<glm/glm.hpp>
 #include<glm/gtc/quaternion.hpp>
 
+/** @addtogroup EngineObjects */
+/*@{*/
 struct TransformData
 {
 	TransformData();
@@ -12,5 +14,5 @@ struct TransformData
 	glm::quat mRotation;
 	glm::vec3 mOffset;
 };
-
+/*@}*/
 #endif

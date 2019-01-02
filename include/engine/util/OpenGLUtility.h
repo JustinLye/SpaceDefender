@@ -3,6 +3,9 @@
 #include<iostream>
 #include"engine/util/OpenGLOptions.h"
 
+/** @addtogroup EngineUtil */
+/*@{*/
+
 #define GL_CHECK_ERRORS assert(glGetError()== GL_NO_ERROR);
 
 class OpenGLUtility
@@ -38,5 +41,5 @@ private:
 	static void FinishUpInitialization(GLFWwindow*);
 	
 };
-
+/*@}*/
 #endif

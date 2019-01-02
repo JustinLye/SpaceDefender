@@ -4,6 +4,9 @@
 #include<glm/glm.hpp>
 #include<glad/glad.h>
 
+/** @addtogroup EngineGraphics */
+/*@{*/
+
 struct TexVertexData
 {
 	glm::vec3 mVertices;
@@ -29,5 +32,5 @@ protected:
 	virtual void Destroy();
 };
 
-
+/*@}*/
 #endif

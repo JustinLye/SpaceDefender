@@ -15,7 +15,8 @@
 #include"engine/shapes/CircleData.h"
 #endif
 
-
+/** @addtogroup GameComponents */
+/*@{*/
 class LaserCannon :
 	public Subject,
 	public Observer,
@@ -79,5 +80,5 @@ protected:
 	void CustomInitOps() override;
 	void CustomUpdateOps(const float&);
 };
-
+/*@}*/
 #endif

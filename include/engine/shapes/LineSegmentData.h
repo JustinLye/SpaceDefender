@@ -3,6 +3,9 @@
 
 #include"engine/shapes/ShapeData.h"
 
+/** @addtogroup EngineShapes */
+/*@{*/
+
 class LineSegmentData :
 	public ShapeData
 {
@@ -15,5 +18,5 @@ public:
 protected:
 	void InitializeData();
 };
-
+/*@}*/
 #endif

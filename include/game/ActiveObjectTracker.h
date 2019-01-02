@@ -10,6 +10,8 @@
 
 using namespace Constants::Types;
 
+/** @addtogroup GameWorld */
+/*@{*/
 class ActiveObjectTracker :
 	public Observer
 {
@@ -28,5 +30,5 @@ protected:
 	Logger* mLogger;
 
 };
-
+/*@}*/
 #endif // !ACTIVE_OBJECT_TRACKER_HEADER_INCLUDED

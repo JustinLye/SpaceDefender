@@ -6,6 +6,9 @@
 #include"engine/font/FontData.h"
 using namespace Constants::Shaders;
 
+/** @addtogroup EngineFonts */
+/*@{*/
+
 class Font
 {
 public:
@@ -31,5 +34,5 @@ protected:
 	glm::vec4 mColor;
 	glm::mat4 mProjection;
 };
-
+/*@}*/
 #endif

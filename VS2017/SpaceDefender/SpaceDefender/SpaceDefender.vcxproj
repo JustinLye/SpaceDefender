@@ -81,6 +81,7 @@
     <ClCompile Include="..\..\..\src\game\SpaceDefender.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\doc\Groups.h" />
     <ClInclude Include="..\..\..\include\engine\containers\BaseObjectContainer.h" />
     <ClInclude Include="..\..\..\include\engine\containers\Detector.h" />
     <ClInclude Include="..\..\..\include\engine\containers\IndexQueue.h" />

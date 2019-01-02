@@ -3,6 +3,9 @@
 
 #include"engine/objects/Text.h"
 
+/** @addtogroup GameWorld */
+/*@{*/
+
 class ScoreText :
 	public Text
 {
@@ -13,5 +16,5 @@ public:
 protected:
 	unsigned int mPoints;
 };
-
+/*@}*/
 #endif

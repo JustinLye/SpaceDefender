@@ -7,6 +7,8 @@
 #include<boost/core/noncopyable.hpp>
 #include<boost/core/ref.hpp>
 
+/** @addtogroup EngineUtil */
+/*@{*/
 class Thread :
 	private boost::noncopyable,
 	private boost::thread
@@ -24,5 +26,5 @@ protected:
 
 	boost::thread::id mThread_id;
 };
-
+/*@}*/
 #endif

@@ -9,6 +9,9 @@
 #include"engine/util/UtiliDefs.h"
 
 
+/** @addtogroup EngineObjects */
+/*@{*/
+
 class Transform
 {
 public:
@@ -45,5 +48,5 @@ protected:
 	void Output(std::ostream&) const;
 	std::string ToString() const;
 };
-
+/*@}*/
 #endif

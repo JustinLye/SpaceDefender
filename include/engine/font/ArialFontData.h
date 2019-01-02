@@ -3,7 +3,8 @@
 
 #include"engine/util/Paths.h"
 #include"engine/font/FontData.h"
-
+/** @addtogroup EngineFonts */
+/*@{*/
 class ArialFontData :
 	public FontData
 {
@@ -16,5 +17,5 @@ public:
 protected:
 	std::string mPath;
 };
-
+/*@}*/
 #endif

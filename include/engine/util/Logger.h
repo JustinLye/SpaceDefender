@@ -8,6 +8,9 @@
 #include"engine/util/MailBox.h"
 #include"engine/util/Thread.h"
 
+
+/** @addtogroup EngineUtil */
+/*@{*/
 class Logger :
 	public Thread
 {
@@ -28,6 +31,6 @@ protected:
 	void EntryPoint();
 	virtual void EventLoop();
 };
-
+/*@}*/
 
 #endif // !LOGGER_HEADER_INCLUDED

@@ -12,6 +12,9 @@
 ///\ date 3/21/2018
 //////////////////////////////////////////////////
 
+
+/** @addtogroup EngineUtil */
+/*@{*/
 template<typename T>
 class MailBox : private std::queue<T>
 {
@@ -27,5 +30,5 @@ public:
 #ifndef MAIL_BOX_CC_INCLUDED
 #include"engine/util/MailBox.cc"
 #endif
-
+/*@}*/
 #endif

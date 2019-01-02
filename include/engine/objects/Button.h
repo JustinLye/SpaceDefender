@@ -7,6 +7,9 @@
 #include"engine/objects/Subject.h"
 #include"engine/objects/Text.h"
 #include"engine/objects/UIObject.h"
+
+/** @addtogroup EngineObjects */
+/*@{*/
 class Button :
 	public UIObject
 {
@@ -40,5 +43,6 @@ protected:
 	
 };
 
+/*@}*/
 
 #endif

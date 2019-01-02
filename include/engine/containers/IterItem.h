@@ -1,6 +1,9 @@
 #ifndef ITER_ITEM_HEADER_INCLUDED
 #define ITER_ITEM_HEADER_INCLUDED
 
+
+/** @addtogroup EngineIterators */
+/*@{*/
 template<class T>
 struct IterItem
 {
@@ -30,7 +33,7 @@ struct IterItem
 	IterItem* mPrev;
 	IterItem* mNext;
 };
-
+/*@}*/
 #ifndef ITER_ITEM_CC_INCLUDED
 #include"engine/containers/IterItem.cc"
 #endif // !ITER_ITEM_CC_INCLUDED

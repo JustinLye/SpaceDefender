@@ -4,6 +4,9 @@
 #include"engine/objects/UIObject.h"
 #include"engine/font/Font.h"
 
+/** @addtogroup EngineObjects */
+/*@{*/
+
 class Text :
 	public UIObject
 {
@@ -33,5 +36,5 @@ protected:
 	std::string mMessage;
 
 };
-
+/*@}*/
 #endif

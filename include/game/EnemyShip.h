@@ -13,7 +13,8 @@
 #include"game/ActiveObjectTracker.h"
 
 using namespace Constants::Types;
-
+/** @addtogroup GameActors */
+/*@{*/
 class EnemyShip :
 	public GameObject
 {
@@ -55,5 +56,5 @@ protected:
 	glm::vec3 mUp;
 	void ProximityScan(); //< Fills mCloseObjects w/ GameObjects in the surrounding area.
 };
-
+/*@}*/
 #endif

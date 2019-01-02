@@ -8,7 +8,8 @@
 #include<glm/glm.hpp>
 #include"engine/util/Constants.h"
 #include"engine/containers/IndexQueue.h"
-
+/** @addtogroup EngineObjectContainers */
+/*@{*/
 //////////////////////////////////////////////////
 ///\ class ObjectManager
 ///\ brief Provoides generic interface for object
@@ -65,5 +66,5 @@ protected:
 #include"engine/containers/ObjectManager.cc"
 #endif // !OBJECT_MANAGER_CC_INCLUDED
 
-
+/*@}*/
 #endif

@@ -6,6 +6,9 @@
 #include<glm/glm.hpp>
 #include<glad/glad.h>
 
+/** @addtogroup EngineShapes */
+/*@{*/
+
 class ShapeData
 {
 public:
@@ -25,5 +28,5 @@ protected:
 	virtual void InitializeData() = 0; 
 	virtual void Destroy();
 };
-
+/*@}*/
 #endif

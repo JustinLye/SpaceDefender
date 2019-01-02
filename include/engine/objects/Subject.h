@@ -7,6 +7,13 @@
 #include"engine/util/Constants.h"
 #include"engine/objects/Observer.h"
 
+
+/** @addtogroup EngineObjects */
+/*@{*/
+
+/*!
+  \brief Observered by zero or more Observers
+*/
 class Subject
 {
 public:
@@ -19,5 +26,5 @@ protected:
 	std::map<unsigned int, Observer*> mObserverMap;
 	bool ObserverIsMapped(Observer*) const;
 };
-
+/*@}*/
 #endif

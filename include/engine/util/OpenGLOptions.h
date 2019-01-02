@@ -6,7 +6,8 @@
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
 
-
+/** @addtogroup EngineUtil */
+/*@{*/
 /////////////////////////////////////////////////////////
 ///\ struct OpenGLVersion
 ///\ brief Used to hold major and minor OpenGL verion
@@ -86,6 +87,6 @@ struct OpenGLOptions
 	// Methods
 	OpenGLOptions(); ///< Default constructor
 };
-
+/*@}*/
 
 #endif // !OPENGL_OPTIONS_HEADER_INCLUDED
