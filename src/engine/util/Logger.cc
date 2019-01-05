@@ -26,6 +26,9 @@ void Logger::Open()
 {
 	assert(mPath != "");
 	mFile.open(mPath);
+  if (!mFile.is_open()) {
+    throw std::runtime_error(std::string("Could not open log file: ") + mPath);
+  }
 	assert(mFile.is_open());
 }
 

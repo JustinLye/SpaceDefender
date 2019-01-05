@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{10C9A6C7-61F4-43F0-9D6F-9D531955022C}</ProjectGuid>
+    <ProjectGuid>{107F9259-4705-4519-B8E7-C54E29962B32}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -65,30 +65,38 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\</OutDir>
-    <IntDir>$(ProjectDir)\.tmp\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>.tmp\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)external;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\</OutDir>
-    <IntDir>$(ProjectDir)\.tmp\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>.tmp\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)external;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\</OutDir>
-    <IntDir>$(ProjectDir)\.tmp\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>.tmp\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)external;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)bin\</OutDir>
-    <IntDir>$(ProjectDir)\.tmp\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>.tmp\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)external;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\glad-dir\include\;$(ProjectDir)external\;$(ProjectDir)src\;$(ProjectDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -96,7 +104,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>glfw3.lib;freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy $(ProjectDir)lib\freetype.dll $(OutDir)</Command>
@@ -104,11 +111,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\glad-dir\include\;$(ProjectDir)external\;$(ProjectDir)src\;$(ProjectDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -118,40 +125,47 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>glfw3.lib;freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy $(ProjectDir)lib\freetype.dll $(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Link>
-      <AdditionalDependencies>glfw3.lib;freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\glad-dir\include\;$(ProjectDir)external\;$(ProjectDir)src\;$(ProjectDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>glfw3.lib;freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
     <PostBuildEvent>
       <Command>copy $(ProjectDir)lib\freetype.dll $(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Link>
-      <AdditionalDependencies>glfw3.lib;freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\glad-dir\include\;$(ProjectDir)external\;$(ProjectDir)src\;$(ProjectDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>glfw3.lib;freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
     <PostBuildEvent>
       <Command>copy $(ProjectDir)lib\freetype.dll $(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="external\glad-dir\src\glad.c" />
+    <ClCompile Include="external\glad\src\glad.c" />
     <ClCompile Include="src\engine\containers\IndexQueue.cc" />
     <ClCompile Include="src\engine\containers\Iterator.cc" />
     <ClCompile Include="src\engine\containers\IterItem.cc" />
@@ -276,603 +290,6 @@
     <ClInclude Include="include\game\Player.h" />
     <ClInclude Include="include\game\ScoreText.h" />
     <ClInclude Include="include\game\SpaceDefender.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="doc\html\ActiveObjectTracker_8cc.html" />
-    <None Include="doc\html\ActiveObjectTracker_8cc_source.html" />
-    <None Include="doc\html\ActiveObjectTracker_8h.html" />
-    <None Include="doc\html\ActiveObjectTracker_8h_source.html" />
-    <None Include="doc\html\annotated.html" />
-    <None Include="doc\html\ArialFontData_8cc.html" />
-    <None Include="doc\html\ArialFontData_8cc_source.html" />
-    <None Include="doc\html\ArialFontData_8h.html" />
-    <None Include="doc\html\ArialFontData_8h_source.html" />
-    <None Include="doc\html\AsteroidCollision_8cc.html" />
-    <None Include="doc\html\AsteroidCollision_8cc_source.html" />
-    <None Include="doc\html\AsteroidCollision_8h.html" />
-    <None Include="doc\html\AsteroidCollision_8h_source.html" />
-    <None Include="doc\html\AsteroidSpawner_8cc.html" />
-    <None Include="doc\html\AsteroidSpawner_8cc_source.html" />
-    <None Include="doc\html\AsteroidSpawner_8h.html" />
-    <None Include="doc\html\AsteroidSpawner_8h_source.html" />
-    <None Include="doc\html\Asteroid_8cc.html" />
-    <None Include="doc\html\Asteroid_8cc_source.html" />
-    <None Include="doc\html\Asteroid_8h.html" />
-    <None Include="doc\html\Asteroid_8h_source.html" />
-    <None Include="doc\html\BaseObjectContainer_8h.html" />
-    <None Include="doc\html\BaseObjectContainer_8h_source.html" />
-    <None Include="doc\html\BasicObject_8cc.html" />
-    <None Include="doc\html\BasicObject_8cc_source.html" />
-    <None Include="doc\html\BasicObject_8h.html" />
-    <None Include="doc\html\BasicObject_8h_source.html" />
-    <None Include="doc\html\BoundryBox_8h.html" />
-    <None Include="doc\html\BoundryBox_8h_source.html" />
-    <None Include="doc\html\Button_8cc.html" />
-    <None Include="doc\html\Button_8cc_source.html" />
-    <None Include="doc\html\Button_8h.html" />
-    <None Include="doc\html\Button_8h_source.html" />
-    <None Include="doc\html\Canvas_8cc.html" />
-    <None Include="doc\html\Canvas_8cc_source.html" />
-    <None Include="doc\html\Canvas_8h.html" />
-    <None Include="doc\html\Canvas_8h_source.html" />
-    <None Include="doc\html\CircleData_8cc.html" />
-    <None Include="doc\html\CircleData_8cc_source.html" />
-    <None Include="doc\html\CircleData_8h.html" />
-    <None Include="doc\html\CircleData_8h_source.html" />
-    <None Include="doc\html\classBasicObject-members.html" />
-    <None Include="doc\html\classBasicObject.html" />
-    <None Include="doc\html\classes.html" />
-    <None Include="doc\html\classExplosionManager-members.html" />
-    <None Include="doc\html\classExplosionManager.html" />
-    <None Include="doc\html\classObjectCollision-members.html" />
-    <None Include="doc\html\classObjectCollision.html" />
-    <None Include="doc\html\classTextureShader-members.html" />
-    <None Include="doc\html\classTextureShader.html" />
-    <None Include="doc\html\Collider_8cc.html" />
-    <None Include="doc\html\Collider_8cc_source.html" />
-    <None Include="doc\html\Collider_8h.html" />
-    <None Include="doc\html\Collider_8h_source.html" />
-    <None Include="doc\html\CollisionDetector_8cc.html" />
-    <None Include="doc\html\CollisionDetector_8cc_source.html" />
-    <None Include="doc\html\CollisionDetector_8h.html" />
-    <None Include="doc\html\CollisionDetector_8h_source.html" />
-    <None Include="doc\html\Constants_8h.html" />
-    <None Include="doc\html\Constants_8h_source.html" />
-    <None Include="doc\html\Container_8cc.html" />
-    <None Include="doc\html\Container_8cc_source.html" />
-    <None Include="doc\html\Container_8h.html" />
-    <None Include="doc\html\Container_8h_source.html" />
-    <None Include="doc\html\DebugFunctions_8cc.html" />
-    <None Include="doc\html\DebugFunctions_8cc_source.html" />
-    <None Include="doc\html\DebugFunctions_8h.html" />
-    <None Include="doc\html\DebugFunctions_8h_source.html" />
-    <None Include="doc\html\Detector_8h.html" />
-    <None Include="doc\html\Detector_8h_source.html" />
-    <None Include="doc\html\dir_000000_000011.html" />
-    <None Include="doc\html\dir_000000_000012.html" />
-    <None Include="doc\html\dir_000000_000017.html" />
-    <None Include="doc\html\dir_000002_000010.html" />
-    <None Include="doc\html\dir_000003_000008.html" />
-    <None Include="doc\html\dir_000003_000010.html" />
-    <None Include="doc\html\dir_000004_000008.html" />
-    <None Include="doc\html\dir_000005_000006.html" />
-    <None Include="doc\html\dir_000005_000008.html" />
-    <None Include="doc\html\dir_000006_000004.html" />
-    <None Include="doc\html\dir_000006_000007.html" />
-    <None Include="doc\html\dir_000006_000008.html" />
-    <None Include="doc\html\dir_000007_000006.html" />
-    <None Include="doc\html\dir_000007_000008.html" />
-    <None Include="doc\html\dir_000008_000006.html" />
-    <None Include="doc\html\dir_000008_000010.html" />
-    <None Include="doc\html\dir_000009_000002.html" />
-    <None Include="doc\html\dir_000010_000002.html" />
-    <None Include="doc\html\dir_000010_000003.html" />
-    <None Include="doc\html\dir_000010_000004.html" />
-    <None Include="doc\html\dir_000010_000005.html" />
-    <None Include="doc\html\dir_000010_000006.html" />
-    <None Include="doc\html\dir_000010_000007.html" />
-    <None Include="doc\html\dir_000010_000008.html" />
-    <None Include="doc\html\dir_000010_000009.html" />
-    <None Include="doc\html\dir_000011_000000.html" />
-    <None Include="doc\html\dir_000012_000000.html" />
-    <None Include="doc\html\dir_000013_000000.html" />
-    <None Include="doc\html\dir_000014_000000.html" />
-    <None Include="doc\html\dir_000015_000000.html" />
-    <None Include="doc\html\dir_000016_000000.html" />
-    <None Include="doc\html\dir_000017_000000.html" />
-    <None Include="doc\html\dir_000018_000000.html" />
-    <None Include="doc\html\dir_1699be727a800b1d059c6f7f2b91d2ee.html" />
-    <None Include="doc\html\dir_169bc07725411c2c359378f17aa1abb6.html" />
-    <None Include="doc\html\dir_1703f27b4d5d0f9ada02e83857ec1421.html" />
-    <None Include="doc\html\dir_2052808828190f934b76e979ee65af8a.html" />
-    <None Include="doc\html\dir_20a03d374c0742f0ab0d897037f8f9aa.html" />
-    <None Include="doc\html\dir_2858459a1249f242673a075ef28a3c13.html" />
-    <None Include="doc\html\dir_4b0439ad67ca3848d4c016ababa979af.html" />
-    <None Include="doc\html\dir_68267d1309a1af8e8297ef4c3efbcdba.html" />
-    <None Include="doc\html\dir_7b2fe11886c6243a9a9e4060aa3988f7.html" />
-    <None Include="doc\html\dir_a7f531b1c37460085cedd304cb8df01d.html" />
-    <None Include="doc\html\dir_ba73608aff21b3524a8f2c22a10ff48a.html" />
-    <None Include="doc\html\dir_d44c64559bbebec7f509842c48db8b23.html" />
-    <None Include="doc\html\dir_da3949656029ad3326fc616aaba78c81.html" />
-    <None Include="doc\html\dir_daf7c1260edf31174d16300bd7dbb4f6.html" />
-    <None Include="doc\html\dir_e542ca8db7fd71a1414236dde431d8c7.html" />
-    <None Include="doc\html\dir_e87dd748593b458b60b107f4eded8184.html" />
-    <None Include="doc\html\dir_e8e9bf7d18dab0ad77df57a1421ae9cd.html" />
-    <None Include="doc\html\dir_f2d57404f6c11dabdd79e811c8938aea.html" />
-    <None Include="doc\html\dir_f307a46daed1218fee22380d1eacedba.html" />
-    <None Include="doc\html\DistanceEntry_8cc.html" />
-    <None Include="doc\html\DistanceEntry_8cc_source.html" />
-    <None Include="doc\html\DistanceEntry_8h.html" />
-    <None Include="doc\html\DistanceEntry_8h_source.html" />
-    <None Include="doc\html\DrawableObject_8cc.html" />
-    <None Include="doc\html\DrawableObject_8cc_source.html" />
-    <None Include="doc\html\DrawableObject_8h.html" />
-    <None Include="doc\html\DrawableObject_8h_source.html" />
-    <None Include="doc\html\EnemyShipManager_8cc.html" />
-    <None Include="doc\html\EnemyShipManager_8cc_source.html" />
-    <None Include="doc\html\EnemyShipManager_8h.html" />
-    <None Include="doc\html\EnemyShipManager_8h_source.html" />
-    <None Include="doc\html\EnemyShip_8cc.html" />
-    <None Include="doc\html\EnemyShip_8cc_source.html" />
-    <None Include="doc\html\EnemyShip_8h.html" />
-    <None Include="doc\html\EnemyShip_8h_source.html" />
-    <None Include="doc\html\ExplosionManager_8cc.html" />
-    <None Include="doc\html\ExplosionManager_8cc_source.html" />
-    <None Include="doc\html\ExplosionManager_8h.html" />
-    <None Include="doc\html\ExplosionManager_8h_source.html" />
-    <None Include="doc\html\Explosion_8cc.html" />
-    <None Include="doc\html\Explosion_8cc_source.html" />
-    <None Include="doc\html\Explosion_8h.html" />
-    <None Include="doc\html\Explosion_8h_source.html" />
-    <None Include="doc\html\files.html" />
-    <None Include="doc\html\FontData_8cc.html" />
-    <None Include="doc\html\FontData_8cc_source.html" />
-    <None Include="doc\html\FontData_8h.html" />
-    <None Include="doc\html\FontData_8h_source.html" />
-    <None Include="doc\html\Font_8cc.html" />
-    <None Include="doc\html\Font_8cc_source.html" />
-    <None Include="doc\html\Font_8h.html" />
-    <None Include="doc\html\Font_8h_source.html" />
-    <None Include="doc\html\functions.html" />
-    <None Include="doc\html\functions_b.html" />
-    <None Include="doc\html\functions_c.html" />
-    <None Include="doc\html\functions_d.html" />
-    <None Include="doc\html\functions_e.html" />
-    <None Include="doc\html\functions_enum.html" />
-    <None Include="doc\html\functions_eval.html" />
-    <None Include="doc\html\functions_f.html" />
-    <None Include="doc\html\functions_func.html" />
-    <None Include="doc\html\functions_func_b.html" />
-    <None Include="doc\html\functions_func_c.html" />
-    <None Include="doc\html\functions_func_d.html" />
-    <None Include="doc\html\functions_func_e.html" />
-    <None Include="doc\html\functions_func_f.html" />
-    <None Include="doc\html\functions_func_g.html" />
-    <None Include="doc\html\functions_func_h.html" />
-    <None Include="doc\html\functions_func_i.html" />
-    <None Include="doc\html\functions_func_j.html" />
-    <None Include="doc\html\functions_func_k.html" />
-    <None Include="doc\html\functions_func_l.html" />
-    <None Include="doc\html\functions_func_m.html" />
-    <None Include="doc\html\functions_func_n.html" />
-    <None Include="doc\html\functions_func_o.html" />
-    <None Include="doc\html\functions_func_p.html" />
-    <None Include="doc\html\functions_func_q.html" />
-    <None Include="doc\html\functions_func_r.html" />
-    <None Include="doc\html\functions_func_s.html" />
-    <None Include="doc\html\functions_func_t.html" />
-    <None Include="doc\html\functions_func_u.html" />
-    <None Include="doc\html\functions_func_v.html" />
-    <None Include="doc\html\functions_func_w.html" />
-    <None Include="doc\html\functions_func_x.html" />
-    <None Include="doc\html\functions_func_y.html" />
-    <None Include="doc\html\functions_func_~.html" />
-    <None Include="doc\html\functions_g.html" />
-    <None Include="doc\html\functions_h.html" />
-    <None Include="doc\html\functions_i.html" />
-    <None Include="doc\html\functions_j.html" />
-    <None Include="doc\html\functions_k.html" />
-    <None Include="doc\html\functions_l.html" />
-    <None Include="doc\html\functions_m.html" />
-    <None Include="doc\html\functions_n.html" />
-    <None Include="doc\html\functions_o.html" />
-    <None Include="doc\html\functions_p.html" />
-    <None Include="doc\html\functions_q.html" />
-    <None Include="doc\html\functions_r.html" />
-    <None Include="doc\html\functions_rela.html" />
-    <None Include="doc\html\functions_s.html" />
-    <None Include="doc\html\functions_t.html" />
-    <None Include="doc\html\functions_type.html" />
-    <None Include="doc\html\functions_u.html" />
-    <None Include="doc\html\functions_v.html" />
-    <None Include="doc\html\functions_vars.html" />
-    <None Include="doc\html\functions_vars_m.html" />
-    <None Include="doc\html\functions_vars_n.html" />
-    <None Include="doc\html\functions_vars_o.html" />
-    <None Include="doc\html\functions_vars_p.html" />
-    <None Include="doc\html\functions_vars_s.html" />
-    <None Include="doc\html\functions_vars_x.html" />
-    <None Include="doc\html\functions_vars_y.html" />
-    <None Include="doc\html\functions_w.html" />
-    <None Include="doc\html\functions_x.html" />
-    <None Include="doc\html\functions_y.html" />
-    <None Include="doc\html\functions_~.html" />
-    <None Include="doc\html\GameObject_8cc.html" />
-    <None Include="doc\html\GameObject_8cc_source.html" />
-    <None Include="doc\html\GameObject_8h.html" />
-    <None Include="doc\html\GameObject_8h_source.html" />
-    <None Include="doc\html\globals.html" />
-    <None Include="doc\html\globals_defs.html" />
-    <None Include="doc\html\globals_func.html" />
-    <None Include="doc\html\globals_vars.html" />
-    <None Include="doc\html\graph_legend.html" />
-    <None Include="doc\html\Groups_8h.html" />
-    <None Include="doc\html\Groups_8h_source.html" />
-    <None Include="doc\html\group__Engine.html" />
-    <None Include="doc\html\group__EngineContainers.html" />
-    <None Include="doc\html\group__EngineFonts.html" />
-    <None Include="doc\html\group__EngineGraphics.html" />
-    <None Include="doc\html\group__EngineIndicesAuxillary.html" />
-    <None Include="doc\html\group__EngineIndicesContainers.html" />
-    <None Include="doc\html\group__EngineIterators.html" />
-    <None Include="doc\html\group__EngineObjectContainers.html" />
-    <None Include="doc\html\group__EngineObjects.html" />
-    <None Include="doc\html\group__EngineShapes.html" />
-    <None Include="doc\html\group__EngineUtil.html" />
-    <None Include="doc\html\group__Game.html" />
-    <None Include="doc\html\group__GameActors.html" />
-    <None Include="doc\html\group__GameComponents.html" />
-    <None Include="doc\html\group__GameWorld.html" />
-    <None Include="doc\html\hierarchy.html" />
-    <None Include="doc\html\index.html" />
-    <None Include="doc\html\IndexQueue_8cc.html" />
-    <None Include="doc\html\IndexQueue_8cc_source.html" />
-    <None Include="doc\html\IndexQueue_8h.html" />
-    <None Include="doc\html\IndexQueue_8h_source.html" />
-    <None Include="doc\html\inherits.html" />
-    <None Include="doc\html\Iterator_8cc.html" />
-    <None Include="doc\html\Iterator_8cc_source.html" />
-    <None Include="doc\html\Iterator_8h.html" />
-    <None Include="doc\html\Iterator_8h_source.html" />
-    <None Include="doc\html\IterItem_8cc.html" />
-    <None Include="doc\html\IterItem_8cc_source.html" />
-    <None Include="doc\html\IterItem_8h.html" />
-    <None Include="doc\html\IterItem_8h_source.html" />
-    <None Include="doc\html\KeyMap_8cc.html" />
-    <None Include="doc\html\KeyMap_8cc_source.html" />
-    <None Include="doc\html\KeyMap_8h.html" />
-    <None Include="doc\html\KeyMap_8h_source.html" />
-    <None Include="doc\html\LaserCannon_8cc.html" />
-    <None Include="doc\html\LaserCannon_8cc_source.html" />
-    <None Include="doc\html\LaserCannon_8h.html" />
-    <None Include="doc\html\LaserCannon_8h_source.html" />
-    <None Include="doc\html\Laser_8cc.html" />
-    <None Include="doc\html\Laser_8cc_source.html" />
-    <None Include="doc\html\Laser_8h.html" />
-    <None Include="doc\html\Laser_8h_source.html" />
-    <None Include="doc\html\LineSegmentData_8cc.html" />
-    <None Include="doc\html\LineSegmentData_8cc_source.html" />
-    <None Include="doc\html\LineSegmentData_8h.html" />
-    <None Include="doc\html\LineSegmentData_8h_source.html" />
-    <None Include="doc\html\Logger_8cc.html" />
-    <None Include="doc\html\Logger_8cc_source.html" />
-    <None Include="doc\html\Logger_8h.html" />
-    <None Include="doc\html\Logger_8h_source.html" />
-    <None Include="doc\html\MailBox_8cc.html" />
-    <None Include="doc\html\MailBox_8cc_source.html" />
-    <None Include="doc\html\MailBox_8h.html" />
-    <None Include="doc\html\MailBox_8h_source.html" />
-    <None Include="doc\html\main_8cc.html" />
-    <None Include="doc\html\main_8cc_source.html" />
-    <None Include="doc\html\Menu_8h.html" />
-    <None Include="doc\html\Menu_8h_source.html" />
-    <None Include="doc\html\modules.html" />
-    <None Include="doc\html\namespaceConstants.html" />
-    <None Include="doc\html\namespaceConstants_1_1Containers.html" />
-    <None Include="doc\html\namespaceConstants_1_1Font.html" />
-    <None Include="doc\html\namespaceConstants_1_1Geometry.html" />
-    <None Include="doc\html\namespaceConstants_1_1Input.html" />
-    <None Include="doc\html\namespaceConstants_1_1logging.html" />
-    <None Include="doc\html\namespaceConstants_1_1Physics.html" />
-    <None Include="doc\html\namespaceConstants_1_1Rendering.html" />
-    <None Include="doc\html\namespaceConstants_1_1Shaders.html" />
-    <None Include="doc\html\namespaceConstants_1_1Time.html" />
-    <None Include="doc\html\namespaceConstants_1_1Types.html" />
-    <None Include="doc\html\namespaceengine.html" />
-    <None Include="doc\html\namespaceengine_1_1debug.html" />
-    <None Include="doc\html\namespacemembers.html" />
-    <None Include="doc\html\namespacemembers_enum.html" />
-    <None Include="doc\html\namespacemembers_eval.html" />
-    <None Include="doc\html\namespacemembers_func.html" />
-    <None Include="doc\html\namespacemembers_vars.html" />
-    <None Include="doc\html\namespaces.html" />
-    <None Include="doc\html\ObjectCollision_8cc.html" />
-    <None Include="doc\html\ObjectCollision_8cc_source.html" />
-    <None Include="doc\html\ObjectCollision_8h.html" />
-    <None Include="doc\html\ObjectCollision_8h_source.html" />
-    <None Include="doc\html\ObjectManager_8cc.html" />
-    <None Include="doc\html\ObjectManager_8cc_source.html" />
-    <None Include="doc\html\ObjectManager_8h.html" />
-    <None Include="doc\html\ObjectManager_8h_source.html" />
-    <None Include="doc\html\ObjectQueue_8cc.html" />
-    <None Include="doc\html\ObjectQueue_8cc_source.html" />
-    <None Include="doc\html\ObjectQueue_8h.html" />
-    <None Include="doc\html\ObjectQueue_8h_source.html" />
-    <None Include="doc\html\Observer_8cc.html" />
-    <None Include="doc\html\Observer_8cc_source.html" />
-    <None Include="doc\html\Observer_8h.html" />
-    <None Include="doc\html\Observer_8h_source.html" />
-    <None Include="doc\html\OpenGLOptions_8cc.html" />
-    <None Include="doc\html\OpenGLOptions_8cc_source.html" />
-    <None Include="doc\html\OpenGLOptions_8h.html" />
-    <None Include="doc\html\OpenGLOptions_8h_source.html" />
-    <None Include="doc\html\OpenGLUtility_8cc.html" />
-    <None Include="doc\html\OpenGLUtility_8cc_source.html" />
-    <None Include="doc\html\OpenGLUtility_8h.html" />
-    <None Include="doc\html\OpenGLUtility_8h_source.html" />
-    <None Include="doc\html\Paths_8h.html" />
-    <None Include="doc\html\Paths_8h_source.html" />
-    <None Include="doc\html\Player_8cc.html" />
-    <None Include="doc\html\Player_8cc_source.html" />
-    <None Include="doc\html\Player_8h.html" />
-    <None Include="doc\html\Player_8h_source.html" />
-    <None Include="doc\html\QuadData_8cc.html" />
-    <None Include="doc\html\QuadData_8cc_source.html" />
-    <None Include="doc\html\QuadData_8h.html" />
-    <None Include="doc\html\QuadData_8h_source.html" />
-    <None Include="doc\html\Rectangle_8h.html" />
-    <None Include="doc\html\Rectangle_8h_source.html" />
-    <None Include="doc\html\RedBlackTree_8h.html" />
-    <None Include="doc\html\RedBlackTree_8h_source.html" />
-    <None Include="doc\html\RenderableObject_8cc.html" />
-    <None Include="doc\html\RenderableObject_8cc_source.html" />
-    <None Include="doc\html\RenderableObject_8h.html" />
-    <None Include="doc\html\RenderableObject_8h_source.html" />
-    <None Include="doc\html\Renderer_8cc.html" />
-    <None Include="doc\html\Renderer_8cc_source.html" />
-    <None Include="doc\html\Renderer_8h.html" />
-    <None Include="doc\html\Renderer_8h_source.html" />
-    <None Include="doc\html\RigidBody_8cc.html" />
-    <None Include="doc\html\RigidBody_8cc_source.html" />
-    <None Include="doc\html\RigidBody_8h.html" />
-    <None Include="doc\html\RigidBody_8h_source.html" />
-    <None Include="doc\html\ScoreText_8cc.html" />
-    <None Include="doc\html\ScoreText_8cc_source.html" />
-    <None Include="doc\html\ScoreText_8h.html" />
-    <None Include="doc\html\ScoreText_8h_source.html" />
-    <None Include="doc\html\ScrollingBackground_8cc.html" />
-    <None Include="doc\html\ScrollingBackground_8cc_source.html" />
-    <None Include="doc\html\ScrollingBackground_8h.html" />
-    <None Include="doc\html\ScrollingBackground_8h_source.html" />
-    <None Include="doc\html\search\all_0.html" />
-    <None Include="doc\html\search\all_1.html" />
-    <None Include="doc\html\search\all_10.html" />
-    <None Include="doc\html\search\all_11.html" />
-    <None Include="doc\html\search\all_12.html" />
-    <None Include="doc\html\search\all_13.html" />
-    <None Include="doc\html\search\all_14.html" />
-    <None Include="doc\html\search\all_15.html" />
-    <None Include="doc\html\search\all_16.html" />
-    <None Include="doc\html\search\all_17.html" />
-    <None Include="doc\html\search\all_18.html" />
-    <None Include="doc\html\search\all_19.html" />
-    <None Include="doc\html\search\all_2.html" />
-    <None Include="doc\html\search\all_3.html" />
-    <None Include="doc\html\search\all_4.html" />
-    <None Include="doc\html\search\all_5.html" />
-    <None Include="doc\html\search\all_6.html" />
-    <None Include="doc\html\search\all_7.html" />
-    <None Include="doc\html\search\all_8.html" />
-    <None Include="doc\html\search\all_9.html" />
-    <None Include="doc\html\search\all_a.html" />
-    <None Include="doc\html\search\all_b.html" />
-    <None Include="doc\html\search\all_c.html" />
-    <None Include="doc\html\search\all_d.html" />
-    <None Include="doc\html\search\all_e.html" />
-    <None Include="doc\html\search\all_f.html" />
-    <None Include="doc\html\search\classes_0.html" />
-    <None Include="doc\html\search\classes_1.html" />
-    <None Include="doc\html\search\classes_10.html" />
-    <None Include="doc\html\search\classes_11.html" />
-    <None Include="doc\html\search\classes_2.html" />
-    <None Include="doc\html\search\classes_3.html" />
-    <None Include="doc\html\search\classes_4.html" />
-    <None Include="doc\html\search\classes_5.html" />
-    <None Include="doc\html\search\classes_6.html" />
-    <None Include="doc\html\search\classes_7.html" />
-    <None Include="doc\html\search\classes_8.html" />
-    <None Include="doc\html\search\classes_9.html" />
-    <None Include="doc\html\search\classes_a.html" />
-    <None Include="doc\html\search\classes_b.html" />
-    <None Include="doc\html\search\classes_c.html" />
-    <None Include="doc\html\search\classes_d.html" />
-    <None Include="doc\html\search\classes_e.html" />
-    <None Include="doc\html\search\classes_f.html" />
-    <None Include="doc\html\search\defines_0.html" />
-    <None Include="doc\html\search\defines_1.html" />
-    <None Include="doc\html\search\defines_2.html" />
-    <None Include="doc\html\search\defines_3.html" />
-    <None Include="doc\html\search\defines_4.html" />
-    <None Include="doc\html\search\defines_5.html" />
-    <None Include="doc\html\search\enums_0.html" />
-    <None Include="doc\html\search\enums_1.html" />
-    <None Include="doc\html\search\enums_2.html" />
-    <None Include="doc\html\search\enums_3.html" />
-    <None Include="doc\html\search\enums_4.html" />
-    <None Include="doc\html\search\enums_5.html" />
-    <None Include="doc\html\search\enums_6.html" />
-    <None Include="doc\html\search\enums_7.html" />
-    <None Include="doc\html\search\enums_8.html" />
-    <None Include="doc\html\search\enumvalues_0.html" />
-    <None Include="doc\html\search\enumvalues_1.html" />
-    <None Include="doc\html\search\enumvalues_10.html" />
-    <None Include="doc\html\search\enumvalues_11.html" />
-    <None Include="doc\html\search\enumvalues_2.html" />
-    <None Include="doc\html\search\enumvalues_3.html" />
-    <None Include="doc\html\search\enumvalues_4.html" />
-    <None Include="doc\html\search\enumvalues_5.html" />
-    <None Include="doc\html\search\enumvalues_6.html" />
-    <None Include="doc\html\search\enumvalues_7.html" />
-    <None Include="doc\html\search\enumvalues_8.html" />
-    <None Include="doc\html\search\enumvalues_9.html" />
-    <None Include="doc\html\search\enumvalues_a.html" />
-    <None Include="doc\html\search\enumvalues_b.html" />
-    <None Include="doc\html\search\enumvalues_c.html" />
-    <None Include="doc\html\search\enumvalues_d.html" />
-    <None Include="doc\html\search\enumvalues_e.html" />
-    <None Include="doc\html\search\enumvalues_f.html" />
-    <None Include="doc\html\search\files_0.html" />
-    <None Include="doc\html\search\files_1.html" />
-    <None Include="doc\html\search\files_10.html" />
-    <None Include="doc\html\search\files_11.html" />
-    <None Include="doc\html\search\files_2.html" />
-    <None Include="doc\html\search\files_3.html" />
-    <None Include="doc\html\search\files_4.html" />
-    <None Include="doc\html\search\files_5.html" />
-    <None Include="doc\html\search\files_6.html" />
-    <None Include="doc\html\search\files_7.html" />
-    <None Include="doc\html\search\files_8.html" />
-    <None Include="doc\html\search\files_9.html" />
-    <None Include="doc\html\search\files_a.html" />
-    <None Include="doc\html\search\files_b.html" />
-    <None Include="doc\html\search\files_c.html" />
-    <None Include="doc\html\search\files_d.html" />
-    <None Include="doc\html\search\files_e.html" />
-    <None Include="doc\html\search\files_f.html" />
-    <None Include="doc\html\search\functions_0.html" />
-    <None Include="doc\html\search\functions_1.html" />
-    <None Include="doc\html\search\functions_10.html" />
-    <None Include="doc\html\search\functions_11.html" />
-    <None Include="doc\html\search\functions_12.html" />
-    <None Include="doc\html\search\functions_13.html" />
-    <None Include="doc\html\search\functions_14.html" />
-    <None Include="doc\html\search\functions_15.html" />
-    <None Include="doc\html\search\functions_16.html" />
-    <None Include="doc\html\search\functions_17.html" />
-    <None Include="doc\html\search\functions_18.html" />
-    <None Include="doc\html\search\functions_19.html" />
-    <None Include="doc\html\search\functions_2.html" />
-    <None Include="doc\html\search\functions_3.html" />
-    <None Include="doc\html\search\functions_4.html" />
-    <None Include="doc\html\search\functions_5.html" />
-    <None Include="doc\html\search\functions_6.html" />
-    <None Include="doc\html\search\functions_7.html" />
-    <None Include="doc\html\search\functions_8.html" />
-    <None Include="doc\html\search\functions_9.html" />
-    <None Include="doc\html\search\functions_a.html" />
-    <None Include="doc\html\search\functions_b.html" />
-    <None Include="doc\html\search\functions_c.html" />
-    <None Include="doc\html\search\functions_d.html" />
-    <None Include="doc\html\search\functions_e.html" />
-    <None Include="doc\html\search\functions_f.html" />
-    <None Include="doc\html\search\groups_0.html" />
-    <None Include="doc\html\search\groups_1.html" />
-    <None Include="doc\html\search\groups_2.html" />
-    <None Include="doc\html\search\groups_3.html" />
-    <None Include="doc\html\search\groups_4.html" />
-    <None Include="doc\html\search\groups_5.html" />
-    <None Include="doc\html\search\groups_6.html" />
-    <None Include="doc\html\search\groups_7.html" />
-    <None Include="doc\html\search\groups_8.html" />
-    <None Include="doc\html\search\groups_9.html" />
-    <None Include="doc\html\search\namespaces_0.html" />
-    <None Include="doc\html\search\namespaces_1.html" />
-    <None Include="doc\html\search\nomatches.html" />
-    <None Include="doc\html\search\related_0.html" />
-    <None Include="doc\html\search\related_1.html" />
-    <None Include="doc\html\search\typedefs_0.html" />
-    <None Include="doc\html\search\typedefs_1.html" />
-    <None Include="doc\html\search\typedefs_2.html" />
-    <None Include="doc\html\search\typedefs_3.html" />
-    <None Include="doc\html\search\typedefs_4.html" />
-    <None Include="doc\html\search\typedefs_5.html" />
-    <None Include="doc\html\search\typedefs_6.html" />
-    <None Include="doc\html\search\variables_0.html" />
-    <None Include="doc\html\search\variables_1.html" />
-    <None Include="doc\html\search\variables_10.html" />
-    <None Include="doc\html\search\variables_11.html" />
-    <None Include="doc\html\search\variables_2.html" />
-    <None Include="doc\html\search\variables_3.html" />
-    <None Include="doc\html\search\variables_4.html" />
-    <None Include="doc\html\search\variables_5.html" />
-    <None Include="doc\html\search\variables_6.html" />
-    <None Include="doc\html\search\variables_7.html" />
-    <None Include="doc\html\search\variables_8.html" />
-    <None Include="doc\html\search\variables_9.html" />
-    <None Include="doc\html\search\variables_a.html" />
-    <None Include="doc\html\search\variables_b.html" />
-    <None Include="doc\html\search\variables_c.html" />
-    <None Include="doc\html\search\variables_d.html" />
-    <None Include="doc\html\search\variables_e.html" />
-    <None Include="doc\html\search\variables_f.html" />
-    <None Include="doc\html\ShaderProgram_8cc.html" />
-    <None Include="doc\html\ShaderProgram_8cc_source.html" />
-    <None Include="doc\html\ShaderProgram_8h.html" />
-    <None Include="doc\html\ShaderProgram_8h_source.html" />
-    <None Include="doc\html\ShapeData_8cc.html" />
-    <None Include="doc\html\ShapeData_8cc_source.html" />
-    <None Include="doc\html\ShapeData_8h.html" />
-    <None Include="doc\html\ShapeData_8h_source.html" />
-    <None Include="doc\html\Shape_8cc.html" />
-    <None Include="doc\html\Shape_8cc_source.html" />
-    <None Include="doc\html\Shape_8h.html" />
-    <None Include="doc\html\Shape_8h_source.html" />
-    <None Include="doc\html\SpaceDefender_8cc.html" />
-    <None Include="doc\html\SpaceDefender_8cc_source.html" />
-    <None Include="doc\html\SpaceDefender_8h.html" />
-    <None Include="doc\html\SpaceDefender_8h_source.html" />
-    <None Include="doc\html\Subject_8cc.html" />
-    <None Include="doc\html\Subject_8cc_source.html" />
-    <None Include="doc\html\Subject_8h.html" />
-    <None Include="doc\html\Subject_8h_source.html" />
-    <None Include="doc\html\TexData_8cc.html" />
-    <None Include="doc\html\TexData_8cc_source.html" />
-    <None Include="doc\html\TexData_8h.html" />
-    <None Include="doc\html\TexData_8h_source.html" />
-    <None Include="doc\html\TexRenderer_8cc.html" />
-    <None Include="doc\html\TexRenderer_8cc_source.html" />
-    <None Include="doc\html\TexRenderer_8h.html" />
-    <None Include="doc\html\TexRenderer_8h_source.html" />
-    <None Include="doc\html\TextShader_8cc.html" />
-    <None Include="doc\html\TextShader_8cc_source.html" />
-    <None Include="doc\html\TextShader_8h.html" />
-    <None Include="doc\html\TextShader_8h_source.html" />
-    <None Include="doc\html\TextureShader_8cc.html" />
-    <None Include="doc\html\TextureShader_8cc_source.html" />
-    <None Include="doc\html\TextureShader_8h.html" />
-    <None Include="doc\html\TextureShader_8h_source.html" />
-    <None Include="doc\html\Texture_8cc.html" />
-    <None Include="doc\html\Texture_8cc_source.html" />
-    <None Include="doc\html\Texture_8h.html" />
-    <None Include="doc\html\Texture_8h_source.html" />
-    <None Include="doc\html\Text_8cc.html" />
-    <None Include="doc\html\Text_8cc_source.html" />
-    <None Include="doc\html\Text_8h.html" />
-    <None Include="doc\html\Text_8h_source.html" />
-    <None Include="doc\html\Thread_8cc.html" />
-    <None Include="doc\html\Thread_8cc_source.html" />
-    <None Include="doc\html\Thread_8h.html" />
-    <None Include="doc\html\Thread_8h_source.html" />
-    <None Include="doc\html\TransformData_8cc.html" />
-    <None Include="doc\html\TransformData_8cc_source.html" />
-    <None Include="doc\html\TransformData_8h.html" />
-    <None Include="doc\html\TransformData_8h_source.html" />
-    <None Include="doc\html\Transform_8cc.html" />
-    <None Include="doc\html\Transform_8cc_source.html" />
-    <None Include="doc\html\Transform_8h.html" />
-    <None Include="doc\html\Transform_8h_source.html" />
-    <None Include="doc\html\TriangleData_8cc.html" />
-    <None Include="doc\html\TriangleData_8cc_source.html" />
-    <None Include="doc\html\TriangleData_8h.html" />
-    <None Include="doc\html\TriangleData_8h_source.html" />
-    <None Include="doc\html\UIObject_8cc.html" />
-    <None Include="doc\html\UIObject_8cc_source.html" />
-    <None Include="doc\html\UIObject_8h.html" />
-    <None Include="doc\html\UIObject_8h_source.html" />
-    <None Include="doc\html\UtiliDefs_8cc.html" />
-    <None Include="doc\html\UtiliDefs_8cc_source.html" />
-    <None Include="doc\html\UtiliDefs_8h.html" />
-    <None Include="doc\html\UtiliDefs_8h_source.html" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
