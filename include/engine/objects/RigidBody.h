@@ -13,17 +13,17 @@ class RigidBody
 public:
 	RigidBody();
 	virtual ~RigidBody();
-	void Update(const float&);
+	void Update(float);
 
-	void Mass(const float&);
-	void Damping(const float&);
+	void Mass(float);
+	void Damping(float);
 	void Force(const glm::vec3&);
 	void Reset();
 
 
-	const float& Mass() const;
-	const float& InverseMass() const;
-	const float& Damping() const;
+	float Mass() const;
+	float InverseMass() const;
+	float Damping() const;
 	const glm::vec3& Force() const;
 	const glm::vec3& Velocity() const;
 	const glm::vec3& Acceleration() const;

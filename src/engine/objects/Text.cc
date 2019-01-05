@@ -27,17 +27,17 @@ void Text::FontPtr(Font* font)
 }
 
 
-void Text::XBearing(const float& x)
+void Text::XBearing(float x)
 {
 	mXBearing = x;
 }
 
-void Text::YBearing(const float& y)
+void Text::YBearing(float y)
 {
 	mYBearing = y;
 }
 
-void Text::Scale(const float& scale)
+void Text::Scale(float scale)
 {
 	mScale = scale;
 }
@@ -52,17 +52,17 @@ void Text::Color(const glm::vec4& color)
 	mFont->Color(color);
 }
 
-const float& Text::XBearing() const
+float Text::XBearing() const
 {
 	return mXBearing;
 }
 
-const float& Text::YBearing() const
+float Text::YBearing() const
 {
 	return mYBearing;
 }
 
-const float& Text::Scale() const
+float Text::Scale() const
 {
 	return mScale;
 }

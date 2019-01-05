@@ -12,16 +12,16 @@ Thread::~Thread()
 
 void Thread::operator()()
 {
-	mThread_id = boost::this_thread::get_id();
+	mThread_id = std::this_thread::get_id();
 	EntryPoint();
 }
 
 void Thread::Launch()
 {
-	if (mThread_id != boost::thread::id())
+	if (mThread_id != std::thread::id())
 	{
 		throw std::runtime_error("Thread already running!");
 	}
-	boost::thread New_thread(boost::ref(*this));
+	std::thread New_thread(std::ref(*this));
 	swap(New_thread);
 }

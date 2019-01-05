@@ -9,7 +9,7 @@
 /*@{*/
 struct DistanceEntry
 {
-	DistanceEntry(const int& = 0, const float& = 0.0f);
+	DistanceEntry(const int& = 0, float = 0.0f);
 	DistanceEntry(const DistanceEntry&);
 	DistanceEntry(DistanceEntry&&);
 

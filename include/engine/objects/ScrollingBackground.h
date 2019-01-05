@@ -14,15 +14,15 @@ public:
 	
 	ScrollingBackground();
 	~ScrollingBackground();
-	void Update(const float&) override;
+	void Update(float) override;
 	void AddBackground(GameObject*);
 
-	void ScrollSpeed(const float&);
-	void MaxYOffset(const float&);
+	void ScrollSpeed(float);
+	void MaxYOffset(float);
 	void StartingPosition(const Transform&);
 
-	const float& ScrollSpeed() const;
-	const float& MaxYOffset() const;
+	float ScrollSpeed() const;
+	float MaxYOffset() const;
 	const Transform& StartingPosition() const;
 
 protected:

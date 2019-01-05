@@ -6,7 +6,7 @@ BasicObject::BasicObject(const object_t& obj_type) :
 	mId(++sNextBasicObjectId),
 	mType(obj_type)
 {
-	DebugMessage(std::string("Next object id: ") + boost::lexical_cast<std::string>(sNextBasicObjectId));
+	DebugMessage(std::string("Next object id: ") + std::to_string(sNextBasicObjectId));
 }
 
 BasicObject::~BasicObject()

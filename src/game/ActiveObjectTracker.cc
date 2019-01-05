@@ -16,7 +16,7 @@ ActiveObjectTracker::~ActiveObjectTracker()
 void ActiveObjectTracker::OnNotify(const GameObject& obj, const event_t& event_name)
 {
 	std::string str;
-	mLogger->Log("notified by object type " + TypeToString(obj.Type()) + std::string(" id ") + boost::lexical_cast<std::string>(obj.Id()) + std::string(" event num ") + boost::lexical_cast<std::string>(event_name));
+	mLogger->Log("notified by object type " + TypeToString(obj.Type()) + std::string(" id ") + std::to_string(obj.Id()) + std::string(" event num ") + std::to_string(event_name));
 	switch (event_name)
 	{
 	case event_t::SPAWNED_OBJECT:
@@ -36,7 +36,7 @@ void ActiveObjectTracker::OnNotify(const GameObject& obj, const event_t& event_n
 		{
 			if (*(*iter) == obj)
 			{
-				mLogger->Log(std::string("Removing ") + TypeToString(obj.Type()) + std::string(" id ") + boost::lexical_cast<std::string>((*iter)->Id()) + std::string(" from object list"));
+				mLogger->Log(std::string("Removing ") + TypeToString(obj.Type()) + std::string(" id ") + std::to_string((*iter)->Id()) + std::string(" from object list"));
 				iter = mGameObjectList.erase(iter);
 				break;
 			}

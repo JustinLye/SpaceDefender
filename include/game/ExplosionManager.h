@@ -24,15 +24,15 @@ public:
 	void AddObserver(Observer*) override;
 	void RemoveObserver(Observer*) override;
 
-	void ExpansionSpeed(const float&);
-	void MinExpansion(const float&);
-	void MaxExpansion(const float&);
-	void InitScale(const float&);
+	void ExpansionSpeed(float);
+	void MinExpansion(float);
+	void MaxExpansion(float);
+	void InitScale(float);
 
-	const float& ExpansionSpeed() const;
-	const float& MaxExpansion() const;
-	const float& MinExpansion() const;
-	const float& InitScale() const;
+	float ExpansionSpeed() const;
+	float MaxExpansion() const;
+	float MinExpansion() const;
+	float InitScale() const;
 
 protected:
 	Transform mTransform;
@@ -47,7 +47,7 @@ protected:
 
 
 	Explosion* ConstructObject();
-	void CustomAllocOps(const unsigned int&) override;
+	void CustomAllocOps(unsigned int) override;
 	void CustomInitOps() override;
 	bool DestructionPred(Explosion*) const override;
 };

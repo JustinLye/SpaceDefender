@@ -36,35 +36,35 @@ public:
 	void RemoveObserver(Observer*) override;
 	void AddActiveObjectTracker(const ActiveObjectTracker*);
 
-	const int& MinRespawnWaitTime() const;
-	const int& MaxRespawnWaitTime() const;
-	const float& MinProjectileSpeed() const;
-	const float& MaxProjectileSpeed() const;
-	const float& StartingYPos() const;
-	const float& MinXPos() const;
-	const float& MaxXPos() const;
-	const float& TerminateYPos() const;
-	const float& ProbabilityOfSpawn() const;
-	const int& HitPoints() const;
-	const glm::vec3& ShipScale() const;
-	const int& MaxPlacementAttempts() const;
+	int MinRespawnWaitTime() const;
+	int MaxRespawnWaitTime() const;
+	float MinProjectileSpeed() const;
+	float MaxProjectileSpeed() const;
+	float StartingYPos() const;
+	float MinXPos() const;
+	float MaxXPos() const;
+	float TerminateYPos() const;
+	float ProbabilityOfSpawn() const;
+	int HitPoints() const;
+	glm::vec3 ShipScale() const;
+	int MaxPlacementAttempts() const;
 
 	const Transform& GetTransform() const;
 	Transform& GetTransform();
 
-	void MinRespawnWaitTime(const int&);
-	void MaxRespawnWaitTime(const int&);
-	void MinProjectileSpeed(const float&);
-	void MaxProjectileSpeed(const float&);
-	void StartingYPos(const float&);
-	void MinXPos(const float&);
-	void MaxXPos(const float&);
-	void TerminateYPos(const float&);
-	void ProbabilityOfSpawn(const float&);
-	void HitPoints(const int&);
+	void MinRespawnWaitTime(int);
+	void MaxRespawnWaitTime(int);
+	void MinProjectileSpeed(float);
+	void MaxProjectileSpeed(float);
+	void StartingYPos(float);
+	void MinXPos(float);
+	void MaxXPos(float);
+	void TerminateYPos(float);
+	void ProbabilityOfSpawn(float);
+	void HitPoints(int);
 	void ShipScale(const glm::vec3&);
-	void ShipScale(const float&);
-	void MaxPlacementAttempts(const int&);
+	void ShipScale(float);
+	void MaxPlacementAttempts(int);
 
 	void Init() override;
 
@@ -97,9 +97,9 @@ protected:
 
 	void OnNotify(const GameObject&, const Constants::Types::event_t&);
 	EnemyShip* ConstructObject();
-	void CustomAllocOps(const unsigned int&) override;
-	void CustomDeallocOps(const unsigned int&) override;
-	void CustomUpdateOps(const float&) override;
+	void CustomAllocOps(unsigned int) override;
+	void CustomDeallocOps(unsigned int) override;
+	void CustomUpdateOps(float) override;
 	bool DestructionPred(EnemyShip*) const override;
 
 	void TrySpawn();

@@ -92,62 +92,62 @@ void EnemyShipManager::AddActiveObjectTracker(const ActiveObjectTracker* tracker
 	}
 }
 
-const int& EnemyShipManager::MinRespawnWaitTime() const
+int EnemyShipManager::MinRespawnWaitTime() const
 {
 	return mMinRespawnWaitTime;
 }
 
-const int& EnemyShipManager::MaxRespawnWaitTime() const
+int EnemyShipManager::MaxRespawnWaitTime() const
 {
 	return mMaxRespawnWaitTime;
 }
 
-const float& EnemyShipManager::MinProjectileSpeed() const
+float EnemyShipManager::MinProjectileSpeed() const
 {
 	return mSpeedDist.min();
 }
 
-const float& EnemyShipManager::MaxProjectileSpeed() const
+float EnemyShipManager::MaxProjectileSpeed() const
 {
 	return mSpeedDist.max();
 }
 
-const float& EnemyShipManager::StartingYPos() const
+float EnemyShipManager::StartingYPos() const
 {
 	return mStartingYPos;
 }
 
-const float& EnemyShipManager::MinXPos() const
+float EnemyShipManager::MinXPos() const
 {
 	return mPosDist.min();
 }
 
-const float& EnemyShipManager::MaxXPos() const
+float EnemyShipManager::MaxXPos() const
 {
 	return mPosDist.max();
 }
 
-const float& EnemyShipManager::TerminateYPos() const
+float EnemyShipManager::TerminateYPos() const
 {
 	return mTerminateYPos;
 }
 
-const float& EnemyShipManager::ProbabilityOfSpawn() const
+float EnemyShipManager::ProbabilityOfSpawn() const
 {
 	return mProbabilityOfSpawn;
 }
 
-const int& EnemyShipManager::HitPoints() const
+int EnemyShipManager::HitPoints() const
 {
 	return mHitPoints;
 }
 
-const glm::vec3& EnemyShipManager::ShipScale() const
+glm::vec3 EnemyShipManager::ShipScale() const
 {
 	return mShipScale;
 }
 
-const int& EnemyShipManager::MaxPlacementAttempts() const
+int EnemyShipManager::MaxPlacementAttempts() const
 {
 	return mMaxPlacementAttempts;
 }
@@ -162,52 +162,52 @@ Transform& EnemyShipManager::GetTransform()
 	return mTransform;
 }
 
-void EnemyShipManager::MinRespawnWaitTime(const int& min)
+void EnemyShipManager::MinRespawnWaitTime(int min)
 {
 	mMinRespawnWaitTime = min;
 }
 
-void EnemyShipManager::MaxRespawnWaitTime(const int& max)
+void EnemyShipManager::MaxRespawnWaitTime(int max)
 {
 	mMaxRespawnWaitTime = max;
 }
 
-void EnemyShipManager::MinProjectileSpeed(const float& speed)
+void EnemyShipManager::MinProjectileSpeed(float speed)
 {
 	mSpeedDist.param(std::uniform_real_distribution<>::param_type(speed, mSpeedDist.max()));
 }
 
-void EnemyShipManager::MaxProjectileSpeed(const float& speed)
+void EnemyShipManager::MaxProjectileSpeed(float speed)
 {
 	mSpeedDist.param(std::uniform_real_distribution<>::param_type(mSpeedDist.min(), speed));
 }
 
-void EnemyShipManager::StartingYPos(const float& pos)
+void EnemyShipManager::StartingYPos(float pos)
 {
 	mStartingYPos = pos;
 }
 
-void EnemyShipManager::MinXPos(const float& pos)
+void EnemyShipManager::MinXPos(float pos)
 {
 	mPosDist.param(std::uniform_real_distribution<>::param_type(pos, mPosDist.max()));
 }
 
-void EnemyShipManager::MaxXPos(const float& pos)
+void EnemyShipManager::MaxXPos(float pos)
 {
 	mPosDist.param(std::uniform_real_distribution<>::param_type(mPosDist.min(), pos));
 }
 
-void EnemyShipManager::TerminateYPos(const float& pos)
+void EnemyShipManager::TerminateYPos(float pos)
 {
 	mTerminateYPos = pos;
 }
 
-void EnemyShipManager::ProbabilityOfSpawn(const float& prob)
+void EnemyShipManager::ProbabilityOfSpawn(float prob)
 {
 	mProbabilityOfSpawn = prob;
 }
 
-void EnemyShipManager::HitPoints(const int& hp)
+void EnemyShipManager::HitPoints(int hp)
 {
 	mHitPoints = hp;
 	for (int i = 0; i < mMaxCapacity; ++i)
@@ -221,12 +221,12 @@ void EnemyShipManager::ShipScale(const glm::vec3& scale)
 	mShipScale = scale;
 }
 
-void EnemyShipManager::ShipScale(const float& scale)
+void EnemyShipManager::ShipScale(float scale)
 {
 	mShipScale = glm::vec3(scale);
 }
 
-void EnemyShipManager::MaxPlacementAttempts(const int& attempts)
+void EnemyShipManager::MaxPlacementAttempts(int attempts)
 {
 	mMaxPlacementAttempts = attempts;
 }
@@ -299,7 +299,7 @@ EnemyShip* EnemyShipManager::ConstructObject()
 	return ship;
 }
 
-void EnemyShipManager::CustomAllocOps(const unsigned int& index)
+void EnemyShipManager::CustomAllocOps(unsigned int index)
 {
 	if (index == NOT_INDEX)
 	{
@@ -316,11 +316,11 @@ void EnemyShipManager::CustomAllocOps(const unsigned int& index)
 	ship->Translate(glm::vec3(mNextXPos, mStartingYPos - mTransform.Position().y, 0.0f));
 	ship->HitPoints(mHitPoints);
 	/*float rad = DegToRad(180.0f);
-	mLogger->Log(std::string("rads ") + boost::lexical_cast<std::string>(rad));
+	mLogger->Log(std::string("rads ") + std::to_string(rad));
 	ship->Rotate(DegToRad(180.0f), glm::vec3(0.0f, 0.0f, 1.0f));*/
 }
 
-void EnemyShipManager::CustomDeallocOps(const unsigned int& index)
+void EnemyShipManager::CustomDeallocOps(unsigned int index)
 {
 	if (index == NOT_INDEX)
 	{
@@ -330,7 +330,7 @@ void EnemyShipManager::CustomDeallocOps(const unsigned int& index)
 	Notify(*mObjects[index], event_t::DESPAWNED_OBJECT);
 }
 
-void EnemyShipManager::CustomUpdateOps(const float& dt)
+void EnemyShipManager::CustomUpdateOps(float dt)
 {
 	TrySpawn();
 }

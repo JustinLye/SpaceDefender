@@ -12,7 +12,23 @@ ObjectManager<T>::ObjectManager() :
 template<class T>
 ObjectManager<T>::~ObjectManager()
 {
-	Destroy();
+  try {
+    if (mObjects != nullptr) {
+      for (int i = 0; i < mMaxCapacity; ++i) {
+        if (mObjects[i] != nullptr) {
+          try {
+            // Call delete on each pointer in the array of pointers
+            delete mObjects[i];
+          } catch (...) {}
+        }
+      }
+      try {
+        // Call delete on array of pointers
+        delete[] mObjects;
+      } catch(...) {}
+    }
+    Destroy();
+  } catch (...) {}
 }
 
 template<class T>
@@ -58,7 +74,7 @@ void ObjectManager<T>::Destroy()
 }
 
 template<class T>
-void ObjectManager<T>::Update(const float& dt)
+void ObjectManager<T>::Update(float dt)
 {
 	CustomUpdateOps(dt);
 	std::list<unsigned int>::iterator iter = mActiveIndices.begin();
@@ -106,13 +122,13 @@ unsigned int ObjectManager<T>::Alloc()
 
 
 template<class T>
-void ObjectManager<T>::CustomAllocOps(const unsigned int& index)
+void ObjectManager<T>::CustomAllocOps(unsigned int index)
 {
 
 }
 
 template<class T>
-void ObjectManager<T>::CustomDeallocOps(const unsigned int& index)
+void ObjectManager<T>::CustomDeallocOps(unsigned int index)
 {
 
 }
@@ -124,7 +140,7 @@ void ObjectManager<T>::CustomInitOps()
 }
 
 template<class T>
-void ObjectManager<T>::CustomUpdateOps(const float& dt)
+void ObjectManager<T>::CustomUpdateOps(float dt)
 {
 
 }

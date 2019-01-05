@@ -51,9 +51,9 @@ public:
 	void Run();
 	Player* GetPlayer();
 	GLFWwindow* GetWindow();
-	void Update(const float&);
+	void Update(float);
 	void Render();
-	void DoCollisionDetection(const float&);
+	void DoCollisionDetection(float);
 
 protected:
 	

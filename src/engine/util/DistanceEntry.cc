@@ -1,6 +1,6 @@
 #include"engine/util/DistanceEntry.h"
 
-DistanceEntry::DistanceEntry(const int& index, const float& dist) :
+DistanceEntry::DistanceEntry(const int& index, float dist) :
 	mIndex(index),
 	mDistance(dist)
 {

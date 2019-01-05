@@ -50,7 +50,7 @@ public:
 	const unsigned int& Id() const;
 	virtual object_t Type() const;
 	virtual void Collide(const GameObject&) const;
-	virtual void Update(const float&);
+	virtual void Update(float);
 	virtual void AddRenderer(Renderer*);
 	virtual void AddRigidBody(RigidBody*);
 	virtual void Match(const Transform&);
@@ -58,14 +58,14 @@ public:
 	virtual void MatchColliders(const Transform&);
 	virtual void MatchGameObjects(const Transform&);
 	
-	void Mass(const float&);
+	void Mass(float);
 	void Force(const glm::vec3&);
-	void Damping(const float&);
+	void Damping(float);
 
-	const float& Mass() const;
-	const float& InverseMass() const;
+	float Mass() const;
+	float InverseMass() const;
 	const glm::vec3& Force() const;
-	const float& Damping() const;
+	float Damping() const;
 	const glm::vec3& Velocity() const;
 	const glm::vec3& Acceleration() const;
 	
@@ -75,11 +75,11 @@ public:
 	const Transform& GetTransform() const;
 	virtual void JumpToPosition(const Transform&);
 	virtual void JumpToPosition(const glm::vec3&);
-	virtual void Scale(const float&);
+	virtual void Scale(float);
 	virtual void ResetScale();
-	virtual void Scale(const float&, DrawableObject*);
-	virtual void Scale(const float&, Collider*);
-	virtual void Scale(const float&, GameObject*);
+	virtual void Scale(float, DrawableObject*);
+	virtual void Scale(float, Collider*);
+	virtual void Scale(float, GameObject*);
 	virtual void Scale(const glm::vec3&);
 	const glm::vec3& Scale() const;
 	const glm::vec3& Scale(DrawableObject*) const;
@@ -93,10 +93,10 @@ public:
 	const glm::vec3& Position(DrawableObject*) const;
 	const glm::vec3& Position(Collider*) const;
 	const glm::vec3& Position(GameObject*) const;
-	virtual void Rotate(const float&, const glm::vec3&);
-	virtual void Rotate(const float&, const glm::vec3&, DrawableObject*);
-	virtual void Rotate(const float&, const glm::vec3&, Collider*);
-	virtual void Rotate(const float&, const glm::vec3&, GameObject*);
+	virtual void Rotate(float, const glm::vec3&);
+	virtual void Rotate(float, const glm::vec3&, DrawableObject*);
+	virtual void Rotate(float, const glm::vec3&, Collider*);
+	virtual void Rotate(float, const glm::vec3&, GameObject*);
 	virtual void Rotation(const glm::quat&);
 	virtual void Rotation(const glm::quat&, DrawableObject*);
 	virtual void Rotation(const glm::quat&, Collider*);
@@ -127,7 +127,7 @@ public:
 	virtual void Render(const glm::mat4&, const glm::mat4&, GameObject*);
 
 	virtual void PolyMode(const OpenGLPolyMode::face_t&, const GLenum&);
-	const GLenum& PolyMode(const OpenGLPolyMode::face_t&) const;
+	GLenum PolyMode(const OpenGLPolyMode::face_t&) const;
 
 	// Collider Interface
 	virtual void AddCollider(Collider*);
@@ -162,11 +162,11 @@ protected:
 	std::map<Collider*, Collider*, CompareTransPtr> mColliderMap;
 	std::map<GameObject*, GameObject*, CompareGameObjectPtr> mGameObjectMap;
 
-	virtual void ScaleDrawableObjects(const float&);
+	virtual void ScaleDrawableObjects(float);
 	virtual void ScaleDrawableObjects(const glm::vec3&);
-	virtual void ScaleColliders(const float&);
+	virtual void ScaleColliders(float);
 	virtual void ScaleColliders(const glm::vec3&);
-	virtual void ScaleObjects(const float&);
+	virtual void ScaleObjects(float);
 	virtual void ScaleObjects(const glm::vec3&);
 	virtual void ResetScaleOnDrawableObjects();
 	virtual void ResetScaleOnColliders();
@@ -174,9 +174,9 @@ protected:
 	virtual void TranslateDrawableObjects(const glm::vec3&);
 	virtual void TranslateColliders(const glm::vec3&);
 	virtual void TranslateObjects(const glm::vec3&);
-	virtual void RotateDrawableObjects(const float&, const glm::vec3&);
-	virtual void RotateColliders(const float&, const glm::vec3&);
-	virtual void RotateObjects(const float&, const glm::vec3&);
+	virtual void RotateDrawableObjects(float, const glm::vec3&);
+	virtual void RotateColliders(float, const glm::vec3&);
+	virtual void RotateObjects(float, const glm::vec3&);
 	virtual void RotationDrawableObjects(const glm::quat&);
 	virtual void RotationColliders(const glm::quat&);
 	virtual void RotationObjects(const glm::quat&);
@@ -184,8 +184,8 @@ protected:
 	virtual void OffsetColliders(const glm::vec3&);
 	virtual void OffsetObjects(const glm::vec3&);
 
-	virtual void CustomScaleActions(const float&) {}
-	virtual void CustomScaleActions(const float&, DrawableObject*) {}
+	virtual void CustomScaleActions(float) {}
+	virtual void CustomScaleActions(float, DrawableObject*) {}
 	virtual void CustomScaleActions(const glm::vec3&) {}
 	virtual void CustomTranslateActions(const glm::vec3&) {}
 

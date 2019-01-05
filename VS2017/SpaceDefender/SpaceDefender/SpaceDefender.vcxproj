@@ -141,6 +141,7 @@
     <ClInclude Include="..\..\..\include\game\EnemyShip.h" />
     <ClInclude Include="..\..\..\include\game\EnemyShipManager.h" />
     <ClInclude Include="..\..\..\include\game\Explosion.h" />
+    <ClInclude Include="..\..\..\include\game\ExplosionManager.h" />
     <ClInclude Include="..\..\..\include\game\Laser.h" />
     <ClInclude Include="..\..\..\include\game\LaserCannon.h" />
     <ClInclude Include="..\..\..\include\game\Player.h" />
@@ -210,7 +211,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external;C:\SpaceDefender\include;C:\SpaceDefender\external\glad\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\glm;C:\SpaceDefender\external;C:\glfw\include;C:\glad\include;C:\SpaceDefender\include;C:\SpaceDefender\src;C:\freetype2\freetype-2.9.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/DENGINE_DEBUG /DFONT_DEBUG /DGRAPHICS_DEBUG /DENEMY_SHIP_DEBUG  /DGAME_OBJECT_DEBUG %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <MinimalRebuild>false</MinimalRebuild>
@@ -226,7 +227,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external\stb;C:\SpaceDefender\external;C:\SpaceDefender\external\glfw\include;C:\SpaceDefender\external\ft29\freetype-2.9\include;C:\SpaceDefender\external\glad\include;C:\SpaceDefender\external\Boost\include;C:\SpaceDefender\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\glm;C:\SpaceDefender\external;C:\glfw\include;C:\glad\include;C:\SpaceDefender\include;C:\SpaceDefender\src;C:\freetype2\freetype-2.9.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/DENGINE_DEBUG %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -242,7 +243,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SpaceDefender\src;C:\SpaceDefender\external;C:\SpaceDefender\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\glm;C:\SpaceDefender\external;C:\glfw\include;C:\glad\include;C:\SpaceDefender\include;C:\SpaceDefender\src;C:\freetype2\freetype-2.9.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -260,6 +261,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\glm;C:\SpaceDefender\external;C:\glfw\include;C:\glad\include;C:\SpaceDefender\include;C:\SpaceDefender\src;C:\freetype2\freetype-2.9.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

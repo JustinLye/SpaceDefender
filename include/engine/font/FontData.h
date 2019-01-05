@@ -3,7 +3,6 @@
 
 #include<map>
 #include<string>
-#include<boost/lexical_cast.hpp>
 #include<glad/glad.h>
 #include<glm/glm.hpp>
 #include<ft2build.h>

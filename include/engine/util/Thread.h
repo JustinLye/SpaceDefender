@@ -1,22 +1,34 @@
 #ifndef __THREAD_H_INCLUDED__
 #define __THREAD_H_INCLUDED__
 
-#define BOOST_THREAD_VERSION 2
 
-#include<boost/thread/thread.hpp>
-#include<boost/core/noncopyable.hpp>
-#include<boost/core/ref.hpp>
+#include<thread>
+#include<functional>
 
 /** @addtogroup EngineUtil */
 /*@{*/
+
+class NonCopyable {
+public:
+  NonCopyable() {}
+  NonCopyable(NonCopyable&&) {}
+  NonCopyable& operator=(NonCopyable&&) {}
+  virtual ~NonCopyable() {}
+private:
+  NonCopyable(const NonCopyable&) = delete;
+  NonCopyable& operator=(const NonCopyable&) = delete;
+
+};
+
+
 class Thread :
-	private boost::noncopyable,
-	private boost::thread
+	private NonCopyable,
+	private std::thread
 {
 public:
-	using boost::thread::get_id;
-	using boost::thread::join;
-	using boost::thread::joinable;
+	using std::thread::get_id;
+	using std::thread::join;
+	using std::thread::joinable;
 	explicit Thread();
 	virtual ~Thread();
 	virtual void Launch();
@@ -24,7 +36,7 @@ public:
 protected:
 	virtual void EntryPoint() = 0;
 
-	boost::thread::id mThread_id;
+	std::thread::id mThread_id;
 };
 /*@}*/
 #endif

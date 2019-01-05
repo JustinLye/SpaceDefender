@@ -18,7 +18,7 @@ object_t Explosion::Type() const
 	return object_t::EXPLOSION_OBJECT;
 }
 
-void Explosion::Update(const float& dt)
+void Explosion::Update(float dt)
 {
 
 	Scale(1.0f + (mSpeed * dt));
@@ -29,22 +29,22 @@ bool Explosion::Terminate() const
 	return mMaxScale <= Scale().x;
 }
 
-void Explosion::Speed(const float& speed)
+void Explosion::Speed(float speed)
 {
 	mSpeed = speed;
 }
 
-void Explosion::MaxScale(const float& max_scale)
+void Explosion::MaxScale(float max_scale)
 {
 	mMaxScale = max_scale;
 }
 
-const float& Explosion::Speed() const
+float Explosion::Speed() const
 {
 	return mSpeed;
 }
 
-const float& Explosion::MaxScale() const
+float Explosion::MaxScale() const
 {
 	return mMaxScale;
 }

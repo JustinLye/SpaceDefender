@@ -26,7 +26,7 @@ void Button::Render()
 	mText->Render();
 }
 
-void Button::Clicked(const float& xpos, const float& ypos)
+void Button::Clicked(float xpos, float ypos)
 {
 
 }
@@ -76,12 +76,12 @@ void Button::AddText(Text* text)
 	mText = text;
 }
 
-const glm::vec4& Button::FillColor() const
+glm::vec4 Button::FillColor() const
 {
 	return mRenderer->Color();
 }
 
-const glm::vec4& Button::TextColor() const
+glm::vec4 Button::TextColor() const
 {
 	return mText->Color();
 }

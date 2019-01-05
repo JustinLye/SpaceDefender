@@ -18,15 +18,15 @@ public:
 	
 	object_t Type() const override;
 	void Collide(const GameObject&) const override;
-	const float& Speed() const;
-	const float& TerminateYPos() const;
-	const float& RotationSpeed() const;
+	float Speed() const;
+	float TerminateYPos() const;
+	float RotationSpeed() const;
 
-	void Speed(const float&);
-	void TerminateYPos(const float&);
-	void RotationSpeed(const float&);
+	void Speed(float);
+	void TerminateYPos(float);
+	void RotationSpeed(float);
 
-	void Update(const float&) override;
+	void Update(float) override;
 	
 	bool Terminate() const;
 	void HitPoints(const int&);

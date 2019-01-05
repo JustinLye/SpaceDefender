@@ -11,7 +11,7 @@ CollisionDetector::~CollisionDetector()
 {
 }
 
-void CollisionDetector::DoDetection(const float& dt)
+void CollisionDetector::DoDetection(float dt)
 {
 	std::map<unsigned int, const Laser*>::const_iterator laser_iter = mLaserMap.cbegin();
 	while (laser_iter != mLaserMap.cend())

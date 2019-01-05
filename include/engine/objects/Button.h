@@ -19,7 +19,7 @@ public:
 
 	void Init();
 	void Render();
-	virtual void Clicked(const float&, const float&);
+	virtual void Clicked(float, float);
 	virtual void Translate(const glm::vec3&);
 	virtual void Scale(const glm::vec3&);
 	void FillColor(const glm::vec4&);
@@ -30,8 +30,8 @@ public:
 	void AddDrawableObject(Shape*);
 	void AddText(Text*);
 
-	const glm::vec4& FillColor() const;
-	const glm::vec4& TextColor() const;
+	glm::vec4 FillColor() const;
+	glm::vec4 TextColor() const;
 
 protected:
 	Transform* mTransform;

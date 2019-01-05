@@ -31,43 +31,43 @@ public:
 	void RemoveObserver(Observer*) override;
 	void AddActiveObjectTracker(const ActiveObjectTracker*);
 
-	const int& MinRespawnWaitTime() const;
-	const int& MaxRespawnWaitTime() const;
-	const float& MinProjectileSpeed() const;
-	const float& MaxProjectileSpeed() const;
-	const float& StartingYPos() const;
-	const float& MinXPos() const;
-	const float& MaxXPos() const;
-	const float& TerminateYPos() const;
-	const float& ProbabilityOfSpawn() const;
-	const float& MinScale() const;
-	const float& MaxScale() const;
-	const int& MinHitPoints() const;
-	const int& MaxHitPoints() const;
-	const float& MinRotationSpeed() const;
-	const float& MaxRotationSpeed() const;
+	int MinRespawnWaitTime() const;
+	int MaxRespawnWaitTime() const;
+	float MinProjectileSpeed() const;
+	float MaxProjectileSpeed() const;
+	float StartingYPos() const;
+	float MinXPos() const;
+	float MaxXPos() const;
+	float TerminateYPos() const;
+	float ProbabilityOfSpawn() const;
+	float MinScale() const;
+	float MaxScale() const;
+	int MinHitPoints() const;
+	int MaxHitPoints() const;
+	float MinRotationSpeed() const;
+	float MaxRotationSpeed() const;
 
 	const Transform& GetTransform() const;
 	Transform& GetTransform();
 
-	void Scale(const float&);
+	void Scale(float);
 	void Translate(const glm::vec3&);
 
-	void MinRespawnWaitTime(const int&);
-	void MaxRespawnWaitTime(const int&);
-	void MinProjectileSpeed(const float&);
-	void MaxProjectileSpeed(const float&);
-	void StartingYPos(const float&);
-	void MinXPos(const float&);
-	void MaxXPos(const float&);
-	void TerminateYPos(const float&);
-	void ProbabilityOfSpawn(const float&);
-	void MinScale(const float&);
-	void MaxScale(const float&);
-	void MinHitPoints(const int&);
-	void MaxHitPoints(const int&);
-	void MinRotationSpeed(const float&);
-	void MaxRotationSpeed(const float&);
+	void MinRespawnWaitTime(int);
+	void MaxRespawnWaitTime(int);
+	void MinProjectileSpeed(float);
+	void MaxProjectileSpeed(float);
+	void StartingYPos(float);
+	void MinXPos(float);
+	void MaxXPos(float);
+	void TerminateYPos(float);
+	void ProbabilityOfSpawn(float);
+	void MinScale(float);
+	void MaxScale(float);
+	void MinHitPoints(int);
+	void MaxHitPoints(int);
+	void MinRotationSpeed(float);
+	void MaxRotationSpeed(float);
 
 	void Init() override;
 
@@ -97,13 +97,13 @@ protected:
 
 	void OnNotify(const GameObject&, const Constants::Types::event_t&);
 	Asteroid* ConstructObject();
-	void CustomAllocOps(const unsigned int&) override;
-	void CustomDeallocOps(const unsigned int&) override;
-	void CustomUpdateOps(const float&) override;
+	void CustomAllocOps(unsigned int) override;
+	void CustomDeallocOps(unsigned int) override;
+	void CustomUpdateOps(float) override;
 	bool DestructionPred(Asteroid*) const override;
 
 	void TrySpawn();
-	Asteroid* LookUpAsteroid(const unsigned int&);
+	Asteroid* LookUpAsteroid(unsigned int);
 
 };
 /*@}*/

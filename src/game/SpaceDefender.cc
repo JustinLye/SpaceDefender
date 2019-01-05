@@ -128,7 +128,7 @@ void SpaceDefender::Run()
 			{
 				mWarningMessage->Message("");
 			}
-			mGunTempText->Message("Gun Temp: " + boost::lexical_cast<std::string>((int)mPlayer->CurrentGunTemp()));
+			mGunTempText->Message("Gun Temp: " + std::to_string((int)mPlayer->CurrentGunTemp()));
 			Render();
 			glfwSwapBuffers(mWindow);
 			glfwPollEvents();
@@ -148,7 +148,7 @@ void SpaceDefender::Run()
 			} else
 			{
 				mWarningMessage->Message("");
-				mGunTempText->Message("Gun Temp: " + boost::lexical_cast<std::string>((int)mPlayer->CurrentGunTemp()));
+				mGunTempText->Message("Gun Temp: " + std::to_string((int)mPlayer->CurrentGunTemp()));
 			}
 			button->Render();
 			glfwSwapBuffers(mWindow);
@@ -158,7 +158,7 @@ void SpaceDefender::Run()
 		++frame_count;
 		if (duration_cast<milliseconds>(high_resolution_clock::now() - begin_time).count() >= 999)
 		{
-			mFPSText->Message(std::string("FPS: ") + boost::lexical_cast<std::string>(frame_count));
+			mFPSText->Message(std::string("FPS: ") + std::to_string(frame_count));
 			frame_count = 0;
 			begin_time = high_resolution_clock::now();
 		}
@@ -178,7 +178,7 @@ GLFWwindow* SpaceDefender::GetWindow()
 	return mWindow;
 }
 
-void SpaceDefender::Update(const float& dt)
+void SpaceDefender::Update(float dt)
 {
 	mPlayer->Update(dt);
 	mAsteroidSpawner->Update(dt);
@@ -197,7 +197,7 @@ void SpaceDefender::Render()
 	mBackground->Render(IDENTITY_MATRIX, IDENTITY_MATRIX);
 }
 
-void SpaceDefender::DoCollisionDetection(const float& dt)
+void SpaceDefender::DoCollisionDetection(float dt)
 {
 	mCollisionDetector->DoDetection(dt);
 }

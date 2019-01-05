@@ -32,7 +32,7 @@ object_t EnemyShip::Type() const
 	return object_t::ENEMY_SHIP;
 }
 
-void EnemyShip::Update(const float& dt)
+void EnemyShip::Update(float dt)
 {
 	if (mRigidBody != nullptr)
 	{
@@ -43,13 +43,13 @@ void EnemyShip::Update(const float& dt)
 			size_t count = mCloseObjects.size();
 			if (count > 0)
 			{
-				mLogger->Log(std::string("----------------- EnemyShip [") + boost::lexical_cast<std::string>(Id()) + std::string("] proximity scan results ---------------"));
-				mLogger->Log(boost::lexical_cast<std::string>(count) + std::string(" objects detected."));
+				mLogger->Log(std::string("----------------- EnemyShip [") + std::to_string(Id()) + std::string("] proximity scan results ---------------"));
+				mLogger->Log(std::to_string(count) + std::string(" objects detected."));
 			}
 			std::string pos_str = Vec3ToString(mTransform.Position());
 			for (index_t i = 0; i < (index_t)count; ++i)
 			{
-				mLogger->Log(TypeToString(mCloseObjects[i]->Type()) + std::string(" object detected at ") + std::string(static_cast<std::string>(mCloseObjects[i]->GetTransform())) + std::string(" with distance of ") + boost::lexical_cast<std::string>(glm::distance(mTransform.Position(), mCloseObjects[i]->GetTransform().Position())) + std::string(" from ") + static_cast<std::string>(mTransform) + std::string(" with angle of ") + boost::lexical_cast<std::string>(glm::angle(mTransform.Rotation())) + std::string(" id is ") + boost::lexical_cast<std::string>(mCloseObjects[i]->Id()));
+				mLogger->Log(TypeToString(mCloseObjects[i]->Type()) + std::string(" object detected at ") + std::string(static_cast<std::string>(mCloseObjects[i]->GetTransform())) + std::string(" with distance of ") + std::to_string(glm::distance(mTransform.Position(), mCloseObjects[i]->GetTransform().Position())) + std::string(" from ") + static_cast<std::string>(mTransform) + std::string(" with angle of ") + std::to_string(glm::angle(mTransform.Rotation())) + std::string(" id is ") + std::to_string(mCloseObjects[i]->Id()));
 			}
 			if (count > 0)
 			{
@@ -138,7 +138,7 @@ void EnemyShip::Despawn() const
 	Notify(*this, event_t::DESPAWNED_OBJECT);
 }
 
-const float& EnemyShip::Speed() const
+float EnemyShip::Speed() const
 {
 	return mSpeed;
 }
@@ -148,7 +148,7 @@ const int& EnemyShip::HitPoints() const
 	return mHitPoints;
 }
 
-const float& EnemyShip::TerminateYPos() const
+float EnemyShip::TerminateYPos() const
 {
 	return mTerminateYPos;
 }
@@ -158,7 +158,7 @@ const glm::vec3& EnemyShip::Up() const
 	return mUp;
 }
 
-void EnemyShip::Speed(const float& speed)
+void EnemyShip::Speed(float speed)
 {
 	mSpeed = speed;
 }
@@ -168,7 +168,7 @@ void EnemyShip::HitPoints(const int& hp)
 	mHitPoints = hp;
 }
 
-void EnemyShip::TerminateYPos(const float& pos)
+void EnemyShip::TerminateYPos(float pos)
 {
 	mTerminateYPos = pos;
 }

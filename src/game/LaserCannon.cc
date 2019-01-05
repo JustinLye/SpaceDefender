@@ -127,7 +127,7 @@ unsigned int LaserCannon::Fire()
 #ifdef LASER_CANNON_DEBUG
 	else if (mGunOverHeated)
 	{
-		DebugMessage("Gun is overheated. Current temp is: " + boost::lexical_cast<std::string>(mCurrentGunTemp));
+		DebugMessage("Gun is overheated. Current temp is: " + std::to_string(mCurrentGunTemp));
 		return NOT_INDEX;
 	}
 #endif
@@ -152,17 +152,17 @@ Transform& LaserCannon::GetTransform()
 	return mTransform;
 }
 
-void LaserCannon::ProjectileSpeed(const float& speed)
+void LaserCannon::ProjectileSpeed(float speed)
 {
 	mProjectileSpeed = speed;
 }
 
-void LaserCannon::CooldownTime(const float& cooldown_time)
+void LaserCannon::CooldownTime(float cooldown_time)
 {
 	mCooldownTime = cooldown_time;
 }
 
-void LaserCannon::LaserTermYPos(const float& ypos)
+void LaserCannon::LaserTermYPos(float ypos)
 {
 	mLaserTermYPos = ypos;
 	for (int i = 0; i < mMaxCapacity; ++i)
@@ -171,37 +171,37 @@ void LaserCannon::LaserTermYPos(const float& ypos)
 	}
 }
 
-void LaserCannon::OverheatCooldownTime(const float& t)
+void LaserCannon::OverheatCooldownTime(float t)
 {
 	mOverheatCooldownTime = t;
 }
 
-const float& LaserCannon::LaserTermYPos() const
+float LaserCannon::LaserTermYPos() const
 {
 	return mLaserTermYPos;
 }
 
-const float& LaserCannon::ProjectileSpeed() const
+float LaserCannon::ProjectileSpeed() const
 {
 	return mProjectileSpeed;
 }
 
-const float& LaserCannon::CooldownTime() const
+float LaserCannon::CooldownTime() const
 {
 	return mCooldownTime;
 }
 
-const float& LaserCannon::OverheatCooldownTime() const
+float LaserCannon::OverheatCooldownTime() const
 {
 	return mOverheatCooldownTime;
 }
 
-const float& LaserCannon::CurrentGunTemp() const
+float LaserCannon::CurrentGunTemp() const
 {
 	return mCurrentGunTemp;
 }
 
-const float& LaserCannon::MaxGunTemp() const
+float LaserCannon::MaxGunTemp() const
 {
 	return mMaxGunTemp;
 }
@@ -211,7 +211,7 @@ bool LaserCannon::GunOverHeated() const
 	return mGunOverHeated;
 }
 
-void LaserCannon::CustomAllocOps(const unsigned int& index)
+void LaserCannon::CustomAllocOps(unsigned int index)
 {
 	if (index == NOT_INDEX)
 	{
@@ -223,12 +223,12 @@ void LaserCannon::CustomAllocOps(const unsigned int& index)
 	object->Scale(glm::vec3(1.0f, 2.0f, 1.0f));
 	float gun_temp_ratio = mCurrentGunTemp / mMaxGunTemp;
 #ifdef LASER_CANNON_DEBUG
-	DebugMessage("gun_time_ratio = " + boost::lexical_cast<std::string>(gun_temp_ratio));
+	DebugMessage("gun_time_ratio = " + std::to_string(gun_temp_ratio));
 #endif
 	object->Color(glm::vec4(gun_temp_ratio, 1.0f - gun_temp_ratio, gun_temp_ratio / 3.0f, 1.0f));
 }
 
-void LaserCannon::CustomDeallocOps(const unsigned int& index)
+void LaserCannon::CustomDeallocOps(unsigned int index)
 {
 	if (DestructionPred(mObjects[index]))
 	{
@@ -244,14 +244,14 @@ void LaserCannon::CustomInitOps()
 	reinterpret_cast<TexRenderer*>(mRenderer)->UseMixInColor(true);
 }
 
-void LaserCannon::CustomUpdateOps(const float& dt)
+void LaserCannon::CustomUpdateOps(float dt)
 {
 #ifdef LASER_CANNON_DEBUG
 	static int counter = 25;
 	++counter;
 	if (counter >= 25)
 	{
-		DebugMessage("Current Gun Temp: " + boost::lexical_cast<std::string>(mCurrentGunTemp));
+		DebugMessage("Current Gun Temp: " + std::to_string(mCurrentGunTemp));
 		counter = 0;
 	}
 	
@@ -290,7 +290,7 @@ Laser* LaserCannon::ConstructObject()
 	return new_obj;
 }
 
-void LaserCannon::Scale(const float& scale)
+void LaserCannon::Scale(float scale)
 {
 	mTransform.Scale(scale);
 	for (int i = 0; i < mMaxCapacity; ++i)

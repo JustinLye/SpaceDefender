@@ -66,7 +66,7 @@ void ExplosionManager::RemoveObserver(Observer* observer)
 	}
 }
 
-void ExplosionManager::ExpansionSpeed(const float& speed)
+void ExplosionManager::ExpansionSpeed(float speed)
 {
 	mSpeed = speed;
 	for (int i = 0; i < mMaxCapacity; ++i)
@@ -75,39 +75,39 @@ void ExplosionManager::ExpansionSpeed(const float& speed)
 	}
 }
 
-void ExplosionManager::MinExpansion(const float& min)
+void ExplosionManager::MinExpansion(float min)
 {
 	mExpansionDist.param(std::uniform_real_distribution<>::param_type((double)min, mExpansionDist.max()));
 }
 
-void ExplosionManager::MaxExpansion(const float& max)
+void ExplosionManager::MaxExpansion(float max)
 {
 	mExpansionDist.param(std::uniform_real_distribution<>::param_type(mExpansionDist.min(), (double)max));
 }
 
 
 
-void ExplosionManager::InitScale(const float& scale)
+void ExplosionManager::InitScale(float scale)
 {
 	mInitScale = scale;
 }
 
-const float& ExplosionManager::ExpansionSpeed() const
+float ExplosionManager::ExpansionSpeed() const
 {
 	return mSpeed;
 }
 
-const float& ExplosionManager::MinExpansion() const
+float ExplosionManager::MinExpansion() const
 {
 	return (float)mExpansionDist.min();
 }
 
-const float& ExplosionManager::MaxExpansion() const
+float ExplosionManager::MaxExpansion() const
 {
 	return (float)mExpansionDist.max();
 }
 
-const float& ExplosionManager::InitScale() const
+float ExplosionManager::InitScale() const
 {
 	return mInitScale;
 }
@@ -124,7 +124,7 @@ Explosion* ExplosionManager::ConstructObject()
 	return object;
 }
 
-void ExplosionManager::CustomAllocOps(const unsigned int& index)
+void ExplosionManager::CustomAllocOps(unsigned int index)
 {
 	if (index == NOT_INDEX)
 	{

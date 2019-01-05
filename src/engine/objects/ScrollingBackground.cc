@@ -15,7 +15,7 @@ ScrollingBackground::~ScrollingBackground()
 }
 
 
-void ScrollingBackground::Update(const float& dt)
+void ScrollingBackground::Update(float dt)
 {
 	std::map<GameObject*, GameObject*, CompareGameObjectPtr>::iterator iter = mGameObjectMap.begin();
 	std::map<GameObject*, GameObject*, CompareGameObjectPtr>::iterator end_iter = mGameObjectMap.end();
@@ -37,12 +37,12 @@ void ScrollingBackground::AddBackground(GameObject* bg)
 	AddGameObject(bg);
 }
 
-void ScrollingBackground::ScrollSpeed(const float& speed)
+void ScrollingBackground::ScrollSpeed(float speed)
 {
 	mScrollOffsetVec.y = speed;
 }
 
-void ScrollingBackground::MaxYOffset(const float& offset)
+void ScrollingBackground::MaxYOffset(float offset)
 {
 	mMaxYOffset = offset;
 }
@@ -52,12 +52,12 @@ void ScrollingBackground::StartingPosition(const Transform& transform)
 	mStartingPosition = transform;
 }
 
-const float& ScrollingBackground::ScrollSpeed() const
+float ScrollingBackground::ScrollSpeed() const
 {
 	return mScrollOffsetVec.y;
 }
 
-const float& ScrollingBackground::MaxYOffset() const
+float ScrollingBackground::MaxYOffset() const
 {
 	return mMaxYOffset;
 }

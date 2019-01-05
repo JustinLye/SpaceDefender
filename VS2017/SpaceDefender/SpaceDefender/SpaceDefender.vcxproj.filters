@@ -446,5 +446,8 @@
     <ClInclude Include="..\..\..\include\doc\Groups.h">
       <Filter>include\doc</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\game\ExplosionManager.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

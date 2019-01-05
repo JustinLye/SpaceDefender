@@ -3,7 +3,6 @@
 
 #include<string>
 #include<iterator>
-#include<boost/lexical_cast.hpp>
 #include<stdexcept>
 #include"engine/util/UtiliDefs.h"
 #include"engine/util/Constants.h"

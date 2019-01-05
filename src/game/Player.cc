@@ -39,7 +39,7 @@ void Player::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 	}
 }
 
-void Player::Update(const float& dt)
+void Player::Update(float dt)
 {
 /*	float distance = mTargetXPos - mTransform.Position().x;
 	float delta_x = distance*dt*mSpeed*mSpeedBoost;
@@ -99,7 +99,7 @@ void Player::FireCannon()
 	}
 }
 
-void Player::CustomScaleActions(const float& scale)
+void Player::CustomScaleActions(float scale)
 {
 	if (mLaserCannon)
 	{
@@ -115,27 +115,27 @@ void Player::CustomTranslateActions(const glm::vec3& translation)
 	}
 }
 
-void Player::Speed(const float& speed)
+void Player::Speed(float speed)
 {
 	mSpeed = speed;
 }
 
-const float& Player::Speed() const
+float Player::Speed() const
 {
 	return mSpeed;
 }
 
-void Player::Boost(const float& boost)
+void Player::Boost(float boost)
 {
 	mSpeedBoost = boost;
 }
 
-const float& Player::Boost() const
+float Player::Boost() const
 {
 	return mSpeedBoost;
 }
 
-const float& Player::CurrentGunTemp() const
+float Player::CurrentGunTemp() const
 {
 #ifdef ENGINE_DEBUG
 	assert(mLaserCannon != nullptr);
@@ -143,7 +143,7 @@ const float& Player::CurrentGunTemp() const
 	return mLaserCannon->CurrentGunTemp();
 }
 
-const float& Player::MaxGunTemp() const
+float Player::MaxGunTemp() const
 {
 #ifdef ENGINE_DEBUG
 	assert(mLaserCannon != nullptr);

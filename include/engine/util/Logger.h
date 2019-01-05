@@ -4,7 +4,7 @@
 #include<string>
 #include<fstream>
 #include<map>
-#include<boost/filesystem.hpp>
+#include<cassert>
 #include"engine/util/MailBox.h"
 #include"engine/util/Thread.h"
 

@@ -81,7 +81,7 @@ void Renderer::PolyMode(const OpenGLPolyMode::face_t& face, const GLenum& poly_m
 	mPolyMode[face] = poly_mode;
 }
 
-const GLenum& Renderer::PolyMode(const OpenGLPolyMode::face_t& face) const
+GLenum Renderer::PolyMode(const OpenGLPolyMode::face_t& face) const
 {
 	return mPolyMode[face];
 }
@@ -92,7 +92,7 @@ void Renderer::Color(const glm::vec4& color)
 	mColor = color;
 }
 
-const glm::vec4& Renderer::Color() const
+glm::vec4 Renderer::Color() const
 {
 	return mColor;
 }

@@ -2,7 +2,6 @@
 #define ENEMY_SHIP_HEADER_INCLUDED
 #include<limits>
 #include<algorithm>
-#include<boost/lexical_cast.hpp>
 #ifdef ENEMY_SHIP_DEBUG
 #include"engine/util/DebugFunctions.h"
 #endif
@@ -27,20 +26,20 @@ public:
 	~EnemyShip();
 
 	object_t Type() const override;
-	void Update(const float&) override;
+	void Update(float) override;
 	void Collide(const GameObject&) const override;
 
 	bool Terminate() const;
 	void Despawn() const;
 
-	const float& Speed() const;
+	float Speed() const;
 	const int& HitPoints() const;
-	const float& TerminateYPos() const;
+	float TerminateYPos() const;
 	const glm::vec3& Up() const;
 
-	void Speed(const float&);
+	void Speed(float);
 	void HitPoints(const int&);
-	void TerminateYPos(const float&);
+	void TerminateYPos(float);
 	void Up(const glm::vec3&);
 
 	void AddActiveObjectTracker(const ActiveObjectTracker*);
