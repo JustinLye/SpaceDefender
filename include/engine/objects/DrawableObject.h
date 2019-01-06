@@ -2,7 +2,8 @@
 #define DRAWABLE_OBJECT_HEADER_INCLUDED
 
 #include<glad/glad.h>
-
+/** @addtogroup EngineObjects */
+/*@{*/
 class DrawableObject
 {
 public:
@@ -20,5 +21,5 @@ protected:
 	virtual void CustomActivationSteps();
 	virtual void CustomDeactivationSteps();
 };
-
+/*@}*/
 #endif

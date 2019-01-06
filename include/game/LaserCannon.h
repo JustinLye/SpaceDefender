@@ -15,7 +15,8 @@
 #include"engine/shapes/CircleData.h"
 #endif
 
-
+/** @addtogroup GameComponents */
+/*@{*/
 class LaserCannon :
 	public Subject,
 	public Observer,
@@ -32,24 +33,24 @@ public:
 
 	void DoDetection(Collider*);
 
-	const float& ProjectileSpeed() const; 
-	const float& CooldownTime() const;
-	const float& LaserTermYPos() const;
-	const float& OverheatCooldownTime() const;
-	const float& CurrentGunTemp() const;
-	const float& MaxGunTemp() const;
+	float ProjectileSpeed() const; 
+	float CooldownTime() const;
+	float LaserTermYPos() const;
+	float OverheatCooldownTime() const;
+	float CurrentGunTemp() const;
+	float MaxGunTemp() const;
 	bool GunOverHeated() const;
 
 	const Transform& GetTransform() const;
 	Transform& GetTransform();
-	void Scale(const float&);
+	void Scale(float);
 	void ScaleLasers(const glm::vec3&);
 	void Translate(const glm::vec3&);
 	unsigned int Fire();
-	void ProjectileSpeed(const float&);
-	void CooldownTime(const float&);
-	void LaserTermYPos(const float&);
-	void OverheatCooldownTime(const float&);
+	void ProjectileSpeed(float);
+	void CooldownTime(float);
+	void LaserTermYPos(float);
+	void OverheatCooldownTime(float);
 	bool DestructionPred(Laser*) const override;
 	void AttachTo(const GameObject&);
 	void Render(const glm::mat4&, const glm::mat4&) override;
@@ -74,10 +75,10 @@ protected:
 	float mCurrentGunTemp;
 	bool mGunOverHeated;
 
-	void CustomAllocOps(const unsigned int&) override;
-	void CustomDeallocOps(const unsigned int&) override;
+	void CustomAllocOps(unsigned int) override;
+	void CustomDeallocOps(unsigned int) override;
 	void CustomInitOps() override;
-	void CustomUpdateOps(const float&);
+	void CustomUpdateOps(float);
 };
-
+/*@}*/
 #endif

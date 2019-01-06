@@ -13,7 +13,8 @@
 #endif
 
 using namespace Constants::Types;
-
+/** @addtogroup GameWorld */
+/*@{*/
 class CollisionDetector :
 	public Subject,
 	public Observer
@@ -21,7 +22,7 @@ class CollisionDetector :
 public:
 	CollisionDetector();
 	~CollisionDetector();
-	void DoDetection(const float&);
+	void DoDetection(float);
 	void OnNotify(const GameObject&, const Constants::Types::event_t&);
 protected:
 	std::map<unsigned int, const Asteroid*> mAsteroidMap;
@@ -29,4 +30,5 @@ protected:
 	std::map<unsigned int, const EnemyShip*> mEnemyShipMap;
 
 };
+/*@}*/
 #endif

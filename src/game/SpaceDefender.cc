@@ -5,10 +5,13 @@ SpaceDefender::SpaceDefender(const OpenGLOptions& opts) :
 	mPlayer(nullptr),
 	mWindow(nullptr),
 	mAsteroidSpawner(nullptr),
+	mTracker(nullptr),
 	mViewMat(Constants::Geometry::IDENTITY_MATRIX),
 	mProjMat(Constants::Geometry::IDENTITY_MATRIX),
 	mScoreText(nullptr),
-	mGameState(game_state_t::INIT_GAME_STATE)
+	mGameState(game_state_t::INIT_GAME_STATE),
+	mBackground(nullptr),
+  mLastObjectInfoPrinted(Constants::NOT_AN_OBJECT)
 {
 
 }
@@ -27,6 +30,8 @@ void SpaceDefender::Init()
 	InitFonts();
 	InitUI();
 	InitTextures();
+	InitBackground();
+	InitTracker();
 	InitPlayer();
 	InitAsteroids();
 	InitExplosions();
@@ -41,6 +46,7 @@ void SpaceDefender::Run()
 	Button* button = new Button();
 	QuadData* quad_data = new QuadData();
 	Shape* button_shape = new Shape();
+	button_shape->Buffer(quad_data);
 	Text* button_text = new Text();
 	button_text->FontPtr(mFont[PAUSE_FONT]);
 	button_text->Scale(1.0f);
@@ -60,32 +66,6 @@ void SpaceDefender::Run()
 
 	glEnable(GL_TEXTURE_2D);
 
-	GameObject* background = new GameObject();
-	GameObject* background2 = new GameObject();
-	GameObject* background3 = new GameObject();
-	GameObject* start_background = new GameObject();
-	GameObject* static_background = new GameObject();
-
-	static_background->AddGameObject(background);
-	static_background->AddGameObject(background2);
-	static_background->AddGameObject(background3);
-	static_background->AddGameObject(start_background);
-	//static_background->Scale(2.0f);
-	background->AddRenderer(new TexRenderer(mShaders[shader_prog_t::TEXTURE_SHADER_PROG]));
-	background->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND]);
-	background->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND2]);
-	background2->AddRenderer(new TexRenderer(mShaders[shader_prog_t::TEXTURE_SHADER_PROG]));
-	background2->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND]);
-	background2->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND2]);
-	background3->AddRenderer(new TexRenderer(mShaders[shader_prog_t::TEXTURE_SHADER_PROG]));
-	background3->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND]);
-	background3->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND2]);
-
-	start_background->Offset(glm::vec3(0.0f, -2.5f, 0.0f));
-	background2->Offset(glm::vec3(0.0f, -1.75f, 0.0f));
-	background3->Offset(glm::vec3(0.0f, -2.75f, 0.0f));
-
-	float scroll_speed = 0.10f * (1.0f / 60.0f);
 	auto begin_time = high_resolution_clock::now();
 	auto last_frame_time = high_resolution_clock::now();
 	auto next_frame_time = high_resolution_clock::now();
@@ -148,24 +128,8 @@ void SpaceDefender::Run()
 			{
 				mWarningMessage->Message("");
 			}
-			mGunTempText->Message("Gun Temp: " + boost::lexical_cast<std::string>((int)mPlayer->CurrentGunTemp()));
+			mGunTempText->Message("Gun Temp: " + std::to_string((int)mPlayer->CurrentGunTemp()));
 			Render();
-			static_background->Render(Constants::Geometry::IDENTITY_MATRIX, Constants::Geometry::IDENTITY_MATRIX);
-			static_background->Offset(glm::vec3(0.0f, scroll_speed, 0.0f), background);
-			static_background->Offset(glm::vec3(0.0f, scroll_speed, 0.0f), background2);
-			static_background->Offset(glm::vec3(0.0f, scroll_speed, 0.0f), background3);
-			if (background->Offset().y >= 2.15f)
-			{
-				background->Match(start_background->GetTransform());
-			}
-			if (background2->Offset().y >= 2.15f)
-			{
-				background2->Match(start_background->GetTransform());
-			}
-			if (background3->Offset().y >= 2.15f)
-			{
-				background3->Match(start_background->GetTransform());
-			}
 			glfwSwapBuffers(mWindow);
 			glfwPollEvents();
 			break;
@@ -184,10 +148,9 @@ void SpaceDefender::Run()
 			} else
 			{
 				mWarningMessage->Message("");
-				mGunTempText->Message("Gun Temp: " + boost::lexical_cast<std::string>((int)mPlayer->CurrentGunTemp()));
+				mGunTempText->Message("Gun Temp: " + std::to_string((int)mPlayer->CurrentGunTemp()));
 			}
 			button->Render();
-			static_background->Render(Constants::Geometry::IDENTITY_MATRIX, Constants::Geometry::IDENTITY_MATRIX);
 			glfwSwapBuffers(mWindow);
 			glfwPollEvents();
 			break;
@@ -195,7 +158,7 @@ void SpaceDefender::Run()
 		++frame_count;
 		if (duration_cast<milliseconds>(high_resolution_clock::now() - begin_time).count() >= 999)
 		{
-			mFPSText->Message(std::string("FPS: ") + boost::lexical_cast<std::string>(frame_count));
+			mFPSText->Message(std::string("FPS: ") + std::to_string(frame_count));
 			frame_count = 0;
 			begin_time = high_resolution_clock::now();
 		}
@@ -215,12 +178,13 @@ GLFWwindow* SpaceDefender::GetWindow()
 	return mWindow;
 }
 
-void SpaceDefender::Update(const float& dt)
+void SpaceDefender::Update(float dt)
 {
 	mPlayer->Update(dt);
 	mAsteroidSpawner->Update(dt);
 	mExplosionManager->Update(dt);
 	mEnemyShipManager->Update(dt);
+	mBackground->Update(dt);
 }
 
 void SpaceDefender::Render()
@@ -230,9 +194,10 @@ void SpaceDefender::Render()
 	mExplosionManager->Render(mProjMat, mViewMat);
 	mEnemyShipManager->Render(mProjMat, mViewMat);
 	mCanvas->Render();
+	mBackground->Render(IDENTITY_MATRIX, IDENTITY_MATRIX);
 }
 
-void SpaceDefender::DoCollisionDetection(const float& dt)
+void SpaceDefender::DoCollisionDetection(float dt)
 {
 	mCollisionDetector->DoDetection(dt);
 }
@@ -355,6 +320,39 @@ void SpaceDefender::InitTextures()
 	mTextures[texture_t::ENEMY_SHIP_TEXTURE]->LoadFromFile(EngineTexPath(ENEMY_SHIP_TEXTURE_FILENAME));
 }
 
+void SpaceDefender::InitBackground()
+{
+	mBackground = new ScrollingBackground();
+	mBackground->ScrollSpeed(0.10f * (1.0f / 60.0f));
+	mBackground->MaxYOffset(2.15f);
+	Transform transform;
+	transform.Offset(glm::vec3(0.0f, -2.50f, 0.0f));
+	mBackground->StartingPosition(transform);
+
+	GameObject* b1 = new GameObject();
+	GameObject* b2 = new GameObject();
+	GameObject* b3 = new GameObject();
+
+	b1->AddRenderer(new TexRenderer(mShaders[shader_prog_t::TEXTURE_SHADER_PROG]));
+	b1->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND]);
+	b1->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND2]);
+	b2->AddRenderer(new TexRenderer(mShaders[shader_prog_t::TEXTURE_SHADER_PROG]));
+	b2->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND]);
+	b2->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND2]);
+	b3->AddRenderer(new TexRenderer(mShaders[shader_prog_t::TEXTURE_SHADER_PROG]));
+	b3->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND]);
+	b3->AddDrawableObject(mTextures[texture_t::SPACE_BACKGROUND2]);
+
+	b2->Offset(glm::vec3(0.0f, -1.75f, 0.0f));
+	b3->Offset(glm::vec3(0.0f, -2.75f, 0.0f));
+
+	mBackground->AddBackground(b1);
+	mBackground->AddBackground(b2);
+	mBackground->AddBackground(b3);
+
+
+}
+
 void SpaceDefender::InitPlayer()
 {
 	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
@@ -386,8 +384,12 @@ void SpaceDefender::InitPlayer()
 	mPlayer->Translate(glm::vec3(sw/2.0f, sh*0.09f, 0.0f));
 	laser_cannon->Translate(glm::vec3(1.0f, sh * 0.05f, 0.0f)); // adjust laser cannon
 	laser_cannon->Scale(0.5f);
-	
+	laser_cannon->AddObserver(mTracker);
+}
 
+void SpaceDefender::InitTracker()
+{
+	mTracker = new ActiveObjectTracker();
 }
 
 void SpaceDefender::InitAsteroids()
@@ -414,6 +416,7 @@ void SpaceDefender::InitAsteroids()
 	mAsteroidSpawner->StartingYPos(mBoundries.mTop + (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.075f));
 	mAsteroidSpawner->TerminateYPos(mBoundries.mBottom - (OpenGLUtility::GetScreenHeight(mOptions.mMonitor)*0.05f));
 	mAsteroidSpawner->AddObserver(mScoreText);
+	mAsteroidSpawner->AddObserver(mTracker);
 	
 }
 
@@ -441,9 +444,13 @@ void SpaceDefender::InitEnemyShips()
 	mEnemyShipManager->ProbabilityOfSpawn(10.0f);
 	mEnemyShipManager->MaxXPos(mBoundries.mRight - (sw * 0.05f));
 	mEnemyShipManager->MinXPos(mBoundries.mLeft + (sw *0.05f));
-	mEnemyShipManager->StartingYPos(mBoundries.mTop + (sh * 0.075f));
+	//mEnemyShipManager->StartingYPos(mBoundries.mTop + (sh * 0.075f));
+	mEnemyShipManager->StartingYPos(mBoundries.mTop - (sh * 0.075f));
 	mEnemyShipManager->TerminateYPos(mBoundries.mBottom - (sh * 0.05f));
+	mEnemyShipManager->MaxPlacementAttempts(5);
 	mEnemyShipManager->AddObserver(mScoreText);
+	mEnemyShipManager->AddObserver(mTracker);
+	mEnemyShipManager->AddActiveObjectTracker(mTracker);
 }
 
 void SpaceDefender::InitCollisionDetection()
@@ -503,7 +510,29 @@ void SpaceDefender::HandleInput()
 			mPlayer->FireCannon();
 		}
 	}
+	if (mGameState == game_state_t::PAUSED)
+	{
+    MouseHoverObjectInfo();
+	}
 
+}
+
+void SpaceDefender::MouseHoverObjectInfo() const {
+  double xpos = 0.0;
+  double ypos = 0.0;
+  glfwGetCursorPos(mWindow, &xpos, &ypos);
+  if (xpos >= mBoundries.mLeft && xpos <= mBoundries.mRight && ypos >= mBoundries.mBottom && ypos <= mBoundries.mTop) {
+    Transform transform;
+    transform.Translate(glm::vec3(xpos, mBoundries.mTop - ypos, 0.0f));
+    float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
+    transform.Scale(sw * 0.002f);
+    std::vector<const GameObject*> close_objects;
+    mTracker->ObjectScan(transform, close_objects);
+    if (close_objects.size() > 0 && close_objects[0]->Id() != mLastObjectInfoPrinted) {
+      mLastObjectInfoPrinted = close_objects[0]->Id();
+      std::cout << "Object: " << TypeToString(close_objects[0]->Type()) << '\t' << close_objects[0]->GetTransform() << '\n';
+    }
+  }
 }
 
 void SpaceDefender::HandleLeftMovement()

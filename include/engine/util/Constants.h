@@ -3,9 +3,11 @@
 #include<string>
 #include<glad/glad.h>
 #include<glm/glm.hpp>
+/** @addtogroup EngineUtil */
+/*@{*/
 namespace Constants
 {
-
+  const unsigned int NOT_AN_OBJECT = ~0;
 	namespace Containers
 	{
 		const unsigned int NULL_ELEMENT_INDEX = ~0;
@@ -102,6 +104,8 @@ namespace Constants
 		
 		enum event_t : unsigned int
 		{
+			SPAWNED_OBJECT,
+			DESPAWNED_OBJECT,
 			ACTIVATED_COLLIDABLE_OBJECT,
 			TERMINATED_COLLIDABLE_OBJECT,
 			OBJECT_OUT_OF_BOUNDS,
@@ -121,10 +125,18 @@ namespace Constants
 			PLAYER,
 			EXPLOSION_OBJECT,
 			ENEMY_SHIP,
+			ASTEROID_COLLISION,
 			TOTAL_GAME_OBJECT_TYPES
 		};
 
-
+		enum color_t
+		{
+			WHITE,
+			GRAY,
+			RED,
+			BLACK,
+			TOTAL_COLOR_TYPES
+		};
 
 		enum font_data_t : unsigned int
 		{
@@ -161,6 +173,11 @@ namespace Constants
 			TOTAL_GAME_TEXTURES
 		};
 	}
-};
 
+	namespace logging
+	{
+		
+	};
+};
+/*@}*/
 #endif

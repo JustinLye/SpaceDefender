@@ -5,7 +5,8 @@ Asteroid::Asteroid() :
 	GameObject(),
 	mSpeed(0.0f),
 	mHitPoints(2),
-	mRotationSpeed(0.0f)
+	mRotationSpeed(0.0f),
+	mTracker(nullptr)
 {
 }
 
@@ -13,7 +14,8 @@ Asteroid::Asteroid(const Asteroid& other) :
 	GameObject(other),
 	mSpeed(other.mSpeed),
 	mHitPoints(other.mHitPoints),
-	mRotationSpeed(other.mRotationSpeed)
+	mRotationSpeed(other.mRotationSpeed),
+	mTracker(nullptr)
 {
 
 }
@@ -23,9 +25,9 @@ Asteroid::~Asteroid()
 
 }
 
-const Constants::Types::object_t& Asteroid::Type() const
+Constants::Types::object_t Asteroid::Type() const
 {
-	return Constants::Types::object_t::ASTEROID;
+	return object_t::ASTEROID;
 }
 
 void Asteroid::Collide(const GameObject& object) const
@@ -67,17 +69,22 @@ void Asteroid::ReportAsteroidCollision(const Asteroid& asteroid) const
 	Notify(collision, event_t::ASTEROID_TO_ASTEROID_COLLISION);
 }
 
-const float& Asteroid::Speed() const
+void Asteroid::AddActiveObjectTracker(const ActiveObjectTracker* tracker)
+{
+	mTracker = tracker;
+}
+
+float Asteroid::Speed() const
 {
 	return mSpeed;
 }
 
-const float& Asteroid::TerminateYPos() const
+float Asteroid::TerminateYPos() const
 {
 	return mTerminateYPos;
 }
 
-const float& Asteroid::RotationSpeed() const
+float Asteroid::RotationSpeed() const
 {
 	return mRotationSpeed;
 }
@@ -87,17 +94,17 @@ const int& Asteroid::HitPoints() const
 	return mHitPoints;
 }
 
-void Asteroid::Speed(const float& speed)
+void Asteroid::Speed(float speed)
 {
 	mSpeed = speed;
 }
 
-void Asteroid::TerminateYPos(const float& ypos)
+void Asteroid::TerminateYPos(float ypos)
 {
 	mTerminateYPos = ypos;
 }
 
-void Asteroid::RotationSpeed(const float& speed)
+void Asteroid::RotationSpeed(float speed)
 {
 	mRotationSpeed = speed;
 }
@@ -107,7 +114,7 @@ void Asteroid::HitPoints(const int& points)
 	mHitPoints = points;
 }
 
-void Asteroid::Update(const float& dt)
+void Asteroid::Update(float dt)
 {
 	if (mRigidBody != nullptr)
 	{

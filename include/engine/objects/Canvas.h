@@ -3,6 +3,8 @@
 #include<map>
 #include"engine/objects/UIObject.h"
 #include"engine/objects/Text.h"
+/** @addtogroup EngineObjects */
+/*@{*/
 class Canvas :
 	public UIObject
 {
@@ -18,5 +20,6 @@ protected:
 	std::map<unsigned int, UIObject*> mUIObjects;
 };
 
+/*@}*/
 
 #endif

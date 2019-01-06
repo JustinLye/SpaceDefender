@@ -5,6 +5,9 @@
 
 using namespace Constants::Types;
 
+/** @addtogroup GameComponents */
+/*@{*/
+
 class Explosion :
 	public GameObject
 {
@@ -12,19 +15,19 @@ public:
 	Explosion();
 	virtual ~Explosion();
 
-	const object_t& Type() const override;
-	virtual void Update(const float&) override;
+	object_t Type() const override;
+	virtual void Update(float) override;
 	bool Terminate() const;
 
-	void Speed(const float&);
-	void MaxScale(const float&);
+	void Speed(float);
+	void MaxScale(float);
 
-	const float& Speed() const;
-	const float& MaxScale() const;
+	float Speed() const;
+	float MaxScale() const;
 
 protected:
 	float mSpeed;
 	float mMaxScale;
 };
-
+/*@}*/
 #endif

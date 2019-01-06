@@ -3,13 +3,18 @@
 
 #include<string>
 #include<iterator>
-#include<boost/lexical_cast.hpp>
 #include<stdexcept>
 #include"engine/util/UtiliDefs.h"
 #include"engine/util/Constants.h"
 #include"engine/util/DebugFunctions.h"
 using namespace Constants::Containers;
 
+
+/**
+  @ingroup EngineIndicesAuxillary
+  @struct Index
+  @brief Used as index to element of IndexQueue
+*/
 struct Index
 {
 	typedef unsigned int size_t;
@@ -34,6 +39,11 @@ struct Index
 	static Index* PAST_END_INDEX; // Use as abstraction for end()
 };
 
+/**
+  @ingroup EngineIndicesAuxillary
+  @class IdxQueueIter
+  @brief  Implements iterator concept with pointer to Index. Used by IndexQueue
+*/
 class IdxQueueIter
 {
 public:
@@ -65,8 +75,8 @@ protected:
 	Index* mIdx;
 };
 
-
-
+/** @addtogroup EngineIndicesContainers */
+/*@{*/
 class IndexQueue
 {
 public:
@@ -118,5 +128,5 @@ public:
 protected:
 
 };
-
+/*@}*/
 #endif

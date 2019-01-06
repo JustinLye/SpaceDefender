@@ -13,7 +13,7 @@ Observer::~Observer()
 
 }
 
-const unsigned int& Observer::Id() const
+unsigned int Observer::Id() const
 {
 	return mId;
 }

@@ -1,5 +1,5 @@
 #include"engine/util/UtiliDefs.h"
-const std::string& TypeToString(const object_t& obj)
+std::string TypeToString(const object_t& obj)
 {
 	std::string result;
 	switch (obj)
@@ -22,6 +22,9 @@ const std::string& TypeToString(const object_t& obj)
 	case object_t::PLAYER:
 		result = "PLAYER";
 		break;
+	case object_t::ASTEROID_COLLISION:
+		result = "ASTEROID_COLLISION";
+		break;
 	default:
 		result = "UNKNOWN";
 		break;
@@ -33,4 +36,12 @@ std::ostream& operator<<(std::ostream& os, const object_t& obj)
 {
 	os << TypeToString(obj);
 	return os;
+}
+
+float VecToVecAngle(const glm::vec3& u, const glm::vec3& v)
+{
+	float dot_uv = glm::dot(u, v);
+	float len_u = glm::length(u);
+	float len_v = glm::length(v);
+	return std::acos(dot_uv / (len_u * len_v));
 }

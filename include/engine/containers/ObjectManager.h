@@ -8,7 +8,8 @@
 #include<glm/glm.hpp>
 #include"engine/util/Constants.h"
 #include"engine/containers/IndexQueue.h"
-
+/** @addtogroup EngineObjectContainers */
+/*@{*/
 //////////////////////////////////////////////////
 ///\ class ObjectManager
 ///\ brief Provoides generic interface for object
@@ -41,7 +42,7 @@ public:
 	virtual void Init();
 	virtual void Destroy();
 
-	virtual void Update(const float&);
+	virtual void Update(float);
 	virtual void Render(const glm::mat4& = Constants::Geometry::IDENTITY_MATRIX, const glm::mat4& = Constants::Geometry::IDENTITY_MATRIX);
 
 protected:
@@ -53,10 +54,10 @@ protected:
 
 	virtual unsigned int Alloc();
 	virtual T* ConstructObject() = 0;
-	virtual void CustomAllocOps(const unsigned int&);
-	virtual void CustomDeallocOps(const unsigned int&);
+	virtual void CustomAllocOps(unsigned int);
+	virtual void CustomDeallocOps(unsigned int);
 	virtual void CustomInitOps();
-	virtual void CustomUpdateOps(const float&);
+	virtual void CustomUpdateOps(float);
 	virtual std::list<unsigned int>::iterator Dealloc(std::list<unsigned int>::iterator);
 	virtual bool DestructionPred(T*) const;
 };
@@ -65,5 +66,5 @@ protected:
 #include"engine/containers/ObjectManager.cc"
 #endif // !OBJECT_MANAGER_CC_INCLUDED
 
-
+/*@}*/
 #endif

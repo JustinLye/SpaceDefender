@@ -34,7 +34,7 @@ int AsteroidSpawner::MaxCapacity()
 }
 int AsteroidSpawner::MaxActiveCapacity()
 {
-	return 15;
+	return 12;
 }
 
 
@@ -62,69 +62,69 @@ std::vector<const Asteroid*> AsteroidSpawner::ActiveAsteroidList() const
 	}
 	return result;
 }
-const int& AsteroidSpawner::MinRespawnWaitTime() const
+int AsteroidSpawner::MinRespawnWaitTime() const
 {
 	return mMinRespawnWaitTime;
 }
-const int& AsteroidSpawner::MaxRespawnWaitTime() const
+int AsteroidSpawner::MaxRespawnWaitTime() const
 {
 	return mMaxRespawnWaitTime;
 }
-const float& AsteroidSpawner::MinProjectileSpeed() const
+float AsteroidSpawner::MinProjectileSpeed() const
 {
-	return mSpeedDist.min();
+	return (float)mSpeedDist.min();
 }
-const float& AsteroidSpawner::MaxProjectileSpeed() const
+float AsteroidSpawner::MaxProjectileSpeed() const
 {
-	return mSpeedDist.max();
+	return (float)mSpeedDist.max();
 }
-const float& AsteroidSpawner::StartingYPos() const
+float AsteroidSpawner::StartingYPos() const
 {
 	return mStartingYPos;
 }
-const float& AsteroidSpawner::MinXPos() const
+float AsteroidSpawner::MinXPos() const
 {
-	return mPosDist.min();
+	return (float)mPosDist.min();
 }
-const float& AsteroidSpawner::MaxXPos() const
+float AsteroidSpawner::MaxXPos() const
 {
-	return mPosDist.max();
+	return (float)mPosDist.max();
 }
-const float& AsteroidSpawner::TerminateYPos() const
+float AsteroidSpawner::TerminateYPos() const
 {
 	return mTerminateYPos;
 }
-const float& AsteroidSpawner::ProbabilityOfSpawn() const
+float AsteroidSpawner::ProbabilityOfSpawn() const
 {
 	return mProbabilityOfSpawn;
 }
-const float& AsteroidSpawner::MinScale() const
+float AsteroidSpawner::MinScale() const
 {
-	return mScaleDist.min();
+	return (float)mScaleDist.min();
 }
-const float& AsteroidSpawner::MaxScale() const
+float AsteroidSpawner::MaxScale() const
 {
-	return mScaleDist.max();
+	return (float)mScaleDist.max();
 }
 
-const int& AsteroidSpawner::MinHitPoints() const
+int AsteroidSpawner::MinHitPoints() const
 {
 	return mMinHitPoints;
 }
 
-const int& AsteroidSpawner::MaxHitPoints() const
+int AsteroidSpawner::MaxHitPoints() const
 {
 	return mMaxHitPoints;
 }
 
-const float& AsteroidSpawner::MinRotationSpeed() const
+float AsteroidSpawner::MinRotationSpeed() const
 {
-	return mRotateDist.min();
+	return (float)mRotateDist.min();
 }
 
-const float& AsteroidSpawner::MaxRotationSpeed() const
+float AsteroidSpawner::MaxRotationSpeed() const
 {
-	return mRotateDist.max();
+	return (float)mRotateDist.max();
 }
 
 const Transform& AsteroidSpawner::GetTransform() const
@@ -137,7 +137,7 @@ Transform& AsteroidSpawner::GetTransform()
 	return mTransform;
 }
 
-void AsteroidSpawner::Scale(const float& scale)
+void AsteroidSpawner::Scale(float scale)
 {
 	mTransform.Scale(scale);
 	for (int i = 0; i < mMaxCapacity; ++i)
@@ -151,44 +151,44 @@ void AsteroidSpawner::Translate(const glm::vec3& translation)
 	mTransform.Translate(translation);
 }
 
-void AsteroidSpawner::MinRespawnWaitTime(const int& wait_time)
+void AsteroidSpawner::MinRespawnWaitTime(int wait_time)
 {
 	mMinRespawnWaitTime = wait_time;
 }
-void AsteroidSpawner::MaxRespawnWaitTime(const int& wait_time)
+void AsteroidSpawner::MaxRespawnWaitTime(int wait_time)
 {
 	mMaxRespawnWaitTime = wait_time;
 }
-void AsteroidSpawner::MinProjectileSpeed(const float& speed)
+void AsteroidSpawner::MinProjectileSpeed(float speed)
 {
 	mSpeedDist.param(std::uniform_real_distribution<>::param_type(speed, mSpeedDist.max()));
 }
-void AsteroidSpawner::MaxProjectileSpeed(const float& speed)
+void AsteroidSpawner::MaxProjectileSpeed(float speed)
 {
 	mSpeedDist.param(std::uniform_real_distribution<>::param_type(mSpeedDist.min(), speed));
 }
-void AsteroidSpawner::StartingYPos(const float& ypos)
+void AsteroidSpawner::StartingYPos(float ypos)
 {
 	mStartingYPos = ypos;
 }
-void AsteroidSpawner::MinXPos(const float& xpos)
+void AsteroidSpawner::MinXPos(float xpos)
 {
 	mPosDist.param(std::uniform_real_distribution<>::param_type(xpos, mPosDist.max()));
 }
-void AsteroidSpawner::MaxXPos(const float& xpos)
+void AsteroidSpawner::MaxXPos(float xpos)
 {
 	mPosDist.param(std::uniform_real_distribution<>::param_type(mPosDist.min(), xpos));
 }
-void AsteroidSpawner::MinRotationSpeed(const float& speed)
+void AsteroidSpawner::MinRotationSpeed(float speed)
 {
 	mRotateDist.param(std::uniform_real_distribution<>::param_type(speed, mRotateDist.max()));
 }
-void AsteroidSpawner::MaxRotationSpeed(const float& speed)
+void AsteroidSpawner::MaxRotationSpeed(float speed)
 {
 	mRotateDist.param(std::uniform_real_distribution<>::param_type(mRotateDist.min(), speed));
 }
 
-void AsteroidSpawner::TerminateYPos(const float& ypos)
+void AsteroidSpawner::TerminateYPos(float ypos)
 {
 	mTerminateYPos = ypos;
 	for (int i = 0; i < mMaxCapacity; ++i)
@@ -196,27 +196,27 @@ void AsteroidSpawner::TerminateYPos(const float& ypos)
 		mObjects[i]->TerminateYPos(ypos);
 	}
 }
-void AsteroidSpawner::ProbabilityOfSpawn(const float& prob)
+void AsteroidSpawner::ProbabilityOfSpawn(float prob)
 {
 	mProbabilityOfSpawn = prob;
 }
 
-void AsteroidSpawner::MinScale(const float& scale)
+void AsteroidSpawner::MinScale(float scale)
 {
 	mScaleDist.param(std::uniform_real_distribution<>::param_type(scale, mScaleDist.max()));
 }
 
-void AsteroidSpawner::MaxScale(const float& scale)
+void AsteroidSpawner::MaxScale(float scale)
 {
 	mScaleDist.param(std::uniform_real_distribution<>::param_type(mScaleDist.min(), scale));
 }
 
-void AsteroidSpawner::MinHitPoints(const int& hp)
+void AsteroidSpawner::MinHitPoints(int hp)
 {
 	mMinHitPoints = hp;
 }
 
-void AsteroidSpawner::MaxHitPoints(const int& hp)
+void AsteroidSpawner::MaxHitPoints(int hp)
 {
 	mMaxHitPoints = hp;
 }
@@ -257,6 +257,14 @@ void AsteroidSpawner::RemoveObserver(Observer* observer)
 	for (int i = 0; i < mMaxCapacity; ++i)
 	{
 		mObjects[i]->RemoveObserver(observer);
+	}
+}
+
+void AsteroidSpawner::AddActiveObjectTracker(const ActiveObjectTracker* tracker)
+{
+	for (int i = 0; i < mMaxCapacity; ++i)
+	{
+		mObjects[i]->AddActiveObjectTracker(tracker);
 	}
 }
 
@@ -331,7 +339,7 @@ void AsteroidSpawner::OnNotify(const GameObject& object, const Constants::Types:
 	}
 }
 
-Asteroid* AsteroidSpawner::LookUpAsteroid(const unsigned int& id)
+Asteroid* AsteroidSpawner::LookUpAsteroid(unsigned int id)
 {
 	Asteroid* result = nullptr;
 	
@@ -350,7 +358,7 @@ Asteroid* AsteroidSpawner::ConstructObject()
 	return asteroid;
 }
 
-void AsteroidSpawner::CustomAllocOps(const unsigned int& index)
+void AsteroidSpawner::CustomAllocOps(unsigned int index)
 {
 	if (index == NOT_INDEX)
 	{
@@ -366,16 +374,18 @@ void AsteroidSpawner::CustomAllocOps(const unsigned int& index)
 	asteroid->RotationSpeed(mRotateDist(mGen));
 }
 
-void AsteroidSpawner::CustomDeallocOps(const unsigned int& index)
+void AsteroidSpawner::CustomDeallocOps(unsigned int index)
 {
 	mObjects[index]->ResetRigidBody();
 	if (mObjects[index]->HitPoints() > 0)
 	{
 		Notify(*mObjects[index], event_t::OBJECT_OUT_OF_BOUNDS);
 	}
+	Notify(*mObjects[index], event_t::DESPAWNED_OBJECT);
+
 }
 
-void AsteroidSpawner::CustomUpdateOps(const float& dt)
+void AsteroidSpawner::CustomUpdateOps(float dt)
 {
 	TrySpawn();
 }

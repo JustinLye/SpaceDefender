@@ -18,7 +18,7 @@ void ScoreText::OnNotify(const GameObject& object, const event_t& event_name)
 	{
 	case PLAYER_DESTROYED_ASTEROID:
 		++mPoints;
-		mMessage = std::string("Score: ") + boost::lexical_cast<std::string>(mPoints);
+		mMessage = std::string("Score: ") + std::to_string(mPoints);
 		break;
 	}
 }

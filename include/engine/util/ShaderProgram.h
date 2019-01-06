@@ -8,6 +8,9 @@
 #include<glad/glad.h>
 #include"engine/util/Paths.h"
 #include"engine/util/Constants.h"
+
+/** @addtogroup EngineUtil */
+/*@{*/
 class ShaderProgram
 {
 public:
@@ -40,6 +43,6 @@ protected:
 	void DeleteShaders();
 };
 
-
+/*@}*/
 
 #endif

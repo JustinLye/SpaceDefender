@@ -52,7 +52,7 @@ void FontData::Init()
 		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
 		{
 			Destroy();
-			throw std::runtime_error(std::string("Failed to load glyph ") + boost::lexical_cast<std::string>(c));
+			throw std::runtime_error(std::string("Failed to load glyph ") + std::to_string(c));
 		}
 
 		// Create texture

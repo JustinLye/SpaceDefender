@@ -8,6 +8,8 @@
 using namespace Constants::Input;
 using namespace std::chrono;
 
+/** @addtogroup EngineUtil */
+/*@{*/
 struct KeyState
 {
 	KEY_STATE mState;
@@ -32,5 +34,5 @@ public:
 protected:
 	std::map<int, KeyState> mStateMap;
 };
-
+/*@}*/
 #endif

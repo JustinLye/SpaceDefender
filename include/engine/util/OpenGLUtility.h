@@ -1,9 +1,10 @@
 #ifndef OPENGL_UTILITY_HEADER_INCLUDED
 #define OPENGL_UTILITY_HEADER_INCLUDED
-#ifdef ENGINE_DEBUG
 #include<iostream>
-#endif
 #include"engine/util/OpenGLOptions.h"
+
+/** @addtogroup EngineUtil */
+/*@{*/
 
 #define GL_CHECK_ERRORS assert(glGetError()== GL_NO_ERROR);
 
@@ -40,5 +41,5 @@ private:
 	static void FinishUpInitialization(GLFWwindow*);
 	
 };
-
+/*@}*/
 #endif

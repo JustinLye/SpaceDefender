@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{107F9259-4705-4519-B8E7-C54E29962B32}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>.tmp\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)external;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>.tmp\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)external;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>.tmp\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)external;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>.tmp\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)external;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>glfw3.lib;freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(ProjectDir)lib\freetype.dll $(OutDir)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glfw3.lib;freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(ProjectDir)lib\freetype.dll $(OutDir)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>glfw3.lib;freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(ProjectDir)lib\freetype.dll $(OutDir)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>glfw3.lib;freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(ProjectDir)lib\freetype.dll $(OutDir)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="external\glad\src\glad.c" />
+    <ClCompile Include="src\engine\containers\IndexQueue.cc" />
+    <ClCompile Include="src\engine\containers\Iterator.cc" />
+    <ClCompile Include="src\engine\containers\IterItem.cc" />
+    <ClCompile Include="src\engine\containers\ObjectManager.cc" />
+    <ClCompile Include="src\engine\font\ArialFontData.cc" />
+    <ClCompile Include="src\engine\font\Font.cc" />
+    <ClCompile Include="src\engine\font\FontData.cc" />
+    <ClCompile Include="src\engine\graphics\TexData.cc" />
+    <ClCompile Include="src\engine\graphics\Texture.cc" />
+    <ClCompile Include="src\engine\graphics\TextureShader.cc" />
+    <ClCompile Include="src\engine\objects\Button.cc" />
+    <ClCompile Include="src\engine\objects\Canvas.cc" />
+    <ClCompile Include="src\engine\objects\Collider.cc" />
+    <ClCompile Include="src\engine\objects\DrawableObject.cc" />
+    <ClCompile Include="src\engine\objects\GameObject.cc" />
+    <ClCompile Include="src\engine\objects\Observer.cc" />
+    <ClCompile Include="src\engine\objects\RenderableObject.cc" />
+    <ClCompile Include="src\engine\objects\Renderer.cc" />
+    <ClCompile Include="src\engine\objects\RigidBody.cc" />
+    <ClCompile Include="src\engine\objects\ScrollingBackground.cc" />
+    <ClCompile Include="src\engine\objects\Subject.cc" />
+    <ClCompile Include="src\engine\objects\TexRenderer.cc" />
+    <ClCompile Include="src\engine\objects\Text.cc" />
+    <ClCompile Include="src\engine\objects\Transform.cc" />
+    <ClCompile Include="src\engine\objects\TransformData.cc" />
+    <ClCompile Include="src\engine\objects\UIObject.cc" />
+    <ClCompile Include="src\engine\shapes\CircleData.cc" />
+    <ClCompile Include="src\engine\shapes\LineSegmentData.cc" />
+    <ClCompile Include="src\engine\shapes\QuadData.cc" />
+    <ClCompile Include="src\engine\shapes\Shape.cc" />
+    <ClCompile Include="src\engine\shapes\ShapeData.cc" />
+    <ClCompile Include="src\engine\shapes\TriangleData.cc" />
+    <ClCompile Include="src\engine\UtiliDefs.cc" />
+    <ClCompile Include="src\engine\util\DebugFunctions.cc" />
+    <ClCompile Include="src\engine\util\DistanceEntry.cc" />
+    <ClCompile Include="src\engine\util\KeyMap.cc" />
+    <ClCompile Include="src\engine\util\Logger.cc" />
+    <ClCompile Include="src\engine\util\MailBox.cc" />
+    <ClCompile Include="src\engine\util\OpenGLOptions.cc" />
+    <ClCompile Include="src\engine\util\OpenGLUtility.cc" />
+    <ClCompile Include="src\engine\util\ShaderProgram.cc" />
+    <ClCompile Include="src\engine\util\TextShader.cc" />
+    <ClCompile Include="src\engine\util\Thread.cc" />
+    <ClCompile Include="src\game\ActiveObjectTracker.cc" />
+    <ClCompile Include="src\game\Asteroid.cc" />
+    <ClCompile Include="src\game\AsteroidCollision.cc" />
+    <ClCompile Include="src\game\AsteroidSpawner.cc" />
+    <ClCompile Include="src\game\CollisionDetector.cc" />
+    <ClCompile Include="src\game\EnemyShip.cc" />
+    <ClCompile Include="src\game\EnemyShipManager.cc" />
+    <ClCompile Include="src\game\Explosion.cc" />
+    <ClCompile Include="src\game\ExplosionManager.cc" />
+    <ClCompile Include="src\game\Laser.cc" />
+    <ClCompile Include="src\game\LaserCannon.cc" />
+    <ClCompile Include="src\game\main.cc" />
+    <ClCompile Include="src\game\Player.cc" />
+    <ClCompile Include="src\game\ScoreText.cc" />
+    <ClCompile Include="src\game\SpaceDefender.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\doc\Groups.h" />
+    <ClInclude Include="include\engine\containers\Detector.h" />
+    <ClInclude Include="include\engine\containers\IndexQueue.h" />
+    <ClInclude Include="include\engine\containers\Iterator.h" />
+    <ClInclude Include="include\engine\containers\IterItem.h" />
+    <ClInclude Include="include\engine\containers\ObjectManager.h" />
+    <ClInclude Include="include\engine\font\ArialFontData.h" />
+    <ClInclude Include="include\engine\font\Font.h" />
+    <ClInclude Include="include\engine\font\FontData.h" />
+    <ClInclude Include="include\engine\graphics\TexData.h" />
+    <ClInclude Include="include\engine\graphics\Texture.h" />
+    <ClInclude Include="include\engine\graphics\TextureShader.h" />
+    <ClInclude Include="include\engine\objects\Button.h" />
+    <ClInclude Include="include\engine\objects\Canvas.h" />
+    <ClInclude Include="include\engine\objects\Collider.h" />
+    <ClInclude Include="include\engine\objects\DrawableObject.h" />
+    <ClInclude Include="include\engine\objects\GameObject.h" />
+    <ClInclude Include="include\engine\objects\Menu.h" />
+    <ClInclude Include="include\engine\objects\Observer.h" />
+    <ClInclude Include="include\engine\objects\RenderableObject.h" />
+    <ClInclude Include="include\engine\objects\Renderer.h" />
+    <ClInclude Include="include\engine\objects\RigidBody.h" />
+    <ClInclude Include="include\engine\objects\ScrollingBackground.h" />
+    <ClInclude Include="include\engine\objects\Subject.h" />
+    <ClInclude Include="include\engine\objects\TexRenderer.h" />
+    <ClInclude Include="include\engine\objects\Text.h" />
+    <ClInclude Include="include\engine\objects\Transform.h" />
+    <ClInclude Include="include\engine\objects\TransformData.h" />
+    <ClInclude Include="include\engine\objects\UIObject.h" />
+    <ClInclude Include="include\engine\shapes\CircleData.h" />
+    <ClInclude Include="include\engine\shapes\LineSegmentData.h" />
+    <ClInclude Include="include\engine\shapes\QuadData.h" />
+    <ClInclude Include="include\engine\shapes\Rectangle.h" />
+    <ClInclude Include="include\engine\shapes\Shape.h" />
+    <ClInclude Include="include\engine\shapes\ShapeData.h" />
+    <ClInclude Include="include\engine\shapes\TriangleData.h" />
+    <ClInclude Include="include\engine\util\BoundryBox.h" />
+    <ClInclude Include="include\engine\util\Constants.h" />
+    <ClInclude Include="include\engine\util\DebugFunctions.h" />
+    <ClInclude Include="include\engine\util\DistanceEntry.h" />
+    <ClInclude Include="include\engine\util\KeyMap.h" />
+    <ClInclude Include="include\engine\util\Logger.h" />
+    <ClInclude Include="include\engine\util\MailBox.h" />
+    <ClInclude Include="include\engine\util\OpenGLOptions.h" />
+    <ClInclude Include="include\engine\util\OpenGLUtility.h" />
+    <ClInclude Include="include\engine\util\Paths.h" />
+    <ClInclude Include="include\engine\util\ShaderProgram.h" />
+    <ClInclude Include="include\engine\util\TextShader.h" />
+    <ClInclude Include="include\engine\util\Thread.h" />
+    <ClInclude Include="include\engine\util\UtiliDefs.h" />
+    <ClInclude Include="include\game\ActiveObjectTracker.h" />
+    <ClInclude Include="include\game\Asteroid.h" />
+    <ClInclude Include="include\game\AsteroidCollision.h" />
+    <ClInclude Include="include\game\AsteroidSpawner.h" />
+    <ClInclude Include="include\game\CollisionDetector.h" />
+    <ClInclude Include="include\game\EnemyShip.h" />
+    <ClInclude Include="include\game\EnemyShipManager.h" />
+    <ClInclude Include="include\game\Explosion.h" />
+    <ClInclude Include="include\game\ExplosionManager.h" />
+    <ClInclude Include="include\game\Laser.h" />
+    <ClInclude Include="include\game\LaserCannon.h" />
+    <ClInclude Include="include\game\Player.h" />
+    <ClInclude Include="include\game\ScoreText.h" />
+    <ClInclude Include="include\game\SpaceDefender.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

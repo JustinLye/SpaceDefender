@@ -16,7 +16,7 @@ RigidBody::~RigidBody()
 
 }
 
-void RigidBody::Update(const float& dt)
+void RigidBody::Update(float dt)
 {
 	// Update acceleration
 	mAcceleration = mForce * mInverseMass;
@@ -25,13 +25,13 @@ void RigidBody::Update(const float& dt)
 	mForce = glm::vec3(0.0f);
 }
 
-void RigidBody::Mass(const float& mass)
+void RigidBody::Mass(float mass)
 {
 	mMass = mass;
 	mInverseMass = (mass <= 0.0f) ? 0.0f : 1.0f / mass;
 }
 
-void RigidBody::Damping(const float& damping)
+void RigidBody::Damping(float damping)
 {
 	mDamping = damping;
 }
@@ -48,17 +48,17 @@ void RigidBody::Force(const glm::vec3& force)
 	mForce += force;
 }
 
-const float& RigidBody::Mass() const
+float RigidBody::Mass() const
 {
 	return mMass;
 }
 
-const float& RigidBody::InverseMass() const
+float RigidBody::InverseMass() const
 {
 	return mInverseMass;
 }
 
-const float& RigidBody::Damping() const
+float RigidBody::Damping() const
 {
 	return mDamping;
 }

@@ -90,6 +90,7 @@ const GLFWvidmode* OpenGLUtility::GetVidMode(GLFWmonitor* monitor)
 	{
 		throw std::runtime_error("GLFW could not get screen resolution. Possible causes are GLFW is not initialized or a platform error occurred. Either way you should handle this exception by 1) init glfw first or 2) have backup/default resolution ready");
 	}
+	return mode;
 }
 
 float OpenGLUtility::GetScreenHeight(GLFWmonitor* monitor)

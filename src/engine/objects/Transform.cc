@@ -16,7 +16,7 @@ Transform::~Transform()
 
 }
 
-void Transform::Scale(const float& scale)
+void Transform::Scale(float scale)
 {
 	mTransformData.mScale *= scale;
 }
@@ -42,7 +42,7 @@ const glm::vec3& Transform::Position() const
 	return mTransformData.mPosition;
 }
 
-void Transform::Rotate(const float& angle_degrees, const glm::vec3& rotation_axis)
+void Transform::Rotate(float angle_degrees, const glm::vec3& rotation_axis)
 {
 	mTransformData.mRotation = glm::rotate(mTransformData.mRotation, angle_degrees, rotation_axis);
 }

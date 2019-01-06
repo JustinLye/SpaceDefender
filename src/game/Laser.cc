@@ -17,7 +17,7 @@ void Laser::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 	RenderDrawableObjects(proj_mat, view_mat);
 }
 
-void Laser::TerminateYPos(const float& ypos)
+void Laser::TerminateYPos(float ypos)
 {
 	mTerminateYPos = ypos;
 }
@@ -27,7 +27,7 @@ void Laser::Color(const glm::vec4& color)
 	mColor = color;
 }
 
-const float& Laser::TerminateYPos() const
+float Laser::TerminateYPos() const
 {
 	return mTerminateYPos;
 }
@@ -44,7 +44,7 @@ bool Laser::Terminate() const
 	return (std::abs(term_ypos) > 0.0f && ((term_ypos > 0.0f && curr_ypos > term_ypos) || (term_ypos < 0.0f && curr_ypos < term_ypos)));
 }
 
-const object_t& Laser::Type() const
+object_t Laser::Type() const
 {
 	return object_t::LASER;
 }
@@ -60,7 +60,7 @@ void Laser::Collide(const GameObject& object) const
 	}
 }
 
-void Laser::Update(const float& dt)
+void Laser::Update(float dt)
 {
 	Translate(glm::vec3(0.0f, dt*10.0f, 0.0f));
 }

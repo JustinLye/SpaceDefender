@@ -164,7 +164,7 @@ void IndexQueue::Insert(const Index& index)
 
 	if (!(index >= 0 && index < mMaxCap))
 	{
-		DebugMessage(boost::lexical_cast<std::string>(index) + std::string(" is out of bounds [") + boost::lexical_cast<std::string>(0) + std::string(", ") + boost::lexical_cast<std::string>(mMaxCap) + std::string("]"));
+		DebugMessage(std::to_string(index) + std::string(" is out of bounds [") + std::to_string(0) + std::string(", ") + std::to_string(mMaxCap) + std::string("]"));
 		throw std::runtime_error("Attempted to insert value outside bounds");
 	}
 	assert(mIndices != nullptr);

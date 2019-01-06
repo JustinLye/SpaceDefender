@@ -11,7 +11,7 @@ CollisionDetector::~CollisionDetector()
 {
 }
 
-void CollisionDetector::DoDetection(const float& dt)
+void CollisionDetector::DoDetection(float dt)
 {
 	std::map<unsigned int, const Laser*>::const_iterator laser_iter = mLaserMap.cbegin();
 	while (laser_iter != mLaserMap.cend())
@@ -96,9 +96,7 @@ void CollisionDetector::OnNotify(const GameObject& object, const Constants::Type
 	case Constants::Types::event_t::ACTIVATED_COLLIDABLE_OBJECT:
 		if (object.Type() == Constants::Types::object_t::ASTEROID)
 		{
-			DebugMessage("");
 			mAsteroidMap.insert({ object.Id(), reinterpret_cast<const Asteroid*>(&object) });
-			DebugMessage("");
 		}
 		else if (object.Type() == Constants::Types::object_t::LASER)
 		{
@@ -112,9 +110,7 @@ void CollisionDetector::OnNotify(const GameObject& object, const Constants::Type
 	case Constants::Types::event_t::OBJECT_OUT_OF_BOUNDS:
 		if (object.Type() == Constants::Types::object_t::ASTEROID)
 		{
-			DebugMessage("");
 			mAsteroidMap.erase(object.Id());
-			DebugMessage("");
 		}
 		else if (object.Type() == Constants::Types::object_t::LASER)
 		{

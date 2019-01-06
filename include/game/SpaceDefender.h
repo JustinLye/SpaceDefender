@@ -20,12 +20,14 @@
 #include"engine/objects/Button.h"
 #include"engine/graphics/TextureShader.h"
 #include"engine/objects/TexRenderer.h"
+#include"engine/objects/ScrollingBackground.h"
 #include"game/Player.h"
 #include"game/AsteroidSpawner.h"
 #include"game/CollisionDetector.h"
 #include"game/ScoreText.h"
 #include"game/ExplosionManager.h"
 #include"game/EnemyShipManager.h"
+#include"game/ActiveObjectTracker.h"
 
 using namespace Constants::Input;
 using namespace Constants::Types;
@@ -33,6 +35,10 @@ using namespace Constants::Font;
 using namespace Constants::Shaders;
 using namespace Constants::Rendering;
 using namespace std::chrono;
+using namespace Constants::Geometry;
+
+/** @addtogroup GameWorld */
+/*@{*/
 
 class SpaceDefender
 {
@@ -45,9 +51,9 @@ public:
 	void Run();
 	Player* GetPlayer();
 	GLFWwindow* GetWindow();
-	void Update(const float&);
+	void Update(float);
 	void Render();
-	void DoCollisionDetection(const float&);
+	void DoCollisionDetection(float);
 
 protected:
 	
@@ -61,6 +67,8 @@ protected:
 	CollisionDetector* mCollisionDetector;
 	ExplosionManager* mExplosionManager;
 	EnemyShipManager* mEnemyShipManager;
+	ActiveObjectTracker* mTracker;
+	ScrollingBackground* mBackground;
 
 	BoundryBox mBoundries;
 	glm::mat4 mViewMat;
@@ -73,9 +81,9 @@ protected:
 	ScoreText* mFPSText;
 	ScoreText* mGunTempText;
 	ScoreText* mWarningMessage;
-
 	Canvas* mCanvas;
 	game_state_t mGameState;
+  mutable unsigned int mLastObjectInfoPrinted; ///< This is the object id of the last object printed (with mouse hover feature)
 
 	void InitSys();
 	void InitBoundries();
@@ -85,7 +93,9 @@ protected:
 	void InitFonts();
 	void InitUI();
 	void InitTextures();
+	void InitBackground();
 	void InitPlayer();
+	void InitTracker();
 	void InitAsteroids();
 	void InitExplosions();
 	void InitEnemyShips();
@@ -93,6 +103,7 @@ protected:
 	void InitKeyStateMap();
 	void HandleInput();
 	void UpdateKeyStates();
+  void MouseHoverObjectInfo() const; ///< prints object info 
 
 	void HandleLeftMovement();
 	void HandleRightMovement();
@@ -104,6 +115,6 @@ protected:
 
 };
 
-
+/*@}*/
 
 #endif

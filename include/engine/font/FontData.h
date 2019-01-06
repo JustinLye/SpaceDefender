@@ -3,11 +3,13 @@
 
 #include<map>
 #include<string>
-#include<boost/lexical_cast.hpp>
 #include<glad/glad.h>
 #include<glm/glm.hpp>
 #include<ft2build.h>
 #include FT_FREETYPE_H
+
+/** @addtogroup EngineFonts */
+/*@{*/
 
 struct Character
 {
@@ -32,5 +34,5 @@ protected:
 	std::map<GLchar, Character> mCharacterMap;
 	GLuint* mTextures;
 };
-
+/*@}*/
 #endif

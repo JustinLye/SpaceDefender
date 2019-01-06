@@ -13,6 +13,11 @@ AsteroidCollision::~AsteroidCollision()
 
 }
 
+Constants::Types::object_t AsteroidCollision::Type() const
+{
+	return object_t::ASTEROID_COLLISION;
+}
+
 std::pair<const unsigned int&, const unsigned int&> AsteroidCollision::GetAsteroidIds() const
 {
 	return std::pair<const unsigned int&, const unsigned int&>(mAsteroid_1, mAsteroid_2);

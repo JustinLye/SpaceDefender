@@ -29,6 +29,15 @@ GameObject::GameObject(GameObject&& other) :
 {
 }
 
+GameObject& GameObject::operator=(const GameObject& other)
+{
+	mTransform = other.mTransform;
+	mRenderer = other.mRenderer;
+	mRigidBody = other.mRigidBody;
+	mId = other.mId;
+	return *this;
+}
+
 GameObject::~GameObject()
 {
 }
@@ -38,9 +47,9 @@ const unsigned int& GameObject::Id() const
 	return mId;
 }
 
-const Constants::Types::object_t& GameObject::Type() const
+Constants::Types::object_t GameObject::Type() const
 {
-	return Constants::Types::object_t::GENERIC_OBJECT;
+	return object_t::GENERIC_OBJECT;
 }
 
 void GameObject::Collide(const GameObject& object) const
@@ -86,7 +95,7 @@ void GameObject::MatchGameObjects(const Transform& transform)
 	}
 }
 
-void GameObject::Mass(const float& mass)
+void GameObject::Mass(float mass)
 {
 #ifdef ENGINE_DEBUG
 	assert(mRigidBody != nullptr);
@@ -102,7 +111,7 @@ void GameObject::Force(const glm::vec3& force)
 	mRigidBody->Force(force);
 }
 
-void GameObject::Damping(const float& damping)
+void GameObject::Damping(float damping)
 {
 #ifdef ENGINE_DEBUG
 	assert(mRigidBody != nullptr);
@@ -110,7 +119,7 @@ void GameObject::Damping(const float& damping)
 	mRigidBody->Damping(damping);
 }
 
-const float& GameObject::Mass() const
+float GameObject::Mass() const
 {
 #ifdef ENGINE_DEBUG
 	assert(mRigidBody != nullptr);
@@ -118,7 +127,7 @@ const float& GameObject::Mass() const
 	return mRigidBody->Mass();
 }
 
-const float& GameObject::InverseMass() const
+float GameObject::InverseMass() const
 {
 #ifdef ENGINE_DEBUG
 	assert(mRigidBody != nullptr);
@@ -134,7 +143,7 @@ const glm::vec3& GameObject::Force() const
 	return mRigidBody->Force();
 }
 
-const float& GameObject::Damping() const
+float GameObject::Damping() const
 {
 #ifdef ENGINE_DEBUG
 	assert(mRigidBody != nullptr);
@@ -179,14 +188,10 @@ void GameObject::JumpToPosition(const glm::vec3& pos)
 void GameObject::Render(const glm::mat4& proj_mat, const glm::mat4& view_mat)
 {
 	RenderGameObjects(proj_mat, view_mat);
-#ifdef ENGINE_DEBUG
 	if (!mRenderer)
 	{
 		return;
 	}
-#else
-	assert(mRenderer != nullptr);
-#endif
 	RenderDrawableObjects(proj_mat, view_mat);
 	
 }
@@ -240,7 +245,7 @@ void GameObject::RemoveDrawableObject(DrawableObject* object)
 }
 
 
-void GameObject::Update(const float& dt)
+void GameObject::Update(float dt)
 {
 	if (mRigidBody != nullptr)
 	{
@@ -270,7 +275,7 @@ void GameObject::AddRigidBody(RigidBody* rb)
 
 // SCALING OPS
 
-void GameObject::Scale(const float& scale)
+void GameObject::Scale(float scale)
 {
 	mTransform.Scale(scale);
 	ScaleDrawableObjects(scale);
@@ -287,17 +292,17 @@ void GameObject::ResetScale()
 	ResetScaleOnObjects();
 }
 
-void GameObject::Scale(const float& scale, DrawableObject* object)
+void GameObject::Scale(float scale, DrawableObject* object)
 {
 	GetDrawableObject(object)->second.Scale(scale);
 }
 
-void GameObject::Scale(const float& scale, Collider* collider)
+void GameObject::Scale(float scale, Collider* collider)
 {
 	GetCollider(collider)->second->Scale(scale);
 }
 
-void GameObject::Scale(const float& scale, GameObject* object)
+void GameObject::Scale(float scale, GameObject* object)
 {
 	GetGameObject(object)->second->Scale(scale);
 }
@@ -378,7 +383,7 @@ const glm::vec3& GameObject::Position(GameObject* object) const
 
 // ROTATION OPS
 
-void GameObject::Rotate(const float& angle_degrees, const glm::vec3& rotation_axis)
+void GameObject::Rotate(float angle_degrees, const glm::vec3& rotation_axis)
 {
 	mTransform.Rotate(angle_degrees, rotation_axis);
 	RotateDrawableObjects(angle_degrees, rotation_axis);
@@ -386,17 +391,17 @@ void GameObject::Rotate(const float& angle_degrees, const glm::vec3& rotation_ax
 	RotateObjects(angle_degrees, rotation_axis);
 }
 
-void GameObject::Rotate(const float& angle_degrees, const glm::vec3& rotation_axis, DrawableObject* object)
+void GameObject::Rotate(float angle_degrees, const glm::vec3& rotation_axis, DrawableObject* object)
 {
 	GetDrawableObject(object)->second.Rotate(angle_degrees, rotation_axis);
 }
 
-void GameObject::Rotate(const float& angle_degrees, const glm::vec3& rotation_axis, Collider* collider)
+void GameObject::Rotate(float angle_degrees, const glm::vec3& rotation_axis, Collider* collider)
 {
 	GetCollider(collider)->second->Rotate(angle_degrees, rotation_axis);
 }
 
-void GameObject::Rotate(const float& angle_degrees, const glm::vec3& rotation_axis, GameObject* object)
+void GameObject::Rotate(float angle_degrees, const glm::vec3& rotation_axis, GameObject* object)
 {
 	GetGameObject(object)->second->Rotate(angle_degrees, rotation_axis);
 }
@@ -517,7 +522,7 @@ void GameObject::PolyMode(const OpenGLPolyMode::face_t& face, const GLenum& poly
 	mRenderer->PolyMode(face, poly_mode);
 }
 
-const GLenum& GameObject::PolyMode(const OpenGLPolyMode::face_t& face) const
+GLenum GameObject::PolyMode(const OpenGLPolyMode::face_t& face) const
 {
 #ifdef ENGINE_DEBUG
 	assert(mRenderer != nullptr);
@@ -558,6 +563,7 @@ void GameObject::Spawn(const Transform& transform)
 	{
 		Notify(*this, Constants::Types::event_t::ACTIVATED_COLLIDABLE_OBJECT);
 	}
+	Notify(*this, event_t::SPAWNED_OBJECT);
 }
 
 void GameObject::Despawn() const
@@ -569,6 +575,7 @@ void GameObject::Despawn() const
 	{
 		Notify(*this, Constants::Types::event_t::TERMINATED_COLLIDABLE_OBJECT);
 	}
+	Notify(*this, event_t::DESPAWNED_OBJECT);
 }
 
 void GameObject::OutOfBounds() const
@@ -615,7 +622,7 @@ std::pair<GameObject::const_collider_iter, GameObject::const_collider_iter> Game
 	return std::pair<const_collider_iter, const_collider_iter>(mColliderMap.cbegin(), mColliderMap.cend());
 }
 
-void GameObject::ScaleDrawableObjects(const float& scale)
+void GameObject::ScaleDrawableObjects(float scale)
 {
 	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::iterator iter = mDrawableObjectMap.begin();
 	while (iter != mDrawableObjectMap.end())
@@ -635,7 +642,7 @@ void GameObject::ScaleDrawableObjects(const glm::vec3& scale)
 	}
 }
 
-void GameObject::ScaleColliders(const float& scale)
+void GameObject::ScaleColliders(float scale)
 {
 	std::map<Collider*, Collider*, CompareTransPtr>::iterator iter = mColliderMap.begin();
 	while (iter != mColliderMap.end())
@@ -655,7 +662,7 @@ void GameObject::ScaleColliders(const glm::vec3& scale)
 	}
 }
 
-void GameObject::ScaleObjects(const float& scale)
+void GameObject::ScaleObjects(float scale)
 {
 	std::map<GameObject*, GameObject*, CompareGameObjectPtr>::iterator iter = mGameObjectMap.begin();
 	while (iter != mGameObjectMap.end())
@@ -735,7 +742,7 @@ void GameObject::TranslateObjects(const glm::vec3& translation)
 	}
 }
 
-void GameObject::RotateDrawableObjects(const float& angle_degrees, const glm::vec3& rotation_axis)
+void GameObject::RotateDrawableObjects(float angle_degrees, const glm::vec3& rotation_axis)
 {
 	std::map<DrawableObject*, Transform, CompareDrawObjPtr>::iterator iter = mDrawableObjectMap.begin();
 	while (iter != mDrawableObjectMap.end())
@@ -745,7 +752,7 @@ void GameObject::RotateDrawableObjects(const float& angle_degrees, const glm::ve
 	}
 }
 
-void GameObject::RotateColliders(const float& angle_degrees, const glm::vec3& rotation_axis)
+void GameObject::RotateColliders(float angle_degrees, const glm::vec3& rotation_axis)
 {
 	std::map<Collider*, Collider*, CompareTransPtr>::iterator iter = mColliderMap.begin();
 	while (iter != mColliderMap.end())
@@ -755,7 +762,7 @@ void GameObject::RotateColliders(const float& angle_degrees, const glm::vec3& ro
 	}
 }
 
-void GameObject::RotateObjects(const float& angle_degrees, const glm::vec3& rotation_axis)
+void GameObject::RotateObjects(float angle_degrees, const glm::vec3& rotation_axis)
 {
 	std::map<GameObject*, GameObject*, CompareGameObjectPtr>::iterator iter = mGameObjectMap.begin();
 	while (iter != mGameObjectMap.end())

@@ -3,6 +3,9 @@
 
 #include"engine/shapes/ShapeData.h"
 
+/** @addtogroup EngineShapes */
+/*@{*/
+
 class TriangleData :
 	public ShapeData
 {
@@ -17,5 +20,5 @@ protected:
 	void InitializeData();
 
 };
-
+/*@}*/
 #endif

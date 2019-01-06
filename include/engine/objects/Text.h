@@ -4,6 +4,9 @@
 #include"engine/objects/UIObject.h"
 #include"engine/font/Font.h"
 
+/** @addtogroup EngineObjects */
+/*@{*/
+
 class Text :
 	public UIObject
 {
@@ -13,16 +16,16 @@ public:
 	void Render();
 
 	void FontPtr(Font*);
-	void XBearing(const float&);
-	void YBearing(const float&);
-	void Scale(const float&);
+	void XBearing(float);
+	void YBearing(float);
+	void Scale(float);
 	void Message(const std::string&);
 	void Color(const glm::vec4&);
 
 	const Font* FontPtr() const;
-	const float& XBearing() const;
-	const float& YBearing() const;
-	const float& Scale() const;
+	float XBearing() const;
+	float YBearing() const;
+	float Scale() const;
 	const std::string& Message() const;
 	const glm::vec4& Color() const;
 protected:
@@ -33,5 +36,5 @@ protected:
 	std::string mMessage;
 
 };
-
+/*@}*/
 #endif

@@ -5,27 +5,30 @@
 #include"engine/objects/GameObject.h"
 #include"game/LaserCannon.h"
 
+using namespace Constants::Types;
+/** @addtogroup GameActors */
+/*@{*/
 class Player :
 	public GameObject
 {
 public:
 	Player();
 	virtual ~Player();
-	const Constants::Types::object_t& Type() const override;
+	object_t Type() const override;
 	void Render(const glm::mat4&, const glm::mat4&) override;
 	void HandleKeyboardInput(GLFWwindow*);
 	void AttachCannon(LaserCannon*);
-	void Update(const float&) override;
+	void Update(float) override;
 	virtual void Strafe(const Constants::Types::DIRECTION&);
 	virtual void FireCannon();
-	virtual void CustomScaleActions(const float&) override;
+	virtual void CustomScaleActions(float) override;
 	virtual void CustomTranslateActions(const glm::vec3&) override;
-	virtual void Speed(const float&);
-	const float& Speed() const;
-	virtual void Boost(const float&);
-	const float& Boost() const;
-	const float& CurrentGunTemp() const;
-	const float& MaxGunTemp() const;
+	virtual void Speed(float);
+	float Speed() const;
+	virtual void Boost(float);
+	float Boost() const;
+	float CurrentGunTemp() const;
+	float MaxGunTemp() const;
 	bool GunOverHeated() const;
 
 	virtual void DoDetection(Collider*);
@@ -40,5 +43,5 @@ protected:
 	float mMaxBoost;
 	LaserCannon* mLaserCannon;
 };
-
+/*@}*/
 #endif

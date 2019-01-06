@@ -5,6 +5,9 @@
 #include<glm/glm.hpp>
 #include"engine/objects/Renderer.h"
 
+/** @addtogroup EngineObjects */
+/*@{*/
+
 class TexRenderer :
 	public Renderer
 {
@@ -22,5 +25,5 @@ protected:
 	int mUseMixInColor;
 	glm::vec4 mMixInColor;
 };
-
+/*@}*/
 #endif

@@ -5,6 +5,8 @@
 #include<glm/glm.hpp>
 #include<glm/gtc/type_ptr.hpp>
 
+/** @addtogroup EngineUtil */
+/*@{*/
 namespace engine
 {
 	namespace debug
@@ -17,5 +19,5 @@ namespace engine
 #define DebugMessage(msg) std::cout << __FILE__ << "    " << __FUNCTION__ << " [" << __LINE__ << "] " << msg << '\n';
 #endif
 };
-
+/*@}*/
 #endif

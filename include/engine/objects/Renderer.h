@@ -12,6 +12,8 @@
 
 using namespace Constants::Shaders;
 using namespace Constants::Rendering;
+/** @addtogroup EngineObjects */
+/*@{*/
 class Renderer
 {
 public:
@@ -28,15 +30,15 @@ public:
 	virtual void Shader(ShaderProgram*);
 
 	void PolyMode(const OpenGLPolyMode::face_t&, const GLenum&);
-	const GLenum& PolyMode(const OpenGLPolyMode::face_t&) const;
+	GLenum PolyMode(const OpenGLPolyMode::face_t&) const;
 
 	void Color(const glm::vec4&);
-	const glm::vec4& Color() const;
+	glm::vec4 Color() const;
 protected:
 	
 	ShaderProgram* mShader;
 	OpenGLPolyMode mPolyMode;
 	glm::vec4 mColor;
 };
-
+/*@}*/
 #endif
