@@ -9,6 +9,12 @@
 #include"engine/util/Thread.h"
 
 
+namespace sd_app {
+namespace engine {
+namespace util {
+namespace impl {
+namespace logger {
+
 /** @addtogroup EngineUtil */
 /*@{*/
 class Logger :
@@ -32,5 +38,10 @@ protected:
 	virtual void EventLoop();
 };
 /*@}*/
-
+} // namespace logger
+} // namespace impl
+using Logger = impl::logger::Logger;
+} // namespace util
+} // namespace engine
+} // namespace sd_app
 #endif // !LOGGER_HEADER_INCLUDED

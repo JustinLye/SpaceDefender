@@ -1,5 +1,10 @@
 #include"engine/objects/Transform.h"
 
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace transform {
 Transform::Transform()
 {
 
@@ -69,9 +74,9 @@ const glm::vec3& Transform::Offset() const
 
 glm::mat4 Transform::Model()
 {
-	glm::mat4 translation_matrix = glm::translate(Constants::Geometry::IDENTITY_MATRIX, mTransformData.mPosition);
-	glm::mat4 offset_matrix = glm::translate(Constants::Geometry::IDENTITY_MATRIX, mTransformData.mOffset);
-	glm::mat4 scale_matrix = glm::scale(Constants::Geometry::IDENTITY_MATRIX, mTransformData.mScale);
+	glm::mat4 translation_matrix = glm::translate(IDENTITY_MATRIX, mTransformData.mPosition);
+	glm::mat4 offset_matrix = glm::translate(IDENTITY_MATRIX, mTransformData.mOffset);
+	glm::mat4 scale_matrix = glm::scale(IDENTITY_MATRIX, mTransformData.mScale);
 	glm::mat4 rotation_matrix = glm::mat4_cast(mTransformData.mRotation);
 	return  translation_matrix * rotation_matrix * offset_matrix * scale_matrix;
 	//return  translation_matrix * rotation_matrix * scale_matrix;
@@ -171,3 +176,8 @@ std::string Transform::ToString() const
 	result += std::string("\trotation: ") + Vec4ToString(mTransformData.mRotation);
 	return result;
 }
+} // namespace transform
+} // namespace impl
+} // namespace objects
+} // namespace engine
+} // namespace sd_app

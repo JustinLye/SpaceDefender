@@ -1,5 +1,10 @@
 #include"engine/objects/GameObject.h"
 
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace game_object {
 unsigned int GameObject::NextObjectId = 0;
 
 GameObject::GameObject() :
@@ -47,7 +52,7 @@ const unsigned int& GameObject::Id() const
 	return mId;
 }
 
-Constants::Types::object_t GameObject::Type() const
+object_t GameObject::Type() const
 {
 	return object_t::GENERIC_OBJECT;
 }
@@ -561,7 +566,7 @@ void GameObject::Spawn(const Transform& transform)
 	Match(transform);
 	if (mColliderMap.size() > 0)
 	{
-		Notify(*this, Constants::Types::event_t::ACTIVATED_COLLIDABLE_OBJECT);
+		Notify(*this, event_t::ACTIVATED_COLLIDABLE_OBJECT);
 	}
 	Notify(*this, event_t::SPAWNED_OBJECT);
 }
@@ -573,7 +578,7 @@ void GameObject::Despawn() const
 #endif
 	if (mColliderMap.size() > 0)
 	{
-		Notify(*this, Constants::Types::event_t::TERMINATED_COLLIDABLE_OBJECT);
+		Notify(*this, event_t::TERMINATED_COLLIDABLE_OBJECT);
 	}
 	Notify(*this, event_t::DESPAWNED_OBJECT);
 }
@@ -583,7 +588,7 @@ void GameObject::OutOfBounds() const
 #ifdef COLLISION_DEBUG
 	std::cout << __FUNCTION__ << '\n';
 #endif
-	Notify(*this, Constants::Types::event_t::OBJECT_OUT_OF_BOUNDS);
+	Notify(*this, event_t::OBJECT_OUT_OF_BOUNDS);
 }
 
 bool GameObject::CollisionDetected(const Collider* collider) const
@@ -953,7 +958,7 @@ bool GameObject::ObjectIsMapped(GameObject* object) const
 
 void GameObject::ReportCollision() const
 {
-	Notify(*this, Constants::Types::event_t::COLLISION_REPORTED);
+	Notify(*this, event_t::COLLISION_REPORTED);
 }
 
 void GameObject::ResetRigidBody()
@@ -973,3 +978,8 @@ bool GameObject::operator==(const GameObject& other) const
 {
 	return mId == other.Id();
 }
+} // namespace game_object
+} // namespace impl
+} // namespace objects
+} // namespace engine
+} // namespace sd_app

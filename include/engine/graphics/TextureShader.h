@@ -8,16 +8,27 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include"engine/graphics/Texture.h" //for sizeof(TexVertexData)
 
-
-using namespace Constants::Shaders;
+namespace sd_app {
+namespace engine {
+namespace graphics {
+namespace impl {
+namespace texture_shader {
+using namespace constants::shaders;
+using ShaderProgram = sd_app::engine::util::ShaderProgram;
 
 class TextureShader :
-	public ShaderProgram
-{
+  public ShaderProgram {
 public:
-	TextureShader();
-	virtual ~TextureShader();
-	virtual void Init() override;
+  TextureShader();
+  virtual ~TextureShader();
+  virtual void Init() override;
 };
+} // namespace texture_shader
+} // namespace impl
+using TextureShader = impl::texture_shader::TextureShader;
+} // namespace graphics
+} // namespace engine
+} // namespace sd_app
+
 
 #endif

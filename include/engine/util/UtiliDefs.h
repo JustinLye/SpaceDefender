@@ -3,7 +3,7 @@
 #include<iostream>
 #include<string>
 #include"engine/util/Constants.h"
-using namespace Constants::Types;
+
 /** @addtogroup EngineUtil */
 /*@{*/
 #ifndef VEC3_TO_STRING
@@ -25,9 +25,16 @@ using namespace Constants::Types;
 #define RadToDeg(rad) (float)rad * (180.0f/(float)PI)
 #endif // !RAD_TO_DEG
 
-
+namespace sd_app {
+namespace engine {
+namespace util {
+using object_t = sd_app::engine::constants::types::object_t;
 std::string TypeToString(const object_t& obj);
 std::ostream& operator<<(std::ostream& os, const object_t& obj);
 float VecToVecAngle(const glm::vec3&, const glm::vec3&);
+} // namespace util
+} // namespace engine
+} // namespace sd_app
+
 /*@}*/
 #endif

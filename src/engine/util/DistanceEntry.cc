@@ -1,5 +1,9 @@
 #include"engine/util/DistanceEntry.h"
-
+namespace sd_app {
+namespace engine {
+namespace util {
+namespace impl {
+namespace distance_entry {
 DistanceEntry::DistanceEntry(const int& index, float dist) :
 	mIndex(index),
 	mDistance(dist)
@@ -32,3 +36,8 @@ DistanceEntry& DistanceEntry::operator=(const DistanceEntry& other)
 	mDistance = other.mDistance;
 	return *this;
 }
+}// namespace distance_entry
+}// namespace impl
+}// namespace util
+}// namespace engine
+}// namespace sd_app

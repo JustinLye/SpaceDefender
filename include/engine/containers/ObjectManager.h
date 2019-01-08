@@ -8,6 +8,12 @@
 #include<glm/glm.hpp>
 #include"engine/util/Constants.h"
 #include"engine/containers/IndexQueue.h"
+
+namespace sd_app {
+namespace engine {
+namespace containers {
+namespace impl {
+namespace object_manager {
 /** @addtogroup EngineObjectContainers */
 /*@{*/
 //////////////////////////////////////////////////
@@ -25,41 +31,40 @@
 ///\ date 04/08/2018
 //////////////////////////////////////////////////
 template<class T>
-class ObjectManager
-{
+class ObjectManager {
 public:
 
-	static constexpr unsigned int NOT_INDEX = ~0;
+  static constexpr unsigned int NOT_INDEX = ~0;
 
-	ObjectManager();
-	virtual ~ObjectManager();
+  ObjectManager();
+  virtual ~ObjectManager();
 
-	unsigned int ActiveObjectCount() const;
+  unsigned int ActiveObjectCount() const;
 
-	virtual int MaxCapacity() = 0;
-	virtual int MaxActiveCapacity() = 0;
+  virtual int MaxCapacity() = 0;
+  virtual int MaxActiveCapacity() = 0;
 
-	virtual void Init();
-	virtual void Destroy();
+  virtual void Init();
+  virtual void Destroy();
 
-	virtual void Update(float);
-	virtual void Render(const glm::mat4& = Constants::Geometry::IDENTITY_MATRIX, const glm::mat4& = Constants::Geometry::IDENTITY_MATRIX);
+  virtual void Update(float);
+  virtual void Render(const glm::mat4& = Constants::Geometry::IDENTITY_MATRIX, const glm::mat4& = Constants::Geometry::IDENTITY_MATRIX);
 
 protected:
-	int mMaxCapacity;
-	int mMaxActiveCapacity;
-	IndexQueue mIndexQueue;
-	std::list<unsigned int> mActiveIndices;
-	T** mObjects;
+  int mMaxCapacity;
+  int mMaxActiveCapacity;
+  IndexQueue mIndexQueue;
+  std::list<unsigned int> mActiveIndices;
+  T** mObjects;
 
-	virtual unsigned int Alloc();
-	virtual T* ConstructObject() = 0;
-	virtual void CustomAllocOps(unsigned int);
-	virtual void CustomDeallocOps(unsigned int);
-	virtual void CustomInitOps();
-	virtual void CustomUpdateOps(float);
-	virtual std::list<unsigned int>::iterator Dealloc(std::list<unsigned int>::iterator);
-	virtual bool DestructionPred(T*) const;
+  virtual unsigned int Alloc();
+  virtual T* ConstructObject() = 0;
+  virtual void CustomAllocOps(unsigned int);
+  virtual void CustomDeallocOps(unsigned int);
+  virtual void CustomInitOps();
+  virtual void CustomUpdateOps(float);
+  virtual std::list<unsigned int>::iterator Dealloc(std::list<unsigned int>::iterator);
+  virtual bool DestructionPred(T*) const;
 };
 
 #ifndef OBJECT_MANAGER_CC_INCLUDED
@@ -67,4 +72,13 @@ protected:
 #endif // !OBJECT_MANAGER_CC_INCLUDED
 
 /*@}*/
+} // namespace object_manager
+} // namespace impl
+using ObjectManager = impl::object_manager::ObjectManager;
+} // namespace containers
+} // namespace engine
+} // namespace sd_app
+
+
+
 #endif

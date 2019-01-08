@@ -1,5 +1,9 @@
 #include"engine/shapes/LineSegmentData.h"
-
+namespace sd_app {
+namespace engine {
+namespace shapes {
+namespace impl {
+namespace line_segment_data {
 LineSegmentData::LineSegmentData() :
 	ShapeData()
 {
@@ -36,3 +40,8 @@ void LineSegmentData::InitializeData()
 	mIndices[0] = 0;
 	mIndices[1] = 1;
 }
+} // namespace line_segment_data
+} // namespace impl
+} // namespace shapes
+} // namespace engine
+} // namespace sd_app

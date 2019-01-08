@@ -1,4 +1,9 @@
 #include"engine/objects/Collider.h"
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace collider {
 Collider::Collider() :
 	Transform()
 {
@@ -25,3 +30,8 @@ bool Collider::CollisionDetected(const Transform& lhs, const Transform& rhs)
 	float dist = glm::length(diff);
 	return dist < radius_sum;
 }
+} // namespace collider
+} // namespace impl
+} // namespace objects
+} // namespace engine
+} // namespace sd_app

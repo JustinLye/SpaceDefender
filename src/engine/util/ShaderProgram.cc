@@ -1,5 +1,11 @@
 #include"engine/util/ShaderProgram.h"
 
+
+namespace sd_app {
+namespace engine {
+namespace util {
+namespace impl {
+namespace shader_program {
 ShaderProgram::ShaderProgram() :
 	mProgram(0)
 {
@@ -149,16 +155,16 @@ void ShaderProgram::AutoFillUniformsFromFile(const std::string& file_path)
 
 void ShaderProgram::Init()
 {
-	std::string vshader = EngineShaderPath(Constants::Shaders::DFLT_VERTEX_SHADER);
-	std::string fshader = EngineShaderPath(Constants::Shaders::DFLT_FRAGMENT_SHADER);
+	std::string vshader = EngineShaderPath(DFLT_VERTEX_SHADER);
+	std::string fshader = EngineShaderPath(DFLT_FRAGMENT_SHADER);
 	LoadFromFile(ShaderProgram::VERTEX, vshader);
 	LoadFromFile(ShaderProgram::FRAGMENT, fshader);
 	CreateAndLink();
 	Use();
 	AutoFillUniformsFromFile(vshader);
 	AutoFillUniformsFromFile(fshader);
-	glEnableVertexAttribArray(this->operator[](Constants::Shaders::DFLT_VERTEX_ATTRIB_NAME));
-	glVertexAttribPointer(this->operator[](Constants::Shaders::DFLT_VERTEX_ATTRIB_NAME), 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(this->operator[](DFLT_VERTEX_ATTRIB_NAME));
+	glVertexAttribPointer(this->operator[](DFLT_VERTEX_ATTRIB_NAME), 3, GL_FLOAT, GL_FALSE, 0, 0);
 	UnUse();
 }
 
@@ -195,3 +201,8 @@ void ShaderProgram::DeleteShaders()
 		glDeleteShader(mShaders[i]);
 	}
 }
+} // namespace shader_program
+} // namespace impl
+} // namespace util
+} // namespace engine
+} // namespace sd_app 

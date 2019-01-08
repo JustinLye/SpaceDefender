@@ -1,5 +1,11 @@
  #include"engine/objects/Renderer.h"
 
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace renderer {
+
 Renderer::Renderer(ShaderProgram* shader_program, const OpenGLPolyMode& poly_mode) :
 	mShader(shader_program),
 	mPolyMode(poly_mode),
@@ -96,3 +102,8 @@ glm::vec4 Renderer::Color() const
 {
 	return mColor;
 }
+} // namespace renderer
+} // namespace impl
+} // namespace objects
+} // namespace engine
+} // namespace sd_app

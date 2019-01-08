@@ -1,5 +1,9 @@
 #include"engine/util/OpenGLUtility.h"
-
+namespace sd_app {
+namespace engine {
+namespace util {
+namespace impl {
+namespace opengl_utility {
 OpenGLOptions OpenGLUtility::sOpenGLOpts;
 int OpenGLUtility::sLastOpenGLErrorCode = 0;
 int OpenGLUtility::sVersionArrayIndex = 0;
@@ -213,3 +217,8 @@ void OpenGLUtility::FinishUpInitialization(GLFWwindow* window)
 		glEnable(opt);
 	}
 }
+} // namespace opengl_utility
+} // namespace impl
+} // namespace util
+} // namespace engine
+} // namespace sd_app

@@ -1,5 +1,9 @@
 #include"engine/objects/DrawableObject.h"
-
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace drawable_object {
 DrawableObject::DrawableObject() :
 	mVaoId(0)
 {
@@ -52,3 +56,8 @@ void DrawableObject::CustomDeactivationSteps()
 {
 
 }
+} // namespace drawable_object
+} // namespace impl
+} // namespace objects
+} // namespace engine
+} // namespace sd_app

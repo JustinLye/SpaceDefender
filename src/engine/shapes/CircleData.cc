@@ -1,5 +1,9 @@
 #include"engine/shapes/CircleData.h"
-
+namespace sd_app {
+namespace engine {
+namespace shapes {
+namespace impl {
+namespace circle_data {
 CircleData::CircleData() :
 	ShapeData()
 {
@@ -46,3 +50,8 @@ void CircleData::InitializeData()
 	}
 	mIndices[index_size - 1] = 0;
 }
+} // namespace circle_data
+} // namespace impl
+} // namespace shapes
+} // namespace engine
+} // namespace sd_app

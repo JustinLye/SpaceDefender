@@ -10,35 +10,51 @@
 #include"engine/util/ShaderProgram.h"
 #include"engine/shapes/Shape.h"
 
-using namespace Constants::Shaders;
-using namespace Constants::Rendering;
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace renderer {
+
+using namespace constants::shaders;
+using namespace constants::rendering;
+using ShaderProgram = util::ShaderProgram;
+using OpenGLPolyMode = util::OpenGLPolyMode;
+using OpenGLOptions = util::OpenGLOptions;
+
 /** @addtogroup EngineObjects */
 /*@{*/
-class Renderer
-{
+class Renderer {
 public:
-	Renderer(ShaderProgram* = nullptr, const OpenGLPolyMode& = OpenGLOptions::DEFAULT_POLY_MODE);
-	virtual ~Renderer();
-	virtual void Render(DrawableObject*, const float*);
-	virtual std::string VertexShaderPath();
-	virtual std::string FragmentShaderPath();
-	virtual void SetCustomUniforms();
-	virtual void SetAttribs();
-	virtual void Init();
-	virtual void Destroy();
+  Renderer(ShaderProgram* = nullptr, const OpenGLPolyMode& = OpenGLOptions::DEFAULT_POLY_MODE);
+  virtual ~Renderer();
+  virtual void Render(DrawableObject*, const float*);
+  virtual std::string VertexShaderPath();
+  virtual std::string FragmentShaderPath();
+  virtual void SetCustomUniforms();
+  virtual void SetAttribs();
+  virtual void Init();
+  virtual void Destroy();
 
-	virtual void Shader(ShaderProgram*);
+  virtual void Shader(ShaderProgram*);
 
-	void PolyMode(const OpenGLPolyMode::face_t&, const GLenum&);
-	GLenum PolyMode(const OpenGLPolyMode::face_t&) const;
+  void PolyMode(const OpenGLPolyMode::face_t&, const GLenum&);
+  GLenum PolyMode(const OpenGLPolyMode::face_t&) const;
 
-	void Color(const glm::vec4&);
-	glm::vec4 Color() const;
+  void Color(const glm::vec4&);
+  glm::vec4 Color() const;
 protected:
-	
-	ShaderProgram* mShader;
-	OpenGLPolyMode mPolyMode;
-	glm::vec4 mColor;
+
+  ShaderProgram* mShader;
+  OpenGLPolyMode mPolyMode;
+  glm::vec4 mColor;
 };
 /*@}*/
+} // namespace renderer
+} // namespace impl
+using Renderer = impl::renderer::Renderer;
+} // namespace objects
+} // namespace engine
+} // namespace sd_app
+
 #endif

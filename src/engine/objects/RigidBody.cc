@@ -1,5 +1,11 @@
 #include"engine/objects/RigidBody.h"
 
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace rigid_body {
+
 RigidBody::RigidBody() :
 	mVelocity(glm::vec3(0.0f)),
 	mAcceleration(glm::vec3(0.0f)),
@@ -78,3 +84,8 @@ const glm::vec3& RigidBody::Acceleration() const
 	return mAcceleration;
 }
 
+} // namespace rigid_body
+} // namespace impl
+} // namespace objects
+} // namespace engine
+} // namespace sd_app

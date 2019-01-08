@@ -1,6 +1,10 @@
 #include"engine/font/Font.h"
 
-
+namespace sd_app {
+namespace engine {
+namespace font {
+namespace impl {
+namespace font {
 Font::Font() :
 	mShader(nullptr),
 	mFontData(nullptr),
@@ -122,3 +126,8 @@ const GLuint& Font::GetVao() const
 {
 	return mVaoId;
 }
+} // namespace font
+} // namespace impl
+} // namespace font
+} // namespace engine
+} // namespace sd_app

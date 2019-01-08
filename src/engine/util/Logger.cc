@@ -1,5 +1,9 @@
 #include"engine/util/Logger.h"
-
+namespace sd_app {
+namespace engine {
+namespace util {
+namespace impl {
+namespace logger {
 Logger::Logger(const char* path) :
 	mShutdown(false),
 	mPath(path)
@@ -45,3 +49,9 @@ void Logger::EventLoop()
 		mFile << str << '\n';
 	}
 }
+} // namespace logger
+} // namespace impl
+using Logger = impl::logger::Logger;
+} // namespace util
+} // namespace engine
+} // namespace sd_app

@@ -2,8 +2,12 @@
 #ifndef RIGID_BODY_HEADER_INCLUDED
 #define RIGID_BODY_HEADER_INCLUDED
 #include"engine/util/Constants.h"
-
-using namespace Constants::Physics;
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace rigid_body {
+using namespace constants::physics;
 
 /** @addtogroup EngineObjects */
 /*@{*/
@@ -38,5 +42,10 @@ protected:
 };
 
 /*@}*/
-
+} // namespace renderable_object
+} // namespace impl
+using RigidBody = impl::rigid_body::RigidBody;
+} // namespace objects
+} // namespace engine
+} // namespace sd_app
 #endif

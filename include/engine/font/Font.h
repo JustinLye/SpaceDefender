@@ -4,7 +4,14 @@
 #include"engine/util/Constants.h"
 #include"engine/util/ShaderProgram.h"
 #include"engine/font/FontData.h"
-using namespace Constants::Shaders;
+
+namespace sd_app {
+namespace engine {
+namespace font {
+namespace impl {
+namespace font {
+
+using namespace constants::shaders;
 
 /** @addtogroup EngineFonts */
 /*@{*/
@@ -35,4 +42,10 @@ protected:
 	glm::mat4 mProjection;
 };
 /*@}*/
+} // namespace font
+} // namespace impl
+using Font = impl::font::Font;
+} // namespace font
+} // namespace engine
+} // namespace sd_app
 #endif

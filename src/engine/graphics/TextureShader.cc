@@ -1,5 +1,9 @@
 #include"engine/graphics/TextureShader.h"
-
+namespace sd_app {
+namespace engine {
+namespace graphics {
+namespace impl {
+namespace texture_shader {
 TextureShader::TextureShader() :
 	ShaderProgram()
 {
@@ -28,3 +32,8 @@ void TextureShader::Init()
 	glEnableVertexAttribArray((*this)[TEXTURE_COORD_ATTRIB_NAME]);
 	glVertexAttribPointer((*this)[TEXTURE_COORD_ATTRIB_NAME], 2, GL_FLOAT, GL_FALSE, sizeof(TexVertexData), (void*)(sizeof(glm::vec3)));
 }
+} // namespace texture_shader
+} // namespace impl
+} // namespace graphics
+} // namespace engine
+} // namespace sd_app

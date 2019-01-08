@@ -1,5 +1,9 @@
 #include"engine/graphics/TexData.h"
-
+namespace sd_app {
+namespace engine {
+namespace graphics {
+namespace impl {
+namespace tex_data {
 TexData::TexData() :
 	mTexVertexData(nullptr),
 	mIndices(nullptr)
@@ -64,3 +68,8 @@ void TexData::Destroy()
 		mTexVertexData = nullptr;
 	}
 }
+} // namespace tex_data
+} // namespace impl
+} // namespace graphics
+} // namespace engine
+} // namespace ad_app

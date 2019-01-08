@@ -1,5 +1,9 @@
 #include"engine/shapes/Shape.h"
-
+namespace sd_app {
+namespace engine {
+namespace shapes {
+namespace impl {
+namespace shape {
 Shape::Shape() :
 	DrawableObject(),
 	mShapeData(nullptr),
@@ -61,8 +65,8 @@ void Shape::Buffer(ShapeData* shape_data)
 	GLfloat* buffer = static_cast<GLfloat*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 	mShapeData->FillVertices(buffer);
 	glUnmapBuffer(GL_ARRAY_BUFFER);
-	glEnableVertexAttribArray(Constants::Shaders::VERTEX_ATTRIB_POS);
-	glVertexAttribPointer(Constants::Shaders::VERTEX_ATTRIB_POS, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(VERTEX_ATTRIB_POS);
+	glVertexAttribPointer(VERTEX_ATTRIB_POS, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndicesVboId);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mShapeData->IndexCount() * sizeof(GLuint), 0, GL_STATIC_DRAW);
@@ -82,7 +86,11 @@ void Shape::Destroy()
 	mIndicesVboId = 0;
 	mVaoId = 0;
 }
-
+} // namespace shape
+} // namespace impl
+} // namespace shapes
+} // namespace engine
+} // namespace sd_app
 
 
 

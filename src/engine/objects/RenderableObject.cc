@@ -1,5 +1,9 @@
 #include"engine/objects/RenderableObject.h"
-
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace renderable_object {
 RenderableObject::RenderableObject() :
 	mVaoId(0),
 	mVboVerticesId(0),
@@ -113,3 +117,9 @@ std::string RenderableObject::FragmentShaderPath()
 {
 	return EngineShaderPath("unicolor.frag");
 }
+} // namespace renderable_object
+} // namespace impl
+using RenderableObject = impl::renderable_object::RenderableObject;
+} // namespace objects
+} // namespace engine
+} // namespace sd_app

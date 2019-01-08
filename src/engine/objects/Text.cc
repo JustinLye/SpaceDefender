@@ -1,5 +1,9 @@
 #include"engine/objects/Text.h"
-
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace text {
 Text::Text() :
 	UIObject(),
 	mFont(nullptr),
@@ -76,3 +80,8 @@ const glm::vec4& Text::Color() const
 {
 	return mFont->Color();
 }
+} // namespace text
+} // namespace impl
+} // namespace objects
+} // namespace engine
+} // namespace sd_app

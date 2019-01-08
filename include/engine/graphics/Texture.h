@@ -11,7 +11,14 @@
 #include"engine/util/Constants.h"
 #include"engine/graphics/TexData.h"
 #include"engine/objects/DrawableObject.h"
-using namespace Constants::Shaders;
+
+namespace sd_app {
+namespace engine {
+namespace graphics {
+namespace impl {
+namespace texture {
+
+using namespace constants::shaders;
 
 /** @addtogroup EngineGraphics */
 /*@{*/
@@ -43,6 +50,11 @@ protected:
 
 
 };
-
 /*@}*/
+} // namespace texture
+} // namespace impl
+using Texture = impl::texture::Texture;
+} // namespace graphics
+} // namespace engine
+} // namespace ad_app
 #endif

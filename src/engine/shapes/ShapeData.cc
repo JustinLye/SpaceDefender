@@ -1,5 +1,10 @@
 #include"engine/shapes/ShapeData.h"
 
+namespace sd_app {
+namespace engine {
+namespace shapes {
+namespace impl {
+namespace shape_data {
 ShapeData::ShapeData() :
 	mVertices(nullptr),
 	mIndices(nullptr)
@@ -71,5 +76,10 @@ void ShapeData::Destroy()
 	{
 		delete[] mIndices;
 	}
-	
 }
+
+} // namespace shape_data
+} // namespace impl
+} // namespace shapes
+} // namespace engine
+} // namespace sd_app

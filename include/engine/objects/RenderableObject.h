@@ -4,6 +4,13 @@
 #define RENDERABLE_OBJECT_HEADER_INCLUDED
 
 #include"engine/util/ShaderProgram.h"
+
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace renderable_object {
+using ShaderProgram = util::ShaderProgram;
 /** @addtogroup EngineObjects */
 /*@{*/
 class RenderableObject
@@ -42,5 +49,12 @@ protected:
 };
 
 /*@}*/
+
+} // namespace renderable_object
+} // namespace impl
+using RenderableObject = impl::renderable_object::RenderableObject;
+} // namespace objects
+} // namespace engine
+} // namespace sd_app
 
 #endif

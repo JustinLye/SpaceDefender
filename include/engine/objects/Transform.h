@@ -7,7 +7,12 @@
 #include"engine/util/Constants.h"
 #include"engine/util/UtiliDefs.h"
 
-
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace transform {
+using namespace constants::geometry;
 /** @addtogroup EngineObjects */
 /*@{*/
 
@@ -48,4 +53,10 @@ protected:
 	std::string ToString() const;
 };
 /*@}*/
+} // namespace transform
+} // namespace impl
+using Transform = impl::transform::Transform;
+} // namespace objects
+} // namespace engine
+} // namespace sd_app
 #endif

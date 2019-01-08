@@ -1,5 +1,9 @@
 #include"engine/objects/Button.h"
-
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace button {
 Button::Button() :
 	UIObject(),
 	mTransform(new Transform()),
@@ -85,3 +89,8 @@ glm::vec4 Button::TextColor() const
 {
 	return mText->Color();
 }
+} // namespace button
+} // namespace impl
+} // namespace objects
+} // namespace engine
+} // namespace sd_app

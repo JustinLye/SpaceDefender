@@ -1,5 +1,9 @@
 #include"engine/util/KeyMap.h"
-
+namespace sd_app {
+namespace engine {
+namespace util {
+namespace impl {
+namespace key_map {
 KeyStateMap::KeyStateMap()
 {
 
@@ -51,3 +55,8 @@ KeyStateMap::const_iterator KeyStateMap::End() const
 	return mStateMap.cend();
 }
 
+} // namespace key_map
+} // namespace impl
+} // namespace util
+} // namespace engine
+} // namespace sd_app

@@ -3,39 +3,53 @@
 #include<iterator>
 #include"engine/containers/IterItem.h"
 
+namespace sd_app {
+namespace engine {
+namespace containers {
+namespace impl {
+namespace iterator {
+
+using IterItem = sd_app::engine::containers::IterItem;
 
 /** @addtogroup EngineIterators */
 /*@{*/
 template<class T>
-class Iterator
-{
+class Iterator {
 public:
 protected:
-	typedef std::ptrdiff_t difference_type;
-	typedef T value_type;
-	typedef T& reference;
-	typedef T* pointer;
-	typedef std::bidirectional_iterator_tag iterator_category;
+  typedef std::ptrdiff_t difference_type;
+  typedef T value_type;
+  typedef T& reference;
+  typedef T* pointer;
+  typedef std::bidirectional_iterator_tag iterator_category;
 
-	Iterator(pointer = nullptr);
-	Iterator(const Iterator&);
-	virtual ~Iterator();
+  Iterator(pointer = nullptr);
+  Iterator(const Iterator&);
+  virtual ~Iterator();
 
-	reference operator*();
-	pointer operator->();
-	Iterator& operator++();
-	Iterator operator++(int);
-	Iterator& operator--();
-	Iterator operator--(int);
+  reference operator*();
+  pointer operator->();
+  Iterator& operator++();
+  Iterator operator++(int);
+  Iterator& operator--();
+  Iterator operator--(int);
 
-	bool operator==(const Iterator&) const;
-	bool operator!=(const Iterator&) const;
+  bool operator==(const Iterator&) const;
+  bool operator!=(const Iterator&) const;
 
-	Iterator& operator=(const Iterator&);
+  Iterator& operator=(const Iterator&);
 protected:
-	IterItem<T> mPtr;
+  IterItem<T> mPtr;
 };
 /*@}*/
+} // namespace iterator
+} // namespace impl
+using Iterator = impl::iterator::Iterator;
+} // namespace containers
+} // namespace engine
+} // namespace sd_app
+
+
 #ifndef ITERATOR_CC_INCLUDED
 #include"engine/containers/Iterator.cc"
 #endif // !ITERATOR_CC_INCLUDED

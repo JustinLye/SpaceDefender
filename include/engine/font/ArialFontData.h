@@ -3,6 +3,13 @@
 
 #include"engine/util/Paths.h"
 #include"engine/font/FontData.h"
+
+namespace sd_app {
+namespace engine {
+namespace font {
+namespace impl {
+namespace arial_font_data {
+
 /** @addtogroup EngineFonts */
 /*@{*/
 class ArialFontData :
@@ -19,3 +26,10 @@ protected:
 };
 /*@}*/
 #endif
+
+} // namespace arial_font_data
+} // namespace impl
+using ArialFontData = impl::arial_font_data::ArialFontData;
+} // namespace font
+} // namespace engine
+} // namespace sd_app

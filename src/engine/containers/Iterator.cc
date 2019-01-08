@@ -2,7 +2,11 @@
 #define ITERATOR_CC_INCLUDED
 
 #include"engine/containers/Iterator.h"
-
+namespace sd_app {
+namespace engine {
+namespace containers {
+namespace impl {
+namespace iterator {
 #ifdef BUILD_ITERATOR
 #endif
 
@@ -84,4 +88,9 @@ Iterator<T>& Iterator<T>::operator=(const Iterator& other)
 	mPtr = other.mPtr;
 	return *this;
 }
+} // namespace iterator
+} // namespace impl
+} // namespace containers
+} // namespace engine
+} // namespace sd_app
 #endif // !ITERATOR_CC_INCLUDED

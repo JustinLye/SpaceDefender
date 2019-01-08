@@ -1,5 +1,9 @@
 #include"engine/graphics/Texture.h"
-
+namespace sd_app {
+namespace engine {
+namespace graphics {
+namespace impl {
+namespace texture {
 Texture::Texture() :
 	TexData(),
 	DrawableObject(),
@@ -135,3 +139,8 @@ void Texture::CustomDeactivationSteps()
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
+} // namespace texture
+} // namespace impl
+} // namespace graphics
+} // namespace engine
+} // namespace ad_app

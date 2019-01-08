@@ -1,5 +1,9 @@
 #include"engine/objects/ScrollingBackground.h"
-
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace scrolling_background {
 ScrollingBackground::ScrollingBackground() :
 	GameObject(),
 	mScrollOffsetVec(glm::vec3(0.0f)),
@@ -66,3 +70,8 @@ const Transform& ScrollingBackground::StartingPosition() const
 {
 	return mStartingPosition;
 }
+} // namespace scrolling_background
+} // namespace impl
+} // namespace objects
+} // namespace engine
+} // namespace sd_app

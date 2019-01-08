@@ -1,5 +1,9 @@
 #include"engine/shapes/TriangleData.h"
-
+namespace sd_app {
+namespace engine {
+namespace shapes {
+namespace impl {
+namespace triangle_data {
 TriangleData::TriangleData() :
 	ShapeData()
 {
@@ -40,3 +44,8 @@ void TriangleData::InitializeData()
 	mIndices[1] = 1;
 	mIndices[2] = 2;
 }
+} // namespace triangle_data
+} // namespace impl
+} // namespace shapes
+} // namespace engine
+} // namespace sd_app

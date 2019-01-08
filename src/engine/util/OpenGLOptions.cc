@@ -1,5 +1,9 @@
 #include"engine/util/OpenGLOptions.h"
-
+namespace sd_app {
+namespace engine {
+namespace util {
+namespace impl {
+namespace opengl_options {
 const unsigned int OpenGLOptions::DEFAULT_MAJOR_V = 3;
 const unsigned int OpenGLOptions::DEFAULT_MINOR_V = 3;
 const unsigned int OpenGLOptions::DEFAULT_PROFILE_MODE = GLFW_OPENGL_CORE_PROFILE;
@@ -58,3 +62,9 @@ OpenGLOptions::OpenGLOptions() :
 {
 
 }
+} // namespace opengl_options
+} // namespace impl
+} // namespace util
+} // namespace engine
+} // namespace sd_app
+

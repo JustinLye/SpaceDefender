@@ -1,5 +1,10 @@
 #include "engine/util/Thread.h"
 #include <iostream>
+namespace sd_app {
+namespace engine {
+namespace util {
+namespace impl {
+namespace thread {
 Thread::Thread()
 {
 
@@ -25,3 +30,8 @@ void Thread::Launch()
 	std::thread New_thread(std::ref(*this));
 	swap(New_thread);
 }
+} // namespace thread
+} // namespace impl
+} // namespace util
+} // namespace engine
+} // namespace sd_app

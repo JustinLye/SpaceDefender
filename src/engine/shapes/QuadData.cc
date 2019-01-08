@@ -1,5 +1,9 @@
 #include"engine/shapes/QuadData.h"
-
+namespace sd_app {
+namespace engine {
+namespace shapes {
+namespace impl {
+namespace quad_data {
 QuadData::QuadData() :
 	ShapeData()
 {
@@ -44,3 +48,8 @@ void QuadData::InitializeData()
 	mIndices[4] = 3;
 	mIndices[5] = 2;
 }
+} // namespace quad_data
+} // namespace impl
+} // namespace shapes
+} // namespace engine
+} // namespace sd_app

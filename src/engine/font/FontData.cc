@@ -1,5 +1,10 @@
 #include"engine/font/FontData.h"
 
+namespace sd_app {
+namespace engine {
+namespace font {
+namespace impl {
+namespace font_data {
 FontData::FontData() :
 	mTextures(nullptr)
 {
@@ -111,3 +116,8 @@ const Character& FontData::operator[](const GLchar& character) const
 	}
 	return result->second;
 }
+} // namespace font_data
+} // namespace impl
+} // namespace font
+} // namespace engine
+} // namespace sd_app

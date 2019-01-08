@@ -7,17 +7,14 @@
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\engine\UtiliDefs.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\containers\IndexQueue.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,9 +60,6 @@
     <ClCompile Include="src\engine\objects\GameObject.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\objects\Observer.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\objects\RenderableObject.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -76,9 +70,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\objects\ScrollingBackground.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\objects\Subject.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\objects\TexRenderer.cc">
@@ -192,8 +183,26 @@
     <ClCompile Include="external\glad\src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\Configuration.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\util\UtiliDefs.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Observer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Subject.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\core\Configuration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\NonCopyable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\doc\Groups.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -248,9 +257,6 @@
     <ClInclude Include="include\engine\objects\Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\engine\objects\Observer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\engine\objects\RenderableObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -261,9 +267,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\engine\objects\ScrollingBackground.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\engine\objects\Subject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\engine\objects\TexRenderer.h">
@@ -384,6 +387,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\game\SpaceDefender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\engine\sys\Settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\Subject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\Observer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,9 @@
 #include"engine/objects/TexRenderer.h"
-
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace tex_renderer {
 TexRenderer::TexRenderer(ShaderProgram* shader_prog, const OpenGLPolyMode& poly_mode) :
 	Renderer(nullptr, poly_mode),
 	mUseMixInColor(0),
@@ -51,3 +55,8 @@ void TexRenderer::MixInColor(const glm::vec4& color)
 {
 	mMixInColor = color;
 }
+} // namespace tex_renderer
+} // namespace impl
+} // namespace objects
+} // namespace engine
+} // namespace sd_app

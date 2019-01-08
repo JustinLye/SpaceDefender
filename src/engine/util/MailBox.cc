@@ -3,6 +3,12 @@
 
 #include"engine/util/MailBox.h"
 
+namespace sd_app {
+namespace engine {
+namespace util {
+namespace impl {
+namespace mailbox {
+
 #ifdef BUILD_MAIL_BOX_CC
 #endif
 
@@ -13,20 +19,20 @@
 ///\ date 03/21/2018
 ///////////////////////////////////////////////
 
-template<typename T>
+template<class T>
 inline bool MailBox<T>::Empty() const
 {
 	return empty();
 }
 
-template<typename T>
+template<class T>
 MailBox<T>::MailBox() :
 	std::queue<T>()
 {
 
 }
 
-template<typename T>
+template<class T>
 T MailBox<T>::GetMail()
 {
 	std::unique_lock<std::mutex> lockbox(mCheckMailMtx);
@@ -39,7 +45,7 @@ T MailBox<T>::GetMail()
 	return mail;
 }
 
-template<typename T>
+template<class T>
 void MailBox<T>::AcceptMail(T mail)
 {
 	std::unique_lock<std::mutex> lockbox(mCheckMailMtx);
@@ -55,6 +61,10 @@ void MailBox<T>::AcceptMail(T mail)
 	}
 	mMailReceivedEvent.notify_all();
 }
-
+} // namespace mailbox
+} // namespace impl
+} // namespace util
+} // namespace engine
+} // namespace sd_app
 
 #endif

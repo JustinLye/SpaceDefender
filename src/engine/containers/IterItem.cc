@@ -2,7 +2,11 @@
 #define ITER_ITEM_CC_INCLUDED
 
 #include"engine/containers/IterItem.h"
-
+namespace sd_app {
+namespace engine {
+namespace containers {
+namespace impl {
+namespace iter_item {
 template<class T>
 IterItem<T>::IterItem(pointer ptr) :
 	mPtr(ptr),
@@ -121,5 +125,9 @@ IterItem<T>& IterItem<T>::operator=(const IterItem& other)
 	mPrev = other.mPrev;
 	return *this;
 }
-
+} // namespace iter_item
+} // namespace impl
+} // namespace containers
+} // namespace engine
+} // namespace sd_app
 #endif // !ITER_ITEM_CC_INCLUDED

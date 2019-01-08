@@ -1,5 +1,9 @@
 #include"engine/objects/Canvas.h"
-
+namespace sd_app {
+namespace engine {
+namespace objects {
+namespace impl {
+namespace canvas {
 Canvas::Canvas() :
 	UIObject()
 {
@@ -33,3 +37,8 @@ void Canvas::RemoveUIObject(UIObject* object)
 {
 	mUIObjects.erase(object->Id());
 }
+} // namespace canvas
+} // namespace impl
+} // namespace objects
+} // namespace engine
+} // namespace sd_app

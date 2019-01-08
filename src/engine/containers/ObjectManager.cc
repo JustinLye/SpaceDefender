@@ -2,6 +2,12 @@
 #define OBJECT_MANAGER_CC_INCLUDED
 #include"engine/containers/ObjectManager.h"
 
+namespace sd_app {
+namespace engine {
+namespace containers {
+namespace impl {
+namespace object_manager {
+
 template<class T>
 ObjectManager<T>::ObjectManager() :
 	mObjects(nullptr)
@@ -159,5 +165,10 @@ bool ObjectManager<T>::DestructionPred(T* object) const
 {
 	return false;
 }
+} // namespace object_manager
+} // namespace impl
+} // namespace containers
+} // namespace engine
+} // namespace sd_app
 
 #endif
