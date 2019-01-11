@@ -1,5 +1,8 @@
 #include"game/EnemyShipManager.h"
-
+namespace sd_app {
+namespace game {
+namespace impl {
+namespace enemy_ship_manager {
 EnemyShipManager::EnemyShipManager(DrawableObject* shape, ShaderProgram* shader_prog) :
 	Subject(),
 	Observer(),
@@ -7,8 +10,8 @@ EnemyShipManager::EnemyShipManager(DrawableObject* shape, ShaderProgram* shader_
 	mStartingYPos(0.0f),
 	mTerminateYPos(0.0f),
 	mProbabilityOfSpawn(0.0f),
-	mMinRespawnWaitTime(0.0f),
-	mMaxRespawnWaitTime(0.0f),
+	mMinRespawnWaitTime(0),
+	mMaxRespawnWaitTime(0),
 	mHitPoints(1),
 	mShipScale(glm::vec3(1.0f)),
 	mTransform(Transform()),
@@ -20,7 +23,7 @@ EnemyShipManager::EnemyShipManager(DrawableObject* shape, ShaderProgram* shader_
 	mPosDist(0.0f, 0.0f),
 	mSpeedDist(0.0f, 0.0f),
 	mLastSpawnTime(high_resolution_clock::now()),
-	mNextXPos(0.0f),
+	mNextXPos(0.0),
 	mMaxPlacementAttempts(1),
 	mTracker(nullptr)
 {
@@ -102,12 +105,12 @@ int EnemyShipManager::MaxRespawnWaitTime() const
 	return mMaxRespawnWaitTime;
 }
 
-float EnemyShipManager::MinProjectileSpeed() const
+double EnemyShipManager::MinProjectileSpeed() const
 {
 	return mSpeedDist.min();
 }
 
-float EnemyShipManager::MaxProjectileSpeed() const
+double EnemyShipManager::MaxProjectileSpeed() const
 {
 	return mSpeedDist.max();
 }
@@ -117,12 +120,12 @@ float EnemyShipManager::StartingYPos() const
 	return mStartingYPos;
 }
 
-float EnemyShipManager::MinXPos() const
+double EnemyShipManager::MinXPos() const
 {
 	return mPosDist.min();
 }
 
-float EnemyShipManager::MaxXPos() const
+double EnemyShipManager::MaxXPos() const
 {
 	return mPosDist.max();
 }
@@ -246,7 +249,7 @@ void EnemyShipManager::Init()
 	}
 }
 
-void EnemyShipManager::OnNotify(const GameObject& object, const Constants::Types::event_t& event_name)
+void EnemyShipManager::OnNotify(const GameObject& object, const event_t& event_name)
 {
 	
 	if (object.Type() == object_t::ENEMY_SHIP)
@@ -357,12 +360,12 @@ void EnemyShipManager::TrySpawn()
 bool EnemyShipManager::CanSpawn()
 {
 	// Check if all active slots are used
-	if (mActiveIndices.size() >= mMaxActiveCapacity)
+	if (mActiveIndices.size() >= static_cast<std::size_t>(mMaxActiveCapacity))
 	{
 		return false;
 	}
 	// Get time since last spawn in milliseconds
-	float elapsed = duration_cast<milliseconds>(high_resolution_clock::now() - mLastSpawnTime).count();
+	float elapsed = static_cast<float>(duration_cast<milliseconds>(high_resolution_clock::now() - mLastSpawnTime).count());
 
 	// Check if enough time has passed since last spawn
 	if (elapsed < mMinRespawnWaitTime)
@@ -407,3 +410,7 @@ bool EnemyShipManager::CanSpawn()
 	}
 	return false;
 }
+} // namespace enemy_ship_manager
+} // namespace impl
+} // namespace game
+} // namespace sd_app

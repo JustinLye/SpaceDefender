@@ -50,6 +50,7 @@ public:
   virtual void Update(float);
   virtual void Render(const glm::mat4& = Constants::Geometry::IDENTITY_MATRIX, const glm::mat4& = Constants::Geometry::IDENTITY_MATRIX);
 
+
 protected:
   int mMaxCapacity;
   int mMaxActiveCapacity;
@@ -67,18 +68,19 @@ protected:
   virtual bool DestructionPred(T*) const;
 };
 
-#ifndef OBJECT_MANAGER_CC_INCLUDED
-#include"engine/containers/ObjectManager.cc"
-#endif // !OBJECT_MANAGER_CC_INCLUDED
-
 /*@}*/
 } // namespace object_manager
 } // namespace impl
-using ObjectManager = impl::object_manager::ObjectManager;
+template<class T>
+using ObjectManager = impl::object_manager::ObjectManager<T>;
 } // namespace containers
 } // namespace engine
 } // namespace sd_app
 
-
-
 #endif
+
+#ifndef OBJECT_MANAGER_CC_INCLUDED
+#include"engine/containers/ObjectManager.cc"
+#endif // !OBJECT_MANAGER_CC_INCLUDED
+
+

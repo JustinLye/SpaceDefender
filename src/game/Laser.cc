@@ -1,8 +1,11 @@
 #include"game/Laser.h"
-
+namespace sd_app {
+namespace game {
+namespace impl {
+namespace laser {
 Laser::Laser() :
 	GameObject(),
-	mColor(Constants::Rendering::DFLT_SHAPE_COLOR)
+	mColor(DFLT_SHAPE_COLOR)
 {
 
 }
@@ -64,3 +67,7 @@ void Laser::Update(float dt)
 {
 	Translate(glm::vec3(0.0f, dt*10.0f, 0.0f));
 }
+} // namespace laser
+} // namespace impl
+} // namespace game
+} // namespace sd_app

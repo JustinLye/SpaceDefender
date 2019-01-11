@@ -19,7 +19,7 @@ namespace impl {
 namespace texture {
 
 using namespace constants::shaders;
-
+using DrawableObject = objects::DrawableObject;
 /** @addtogroup EngineGraphics */
 /*@{*/
 

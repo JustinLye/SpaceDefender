@@ -1,5 +1,8 @@
 #include"game/AsteroidSpawner.h"
-
+namespace sd_app {
+namespace game {
+namespace impl {
+namespace asteroid_spawner {
 AsteroidSpawner::AsteroidSpawner(DrawableObject* shape, ShaderProgram* shader_prog) :
 	Subject(),
 	Observer(),
@@ -268,12 +271,12 @@ void AsteroidSpawner::AddActiveObjectTracker(const ActiveObjectTracker* tracker)
 	}
 }
 
-void AsteroidSpawner::OnNotify(const GameObject& object, const Constants::Types::event_t& event_name)
+void AsteroidSpawner::OnNotify(const GameObject& object, const event_t& event_name)
 {
 	switch (event_name)
 	{
-	case Constants::Types::event_t::TERMINATED_COLLIDABLE_OBJECT:
-		if (object.Type() == Constants::Types::object_t::ASTEROID)
+	case event_t::TERMINATED_COLLIDABLE_OBJECT:
+		if (object.Type() == object_t::ASTEROID)
 		{
 			std::list<unsigned int>::iterator iter = mActiveIndices.begin();
 			unsigned int index = mAsteroidToIndexMap[object.Id()];
@@ -288,7 +291,7 @@ void AsteroidSpawner::OnNotify(const GameObject& object, const Constants::Types:
 			}
 		}
 		break;
-	case Constants::Types::event_t::COLLISION_REPORTED:
+	case event_t::COLLISION_REPORTED:
 		if (object.Type() == object_t::ASTEROID)
 		{
 			//std::list<unsigned int>::iterator iter = mActiveIndices.begin();
@@ -366,12 +369,12 @@ void AsteroidSpawner::CustomAllocOps(unsigned int index)
 	}
 	Asteroid* asteroid = mObjects[index];
 	asteroid->Spawn(mTransform);
-	asteroid->Speed(mSpeedDist(mGen));
+	asteroid->Speed(static_cast<float>(mSpeedDist(mGen)));
 	asteroid->Translate(glm::vec3(mPosDist(mGen), mStartingYPos - mTransform.Position().y, 0.0f));
-	asteroid->Scale(mScaleDist(mGen));
+	asteroid->Scale(static_cast<float>(mScaleDist(mGen)));
 	asteroid->HitPoints((int)((asteroid->Scale().x / mScaleDist.max()) * (mMaxHitPoints - mMinHitPoints) + mMinHitPoints));
 	asteroid->Mass(asteroid->Scale().x);
-	asteroid->RotationSpeed(mRotateDist(mGen));
+	asteroid->RotationSpeed(static_cast<float>(mRotateDist(mGen)));
 }
 
 void AsteroidSpawner::CustomDeallocOps(unsigned int index)
@@ -392,11 +395,11 @@ void AsteroidSpawner::CustomUpdateOps(float dt)
 
 void AsteroidSpawner::TrySpawn()
 {
-	float elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - mLastSpawnTime).count();
+	float elapsed = static_cast<float>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - mLastSpawnTime).count());
 	//if (elapsed >= mMaxRespawnWaitTime || (elapsed >= mMinRespawnWaitTime && ((mProbabilityOfSpawn)*((float)mMinRespawnWaitTime/(float)mMaxRespawnWaitTime) > mSpawnDist(mGen))))
 	if (elapsed >= mMaxRespawnWaitTime || (elapsed >= mMinRespawnWaitTime && (mProbabilityOfSpawn > mSpawnDist(mGen))))
 	{
-		if (mActiveIndices.size() < mMaxActiveCapacity)
+		if (mActiveIndices.size() < static_cast<std::size_t>(mMaxActiveCapacity))
 		{
 			if (Alloc() != NOT_INDEX)
 			{
@@ -411,3 +414,8 @@ bool AsteroidSpawner::DestructionPred(Asteroid* asteroid) const
 {
 	return asteroid->Terminate();
 }
+
+} // namespace asteroid_spawner
+} // namespace impl
+} // namespace game
+} // namespace sd_app

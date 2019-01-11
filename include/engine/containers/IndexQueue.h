@@ -23,7 +23,7 @@ namespace index_queue {
 using namespace constants::containers;
 
 struct Index {
-  typedef unsigned int size_t;
+  using size_t = std::size_t;
   Index(const size_t& = NULL_ELEMENT_INDEX);
   Index(const Index&);
   Index(Index&&);

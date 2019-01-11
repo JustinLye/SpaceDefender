@@ -72,7 +72,7 @@ enum KEY_STATE : unsigned int {
 };
 }
 namespace types {
-enum DIRECTION : unsigned int {
+enum direction_t : unsigned int {
   LEFT,
   RIGHT
 };

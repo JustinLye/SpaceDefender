@@ -26,14 +26,14 @@ using event_t = sd_app::engine::constants::types::event_t;
   use an Observer design pattern on a single thread. This has worked well for my needs.
 
 */
+template<class T>
 class Observer {
 public:
   Observer(); ///< Constructor
-  virtual ~Observer() = 0; ///< Destructor
+  virtual ~Observer(); ///< Destructor
 
   unsigned int Id() const; ///< Get Observers' unique id.
-  template<class T>
-  void OnNotify(const T&, const event_t&); ///< Handle event notification.
+  virtual void OnNotify(const T&, const event_t&) = 0; ///< Handle event notification.
 
 private:
   static unsigned int NextObserverId; ///< Holds next observer id. Incremented each time an Observer is constructed
@@ -41,11 +41,12 @@ private:
 };
 } // namespace observer
 } // namespace impl
-using Observer = impl::observer::Observer;
+template<class T>
+using Observer = impl::observer::Observer<T>;
 } // namespace core
 } // namespace sd_app
-
-
 /*@}*/
-
+#ifndef OBSERVER_CC_INCLUDED
+#include"core/Observer.cc"
+#endif // !OBSERVER_CC_INCLUDED
 #endif

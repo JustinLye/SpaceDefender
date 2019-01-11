@@ -4,7 +4,7 @@
 #include"engine/shapes/Shape.h"
 #include"engine/objects/Transform.h"
 #include"engine/objects/Renderer.h"
-#include"engine/objects/Subject.h"
+#include"core/Subject.h"
 #include"engine/objects/Text.h"
 #include"engine/objects/UIObject.h"
 

@@ -1,17 +1,22 @@
 #include"game/SpaceDefender.h"
 
+namespace sd_app {
+namespace game {
+namespace impl {
+namespace space_defender {
+
 SpaceDefender::SpaceDefender(const OpenGLOptions& opts) :
 	mOptions(opts),
 	mPlayer(nullptr),
 	mWindow(nullptr),
 	mAsteroidSpawner(nullptr),
 	mTracker(nullptr),
-	mViewMat(Constants::Geometry::IDENTITY_MATRIX),
-	mProjMat(Constants::Geometry::IDENTITY_MATRIX),
+	mViewMat(IDENTITY_MATRIX),
+	mProjMat(IDENTITY_MATRIX),
 	mScoreText(nullptr),
 	mGameState(game_state_t::INIT_GAME_STATE),
 	mBackground(nullptr),
-  mLastObjectInfoPrinted(Constants::NOT_AN_OBJECT)
+  mLastObjectInfoPrinted(NOT_AN_OBJECT)
 {
 
 }
@@ -221,10 +226,10 @@ void SpaceDefender::InitBoundries()
 
 void SpaceDefender::InitShapeData()
 {
-	mShapeData[Constants::Types::shape_t::CIRCLE] = new CircleData();
-	mShapeData[Constants::Types::shape_t::LINE_SEG] = new LineSegmentData();
-	mShapeData[Constants::Types::shape_t::QUAD] = new QuadData();
-	mShapeData[Constants::Types::shape_t::TRIANGLE] = new TriangleData();
+	mShapeData[shape_t::CIRCLE] = new CircleData();
+	mShapeData[shape_t::LINE_SEG] = new LineSegmentData();
+	mShapeData[shape_t::QUAD] = new QuadData();
+	mShapeData[shape_t::TRIANGLE] = new TriangleData();
 }
 
 void SpaceDefender::InitShapes()
@@ -360,11 +365,11 @@ void SpaceDefender::InitPlayer()
 
 	// Setup laser cannon
 	
-	LaserCannon* laser_cannon = new LaserCannon(mTextures[texture_t::BRIGHTNESS_STEPS_LASER], mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG]);
+	LaserCannon* laser_cannon = new LaserCannon(mTextures[texture_t::BRIGHTNESS_STEPS_LASER], mShaders[shader_prog_t::TEXTURE_SHADER_PROG]);
 	laser_cannon->LaserTermYPos(mBoundries.mTop * 1.01f);
 	laser_cannon->ProjectileSpeed(sh * 0.10f);
 	laser_cannon->CooldownTime(80.0f);
-	TexRenderer* renderer = new TexRenderer(mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG], { GL_FILL, GL_FILL });
+	TexRenderer* renderer = new TexRenderer(mShaders[shader_prog_t::TEXTURE_SHADER_PROG], { GL_FILL, GL_FILL });
 	Collider* collider = new Collider();
 	RigidBody* rb = new RigidBody();
 	mPlayer = new Player();
@@ -372,7 +377,7 @@ void SpaceDefender::InitPlayer()
 	mPlayer->AddDrawableObject(mTextures[texture_t::PLAYER_SHIP]);
 #ifdef COLLISION_DEBUG
 	Shape* detection_circle = new Shape();
-	detection_circle->Buffer(mShapeData[Constants::Types::shape_t::CIRCLE]);
+	detection_circle->Buffer(mShapeData[shape_t::CIRCLE]);
 	mPlayer->AddDrawableObject(detection_circle);
 #endif
 	mPlayer->AddCollider(collider);
@@ -395,7 +400,7 @@ void SpaceDefender::InitTracker()
 void SpaceDefender::InitAsteroids()
 {
 
-	mAsteroidSpawner = new AsteroidSpawner(mTextures[texture_t::CARTOON_ASTEROID], mShaders[Constants::Types::shader_prog_t::TEXTURE_SHADER_PROG]);
+	mAsteroidSpawner = new AsteroidSpawner(mTextures[texture_t::CARTOON_ASTEROID], mShaders[shader_prog_t::TEXTURE_SHADER_PROG]);
 	float sw = OpenGLUtility::GetScreenWidth(mOptions.mMonitor);
 	float sh = OpenGLUtility::GetScreenHeight(mOptions.mMonitor);
 	//mAsteroidSpawner->MaxProjectileSpeed(sw*0.010f);
@@ -539,7 +544,7 @@ void SpaceDefender::HandleLeftMovement()
 {
 	if (MoveLeft())
 	{
-		mPlayer->Strafe(DIRECTION::LEFT);
+		mPlayer->Strafe(direction_t::LEFT);
 		if (UseBoost(GLFW_KEY_A) || UseBoost(GLFW_KEY_LEFT))
 		{
 			mPlayer->Boost(2.0f);
@@ -551,7 +556,7 @@ void SpaceDefender::HandleRightMovement()
 {
 	if (MoveRight())
 	{
-		mPlayer->Strafe(DIRECTION::RIGHT);
+		mPlayer->Strafe(direction_t::RIGHT);
 		if (UseBoost(GLFW_KEY_D) || UseBoost(GLFW_KEY_RIGHT))
 		{
 			mPlayer->Boost(2.0f);
@@ -626,3 +631,8 @@ float SpaceDefender::TimeSinceKeyChangeMs(const int& key)
 {
 	return (float)duration_cast<milliseconds>(high_resolution_clock::now() - mKeyStateMap[key].mLastChanged).count();
 }
+
+} // namespace space_defender
+} // namespace impl
+} // namespace game
+} // namespace sd_app

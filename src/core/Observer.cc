@@ -1,28 +1,29 @@
+#ifndef OBSERVER_CC_INCLUDED
+#define OBSERVER_CC_INCLUDED
 #include"core/Observer.h"
 
 namespace sd_app {
 namespace core {
 namespace impl {
 namespace observer {
+template<class T>
+unsigned int Observer<T>::NextObserverId = 0;
 
-unsigned int Observer::NextObserverId = 0;
-
-Observer::Observer() :
+template<class T>
+Observer<T>::Observer() :
   mId(++NextObserverId) {
 
 }
 
 template<class T>
-void Observer::OnNotify(const T& object, const event_t& event_name) {
+Observer<T>::~Observer() {}
 
-}
-
-unsigned int Observer::Id() const {
+template<class T>
+unsigned int Observer<T>::Id() const {
   return mId;
 }
-
 } // namespace observer
 } // namespace impl
 } // namespace core
 } // namespace sd_app
-
+#endif // !OBSERVER_CC_INCLUDED

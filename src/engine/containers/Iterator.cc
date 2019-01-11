@@ -18,7 +18,7 @@ Iterator<T>::Iterator(pointer ptr) :
 
 template<class T>
 Iterator<T>::Iterator(const Iterator& other) :
-	mPtr(IterItem(other.mPtr))
+	mPtr(IterItem<T>(other.mPtr))
 {
 }
 

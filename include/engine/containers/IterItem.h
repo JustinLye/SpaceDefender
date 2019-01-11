@@ -40,7 +40,8 @@ struct IterItem {
 /*@}*/
 } // namespace iter_item
 } // namespace impl
-using IterItem = impl::iter_item::IterItem;
+template<class T>
+using IterItem = impl::iter_item::IterItem<T>;
 } // namespace containers
 } // namespace engine
 } // namespace sd_app

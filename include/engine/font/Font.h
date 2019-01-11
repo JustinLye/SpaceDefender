@@ -12,6 +12,7 @@ namespace impl {
 namespace font {
 
 using namespace constants::shaders;
+using ShaderProgram = util::ShaderProgram;
 
 /** @addtogroup EngineFonts */
 /*@{*/

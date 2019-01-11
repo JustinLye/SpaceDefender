@@ -3,7 +3,7 @@
 
 #include<vector>
 #include<set>
-#include"engine/objects/Observer.h"
+#include"core/Observer.h"
 #include"engine/objects/GameObject.h"
 #include"engine/util/UtiliDefs.h"
 #include"engine/util/Logger.h"
@@ -15,20 +15,22 @@ namespace impl {
 namespace active_object_tracker {
 using event_t = engine::constants::types::event_t;
 using object_t = engine::constants::types::object_t;
-using Observer = engine::objects::Observer;
+template<class T>
+using Observer = core::Observer<T>;
 using Transform = engine::objects::Transform;
 using GameObject = engine::objects::GameObject;
 using Logger = engine::util::Logger;
+using Collider = engine::objects::Collider;
+using engine::util::TypeToString;
 
 /** @addtogroup GameWorld */
 /*@{*/
 class ActiveObjectTracker :
-  public Observer {
+  public Observer<GameObject> {
 public:
   ActiveObjectTracker();
   ~ActiveObjectTracker();
-
-  void OnNotify(const GameObject&, const event_t&);
+  void OnNotify(const GameObject&, const event_t&) override;
   const std::vector<const GameObject*>& GetActiveObjectsList() const;
   std::vector<const GameObject*> ObjectScan(const Transform&, const Transform&) const;
   std::vector<const GameObject*> ObjectScan(const Transform&) const;

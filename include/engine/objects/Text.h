@@ -9,6 +9,7 @@ namespace engine {
 namespace objects {
 namespace impl {
 namespace text {
+using event_t = constants::types::event_t;
 using Font = font::Font;
 
 /** @addtogroup EngineObjects */
@@ -40,12 +41,13 @@ protected:
   float mYBearing;
   float mScale;
   std::string mMessage;
+  using UIObject::OnNotify;
 
 };
 /*@}*/
 } // namespace text
 } // namespace impl
-using Text = impl::text::Font;
+using Text = impl::text::Text;
 } // namespace objects
 } // namespace engine
 } // namespace sd_app

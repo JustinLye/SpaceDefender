@@ -3,6 +3,7 @@
 
 #include"engine/objects/Renderer.h"
 #include"engine/objects/Collider.h"
+#include"core/Subject.h"
 #include"engine/objects/RigidBody.h"
 #ifdef ENGINE_DEBUG
 #include"engine/util/DebugFunctions.h"
@@ -18,11 +19,13 @@ using namespace constants::physics;
 using event_t = constants::types::event_t;
 using object_t = constants::types::object_t;
 using OpenGLPolyMode = util::OpenGLPolyMode;
-class Subject;
+template<class T>
+using Subject = core::Subject<T>;
+
 /** @addtogroup EngineObjects */
 /*@{*/
 class GameObject :
-  public Subject {
+  public Subject<GameObject> {
 public:
 
   struct CompareDrawObjPtr {
@@ -223,8 +226,5 @@ using GameObject = impl::game_object::GameObject;
 } // namespace objects
 } // namespace engine
 } // namespace sd_app
-
-#include"engine/objects/Subject.h"
-
 #endif
 

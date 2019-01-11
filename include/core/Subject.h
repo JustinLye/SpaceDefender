@@ -12,7 +12,6 @@ namespace core {
 namespace impl {
 namespace subject {
 using event_t = sd_app::engine::constants::types::event_t;
-using Observer = sd_app::core::Observer;
 
 /** @addtogroup Core */
 /*@{*/
@@ -20,24 +19,28 @@ using Observer = sd_app::core::Observer;
 /*!
   \brief Observered by zero or more Observers
 */
+template<class T>
 class Subject {
 public:
   Subject();
-  ~Subject();
-  virtual void AddObserver(Observer*);
-  virtual void RemoveObserver(Observer*);
-  template<class T>
-  void Notify(const T&, const event_t&) const;
+  virtual ~Subject();
+  virtual void AddObserver(Observer<T>*);
+  virtual void RemoveObserver(Observer<T>*);
+  virtual void Notify(const T&, const event_t&) const;
 protected:
-  std::map<unsigned int, Observer*> mObserverMap;
-  bool ObserverIsMapped(Observer*) const;
+  std::map<unsigned int, Observer<T>*> mObserverMap;
+  bool ObserverIsMapped(Observer<T>*) const;
 };
-/*@}*/
-#endif
 
+/*@}*/
 } // namespace subject
 } // namespace impl
-
-using Subject = impl::subject::Subject;
+template<class T>
+using Subject = impl::subject::Subject<T>;
 } // namespace core
 } // namespace sd_app
+#ifndef SP_APP_SUBJECT_CC_INCLUDED
+#include"core/Subject.cc"
+#endif // !SP_APP_SUBJECT_CC_INCLUDED
+
+#endif

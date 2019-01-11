@@ -1,5 +1,8 @@
 #include"game/ExplosionManager.h"
-
+namespace sd_app {
+namespace game {
+namespace impl {
+namespace explosion_manager {
 ExplosionManager::ExplosionManager(DrawableObject* explosion, ShaderProgram* shader) :
 	Subject(),
 	Observer(),
@@ -153,3 +156,8 @@ bool ExplosionManager::DestructionPred(Explosion* object) const
 {
 	return object->Terminate();
 }
+} // namespace explosion_manager
+} // namespace impl
+using ExplosionManager = impl::explosion_manager::ExplosionManager;
+} // namespace game
+} // namespace sd_app

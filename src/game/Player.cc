@@ -1,5 +1,8 @@
 #include"game/Player.h"
-
+namespace sd_app {
+namespace game {
+namespace impl {
+namespace player {
 Player::Player() :
 	GameObject(),
 	mSpeed(3.0f),
@@ -16,7 +19,7 @@ Player::~Player()
 {
 }
 
-Constants::Types::object_t Player::Type() const
+object_t Player::Type() const
 {
 	return object_t::PLAYER;
 }
@@ -78,14 +81,14 @@ void Player::AttachCannon(LaserCannon* cannon)
 	mLaserCannon->AttachTo(*this);
 }
 
-void Player::Strafe(const Constants::Types::DIRECTION& dir)
+void Player::Strafe(const direction_t& dir)
 {
-	if (dir == Constants::Types::DIRECTION::LEFT)
+	if (dir == direction_t::LEFT)
 	{
 		mRigidBody->Force(glm::vec3(-10.0f, 0.0f, 0.0f));
 	//	mTargetXPos = mTransform.Position().x - mStep;
 	}
-	if (dir == Constants::Types::DIRECTION::RIGHT)
+	if (dir == direction_t::RIGHT)
 	{
 		mRigidBody->Force(glm::vec3(10.0f, 0.0f, 0.0f));
 	}
@@ -159,7 +162,7 @@ bool Player::GunOverHeated() const
 	return mLaserCannon->GunOverHeated();
 }
 
-void Player::AddObserver(Observer* observer)
+void Player::AddObserver(Observer<GameObject>* observer)
 {
 	if (!ObserverIsMapped(observer))
 	{
@@ -171,8 +174,12 @@ void Player::AddObserver(Observer* observer)
 	}
 }
 
-void Player::RemoveObserver(Observer* observer)
+void Player::RemoveObserver(Observer<GameObject>* observer)
 {
 	mObserverMap.erase(observer->Id());
 	mLaserCannon->RemoveObserver(observer);
 }
+} // namespace player
+} // namespace impl
+} // namespace game
+} // namespace sd_app

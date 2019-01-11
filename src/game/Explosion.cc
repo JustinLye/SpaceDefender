@@ -1,9 +1,12 @@
 #include"game/Explosion.h"
-
+namespace sd_app {
+namespace game {
+namespace impl {
+namespace explosion {
 Explosion::Explosion() :
 	GameObject(),
-	mSpeed(0.0f),
-	mMaxScale(0.0f)
+	mSpeed(0.0),
+	mMaxScale(0.0)
 {
 
 }
@@ -29,22 +32,26 @@ bool Explosion::Terminate() const
 	return mMaxScale <= Scale().x;
 }
 
-void Explosion::Speed(float speed)
+void Explosion::Speed(double speed)
 {
 	mSpeed = speed;
 }
 
-void Explosion::MaxScale(float max_scale)
+void Explosion::MaxScale(double max_scale)
 {
 	mMaxScale = max_scale;
 }
 
-float Explosion::Speed() const
+double Explosion::Speed() const
 {
 	return mSpeed;
 }
 
-float Explosion::MaxScale() const
+double Explosion::MaxScale() const
 {
 	return mMaxScale;
 }
+} // namespace explosion
+} // namespace impl
+} // namespace game
+} // namespace sd_app

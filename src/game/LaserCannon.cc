@@ -1,5 +1,8 @@
 #include"game/LaserCannon.h"
-
+namespace sd_app {
+namespace game {
+namespace impl {
+namespace laser_cannon {
 LaserCannon::LaserCannon(DrawableObject* laser, ShaderProgram* shader) :
 	Subject(),
 	Observer(),
@@ -39,12 +42,12 @@ int LaserCannon::MaxActiveCapacity()
 	return 20;
 }
 
-void LaserCannon::OnNotify(const GameObject& object, const Constants::Types::event_t& event_name)
+void LaserCannon::OnNotify(const GameObject& object, const event_t& event_name)
 {
 	switch (event_name)
 	{
-	case Constants::Types::event_t::TERMINATED_COLLIDABLE_OBJECT:
-		if (object.Type() == Constants::Types::object_t::LASER)
+	case event_t::TERMINATED_COLLIDABLE_OBJECT:
+		if (object.Type() == object_t::LASER)
 		{
 			std::list<unsigned int>::iterator iter = mActiveIndices.begin();
 			while (iter != mActiveIndices.end())
@@ -311,3 +314,8 @@ void LaserCannon::Translate(const glm::vec3& translation)
 {
 	mTransform.Translate(translation);
 }
+
+} // namespace laser_cannon
+} // namespace impl
+} // namespace game
+} // namespace sd_app

@@ -10,6 +10,11 @@
 
 #include"engine/containers/IndexQueue.h"
 #include"engine/util/UtiliDefs.h"
+using Player = sd_app::game::Player;
+using OpenGLUtility = sd_app::engine::util::OpenGLUtility;
+using OpenGLOptions = sd_app::engine::util::OpenGLOptions;
+using SpaceDefender = sd_app::game::SpaceDefender;
+using sd_app::engine::util::VecToVecAngle;
 Player* player;
 void TestFunction();
 int main(int argc, char* argv[])

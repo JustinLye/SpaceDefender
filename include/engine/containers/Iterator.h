@@ -9,7 +9,6 @@ namespace containers {
 namespace impl {
 namespace iterator {
 
-using IterItem = sd_app::engine::containers::IterItem;
 
 /** @addtogroup EngineIterators */
 /*@{*/
@@ -44,7 +43,8 @@ protected:
 /*@}*/
 } // namespace iterator
 } // namespace impl
-using Iterator = impl::iterator::Iterator;
+template<class T>
+using Iterator = impl::iterator::Iterator<T>;
 } // namespace containers
 } // namespace engine
 } // namespace sd_app

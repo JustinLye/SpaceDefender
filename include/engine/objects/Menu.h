@@ -1,7 +1,7 @@
 #ifndef MENU_HEADER_INCLUDED
 #define MENU_HEADER_INCLUDED
 
-#include"engine/objects/Subject.h"
+#include"core/Subject.h"
 #include"engine/objects/Transform.h"
 #include"engine/objects/Canvas.h"
 
@@ -10,6 +10,7 @@ namespace engine {
 namespace objects {
 namespace impl {
 namespace menu {
+using Subject = core::Subject;
 class Menu :
   public Subject,
   public Canvas {

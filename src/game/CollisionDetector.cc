@@ -1,5 +1,8 @@
 #include"game/CollisionDetector.h"
-
+namespace sd_app {
+namespace game {
+namespace impl {
+namespace collision_detector {
 CollisionDetector::CollisionDetector() :
 	Subject(),
 	Observer()
@@ -89,16 +92,16 @@ void CollisionDetector::DoDetection(float dt)
 	}
 }
 
-void CollisionDetector::OnNotify(const GameObject& object, const Constants::Types::event_t& event_name)
+void CollisionDetector::OnNotify(const GameObject& object, const event_t& event_name)
 {
 	switch (event_name)
 	{
-	case Constants::Types::event_t::ACTIVATED_COLLIDABLE_OBJECT:
-		if (object.Type() == Constants::Types::object_t::ASTEROID)
+	case event_t::ACTIVATED_COLLIDABLE_OBJECT:
+		if (object.Type() == object_t::ASTEROID)
 		{
 			mAsteroidMap.insert({ object.Id(), reinterpret_cast<const Asteroid*>(&object) });
 		}
-		else if (object.Type() == Constants::Types::object_t::LASER)
+		else if (object.Type() == object_t::LASER)
 		{
 			mLaserMap.insert({ object.Id(), reinterpret_cast<const Laser*>(&object) });
 		}
@@ -107,12 +110,12 @@ void CollisionDetector::OnNotify(const GameObject& object, const Constants::Type
 			mEnemyShipMap.insert({ object.Id(), reinterpret_cast<const EnemyShip*>(&object) });
 		}
 		break;
-	case Constants::Types::event_t::OBJECT_OUT_OF_BOUNDS:
-		if (object.Type() == Constants::Types::object_t::ASTEROID)
+	case event_t::OBJECT_OUT_OF_BOUNDS:
+		if (object.Type() == object_t::ASTEROID)
 		{
 			mAsteroidMap.erase(object.Id());
 		}
-		else if (object.Type() == Constants::Types::object_t::LASER)
+		else if (object.Type() == object_t::LASER)
 		{
 			mLaserMap.erase(object.Id());
 		}
@@ -123,3 +126,7 @@ void CollisionDetector::OnNotify(const GameObject& object, const Constants::Type
 		break;
 	}
 }
+} // namespace collision_detector
+} // namespace impl
+} // namespace game
+} // namespace sd_app

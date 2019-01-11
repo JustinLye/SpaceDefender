@@ -1,8 +1,11 @@
 #include"game/EnemyShip.h"
-
+namespace sd_app {
+namespace game {
+namespace impl {
+namespace enemy_ship {
 EnemyShip::EnemyShip() :
 	GameObject(),
-	mSpeed(0.0f),
+	mSpeed(0.0),
 	mHitPoints(1),
 	mTerminateYPos(0.0f),
 	mFront(glm::vec3(0.0f))
@@ -138,7 +141,7 @@ void EnemyShip::Despawn() const
 	Notify(*this, event_t::DESPAWNED_OBJECT);
 }
 
-float EnemyShip::Speed() const
+double EnemyShip::Speed() const
 {
 	return mSpeed;
 }
@@ -158,7 +161,7 @@ const glm::vec3& EnemyShip::Up() const
 	return mUp;
 }
 
-void EnemyShip::Speed(float speed)
+void EnemyShip::Speed(double speed)
 {
 	mSpeed = speed;
 }
@@ -239,3 +242,8 @@ void EnemyShip::ProximityScan()
 	}
 
 }
+
+} // namespace enemy_ship
+} // namespace impl
+} // namespace game
+} // namespace sd_app

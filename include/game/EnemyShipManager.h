@@ -6,106 +6,131 @@
 #include<vector>
 #include<list>
 #include"engine/util/Constants.h"
-#include"engine/objects/Subject.h"
-#include"engine/objects/Observer.h"
+#include"core/Subject.h"
+#include"core/Observer.h"
 #include"engine/objects/TexRenderer.h"
 #include"engine/containers/ObjectManager.h"
 #include"engine/util/Logger.h"
 #include"game/EnemyShip.h"
 #include"game/ActiveObjectTracker.h"
 
-using namespace Constants::Types;
+namespace sd_app {
+namespace game {
+namespace impl {
+namespace enemy_ship_manager {
 using namespace std::chrono;
+using event_t = engine::constants::types::event_t;
+using object_t = engine::constants::types::object_t;
+template<class T>
+using Subject = core::Subject<T>;
+template<class T>
+using Observer = core::Observer<T>;
+template<class T>
+using ObjectManager = engine::containers::ObjectManager<T>;
+using DrawableObject = engine::objects::DrawableObject;
+using Transform = engine::objects::Transform;
+using TexRenderer = engine::objects::TexRenderer;
+using GameObject = engine::objects::GameObject;
+using Collider = engine::objects::Collider;
+using RigidBody = engine::objects::RigidBody;
+using Logger = engine::util::Logger;
+using ShaderProgram = engine::util::ShaderProgram;
+
+
 
 /** @addtogroup GameWorld */
 /*@{*/
 class EnemyShipManager :
-	Subject,
-	Observer,
-	public ObjectManager<EnemyShip>
-{
+  Subject<GameObject>,
+  Observer<GameObject>,
+  public ObjectManager<EnemyShip> {
 public:
-	EnemyShipManager(DrawableObject*, ShaderProgram*);
-	~EnemyShipManager();
+  EnemyShipManager(DrawableObject*, ShaderProgram*);
+  ~EnemyShipManager();
 
-	int MaxCapacity();
-	int MaxActiveCapacity();
-	std::vector<const EnemyShip*> ActiveEnemyShipList() const;
+  int MaxCapacity();
+  int MaxActiveCapacity();
+  std::vector<const EnemyShip*> ActiveEnemyShipList() const;
 
-	void AddObserver(Observer*) override;
-	void RemoveObserver(Observer*) override;
-	void AddActiveObjectTracker(const ActiveObjectTracker*);
+  void AddObserver(Observer*) override;
+  void RemoveObserver(Observer*) override;
+  void AddActiveObjectTracker(const ActiveObjectTracker*);
 
-	int MinRespawnWaitTime() const;
-	int MaxRespawnWaitTime() const;
-	float MinProjectileSpeed() const;
-	float MaxProjectileSpeed() const;
-	float StartingYPos() const;
-	float MinXPos() const;
-	float MaxXPos() const;
-	float TerminateYPos() const;
-	float ProbabilityOfSpawn() const;
-	int HitPoints() const;
-	glm::vec3 ShipScale() const;
-	int MaxPlacementAttempts() const;
+  int MinRespawnWaitTime() const;
+  int MaxRespawnWaitTime() const;
+  double MinProjectileSpeed() const;
+  double MaxProjectileSpeed() const;
+  float StartingYPos() const;
+  double MinXPos() const;
+  double MaxXPos() const;
+  float TerminateYPos() const;
+  float ProbabilityOfSpawn() const;
+  int HitPoints() const;
+  glm::vec3 ShipScale() const;
+  int MaxPlacementAttempts() const;
 
-	const Transform& GetTransform() const;
-	Transform& GetTransform();
+  const Transform& GetTransform() const;
+  Transform& GetTransform();
 
-	void MinRespawnWaitTime(int);
-	void MaxRespawnWaitTime(int);
-	void MinProjectileSpeed(float);
-	void MaxProjectileSpeed(float);
-	void StartingYPos(float);
-	void MinXPos(float);
-	void MaxXPos(float);
-	void TerminateYPos(float);
-	void ProbabilityOfSpawn(float);
-	void HitPoints(int);
-	void ShipScale(const glm::vec3&);
-	void ShipScale(float);
-	void MaxPlacementAttempts(int);
+  void MinRespawnWaitTime(int);
+  void MaxRespawnWaitTime(int);
+  void MinProjectileSpeed(float);
+  void MaxProjectileSpeed(float);
+  void StartingYPos(float);
+  void MinXPos(float);
+  void MaxXPos(float);
+  void TerminateYPos(float);
+  void ProbabilityOfSpawn(float);
+  void HitPoints(int);
+  void ShipScale(const glm::vec3&);
+  void ShipScale(float);
+  void MaxPlacementAttempts(int);
 
-	void Init() override;
+  void Init() override;
 
 protected:
-	float mStartingYPos;
-	float mTerminateYPos;
-	float mProbabilityOfSpawn;
-	int mMinRespawnWaitTime;
-	int mMaxRespawnWaitTime;
-	int mHitPoints;
-	glm::vec3 mShipScale;
-	Transform mTransform;
-	DrawableObject* mShape;
-	TexRenderer* mRenderer;
-	std::map<unsigned int, unsigned int> mEnemyShipToIndexMap;
-	std::random_device mRd;
-	std::mt19937 mGen;
-	std::uniform_real_distribution<> mSpawnDist;
-	std::uniform_real_distribution<> mPosDist;
-	std::uniform_real_distribution<> mSpeedDist;
+  float mStartingYPos;
+  float mTerminateYPos;
+  float mProbabilityOfSpawn;
+  int mMinRespawnWaitTime;
+  int mMaxRespawnWaitTime;
+  int mHitPoints;
+  glm::vec3 mShipScale;
+  Transform mTransform;
+  DrawableObject* mShape;
+  TexRenderer* mRenderer;
+  std::map<unsigned int, unsigned int> mEnemyShipToIndexMap;
+  std::random_device mRd;
+  std::mt19937 mGen;
+  std::uniform_real_distribution<> mSpawnDist;
+  std::uniform_real_distribution<> mPosDist;
+  std::uniform_real_distribution<> mSpeedDist;
 
-	std::chrono::time_point<
-		std::chrono::high_resolution_clock,
-		std::chrono::duration<float, std::milli>> mLastSpawnTime;
+  std::chrono::time_point<
+    std::chrono::high_resolution_clock,
+    std::chrono::duration<float, std::milli>> mLastSpawnTime;
 
-	float mNextXPos;
-	int mMaxPlacementAttempts;
-	const ActiveObjectTracker* mTracker;
-	Logger* mLogger;
+  double mNextXPos;
+  int mMaxPlacementAttempts;
+  const ActiveObjectTracker* mTracker;
+  Logger* mLogger;
 
-	void OnNotify(const GameObject&, const Constants::Types::event_t&);
-	EnemyShip* ConstructObject();
-	void CustomAllocOps(unsigned int) override;
-	void CustomDeallocOps(unsigned int) override;
-	void CustomUpdateOps(float) override;
-	bool DestructionPred(EnemyShip*) const override;
+  virtual void OnNotify(const GameObject&, const event_t&) override;
+  EnemyShip* ConstructObject();
+  void CustomAllocOps(unsigned int) override;
+  void CustomDeallocOps(unsigned int) override;
+  void CustomUpdateOps(float) override;
+  bool DestructionPred(EnemyShip*) const override;
 
-	void TrySpawn();
-	bool CanSpawn();
+  void TrySpawn();
+  bool CanSpawn();
 
 };
 
 /*@}*/
+} // namespace enemy_ship_manager
+} // namespace impl
+using EnemyShipManager = impl::enemy_ship_manager::EnemyShipManager;
+} // namespace game
+} // namespace sd_app
 #endif

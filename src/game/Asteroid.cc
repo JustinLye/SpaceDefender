@@ -1,6 +1,9 @@
 
 #include"game/Asteroid.h"
-
+namespace sd_app {
+namespace game {
+namespace impl {
+namespace asteroid {
 Asteroid::Asteroid() :
 	GameObject(),
 	mSpeed(0.0f),
@@ -25,7 +28,7 @@ Asteroid::~Asteroid()
 
 }
 
-Constants::Types::object_t Asteroid::Type() const
+object_t Asteroid::Type() const
 {
 	return object_t::ASTEROID;
 }
@@ -137,3 +140,8 @@ bool Asteroid::Terminate() const
 {
 	return mTerminateYPos > mTransform.Position().y;
 }
+
+} // namespace asteroid
+} // namespace impl
+} // namespace game
+} // namespace sd_app

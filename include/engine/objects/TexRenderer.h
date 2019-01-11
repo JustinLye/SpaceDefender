@@ -10,6 +10,8 @@ namespace engine {
 namespace objects {
 namespace impl {
 namespace tex_renderer {
+using namespace constants::rendering;
+using namespace constants::shaders;
 using ShaderProgram = util::ShaderProgram;
 using OpenGLPolyMode = util::OpenGLPolyMode;
 using OpenGLOptions = util::OpenGLOptions;

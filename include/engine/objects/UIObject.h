@@ -1,25 +1,28 @@
 #ifndef UI_OBJECT_HEADER_INCLUDED
 #define UI_OBJECT_HEADER_INCLUDED
 
-#include"engine/objects/Observer.h"
+#include"core/Observer.h"
+#include"engine/objects/GameObject.h"
+
 namespace sd_app {
 namespace engine {
 namespace objects {
 namespace impl {
 namespace ui_object {
-class GameObject;
 using event_t = constants::types::event_t;
+template<class T>
+using Observer = core::Observer<T>;
 
 /** @addtogroup EngineObjects */
 /*@{*/
 
 class UIObject :
-  public Observer {
+  public Observer<GameObject> {
 public:
   UIObject();
   virtual ~UIObject();
   virtual void Render() = 0;
-  virtual void OnNotify(const GameObject&, const event_t&);
+  virtual void OnNotify(const GameObject&, const event_t&) override;
 };
 /*@}*/
 } // namespace ui_object
